@@ -1,17 +1,44 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import NavbarHeader from '../views/NavbarHeader.vue'
+import Restaurantpage from '../views/Restaurantpage.vue'
+import AdminDashboard from '../views/AdminDashboard.vue';
 import CheckOut from '../components/CheckOut.vue'
 const routes = [
     {
-        path: '/',
+        path: '/c',
         name: 'header',
         component: NavbarHeader,
         children:[
           {
-            path: '/',
+            path: '/c',
             name: 'checkout',
             component: CheckOut,
-          }
+          },
+{
+        path: '/rp',
+        name: 'RestaurantPage',
+        component: Restaurantpage
+    },
+    {
+        path:'/admin-dashboard',
+        name:'AdminDashboard',
+        component:AdminDashboard
+    },
+  {
+    path: '/',
+    name: 'Home', // Change name to avoid duplicates
+    component: () => import('../views/DashboardResturantPage.vue') // Use relative path
+  },
+  {
+    path: '/dashboardresturantpage',
+    name: 'DashboardResturant', // Change name to avoid duplicates
+    component: () => import('../views/DashboardResturantPage.vue') // This is fine if you need this route
+  },
+  {
+    path: '/viewallorders',
+    name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
+    component: () => import('../views/ViewAllOrdersAdm.vue') // This is fine if you need this route
+  }
         ]
     }
 ];
