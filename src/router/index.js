@@ -1,8 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import NavbarHeader from '../views/NavbarHeader.vue'
 import Restaurantpage from '../views/Restaurantpage.vue'
 import AdminDashboard from '../views/AdminDashboard.vue';
+import CheckOut from '../components/CheckOut.vue'
 const routes = [
     {
+        path: '/c',
+        name: 'header',
+        component: NavbarHeader,
+        children:[
+          {
+            path: '/c',
+            name: 'checkout',
+            component: CheckOut,
+          },
+{
         path: '/rp',
         name: 'RestaurantPage',
         component: Restaurantpage
@@ -27,12 +39,13 @@ const routes = [
     name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
     component: () => import('../views/ViewAllOrdersAdm.vue') // This is fine if you need this route
   }
+        ]
+    }
 ];
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes,
+  history: createWebHistory(),
+  routes,
 });
 
 export default router;
-

@@ -1,4 +1,3 @@
-
 import store from './store'; 
 import router from './router';
 import { library } from '@fortawesome/fontawesome-svg-core';
