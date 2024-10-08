@@ -1,11 +1,23 @@
-<script setup>
-
-</script>
-
 <template>
-<router-view></router-view>
+  <div id="app">
+    <router-view /> <!-- This will render the active route component -->
+  </div>
 </template>
 
+
+<script >
+export default {
+  name: 'App',
+};
+</script>
+
 <style scoped>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 
 </style>

@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import OrderReorder from '../views/OrderReorder.vue';
+import PrevorderDetails from '../views/PrevorderDetails.vue'; // Import new component
 import NavbarHeader from '../views/NavbarHeader.vue'
 import Restaurantpage from '../views/Restaurantpage.vue'
 import AdminDashboard from '../views/AdminDashboard.vue';
@@ -14,6 +16,7 @@ const routes = [
             name: 'checkout',
             component: CheckOut,
           },
+          
 {
         path: '/rp',
         name: 'RestaurantPage',
@@ -24,22 +27,29 @@ const routes = [
         name:'AdminDashboard',
         component:AdminDashboard
     },
-  {
-    path: '/',
-    name: 'Home', // Change name to avoid duplicates
-    component: () => import('../views/DashboardResturantPage.vue') // Use relative path
-  },
-  {
-    path: '/dashboardresturantpage',
-    name: 'DashboardResturant', // Change name to avoid duplicates
-    component: () => import('../views/DashboardResturantPage.vue') // This is fine if you need this route
-  },
-  {
-    path: '/viewallorders',
-    name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
-    component: () => import('../views/ViewAllOrdersAdm.vue') // This is fine if you need this route
-  }
-        ]
+    {
+      path: '/',
+      name: 'Home',
+      component: OrderReorder,
+    },
+    {
+      path: '/order-details/:id',  // Define dynamic route with 'id' parameter
+      name: 'PrevorderDetails',
+      component: PrevorderDetails,
+      props: true, // Pass route params as props to the component
+    },
+    {
+      path: '/OrderReorder',
+      name: 'OrderReorder',
+      component: OrderReorder,
+    },
+    {
+      path: '/order-details/:id',  // Define dynamic route with 'id' parameter
+      name: 'PrevorderDetails',
+      component: PrevorderDetails,
+      props: true, // Pass route params as props to the component
+    },
+ ]
     }
 ];
 
