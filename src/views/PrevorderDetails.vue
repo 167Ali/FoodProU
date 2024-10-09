@@ -2,7 +2,7 @@
     <div id="app">
         <LoginHeader />
 
-        <div class="order-details-container">
+        <div v-if="order" class="order-details-container">
             <!-- Left Section: Order Details -->
             <div class="order-info">
                 <div class="order-card">
@@ -56,7 +56,6 @@
                     <button class="reorder-button">Select items to reorder</button>
                 </div>
 
-     
                 <div class="action-card invoice-section">
                     <p>Need an invoice?</p>
                     <button class="invoice-button" @click="downloadInvoice">Download invoice</button>
@@ -64,12 +63,17 @@
             </div>
         </div>
 
+        <div v-else class="loading-message">
+            <p v-if="error">{{ error }}</p>
+            <p v-else>Loading order details...</p>
+        </div>
+
         <PageFooter />
     </div>
 </template>
 
-
 <script>
+import { getOrderDetails, downloadOrderInvoice } from '../Services/PrevorderdetailService';
 import LoginHeader from '../components/LoginHeader.vue';
 import PageFooter from '../components/PageFooter.vue';
 
@@ -86,47 +90,24 @@ export default {
     },
     data() {
         return {
-            order: {
-                restaurant: "KFC",
-                location: "Johar Town",
-                deliveryDate: "Wed, 13 Sept, 11:22 pm",
-                orderId: this.id,
-                deliveryAddress: "Building Lahore",
-                items: "1x Mighty Zinger Burger",
-                subtotal: 700.00,
-                deliveryFee: 50.00,
-                total: 750.00,
-                paymentMethod: "Cash on delivery",
-                paymentAmount: 322.50,
-                image: "https://via.placeholder.com/80",
-            },
+            order: null,
+            error: null,
         };
     },
+    created() {
+        this.fetchOrderDetails();
+    },
     methods: {
+        async fetchOrderDetails() {
+            try {
+                this.order = await getOrderDetails(this.id);
+            } catch (error) {
+                this.error = error.message;
+            }
+        },
         async downloadInvoice() {
             try {
-                const response = await fetch(`/api/orders/${this.id}/invoice`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/pdf',
-                    },
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to download invoice');
-                }
-
-                const blob = await response.blob();
-                const url = window.URL.createObjectURL(blob);
-
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `Invoice_${this.id}.pdf`;
-                document.body.appendChild(a);
-                a.click();
-
-                a.remove();
-                window.URL.revokeObjectURL(url);
+                await downloadOrderInvoice(this.id);
             } catch (error) {
                 console.error(error.message);
                 alert('Failed to download invoice');
@@ -136,26 +117,23 @@ export default {
 };
 </script>
 
+
 <style scoped>
-/* Container for both sections */
+/* Same styles as before */
 .order-details-container {
     display: flex;
-    
     max-width: 100%;
     margin: 0 auto;
     padding: 40px 20px;
     background-color: #f4f4f4;
     border-radius: 8px;
-    
 }
 
-/* Left section: Order information */
 .order-info {
     width: 38%;
     margin-left: 15%;
 }
 
-/* Card for restaurant and delivery details */
 .order-card {
     display: flex;
     background-color: white;
@@ -167,7 +145,6 @@ export default {
     height: 300px;
 }
 
-/* Restaurant image */
 .order-image {
     width: 80px;
     height: 80px;
@@ -176,10 +153,10 @@ export default {
     object-fit: cover;
 }
 
-.order-summary  {
+.order-summary {
     margin-left: 50px;
-    
 }
+
 .order-summary h2 {
     margin: 0;
     font-size: 1.3rem;
@@ -193,7 +170,6 @@ export default {
     margin: 10px 0;
 }
 
-/* Styling for Order From and Delivered To */
 .order-from, .delivered-to {
     display: flex;
     align-items: flex-start;
@@ -218,7 +194,6 @@ export default {
     color: #333;
 }
 
-/* Order summary details */
 .order-summary-details {
     background-color: white;
     padding: 25px;
@@ -258,17 +233,14 @@ export default {
     text-align: right;
 }
 
-/* Right section: Action buttons */
 .order-actions {
     width: 25%;
     display: flex;
     flex-direction: column;
     gap: 15px;
     padding: 0 20px;
-    
 }
 
-/* Card layout for buttons */
 .action-card {
     background-color: white;
     padding: 20px;
@@ -285,7 +257,6 @@ export default {
     color: #333;
 }
 
-/* Reorder button style */
 .reorder-button {
     background-color: #00754A;
     color: white;
@@ -300,7 +271,6 @@ export default {
     background-color: #00593C;
 }
 
-/* Invoice button style */
 .invoice-button {
     background-color: #1FD46B;
     color: white;
@@ -313,5 +283,11 @@ export default {
 
 .invoice-button:hover {
     background-color: #16A959;
+}
+
+.loading-message {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 50px 0;
 }
 </style>

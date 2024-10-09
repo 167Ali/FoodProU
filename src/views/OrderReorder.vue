@@ -6,7 +6,8 @@
             <!-- Active Orders Section -->
             <div class="orders-section">
                 <h2>Active Orders</h2>
-                <div v-if="activeOrders.length === 0" class="no-orders">You have no active orders.</div>
+                <div v-if="loadingActive" class="loading-message">Loading active orders...</div>
+                <div v-if="!loadingActive && activeOrders.length === 0" class="no-orders">You have no active orders.</div>
                 <div v-else>
                     <div v-for="order in activeOrders" :key="order.orderId" class="order-card">
                         <img :src="order.image" alt="Order Image" class="order-image" />
@@ -24,7 +25,8 @@
             <!-- Past Orders Section -->
             <div class="orders-section">
                 <h2>Past Orders</h2>
-                <div v-if="pastOrders.length === 0" class="no-orders">You have no past orders.</div>
+                <div v-if="loadingPast" class="loading-message">Loading past orders...</div>
+                <div v-if="!loadingPast && pastOrders.length === 0" class="no-orders">You have no past orders.</div>
                 <div v-else>
                     <div v-for="order in pastOrders" :key="order.orderId" class="order-card">
                         <img :src="order.image" alt="Order Image" class="order-image" />
@@ -36,8 +38,7 @@
                             <p class="price">Rs. {{ order.price }}</p>
                             <p class="rating">You rated this ⭐ {{ order.rating }}</p>
                         </div>
-                        <button class="reorder-button" @click="goToPrevOrderDetails(order.orderId)">Select items to
-                            reorder</button>
+                        <button class="reorder-button" @click="goToPrevOrderDetails(order.orderId)">Select items to reorder</button>
                     </div>
                 </div>
             </div>
@@ -48,6 +49,7 @@
 </template>
 
 <script>
+import { getActiveOrders, getPastOrders } from '../Services/OrderService';
 import LoginHeader from '../components/LoginHeader.vue';
 import PageFooter from '../components/PageFooter.vue';
 import { useRouter } from 'vue-router';
@@ -60,42 +62,10 @@ export default {
     },
     data() {
         return {
-            activeOrders: [
-                {
-                    id: 1,
-                    restaurant: "Ice Food",
-                    location: "Raiwind Road",
-                    deliveryDate: "Wed, 27 Dec, 12:21 am",
-                    orderId: "n2ie-xx2a",
-                    items: "1x Ice Cream Chaat",
-                    price: "357.99",
-                    image: "https://via.placeholder.com/80",
-                },
-            ],
-            pastOrders: [
-                {
-                    id: 2,
-                    restaurant: "Burger Place",
-                    location: "Gulberg",
-                    deliveryDate: "Mon, 25 Dec, 3:00 pm",
-                    orderId: "x23-abc3",
-                    items: "2x Cheese Burger",
-                    price: "599.99",
-                    rating: 4,
-                    image: "https://via.placeholder.com/80",
-                },
-                {
-                    id: 3,
-                    restaurant: "Pizza House",
-                    location: "DHA",
-                    deliveryDate: "Sun, 20 Dec, 6:30 pm",
-                    orderId: "a33-zzz5",
-                    items: "1x Large Pizza",
-                    price: "799.99",
-                    rating: 5,
-                    image: "https://via.placeholder.com/80",
-                },
-            ],
+            activeOrders: [],
+            pastOrders: [],
+            loadingActive: false,
+            loadingPast: false,
         };
     },
     setup() {
@@ -108,8 +78,35 @@ export default {
             goToPrevOrderDetails,
         };
     },
+    mounted() {
+        this.fetchActiveOrders();
+        this.fetchPastOrders();
+    },
+    methods: {
+        async fetchActiveOrders() {
+            this.loadingActive = true;
+            try {
+                this.activeOrders = await getActiveOrders();
+            } catch (error) {
+                console.error('Error fetching active orders:', error);
+            } finally {
+                this.loadingActive = false;
+            }
+        },
+        async fetchPastOrders() {
+            this.loadingPast = true;
+            try {
+                this.pastOrders = await getPastOrders();
+            } catch (error) {
+                console.error('Error fetching past orders:', error);
+            } finally {
+                this.loadingPast = false;
+            }
+        },
+    },
 };
 </script>
+
 
 <style scoped>
 .orders-container {
@@ -132,6 +129,11 @@ h2 {
     margin-bottom: 20px;
     border-bottom: 2px solid #ececec;
     padding-bottom: 10px;
+}
+
+.loading-message {
+    color: #888;
+    font-size: 1.2rem;
 }
 
 .no-orders {
