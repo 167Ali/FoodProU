@@ -15,6 +15,11 @@ const routes = [
     path: '/viewallorders',
     name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
     component: () => import('../views/ViewAllOrdersAdm.vue') // This is fine if you need this route
+  },
+  {
+    path: '/ownermenu',
+    name: 'OwnerMenu', // Change name to avoid duplicates
+    component: () => import('../views/OwnerMenu.vue') // This is fine if you need this route
   }
 ];
 
