@@ -3,7 +3,7 @@
     <RestaurantItem v-for="item in restaurants" :key="item.id" :restaurant="item" />
   </div>
 </template>
-
+all good
 <script setup>
 import RestaurantItem from './RestaurantItem.vue';
 
