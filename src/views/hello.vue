@@ -12,4 +12,3 @@
   <style scoped>
   /* Add any additional styles here for the view */
   </style>
-  
