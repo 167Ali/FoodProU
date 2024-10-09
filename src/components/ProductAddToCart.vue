@@ -1,182 +1,213 @@
 <template>
-    <div>
-      <!-- Add to Cart Button -->
-      <button class="btn btn-primary" @click="showModal = true">Add to cart</button>
-  
-      <!-- Modal -->
-      <div class="modal fade" :class="{ show: showModal }" tabindex="-1" role="dialog" style="display: block;" v-if="showModal">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <!-- Modal Body with scroll -->
-            <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
-              <!-- Product Image at the Top -->
-              <img :src="productImage" alt="Product Image" class="product-image mb-3">
-  
-              <!-- Product Details under the image -->
-              <div class="text-left">
-                <strong><h4 class="font-weight-bold">{{ productName }}</h4></strong>
-                <h6 class="current-price">Rs. {{ discountedPrice.toFixed(2) }} <span class="original-price">Rs. {{ originalPrice }}</span></h6>
-                <p>{{ productDescription }}</p>
-              </div>
-  
-              <!-- Scrollable Card: Choose Your Sub -->
-              <div class="choose-sub-card mt-3">
-                <div class="card p-3" style="background-color: #fff0f5;">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="font-weight-bold">Choose Your Sub</h5>
-                    <span class="badge badge-danger">Required</span>
-                  </div>
-                  <p class="mb-1">Select 1</p>
-                  <div class="scrollable-options">
-                    <!-- Radio Button Options -->
-                    <div class="form-check mb-2" v-for="(option, index) in subOptions" :key="index">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        :id="'option-' + index"
-                        :value="option"
-                        v-model="selectedSub"
-                      />
-                      <label class="form-check-label" :for="'option-' + index">
-                        {{ option.name }} 
-                        <span v-if="option.popular" class="ml-1 text-muted">
-                          <i class="fas fa-fire"></i> Popular
-                        </span>
-                      </label>
-                      <span class="float-right text-muted">{{ option.price }}</span>
-                    </div>
+  <div>
+    <!-- Add to Cart Button -->
+    <button class="btn btn-primary" @click="showModal = true">Add to cart</button>
+
+    <!-- Modal -->
+    <div class="modal fade" :class="{ show: showModal }" tabindex="-1" role="dialog" style="display: block;" v-if="showModal">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <!-- Modal Header with Full-Width Image -->
+          <div class="modal-header ">
+            <img :src="productImage" alt="Product Image" class="product-image">
+          </div>
+
+          <!-- Modal Body with scroll -->
+          <div class="modal-body">
+            <div class="text-left">
+              <strong>
+                <h4 class="font-weight-bold">{{ productName }}</h4>
+              </strong>
+              <h6 class="current-price">Rs. {{ discountedPrice.toFixed(2) }} <span class="original-price">Rs. {{ originalPrice }}</span></h6>
+              <p>{{ productDescription }}</p>
+            </div>
+
+            <!-- Dynamically Render "Choose Your Sub" Sections -->
+            <div v-for="(section, sectionIndex) in sections" :key="sectionIndex" class="choose-sub-card mt-3">
+              <div class="card p-3" style="background-color: #fff0f5;">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h5 class="font-weight-bold">{{ section.title }}</h5>
+                  <span v-if="section.required" class="badge required-badge">Required</span>
+                </div>
+                <p class="mb-1">Select {{ section.selectLimit }}</p>
+                <div class="scrollable-options">
+                  <div class="form-check mb-2" v-for="(option, optionIndex) in section.options" :key="optionIndex">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      :id="'section-' + sectionIndex + '-option-' + optionIndex"
+                      :value="option"
+                      v-model="section.selectedOption"
+                    />
+                    <label class="form-check-label" :for="'section-' + sectionIndex + '-option-' + optionIndex">
+                      {{ option.name }}
+                      <span v-if="option.popular" class="ml-1 text-muted">
+                        <i class="fas fa-fire"></i> Popular
+                      </span>
+                    </label>
+                    <span class="float-right text-muted">{{ option.price }}</span>
                   </div>
                 </div>
               </div>
             </div>
-  
-            <!-- Add to Cart Section -->
-            <div class="modal-footer justify-content-between">
-              <!-- Updated Button -->
-              <button class="btn btn-green w-100" @click="addToCart">Add to cart</button>
-            </div>
+          </div>
+
+          <!-- Add to Cart Section -->
+          <div class="modal-footer justify-content-between">
+            <button class="btn btn-green w-100" @click="addToCart">Add to cart</button>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </template>
-  
+
 <script setup>
 import { ref } from 'vue';
-  
+
 const showModal = ref(false);
-const productImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa9Qq1rV_svdydH5u3O8r5ZmT8udMBnSuKeA&s'; // Replace with your burger image URL
+const productImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa9Qq1rV_svdydH5u3O8r5ZmT8udMBnSuKeA&s';
 const productName = 'Summer Deal 1';
 const discountedPrice = 475.16;
 const originalPrice = 774;
-const discount = '39%';
 const productDescription = 'Chicken Sub & 345ml Drink';
-const quantity = ref(1);
-const selectedSub = ref(null);
-const subOptions = ref([
-    { name: 'Tikka', price: 'Free', popular: true },
-    { name: 'BBQ', price: 'Free', popular: false },
-    { name: 'Roasted Chicken Breast', price: 'Free', popular: false },
-    { name: 'Chicken Chapli', price: 'Free', popular: false },
+
+// Generic sections with multiple options
+const sections = ref([
+  {
+    title: 'Choose Your Sub',
+    selectLimit: 1,
+    required: true,
+    selectedOption: null,
+    options: [
+      { name: 'Tikka', price: 'Free', popular: true },
+      { name: 'BBQ', price: 'Free', popular: false },
+      { name: 'Roasted Chicken Breast', price: 'Free', popular: false },
+      { name: 'Chicken Chapli', price: 'Free', popular: false },
+    ],
+  },
+  {
+    title: 'Choose Your Drink',
+    selectLimit: 1,
+    required: true,
+    selectedOption: null,
+    options: [
+      { name: 'Coca Cola', price: 'Free', popular: true },
+      { name: 'Pepsi', price: 'Free', popular: false },
+      { name: 'Sprite', price: 'Free', popular: false },
+    ],
+  },
+  {
+    title: 'Choose Your Extras',
+    selectLimit: 1,
+    required: false,
+    selectedOption: null,
+    options: [
+      { name: 'Extra Cheese', price: 'Rs. 50', popular: false },
+      { name: 'Extra Mayo', price: 'Rs. 30', popular: false },
+    ],
+  },
+  
 ]);
-  
+
 const closeModal = () => {
-    showModal.value = false;
+  showModal.value = false;
 };
-  
+
 const addToCart = () => {
-    console.log(`Added to cart: ${productName}, Quantity: ${quantity.value}, Sub: ${selectedSub.value?.name}`);
-    closeModal(); // Optionally close the modal after adding to the cart
-};
-  
-const increaseQuantity = () => {
-    quantity.value++;
-};
-  
-const decreaseQuantity = () => {
-    if (quantity.value > 1) quantity.value--;
+  sections.value.forEach((section) => {
+    if (section.selectedOption) {
+      console.log(`Added ${section.title}: ${section.selectedOption.name}`);
+    }
+  });
+  closeModal();
 };
 </script>
-  
+
 <style scoped>
 .modal {
-    display: block;
-    background: rgba(0, 0, 0, 0.5);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1050;
+  display: block;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1050;
 }
 
 .modal-dialog {
-    max-width: 600px; /* Increased width */
-    margin: 100px auto;
-    border-radius: 10px; /* Added border-radius */
+  max-width: 600px;
+  max-height: 70vh;
+  margin: auto;
+  border-radius: 10px;
+  overflow-y: auto;
 }
 
 .modal-content {
-    border-radius: 10px; /* Added border-radius */
+  border-radius: 10px;
+  max-height: 100%;
+  overflow-y: auto;
 }
 
-.modal-body {
-    display: block;
-    text-align: left;
-    padding: 20px;
+.modal-header {
+  position: relative;
+  overflow: hidden;
 }
 
 .product-image {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.modal-body {
+  text-align: left;
+  padding: 20px;
 }
 
 .current-price {
-    font-size: 1.5em;
-    color: #d9534f; /* Bootstrap danger color */
+  font-size: 1.5em;
+  color: #d9534f;
 }
 
 .original-price {
-    text-decoration: line-through;
-    color: gray;
-    margin-left: 10px;
-}
-
-.discount {
-    color: green;
-    font-weight: bold;
+  text-decoration: line-through;
+  color: gray;
+  margin-left: 10px;
 }
 
 .choose-sub-card {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .scrollable-options {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.quantity-control {
-    display: flex;
-    align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 .btn-green {
-    background-color: #00754A; /* Changed button color */
-    color: white;
-    border: none;
-    width: 100%; 
-    transition: background-color 0.3s ease; /* Smooth transition */
+  background-color: #00754A;
+  color: white;
+  border: none;
+  width: 100%;
+  transition: background-color 0.3s ease;
 }
 
 .btn-green:hover {
-    background-color: #005f3d; /* Darker green on hover */
+  background-color: #005f3d;
+}
+
+.required-badge {
+  background-color: #00754A;
+  color: white;
+  padding: 5px 10px;
+  font-size: 0.9em;
 }
 </style>
+
