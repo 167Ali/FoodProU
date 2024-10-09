@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="restaurant-list">
     <RestaurantItem v-for="item in restaurants" :key="item.id" :restaurant="item" />
   </div>
@@ -108,4 +108,4 @@ const restaurants = [
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
-</style>
+</style> -->
