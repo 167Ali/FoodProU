@@ -5,6 +5,7 @@
         <div class="col-lg-7 mb-4">
           <div class="card p-4">
             <h3>Delivery address</h3>
+            <router-link to="/orderreq"><a class="nxt-btn">Order Request</a></router-link>
             <div class="map-container mb-3 mt-2">
 
               <img src="../assets/images/Screenshot 2024-10-07 151047.png" alt="Map" class="img-fluid rounded">

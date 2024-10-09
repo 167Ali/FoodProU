@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import NavbarHeader from '../views/NavbarHeader.vue'
 import CheckOut from '../components/CheckOut.vue'
+import OrderReq from '../components/OrderRequest.vue'
 const routes = [
     {
         path: '/',
@@ -11,6 +12,11 @@ const routes = [
             path: '/',
             name: 'checkout',
             component: CheckOut,
+          },
+          {
+            path: '/orderreq',
+            name: 'orderreq',
+            component: OrderReq,
           }
         ]
     }
