@@ -112,11 +112,6 @@ export default {
     border-bottom: 1px solid #eaeaea;
 }
 
-.navbar-left {
-    display: flex;
-    align-items: center;
-}
-
 .logo {
     font-size: 24px;
     margin-right: 10px;

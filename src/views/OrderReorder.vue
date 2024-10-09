@@ -8,7 +8,7 @@
                 <h2>Active Orders</h2>
                 <div v-if="activeOrders.length === 0" class="no-orders">You have no active orders.</div>
                 <div v-else>
-                    <div v-for="order in activeOrders" :key="order.id" class="order-card">
+                    <div v-for="order in activeOrders" :key="order.orderId" class="order-card">
                         <img :src="order.image" alt="Order Image" class="order-image" />
                         <div class="order-details">
                             <h3>{{ order.restaurant }} – {{ order.location }}</h3>
@@ -26,7 +26,7 @@
                 <h2>Past Orders</h2>
                 <div v-if="pastOrders.length === 0" class="no-orders">You have no past orders.</div>
                 <div v-else>
-                    <div v-for="order in pastOrders" :key="order.id" class="order-card">
+                    <div v-for="order in pastOrders" :key="order.orderId" class="order-card">
                         <img :src="order.image" alt="Order Image" class="order-image" />
                         <div class="order-details">
                             <h3>{{ order.restaurant }} – {{ order.location }}</h3>
@@ -36,7 +36,7 @@
                             <p class="price">Rs. {{ order.price }}</p>
                             <p class="rating">You rated this ⭐ {{ order.rating }}</p>
                         </div>
-                        <button class="reorder-button" @click="goToPrevOrderDetails(order.id)">Select items to
+                        <button class="reorder-button" @click="goToPrevOrderDetails(order.orderId)">Select items to
                             reorder</button>
                     </div>
                 </div>
