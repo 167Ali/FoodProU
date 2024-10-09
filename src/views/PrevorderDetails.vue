@@ -10,13 +10,23 @@
                     <div class="order-summary">
                         <h2>{{ order.restaurant }} – {{ order.location }}</h2>
                         <p class="delivery-info">Delivered on {{ order.deliveryDate }}<br>Order #{{ order.orderId }}</p>
+
+                        <!-- Order From Section -->
                         <div class="order-from">
-                            <p>Order from</p>
-                            <p>{{ order.restaurant }} - {{ order.location }}</p>
+                            <i class="fa-solid fa-location-dot order-icon"></i>
+                            <div class="order-text">
+                                <p>Order from</p>
+                                <p>{{ order.restaurant }} - {{ order.location }}</p>
+                            </div>
                         </div>
+
+                        <!-- Delivered To Section -->
                         <div class="delivered-to">
-                            <p>Delivered to</p>
-                            <p>{{ order.deliveryAddress }}</p>
+                            <i class="fa-solid fa-location-dot order-icon"></i>
+                            <div class="order-text">
+                                <p>Delivered to</p>
+                                <p>{{ order.deliveryAddress }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -26,14 +36,15 @@
                     <div class="order-items">
                         <p>{{ order.items }}</p>
                     </div>
+                    <hr>
                     <div class="order-pricing">
-                        <p>Subtotal: Rs. {{ order.subtotal }}</p>
-                        <p>Delivery fee: Rs. {{ order.deliveryFee }}</p>
-                        <p><strong>Total (incl. VAT): Rs. {{ order.total }}</strong></p>
+                        <p><span>Subtotal:</span> <span>Rs. {{ order.subtotal }}</span></p>
+                        <p><span>Delivery fee:</span> <span>Rs. {{ order.deliveryFee }}</span></p>
+                        <p><strong>Total (incl. VAT):</strong> <strong>Rs. {{ order.total }}</strong></p>
                     </div>
+                    <hr>
                     <div class="payment-details">
-                        <p>Paid with</p>
-                        <p>{{ order.paymentMethod }} - Rs. {{ order.paymentAmount }}</p>
+                        <p><span>Paid with</span> <span>{{ order.paymentMethod }} - Rs. {{ order.paymentAmount }}</span></p>
                     </div>
                 </div>
             </div>
@@ -45,6 +56,7 @@
                     <button class="reorder-button">Select items to reorder</button>
                 </div>
 
+     
                 <div class="action-card invoice-section">
                     <p>Need an invoice?</p>
                     <button class="invoice-button" @click="downloadInvoice">Download invoice</button>
@@ -55,6 +67,7 @@
         <PageFooter />
     </div>
 </template>
+
 
 <script>
 import LoginHeader from '../components/LoginHeader.vue';
@@ -127,17 +140,18 @@ export default {
 /* Container for both sections */
 .order-details-container {
     display: flex;
-    justify-content: space-between;
+    
     max-width: 100%;
     margin: 0 auto;
     padding: 40px 20px;
     background-color: #f4f4f4;
     border-radius: 8px;
+    
 }
 
 /* Left section: Order information */
 .order-info {
-    width: 45%;
+    width: 38%;
     margin-left: 15%;
 }
 
@@ -150,22 +164,22 @@ export default {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     margin-bottom: 30px;
     align-items: center;
+    height: 300px;
 }
 
 /* Restaurant image */
 .order-image {
     width: 80px;
     height: 80px;
-    border-radius: 50%;
+    margin-top: -150px;
+    border-radius: 10%;
     object-fit: cover;
-    margin-right: 20px;
 }
 
-/* Order summary text */
-.order-summary {
-    flex: 1;
+.order-summary  {
+    margin-left: 50px;
+    
 }
-
 .order-summary h2 {
     margin: 0;
     font-size: 1.3rem;
@@ -179,10 +193,29 @@ export default {
     margin: 10px 0;
 }
 
-.order-from,
-.delivered-to {
-    font-size: 0.9rem;
-    color: #666;
+/* Styling for Order From and Delivered To */
+.order-from, .delivered-to {
+    display: flex;
+    align-items: flex-start;
+    margin: 10px 0;
+    margin-left: -110px;
+}
+
+.order-icon {
+    font-size: 1.2rem;
+    color: #00754A;
+    margin-right: 10px;
+}
+
+.order-text p {
+    margin: 0;
+    color: #555;
+}
+
+.order-from .order-text p:first-child,
+.delivered-to .order-text p:first-child {
+    font-weight: bold;
+    color: #333;
 }
 
 /* Order summary details */
@@ -213,12 +246,16 @@ export default {
     color: #555;
 }
 
-.order-pricing p {
+.order-pricing p,
+.payment-details p {
+    display: flex;
+    justify-content: space-between;
     margin: 5px 0;
 }
 
-.payment-details p {
-    margin: 0;
+.order-pricing p span,
+.payment-details p span {
+    text-align: right;
 }
 
 /* Right section: Action buttons */
@@ -228,6 +265,7 @@ export default {
     flex-direction: column;
     gap: 15px;
     padding: 0 20px;
+    
 }
 
 /* Card layout for buttons */
