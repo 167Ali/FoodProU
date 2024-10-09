@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://api.example.com'; // Change to the actual base URL
+const API_BASE_URL = process.env.VUE_APP_API_BASE_URL;
 
 export const getOrderDetails = async (customerId) => {
     try {
