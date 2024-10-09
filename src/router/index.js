@@ -1,25 +1,27 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import OrderReorder from '../views/OrderReorder.vue';
-import PrevorderDetails from '../views/PrevorderDetails.vue'; // Import new component
-
-
+import Restaurantpage from '../views/Restaurantpage.vue'
+import AdminDashboard from '../views/AdminDashboard.vue';
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: OrderReorder,
-  },
-  {
-    path: '/order-details/:id',  // Define dynamic route with 'id' parameter
-    name: 'PrevorderDetails',
-    component: PrevorderDetails,
-    props: true, // Pass route params as props to the component
-  }
+    {
+        path: '/',
+        name: 'RestaurantPage',
+        component: Restaurantpage
+    },
+    {
+        path:'/admin-dashboard',
+        name:'AdminDashboard',
+        component:AdminDashboard
+    },
+ {
+        path: '/hello',
+        name: 'Home',
+        component: Hello // Lazy-loaded
+      }
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes,
+    history: createWebHistory(),
+    routes,
 });
 
 export default router;
