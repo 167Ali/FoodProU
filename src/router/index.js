@@ -11,7 +11,12 @@ const routes = [
         path:'/admin-dashboard',
         name:'AdminDashboard',
         component:AdminDashboard
-    }
+    },
+ {
+        path: '/hello',
+        name: 'Home',
+        component: Hello // Lazy-loaded
+      }
 ];
 
 const router = createRouter({
