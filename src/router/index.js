@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import NavbarHeader from '../views/NavbarHeader.vue'
-import Restaurantpage from '../views/Restaurantpage.vue'
+import Restaurantpage from '../views/RestaurantPage.vue'
 import AdminDashboard from '../views/AdminDashboard.vue'
 import CheckOut from '../components/CheckOut.vue'
 import OrderReq from '../components/OrderRequest.vue'
