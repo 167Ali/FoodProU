@@ -1,8 +1,13 @@
 
-import { createStore } from 'vuex';
 
+import { createStore } from 'vuex';
+import profileModule from './modules/profile'; 
 const store = createStore({
-  state: {
+ modules: {
+    profile: profileModule, 
+    
+  },
+  state:{
   },
   mutations: {
 
@@ -11,8 +16,9 @@ const store = createStore({
 
   },
   getters: {
-
+ 
   },
 });
 
 export default store;
+

@@ -1,5 +1,14 @@
+<!-- HomeView.vue -->
 <template>
-    <h1>FoodPro</h1>
-    <!-- <h1>FoodPro 2</h1>
-    npm install bootstrap@5 popper.js -->
-</template>
+    <div>
+      <addtocart/>
+    </div>
+  </template>
+  
+  <script setup>
+  import addtocart from '../components/ProductAddToCart.vue';
+  </script>
+  
+  <style scoped>
+  /* Add any additional styles here for the view */
+  </style>
