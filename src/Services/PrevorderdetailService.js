@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const API_BASE_URL = 'https://api.example.com'; // Change to the actual base URL
 
-export const getOrderDetails = async (orderId) => {
+export const getOrderDetails = async (customerId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/orders/${orderId}`);
+        const response = await axios.get(`${API_BASE_URL}/orders/${customerId}`);
         return response.data;
     } catch (error) {
         console.error('Error fetching order details:', error);
@@ -12,9 +12,9 @@ export const getOrderDetails = async (orderId) => {
     }
 };
 
-export const downloadOrderInvoice = async (orderId) => {
+export const downloadOrderInvoice = async (customerId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/orders/${orderId}/invoice`, {
+        const response = await axios.get(`${API_BASE_URL}/orders/${customerId}/invoice`, {
             responseType: 'blob', // Important for handling binary data
         });
 
@@ -22,7 +22,7 @@ export const downloadOrderInvoice = async (orderId) => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `Invoice_${orderId}.pdf`;
+        a.download = `Invoice_${customerId}.pdf`;
         document.body.appendChild(a);
         a.click();
         a.remove();

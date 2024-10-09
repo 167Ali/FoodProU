@@ -9,7 +9,7 @@
                     <img :src="order.image" alt="Order Image" class="order-image" />
                     <div class="order-summary">
                         <h2>{{ order.restaurant }} – {{ order.location }}</h2>
-                        <p class="delivery-info">Delivered on {{ order.deliveryDate }}<br>Order #{{ order.orderId }}</p>
+                        <p class="delivery-info">Delivered on {{ order.deliveryDate }}<br>Order #{{ order.customerId }}</p>
 
                         <!-- Order From Section -->
                         <div class="order-from">
