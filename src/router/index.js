@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import NavbarHeader from '../views/NavbarHeader.vue'
-import Restaurantpage from '../views/Restaurantpage.vue'
+import Restaurantpage from '../views/RestaurantPage.vue'
 import AdminDashboard from '../views/AdminDashboard.vue'
 import CheckOut from '../components/CheckOut.vue'
 import OrderReq from '../components/OrderRequest.vue'
@@ -11,7 +11,8 @@ import FavoritesPage from '../views/favs.vue'
 import OrderScreen from '../views/OrderScreen.vue'
 import ModalView from '../components/restOwnReciept.vue'
 import RestOwnerProfile from '../components/restOwnerProfile.vue'
-
+import ViewAllOrdersAdm from '../views/ViewAllOrdersAdm.vue'
+import DashboardResturantPage from '../views/DashboardResturantPage.vue'
 const routes = [
   {
     path: '/c',
@@ -39,6 +40,11 @@ const routes = [
     path: '/admin-dashboard',
     name: 'AdminDashboard',
     component: AdminDashboard
+  },
+  {
+    path: '/dashboardresturantpage',
+    name: 'DashboardResturantPage',
+    component: DashboardResturantPage
   },
   {
     path: '/',
@@ -74,7 +80,7 @@ const routes = [
   {
     path: '/viewallorders',
     name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
-    component: () => import('../views/ViewAllOrdersAdm.vue') // This is fine if you need this route
+    component: ViewAllOrdersAdm // This is fine if you need this route
   },
   {
     path: '/ownermenu',
