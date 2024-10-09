@@ -1,34 +1,97 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import Hello from '../views/Main_Landing.vue';
-import User_login from '../components/User_login.vue'; 
-import User_signup from '../components/User_signup.vue';
-//import Bussiness_Landing from '../views/Bussiness_Landing.vue';
+import { createRouter, createWebHistory } from 'vue-router'
+import NavbarHeader from '../views/NavbarHeader.vue'
+import Restaurantpage from '../views/Restaurantpage.vue'
+import AdminDashboard from '../views/AdminDashboard.vue'
+import CheckOut from '../components/CheckOut.vue'
+import OrderReq from '../components/OrderRequest.vue'
+import OrderReorder from '../views/OrderReorder.vue'
+import PrevorderDetails from '../views/PrevorderDetails.vue' // Import new component
+import ProfileSettings from '../views/ProfileSettings.vue'
+import FavoritesPage from '../views/favs.vue'
+import OrderScreen from '../views/OrderScreen.vue'
+import ModalView from '../components/restOwnReciept.vue'
+import RestOwnerProfile from '../components/restOwnerProfile.vue'
+
 const routes = [
+  {
+    path: '/c',
+    name: 'header',
+    component: NavbarHeader,
+    children: [
+      {
+        path: '/c',
+        name: 'checkout',
+        component: CheckOut
+      },
+      {
+        path: '/orderreq',
+        name: 'orderreq',
+        component: OrderReq
+      }
+    ]
+  },
+  {
+    path: '/rp',
+    name: 'RestaurantPage',
+    component: Restaurantpage
+  },
+  {
+    path: '/admin-dashboard',
+    name: 'AdminDashboard',
+    component: AdminDashboard
+  },
   {
     path: '/',
     name: 'Home',
-    component: Hello 
+    component: OrderReorder
   },
   {
-    path: '/User_login',
-    name: 'User_login',
-    component: User_login 
+    path: '/order-details/:id', // Define dynamic route with 'id' parameter
+    name: 'PrevorderDetails',
+    component: PrevorderDetails,
+    props: true // Pass route params as props to the component
   },
   {
-    path: '/User_signup',
-    name: 'User_signup',
-    component: User_signup 
+    path: '/ps',
+    name: 'ProfileSettings',
+    component: ProfileSettings
   },
-  // {
-  //   path: '/Bussiness_Landing',
-  //   name: 'Bussiness_Landing',
-  //   component: Bussiness_Landing 
-  // },
-];
+  {
+    path: '/fav',
+    name: 'Favorites',
+    component: FavoritesPage
+  },
+  {
+    path: '/orderScreen',
+    name: 'OrderScreen',
+    component: OrderScreen
+  },
+  {
+    path: '/modalView',
+    name: 'ModalView',
+    component: ModalView
+  },
+  {
+    path: '/viewallorders',
+    name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
+    component: () => import('../views/ViewAllOrdersAdm.vue') // This is fine if you need this route
+  },
+  {
+    path: '/ownermenu',
+    name: 'OwnerMenu', // Change name to avoid duplicates
+    component: () => import('../views/OwnerMenu.vue') // This is fine if you need this route
+  },
+  {
+    path: '/restOwnerProfile',
+    name: 'RestOwnerProfile',
+    component: RestOwnerProfile
+
+  }
+]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
-});
+  routes
+})
 
-export default router;
+export default router
