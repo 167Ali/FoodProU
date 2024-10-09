@@ -7,9 +7,21 @@ import FavoritesPage from '../views/favs.vue'
 import OrderScreen from '../views/OrderScreen.vue'
 import ModalView from '../components/restOwnReciept.vue'
 import RestOwnerProfile from '../components/restOwnerProfile.vue'
+import Restaurantpage from '../views/Restaurantpage.vue'
+import AdminDashboard from '../views/AdminDashboard.vue';
 
 
 const routes = [
+  {
+    path: '/restaurant',
+    name: 'RestaurantPage',
+    component: Restaurantpage
+  },
+  {
+    path: '/admin-dashboard',
+    name: 'AdminDashboard',
+    component: AdminDashboard
+  },
   {
     path: '/',
     name: 'Home',
@@ -21,30 +33,30 @@ const routes = [
     component: PrevorderDetails,
     props: true, // Pass route params as props to the component
   },
-{
+  {
     path: '/ps',
     name: 'ProfileSettings',
-    component: ProfileSettings 
+    component: ProfileSettings
   },
   {
     path: '/fav',
     name: 'Favorites',
-    component: FavoritesPage, 
+    component: FavoritesPage,
   },
   {
     path: '/orderScreen',
     name: 'OrderScreen',
-    component: OrderScreen, 
+    component: OrderScreen,
   },
   {
     path: '/modalView',
     name: 'ModalView',
-    component: ModalView, 
+    component: ModalView,
   },
   {
     path: '/restOwnerProfile',
     name: 'RestOwnerProfile',
-    component: RestOwnerProfile, 
+    component: RestOwnerProfile,
   }
 ];
 

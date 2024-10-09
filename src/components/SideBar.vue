@@ -22,20 +22,14 @@
         </li>
         <li>
           <a href="#" class="nav-link">
-            <font-awesome-icon :icon="['fas', 'lock']" />
-            <span>Security</span>
+            <font-awesome-icon :icon="['fas', 'dollar-sign']" />
+            <span>Revenue</span>
           </a>
         </li>
         <li>
           <a href="#" class="nav-link">
-            <font-awesome-icon :icon="['fas', 'image']" />
-            <span>Gallery</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-link">
-            <font-awesome-icon :icon="['fas', 'cog']" />
-            <span>Settings</span>
+            <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
+            <span>Log Out</span>
           </a>
         </li>
       </ul>
@@ -46,10 +40,10 @@
 <script setup>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'; // Import Font Awesome icon
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faUtensils, faHome, faShoppingCart, faLock, faImage, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faUtensils, faHome, faShoppingCart, faSignOutAlt, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 
 // Add icons to the library
-library.add(faUtensils, faHome, faShoppingCart, faLock, faImage, faCog);
+library.add(faUtensils, faHome, faShoppingCart, faDollarSign, faSignOutAlt);
 </script>
 
 <style scoped>
@@ -57,12 +51,14 @@ library.add(faUtensils, faHome, faShoppingCart, faLock, faImage, faCog);
 .sidebar {
   width: 100px;
   height: 100vh;
-  background-color: #1d1d1d; /* Dark sidebar background for contrast */
+  background-color: #1d1d1d;
+  /* Dark sidebar background for contrast */
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px 0;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  /* Add subtle shadow */
 }
 
 /* Logo Container */
@@ -73,7 +69,8 @@ library.add(faUtensils, faHome, faShoppingCart, faLock, faImage, faCog);
 /* Sidebar logo icon */
 .logo {
   font-size: 48px;
-  color: #ffffff; /* White logo for better contrast */
+  color: #ffffff;
+  /* White logo for better contrast */
 }
 
 /* Navigation styling */
@@ -109,8 +106,10 @@ nav ul {
 
 /* Hover effects on navigation links */
 .nav-link:hover {
-  background-color: #00754a; /* Change background on hover */
-  border-radius: 10px; /* Add subtle rounding on hover */
+  background-color: #00754a;
+  /* Change background on hover */
+  border-radius: 10px;
+  /* Add subtle rounding on hover */
 }
 
 /* Add spacing between nav items */
