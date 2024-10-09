@@ -1,21 +1,23 @@
-<script setup>
-</script>
-
 <template>
-<router-view></router-view>
+  <div id="app">
+    <router-view /> <!-- This will render the active route component -->
+  </div>
 </template>
 
+
+<script >
+export default {
+  name: 'App',
+};
+</script>
+
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+
 </style>

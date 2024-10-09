@@ -1,29 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Hello from '../views/Main_Landing.vue';
-import User_login from '../components/User_login.vue'; 
-import User_signup from '../components/User_signup.vue';
-//import Bussiness_Landing from '../views/Bussiness_Landing.vue';
+import OrderReorder from '../views/OrderReorder.vue';
+import PrevorderDetails from '../views/PrevorderDetails.vue'; // Import new component
+
+
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Hello 
+    component: OrderReorder,
   },
   {
-    path: '/User_login',
-    name: 'User_login',
-    component: User_login 
-  },
-  {
-    path: '/User_signup',
-    name: 'User_signup',
-    component: User_signup 
-  },
-  // {
-  //   path: '/Bussiness_Landing',
-  //   name: 'Bussiness_Landing',
-  //   component: Bussiness_Landing 
-  // },
+    path: '/order-details/:id',  // Define dynamic route with 'id' parameter
+    name: 'PrevorderDetails',
+    component: PrevorderDetails,
+    props: true, // Pass route params as props to the component
+  }
 ];
 
 const router = createRouter({
