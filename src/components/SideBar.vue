@@ -9,10 +9,10 @@
     <nav>
       <ul>
         <li>
-          <a href="#" class="nav-link">
+          <router-link to="/admin-dashboard" class="nav-link">
             <font-awesome-icon :icon="['fas', 'home']" />
             <span>Home</span>
-          </a>
+          </router-link>
         </li>
         <li>
           <a href="#" class="nav-link">
@@ -21,10 +21,10 @@
           </a>
         </li>
         <li>
-          <a href="#" class="nav-link">
+          <router-link to="/adminfinance" class="nav-link">
             <font-awesome-icon :icon="['fas', 'dollar-sign']" />
             <span>Revenue</span>
-          </a>
+          </router-link>
         </li>
         <li>
           <a href="#" class="nav-link">

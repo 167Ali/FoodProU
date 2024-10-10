@@ -9,8 +9,7 @@ import ModalView from '../components/restOwnReciept.vue'
 import RestOwnerProfile from '../components/restOwnerProfile.vue'
 import Restaurantpage from '../views/Restaurantpage.vue'
 import AdminDashboard from '../views/AdminDashboard.vue';
-
-
+import AdminFinanceDashboard from '../components/AdminFinanceDashboard.vue';
 const routes = [
   {
     path: '/restaurant',
@@ -57,6 +56,11 @@ const routes = [
     path: '/restOwnerProfile',
     name: 'RestOwnerProfile',
     component: RestOwnerProfile,
+  },
+  {
+    path: '/adminfinance',
+    name: 'AdminFinance',
+    component: AdminFinanceDashboard,
   }
 ];
 
