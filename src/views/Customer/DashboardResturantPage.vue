@@ -1,4 +1,5 @@
 <template>
+    <LoginHeader />
     <div class="row me-xl-5 me-lg-2">
         <div class="d-none d-lg-block col-lg-3">
             <DashboardFilter />
