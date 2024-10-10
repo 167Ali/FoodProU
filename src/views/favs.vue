@@ -1,4 +1,3 @@
-
 <template>
   <div class="container mt-4">
     <h2 class="text-center">Favorite Foods</h2>
@@ -19,40 +18,36 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "FavoriteCards",
-  data() {
-    return {
-      foods: [
-        {
-          id: 1,
-          name: "Biriyani",
-          price: 350,
-          image: "#",
-        },
-        {
-          id: 2,
-          name: "Seekh Kebabs",
-          price: 350,
-          image: "#",
-        },
-        {
-          id: 3,
-          name: "Haleem",
-          price: 350,
-          image: "#",
-        },
-        {
-          id: 4,
-          name: "Seekh Kebabs",
-          price: 350,
-          image: "#",
-        },
-      ],
-    };
+<script setup>
+import { reactive } from 'vue';
+
+// Defining the foods list as a reactive object
+const foods = reactive([
+  {
+    id: 1,
+    name: "Biriyani",
+    price: 350,
+    image: "#",
   },
-};
+  {
+    id: 2,
+    name: "Seekh Kebabs",
+    price: 350,
+    image: "#",
+  },
+  {
+    id: 3,
+    name: "Haleem",
+    price: 350,
+    image: "#",
+  },
+  {
+    id: 4,
+    name: "Seekh Kebabs",
+    price: 350,
+    image: "#",
+  },
+]);
 </script>
 
 <style scoped>
