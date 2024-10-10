@@ -26,7 +26,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import img from '../assets/logo.jpeg';
 import SeeReviews from '../Customer/SeeReviews.vue'
 import Moreinfo from '../Customer/Moreinfo.vue'
 const isLiked = ref(false)
@@ -36,7 +35,7 @@ const toggleLike = () => {
   isLiked.value = !isLiked.value
 }
 
-const logo = ref(img)
+const logo = ref('../assets/logo.jpeg')
 const name = ref('Burger Lab — Johar Town South')
 const categories = ref(['Burgers', 'Fast Food', 'Western', 'Shakes'])
 const deliveryFee = ref(79)
