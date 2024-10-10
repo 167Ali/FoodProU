@@ -6,10 +6,9 @@
   </template>
   
   <script setup>
-  import addtocart from '../components/ProductAddToCart.vue';
+  import addtocart from '../components/Customer/ProductAddToCart.vue';
   </script>
   
   <style scoped>
   /* Add any additional styles here for the view */
   </style>
-  
