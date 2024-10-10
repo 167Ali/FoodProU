@@ -12,7 +12,7 @@
 <style scoped>
     .fullpage{
         background-color: #f7f7f7;
-        /* background-color: green; */
+        margin-bottom: -50px;
     }
     .navbar{
         background-color: #FFFFFFFF;
@@ -20,8 +20,8 @@
         width: 100%;
         box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
         justify-content: center;
-        z-index: 1000;
-        /* box-shadow: ; */
+        z-index: 100000;
+
         position: fixed;
         top: 0;
     }
