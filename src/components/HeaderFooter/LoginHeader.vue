@@ -39,8 +39,7 @@
     </nav>
 </template>
 
-
-<script>
+<script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -53,6 +52,7 @@ import {
     faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
+// Add icons to the library
 library.add(
     faShoppingCart,
     faUtensils,
@@ -62,46 +62,33 @@ library.add(
     faSignOutAlt,
 );
 
-export default {
-    name: 'LoginHeader',
-    components: {
-        FontAwesomeIcon,
-    },
-    setup() {
-        const dropdownOpen = ref(false);
-        const username = ref('Guest');
-        const dropdown = ref(null);
+// Reactive state
+const dropdownOpen = ref(false);
+const username = ref('Guest');
+const dropdown = ref(null);
 
-        const toggleDropdown = (event) => {
-            event.stopPropagation(); // Prevent bubbling to the document click listener
-            dropdownOpen.value = !dropdownOpen.value;
-        };
-
-        const closeDropdown = (event) => {
-            // Only close if the click is outside the dropdown
-            if (dropdown.value && !dropdown.value.contains(event.target)) {
-                dropdownOpen.value = false;
-            }
-        };
-
-        onMounted(() => {
-            document.addEventListener('click', closeDropdown);
-        });
-
-        onBeforeUnmount(() => {
-            document.removeEventListener('click', closeDropdown);
-        });
-
-        return {
-            dropdownOpen,
-            username,
-            toggleDropdown,
-            dropdown,
-        };
-    },
+// Toggle dropdown visibility
+const toggleDropdown = (event) => {
+    event.stopPropagation(); // Prevent bubbling to the document click listener
+    dropdownOpen.value = !dropdownOpen.value;
 };
-</script>
 
+// Close dropdown if clicked outside
+const closeDropdown = (event) => {
+    if (dropdown.value && !dropdown.value.contains(event.target)) {
+        dropdownOpen.value = false;
+    }
+};
+
+// Lifecycle hooks
+onMounted(() => {
+    document.addEventListener('click', closeDropdown);
+});
+
+onBeforeUnmount(() => {
+    document.removeEventListener('click', closeDropdown);
+});
+</script>
 
 <style scoped>
 .navbar {
@@ -149,11 +136,6 @@ export default {
     margin-right: 5px;
 }
 
-.arrow {
-    font-size: 16px;
-    margin-left: 5px;
-}
-
 .dropdownmenu {
     position: absolute;
     top: 100%;
@@ -164,13 +146,6 @@ export default {
     border-radius: 8px;
     min-width: 200px;
     z-index: 1000;
-
-}
-
-[v-show="true"] .dropdownmenu {
-    display: block;
-    transform: translateY(0);
-    opacity: 1;
 }
 
 .dropdownmenu ul {
@@ -193,14 +168,8 @@ export default {
     border-radius: 5px;
 }
 
-.dropdownmenu li i {
-    margin-right: 10px;
-    font-size: 18px;
-}
-
 .cart-icon {
     margin-left: 20px;
-
     display: flex;
     align-items: center;
     font-size: 25px;
@@ -208,9 +177,5 @@ export default {
 
 .cart-icon:hover {
     cursor: pointer;
-}
-
-.icon {
-    font-size: 20px;
 }
 </style>

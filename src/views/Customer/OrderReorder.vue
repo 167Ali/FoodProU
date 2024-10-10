@@ -48,63 +48,50 @@
     </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from 'vue';
 import { getActiveOrders, getPastOrders } from '../../Services/customer/OrderService';
 import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
 import { useRouter } from 'vue-router';
 
-export default {
-    name: 'OrderReorder',
-    components: {
-        LoginHeader,
-        PageFooter,
-    },
-    data() {
-        return {
-            activeOrders: [],
-            pastOrders: [],
-            loadingActive: false,
-            loadingPast: false,
-        };
-    },
-    setup() {
-        const router = useRouter();
-        const goToPrevOrderDetails = (customerId) => {
-            router.push({ name: 'PrevorderDetails', params: { id: customerId } });
-        };
+const router = useRouter();
 
-        return {
-            goToPrevOrderDetails,
-        };
-    },
-    mounted() {
-        this.fetchActiveOrders();
-        this.fetchPastOrders();
-    },
-    methods: {
-        async fetchActiveOrders() {
-            this.loadingActive = true;
-            try {
-                this.activeOrders = await getActiveOrders();
-            } catch (error) {
-                console.error('Error fetching active orders:', error);
-            } finally {
-                this.loadingActive = false;
-            }
-        },
-        async fetchPastOrders() {
-            this.loadingPast = true;
-            try {
-                this.pastOrders = await getPastOrders();
-            } catch (error) {
-                console.error('Error fetching past orders:', error);
-            } finally {
-                this.loadingPast = false;
-            }
-        },
-    },
+const activeOrders = ref([]);
+const pastOrders = ref([]);
+const loadingActive = ref(false);
+const loadingPast = ref(false);
+
+const fetchActiveOrders = async () => {
+  loadingActive.value = true;
+  try {
+    activeOrders.value = await getActiveOrders();
+  } catch (error) {
+    console.error('Error fetching active orders:', error);
+  } finally {
+    loadingActive.value = false;
+  }
 };
+
+const fetchPastOrders = async () => {
+  loadingPast.value = true;
+  try {
+    pastOrders.value = await getPastOrders();
+  } catch (error) {
+    console.error('Error fetching past orders:', error);
+  } finally {
+    loadingPast.value = false;
+  }
+};
+
+const goToPrevOrderDetails = (customerId) => {
+  router.push({ name: 'PrevorderDetails', params: { id: customerId } });
+};
+
+onMounted(() => {
+  fetchActiveOrders();
+  fetchPastOrders();
+});
 </script>
 
 

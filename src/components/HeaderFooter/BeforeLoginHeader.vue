@@ -32,46 +32,25 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { useRouter } from 'vue-router';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-export default {
-    name: 'LoginHeader',
-    components: {
-        FontAwesomeIcon,
-    },
-    setup() {
-        const router = useRouter();
-        const showBanner = ref(true);
+const router = useRouter();
+const showBanner = ref(true);
 
-        // Function to close the business banner
-        const closeBanner = () => {
-            showBanner.value = false;
-        };
+// Navigation functions
+const goToLogin = () => {
+    router.push('/login');
+};
 
-        // Navigation functions
-        const goToLogin = () => {
-            router.push('/login');
-        };
+const goToSignup = () => {
+    router.push('/signup');
+};
 
-        const goToSignup = () => {
-            router.push('/signup');
-        };
-
-        const goToBusinessSignup = () => {
-            router.push('/business-signup');
-        };
-
-        return {
-            showBanner,
-            closeBanner,
-            goToLogin,
-            goToSignup,
-            goToBusinessSignup,
-        };
-    },
+const goToBusinessSignup = () => {
+    router.push('/business-signup');
 };
 </script>
 
@@ -198,6 +177,5 @@ export default {
 .cart-icon {
     font-size: 30px;
     cursor: pointer;
-  }
-  
-</style>  
+}
+</style>

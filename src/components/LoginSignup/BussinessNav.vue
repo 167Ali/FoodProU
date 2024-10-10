@@ -1,6 +1,5 @@
 <template>
     <div>
-      
         <!-- Main Navbar -->
         <nav class="navbar">
             <div class="navbar-left">
@@ -10,52 +9,36 @@
             </div>
 
             <div class="navbar-right">
-                <!-- Log In  buttons -->
+                <!-- Log In buttons -->
                 <button class="auth-button login" @click="goToLogin">Log in</button>
-                
-
             </div>
         </nav>
     </div>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { useRouter } from 'vue-router';
 
-export default {
-    name: 'LoginHeader',
-    components: {
-        FontAwesomeIcon,
-    },
-    setup() {
-        const router = useRouter();
-        const showBanner = ref(true);
+// Router instance
+const router = useRouter();
 
-        // Function to close the business banner
-        const closeBanner = () => {
-            showBanner.value = false;
-        };
+// State management
+const showBanner = ref(true);
 
-        // Navigation functions
-        const goToLogin = () => {
-            router.push('/login');
-        };
+// Function to close the business banner
+const closeBanner = () => {
+    showBanner.value = false;
+};
 
-
-        return {
-            closeBanner,
-            goToLogin,
-            
-        };
-    },
+// Navigation function
+const goToLogin = () => {
+    router.push('/login');
 };
 </script>
 
 <style scoped>
-
-
 .close-icon {
     cursor: pointer;
     font-size: 20px;
@@ -111,5 +94,4 @@ export default {
     background-color: #2e8d6a;
     color: white;
 }
-
-</style>  
+</style>

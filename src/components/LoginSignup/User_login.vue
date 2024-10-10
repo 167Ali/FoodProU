@@ -28,52 +28,39 @@
             </div>
 
             <div class="modal-footer">
-                <p>By signing up, you agree to our <a href="#">Terms and Conditions</a> and <a href="#">Privacy
-                        Policy</a>.</p>
+                <p>By signing up, you agree to our <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>.</p>
             </div>
         </div>
     </div>
 </template>
 
-<script>
-import {
-    defineComponent,
-    ref,
-    toRefs
-} from 'vue';
+<script setup>
+import { ref, toRefs, defineProps, defineEmits } from 'vue';
 
-export default defineComponent({
-    name: 'Login_modal',
-    props: {
-        showModal: {
-            type: Boolean,
-            required: true,
-        },
-    },
-    setup(props, {
-        emit
-    }) {
-        const {
-            showModal
-        } = toRefs(props);
-        const email = ref('');
-        const password = ref('');
-        const closeModal = () => {
-            emit('close');
-        };
-        const login = () => {
-
-            console.log('Email:', email.value, 'Password:', password.value);
-        };
-        return {
-            showModal,
-            email,
-            password,
-            closeModal,
-            login,
-        };
+// Props
+const props = defineProps({
+    showModal: {
+        type: Boolean,
+        required: true,
     },
 });
+
+// Emits
+const emit = defineEmits(['close']);
+
+// State
+const { showModal } = toRefs(props);
+const email = ref('');
+const password = ref('');
+
+// Functions
+const closeModal = () => {
+    emit('close');
+};
+
+const login = () => {
+    console.log('Email:', email.value, 'Password:', password.value);
+};
 </script>
 
 <style scoped>
