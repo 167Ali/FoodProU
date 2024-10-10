@@ -19,14 +19,17 @@
                 </div>
             </div>
         </div>
+        
     </div>
+    <PageFooter />
 </template>
 
 <script setup>
 import RestaurantCard from '../../components/Customer/RestaurantCard.vue'
 import DashboardFilter from '../../components/Customer/DashboardFilter.vue'
 import Searchbar from '../../components/OtherComponents/Searchbar.vue'
-
+import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
+import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
 
 
 const restaurants = [

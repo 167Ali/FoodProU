@@ -17,6 +17,7 @@ import Main_landing from '../views/Login_Signup/Main_Landing.vue'
 import Business_Landing from '../views/Login_Signup/Bussiness_Landing.vue'
 import AdminFinanceDashboard from '../components/Admin/AdminFinanceDashboard.vue'
 import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_Dashboard.vue'
+import ResturantOwner from '@/components/RestaurantOwner/ResturantOwner.vue'
 // import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
 // import Moreinfo from '../components/Customer/Moreinfo.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
@@ -49,6 +50,7 @@ const routes = [
     name: 'AdminDashboard',
     component: AdminDashboard
   },
+ 
   {
     path: '/AdminFinanceDashboard',
     name: 'AdminFinanceDashboard',
@@ -57,7 +59,14 @@ const routes = [
   {
     path: '/RestaurantOwnerDashboard',
     name: 'RestaurantOwner_Dashboard',
-    component: RestaurantOwner_Dashboard
+    component: RestaurantOwner_Dashboard,
+    children: [
+      {
+        path: '/Resturant-owner',
+        name: 'RestaurantOwner',
+        component: ResturantOwner
+      }
+    ]
   },
   {
     path: '/dashboardresturantpage',
