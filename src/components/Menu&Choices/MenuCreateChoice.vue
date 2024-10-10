@@ -27,9 +27,8 @@
                 <div v-for="(item, idx) in choiceForm.choiceitems" :key="idx" class="d-flex align-items-center mb-2">
                     <input type="text" class="form-control me-2" v-model="item.name" placeholder="Name" required />
                     <input type="number" class="form-control me-2" v-model="item.price" placeholder="Price" required />
-                    <button class="btn btn-danger" @click.prevent="removeItem(idx)"
-                        :disabled="choiceForm.choiceitems.length === 1">
-                        Delete
+                    <button class="btn" @click.prevent="removeItem(idx)">
+                        <i class="fa-regular fa-trash-can fa-2xl" style="color: #5c6066;"></i>
                     </button>
                 </div>
                 <button class="btn btn-success mt-2" type="button" @click="addItem">Add Choice</button>
