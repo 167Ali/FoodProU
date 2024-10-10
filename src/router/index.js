@@ -20,7 +20,7 @@ const routes = [
     component: NavbarHeader,
     children: [
       {
-        path: '/c',
+        path: '/co',
         name: 'checkout',
         component: CheckOut
       },
@@ -63,7 +63,7 @@ const routes = [
     component: ProfileSettings
   },
   {
-    path: '/fav',
+    path: '/favs',
     name: 'Favorites',
     component: FavoritesPage
   },
@@ -79,13 +79,13 @@ const routes = [
   },
   {
     path: '/viewallorders',
-    name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
-    component: ViewAllOrdersAdm // This is fine if you need this route
+    name: 'ViewAllOrdersAdm', 
+    component: ViewAllOrdersAdm 
   },
   {
     path: '/ownermenu',
-    name: 'OwnerMenu', // Change name to avoid duplicates
-    component: () => import('../views/OwnerMenu.vue') // This is fine if you need this route
+    name: 'OwnerMenu', 
+    component: () => import('../views/OwnerMenu.vue') 
   },
   {
     path: '/restOwnerProfile',
