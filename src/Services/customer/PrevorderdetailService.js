@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-<<<<<<< HEAD:src/Services/PrevorderdetailService.js
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-=======
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Vite uses 'VITE_' prefix for env variables
->>>>>>> dc494b7fd631f769a3d79f4a3933a615370fffee:src/Services/customer/PrevorderdetailService.js
+
 
 export const getOrderDetails = async (customerId) => {
     try {

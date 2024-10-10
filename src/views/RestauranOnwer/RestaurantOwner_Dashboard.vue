@@ -46,7 +46,7 @@
 
             <!-- Banner -->
             <div class="banner mb-4">
-                <img src="../assets/bg8.gif" alt="Banner" class="img-fluid rounded" />
+                <img src="../../assets/bg3.gif" alt="Banner" class="img-fluid rounded" />
             </div>
 
         </div>
