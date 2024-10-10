@@ -17,18 +17,18 @@ import Main_landing from '../views/Login_Signup/Main_Landing.vue'
 import Business_Landing from '../views/Login_Signup/Bussiness_Landing.vue'
 import AdminFinanceDashboard from '../components/Admin/AdminFinanceDashboard.vue'
 import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_Dashboard.vue'
-import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
-import Moreinfo from '../components/Customer/Moreinfo.vue'
-import SeeReviews from '../components/Customer/SeeReviews.vue'
+// import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
+// import Moreinfo from '../components/Customer/Moreinfo.vue'
+// import SeeReviews from '../components/Customer/SeeReviews.vue'
 
 const routes = [
   {
-    path: '/c',
-    name: 'header',
+    path: '/Navbarheader',
+    name: 'Navbarheader',
     component: NavbarHeader,
     children: [
       {
-        path: '/c',
+        path: '/checkout',
         name: 'checkout',
         component: CheckOut
       },
@@ -40,7 +40,7 @@ const routes = [
     ]
   },
   {
-    path: '/rp',
+    path: '/',
     name: 'RestaurantPage',
     component: Restaurantpage
   },
@@ -65,39 +65,13 @@ const routes = [
     component: DashboardResturantPage
   },
   {
-    path: '/orderreorder',
-    name: 'Home',
-    component: OrderReorder
-  },
-  {
-    path: '/SeeReviews',
-    name: 'SeeReviews',
-    component: SeeReviews
-  },
-  {
-    path: '/order-details/:id', // Define dynamic route with 'id' parameter
-    name: 'PrevorderDetails',
-    component: PrevorderDetails,
-    props: true // Pass route params as props to the component
-  },
-  {
-    path: '/ProductAddToCart', // Define dynamic route with 'id' parameter
-    name: 'ProductAddToCart',
-    component: ProductAddToCart,
-  },
-  {
-    path: '/Moreinfo', // Define dynamic route with 'id' parameter
-    name: 'Moreinfo',
-    component: Moreinfo,
-  },
-  {
-    path: '/ps',
+    path: '/profilesettings',
     name: 'ProfileSettings',
     component: ProfileSettings
   },
   {
-    path: '/fav',
-    name: 'Favorites',
+    path: '/favoritespage',
+    name: 'Favoritespage',
     component: FavoritesPage
   },
   {
@@ -135,7 +109,19 @@ const routes = [
     name: 'RestOwnerProfile',
     component: RestOwnerProfile
 
+  },
+  {
+    path: '/OrderReorder',
+    name: 'OrderReorder',
+    component: OrderReorder,
+  },
+  {
+    path: '/order-details/:id',  // Define dynamic route with 'id' parameter
+    name: 'PrevorderDetails',
+    component: PrevorderDetails,
+    props: true, // Pass route params as props to the component
   }
+
 ]
 
 const router = createRouter({
