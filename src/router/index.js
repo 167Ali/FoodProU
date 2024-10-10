@@ -1,97 +1,71 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import NavbarHeader from '../views/NavbarHeader.vue'
-import Restaurantpage from '../views/Restaurantpage.vue'
-import AdminDashboard from '../views/AdminDashboard.vue'
-import CheckOut from '../components/CheckOut.vue'
-import OrderReq from '../components/OrderRequest.vue'
-import OrderReorder from '../views/OrderReorder.vue'
-import PrevorderDetails from '../views/PrevorderDetails.vue' // Import new component
-import ProfileSettings from '../views/ProfileSettings.vue'
-import FavoritesPage from '../views/favs.vue'
-import OrderScreen from '../views/OrderScreen.vue'
-import ModalView from '../components/restOwnReciept.vue'
-import RestOwnerProfile from '../components/restOwnerProfile.vue'
+// router/index.js
+import { createRouter, createWebHistory } from 'vue-router';
+import store from '../store/index'; // Import the Vuex store
+import Hello from '../views/Main_Landing.vue';
+import UserLogin from '../components/User_login.vue';
+import UserSignup from '../components/User_signup.vue';
+import RestaurantOwnerDashboard from '../views/RestaurantOwner_Dashboard.vue';
+import AdminDashboard from '../views/Admin_Dashboard.vue';
+import CustomerDashboard from '../views/Customer_Dashboard.vue';
 
 const routes = [
   {
-    path: '/c',
-    name: 'header',
-    component: NavbarHeader,
-    children: [
-      {
-        path: '/c',
-        name: 'checkout',
-        component: CheckOut
-      },
-      {
-        path: '/orderreq',
-        name: 'orderreq',
-        component: OrderReq
-      }
-    ]
+    path: '/',
+    name: 'Home',
+    component: Hello,
   },
   {
-    path: '/rp',
-    name: 'RestaurantPage',
-    component: Restaurantpage
+    path: '/User_login',
+    name: 'UserLogin',
+    component: UserLogin,
+  },
+  {
+    path: '/User_signup',
+    name: 'UserSignup',
+    component: UserSignup,
+  },
+  {
+    path: '/restaurant-owner-dashboard',
+    name: 'RestaurantOwnerDashboard',
+    component: RestaurantOwnerDashboard,
+    meta: { requiresAuth: true, role: 'Restaurant Owner' },
   },
   {
     path: '/admin-dashboard',
     name: 'AdminDashboard',
-    component: AdminDashboard
+    component: AdminDashboard,
+    meta: { requiresAuth: true, role: 'Admin' },
   },
   {
-    path: '/',
-    name: 'Home',
-    component: OrderReorder
+    path: '/customer-dashboard',
+    name: 'CustomerDashboard',
+    component: CustomerDashboard,
+    meta: { requiresAuth: true, role: 'Customer' },
   },
-  {
-    path: '/order-details/:id', // Define dynamic route with 'id' parameter
-    name: 'PrevorderDetails',
-    component: PrevorderDetails,
-    props: true // Pass route params as props to the component
-  },
-  {
-    path: '/ps',
-    name: 'ProfileSettings',
-    component: ProfileSettings
-  },
-  {
-    path: '/fav',
-    name: 'Favorites',
-    component: FavoritesPage
-  },
-  {
-    path: '/orderScreen',
-    name: 'OrderScreen',
-    component: OrderScreen
-  },
-  {
-    path: '/modalView',
-    name: 'ModalView',
-    component: ModalView
-  },
-  {
-    path: '/viewallorders',
-    name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
-    component: () => import('../views/ViewAllOrdersAdm.vue') // This is fine if you need this route
-  },
-  {
-    path: '/ownermenu',
-    name: 'OwnerMenu', // Change name to avoid duplicates
-    component: () => import('../views/OwnerMenu.vue') // This is fine if you need this route
-  },
-  {
-    path: '/restOwnerProfile',
-    name: 'RestOwnerProfile',
-    component: RestOwnerProfile
-
-  }
-]
+];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
-})
+  routes,
+});
 
-export default router
+// Navigation Guard to check user role and authentication
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const userRole = store.state.user.role;
+
+  if (requiresAuth && !store.getters.isAuthenticated) {
+    // Not authenticated, redirect to login
+    next({ name: 'UserLogin' });
+  } else if (requiresAuth && to.meta.role && userRole !== to.meta.role) {
+    // Role doesn't match, redirect to appropriate dashboard
+    if (store.getters.isAdmin) next({ name: 'AdminDashboard' });
+    else if (store.getters.isCustomer) next({ name: 'CustomerDashboard' });
+    else if (store.getters.isRestaurantOwner) next({ name: 'RestaurantOwnerDashboard' });
+    else next('/');
+  } else {
+    next(); // Proceed to the route
+  }
+});
+
+export default router;
