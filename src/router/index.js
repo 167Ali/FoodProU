@@ -13,6 +13,14 @@ import ModalView from '../components/restOwnReciept.vue'
 import RestOwnerProfile from '../components/restOwnerProfile.vue'
 import ViewAllOrdersAdm from '../views/ViewAllOrdersAdm.vue'
 import DashboardResturantPage from '../views/DashboardResturantPage.vue'
+import Main_landing from '../views/Main_Landing.vue'
+import Business_Landing from '../views/Bussiness_Landing.vue'
+import AdminFinanceDashboard from '../components/AdminFinanceDashboard.vue'
+import RestaurantOwner_Dashboard from '../views/RestaurantOwner_Dashboard.vue'
+import ProductAddToCart from '../components/ProductAddToCart.vue'
+import Moreinfo from '../components/Moreinfo.vue'
+import SeeReviews from '../components/SeeReviews.vue'
+
 const routes = [
   {
     path: '/c',
@@ -42,20 +50,45 @@ const routes = [
     component: AdminDashboard
   },
   {
+    path: '/AdminFinanceDashboard',
+    name: 'AdminFinanceDashboard',
+    component: AdminFinanceDashboard
+  },
+  {
+    path: '/RestaurantOwnerDashboard',
+    name: 'RestaurantOwner_Dashboard',
+    component: RestaurantOwner_Dashboard
+  },
+  {
     path: '/dashboardresturantpage',
     name: 'DashboardResturantPage',
     component: DashboardResturantPage
   },
   {
-    path: '/',
+    path: '/orderreorder',
     name: 'Home',
     component: OrderReorder
+  },
+  {
+    path: '/SeeReviews',
+    name: 'SeeReviews',
+    component: SeeReviews
   },
   {
     path: '/order-details/:id', // Define dynamic route with 'id' parameter
     name: 'PrevorderDetails',
     component: PrevorderDetails,
     props: true // Pass route params as props to the component
+  },
+  {
+    path: '/ProductAddToCart', // Define dynamic route with 'id' parameter
+    name: 'ProductAddToCart',
+    component: ProductAddToCart,
+  },
+  {
+    path: '/Moreinfo', // Define dynamic route with 'id' parameter
+    name: 'Moreinfo',
+    component: Moreinfo,
   },
   {
     path: '/ps',
@@ -81,6 +114,16 @@ const routes = [
     path: '/viewallorders',
     name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
     component: ViewAllOrdersAdm // This is fine if you need this route
+  },
+  {
+    path: '/mainlanding',
+    name: 'Main_landing', // Change name to avoid duplicates
+    component: Main_landing // This is fine if you need this route
+  },
+  {
+    path: '/businesslanding',
+    name: 'Business_Landing', // Change name to avoid duplicates
+    component: Business_Landing // This is fine if you need this route
   },
   {
     path: '/ownermenu',

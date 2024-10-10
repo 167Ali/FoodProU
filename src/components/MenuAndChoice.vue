@@ -50,10 +50,6 @@
 
                 <!-- Example Category Section -->
                 <div class="category-section mb-4">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h4>Breakfast</h4>
-                        <a href="#" class="text-primary">Edit Category</a>
-                    </div>
                     <div class="menu-items">
                         <div class="menu-item d-flex justify-content-between align-items-center border-bottom py-2">
                             <MenuViewChoice v-if="isChoiceGroupsVisible" />
@@ -91,10 +87,12 @@ const addCategory = () => {
 };
 // Method to toggle the visibility
 const showChoices = () => {
-    isChoiceGroupsVisible.value = !isChoiceGroupsVisible.value; // Toggle visibility
+    isChoiceGroupsVisible.value = true; // Toggle visibility
+    isProductCategoryVisibile.value = false;
 };
 const OpenProductCategory = () => {
     isProductCategoryVisibile.value = true;
+    isChoiceGroupsVisible.value = false;
 };
 </script>
 
