@@ -1,26 +1,35 @@
+
 import { createRouter, createWebHistory } from 'vue-router'
 import NavbarHeader from '../views/NavbarHeader.vue'
-import Restaurantpage from '../views/RestaurantPage.vue'
-import AdminDashboard from '../views/AdminDashboard.vue'
-import CheckOut from '../components/CheckOut.vue'
-import OrderReq from '../components/OrderRequest.vue'
-import OrderReorder from '../views/OrderReorder.vue'
-import PrevorderDetails from '../views/PrevorderDetails.vue' // Import new component
-import ProfileSettings from '../views/ProfileSettings.vue'
-import FavoritesPage from '../views/favs.vue'
-import OrderScreen from '../views/OrderScreen.vue'
-import ModalView from '../components/restOwnReciept.vue'
-import RestOwnerProfile from '../components/restOwnerProfile.vue'
-import ViewAllOrdersAdm from '../views/ViewAllOrdersAdm.vue'
-import DashboardResturantPage from '../views/DashboardResturantPage.vue'
+import Restaurantpage from '../views/Customer/RestaurantPage.vue'
+import AdminDashboard from '../views/Admin/AdminDashboard.vue'
+import CheckOut from '../components/Customer/CheckOut.vue'
+import OrderReq from '../components/RestaurantOwner/OrderRequest.vue'
+import OrderReorder from '../views/Customer/OrderReorder.vue'
+import PrevorderDetails from '../views/Customer/PrevorderDetails.vue' // Import new component
+import ProfileSettings from '../views/Customer/ProfileSettings.vue'
+import FavoritesPage from '../views/Customer/favs.vue'
+import OrderScreen from '../views/Customer/OrderScreen.vue'
+import ModalView from '../components/RestaurantOwner/restOwnReciept.vue'
+import RestOwnerProfile from '../components/RestaurantOwner/restOwnerProfile.vue'
+import ViewAllOrdersAdm from '../views/Admin/ViewAllOrdersAdm.vue'
+import DashboardResturantPage from '../views/Customer/DashboardResturantPage.vue'
+import Main_landing from '../views/Login_Signup/Main_Landing.vue'
+import Business_Landing from '../views/Login_Signup/Bussiness_Landing.vue'
+import AdminFinanceDashboard from '../components/Admin/AdminFinanceDashboard.vue'
+import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_Dashboard.vue'
+// import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
+// import Moreinfo from '../components/Customer/Moreinfo.vue'
+// import SeeReviews from '../components/Customer/SeeReviews.vue'
+
 const routes = [
   {
-    path: '/c',
-    name: 'header',
+    path: '/Navbarheader',
+    name: 'Navbarheader',
     component: NavbarHeader,
     children: [
       {
-        path: '/co',
+        path: '/checkout',
         name: 'checkout',
         component: CheckOut
       },
@@ -32,7 +41,7 @@ const routes = [
     ]
   },
   {
-    path: '/rp',
+    path: '/',
     name: 'RestaurantPage',
     component: Restaurantpage
   },
@@ -42,29 +51,28 @@ const routes = [
     component: AdminDashboard
   },
   {
+    path: '/AdminFinanceDashboard',
+    name: 'AdminFinanceDashboard',
+    component: AdminFinanceDashboard
+  },
+  {
+    path: '/RestaurantOwnerDashboard',
+    name: 'RestaurantOwner_Dashboard',
+    component: RestaurantOwner_Dashboard
+  },
+  {
     path: '/dashboardresturantpage',
     name: 'DashboardResturantPage',
     component: DashboardResturantPage
   },
   {
-    path: '/',
-    name: 'Home',
-    component: OrderReorder
-  },
-  {
-    path: '/order-details/:id', // Define dynamic route with 'id' parameter
-    name: 'PrevorderDetails',
-    component: PrevorderDetails,
-    props: true // Pass route params as props to the component
-  },
-  {
-    path: '/ps',
+    path: '/profilesettings',
     name: 'ProfileSettings',
     component: ProfileSettings
   },
   {
-    path: '/favs',
-    name: 'Favorites',
+    path: '/favoritespage',
+    name: 'Favoritespage',
     component: FavoritesPage
   },
   {
@@ -79,20 +87,42 @@ const routes = [
   },
   {
     path: '/viewallorders',
-    name: 'ViewAllOrdersAdm', 
-    component: ViewAllOrdersAdm 
+    name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
+    component: ViewAllOrdersAdm // This is fine if you need this route
+  },
+  {
+    path: '/mainlanding',
+    name: 'Main_landing', // Change name to avoid duplicates
+    component: Main_landing // This is fine if you need this route
+  },
+  {
+    path: '/businesslanding',
+    name: 'Business_Landing', // Change name to avoid duplicates
+    component: Business_Landing // This is fine if you need this route
   },
   {
     path: '/ownermenu',
-    name: 'OwnerMenu', 
-    component: () => import('../views/OwnerMenu.vue') 
+    name: 'OwnerMenu', // Change name to avoid duplicates
+    component: () => import('../views/Menu/OwnerMenu.vue') // This is fine if you need this route
   },
   {
     path: '/restOwnerProfile',
     name: 'RestOwnerProfile',
     component: RestOwnerProfile
 
+  },
+  {
+    path: '/OrderReorder',
+    name: 'OrderReorder',
+    component: OrderReorder,
+  },
+  {
+    path: '/order-details/:id',  // Define dynamic route with 'id' parameter
+    name: 'PrevorderDetails',
+    component: PrevorderDetails,
+    props: true, // Pass route params as props to the component
   }
+
 ]
 
 const router = createRouter({
@@ -101,3 +131,4 @@ const router = createRouter({
 })
 
 export default router
+ 
