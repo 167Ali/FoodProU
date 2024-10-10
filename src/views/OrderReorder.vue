@@ -9,12 +9,12 @@
                 <div v-if="loadingActive" class="loading-message">Loading active orders...</div>
                 <div v-if="!loadingActive && activeOrders.length === 0" class="no-orders">You have no active orders.</div>
                 <div v-else>
-                    <div v-for="order in activeOrders" :key="order.orderId" class="order-card">
+                    <div v-for="order in activeOrders" :key="order.customerId" class="order-card">
                         <img :src="order.image" alt="Order Image" class="order-image" />
                         <div class="order-details">
                             <h3>{{ order.restaurant }} – {{ order.location }}</h3>
                             <p class="delivery-info">Delivered on {{ order.deliveryDate }}</p>
-                            <p class="order-id">Order #{{ order.orderId }}</p>
+                            <p class="order-id">Order #{{ order.customerId }}</p>
                             <p>{{ order.items }}</p>
                             <p class="price">Rs. {{ order.price }}</p>
                         </div>
@@ -28,17 +28,17 @@
                 <div v-if="loadingPast" class="loading-message">Loading past orders...</div>
                 <div v-if="!loadingPast && pastOrders.length === 0" class="no-orders">You have no past orders.</div>
                 <div v-else>
-                    <div v-for="order in pastOrders" :key="order.orderId" class="order-card">
+                    <div v-for="order in pastOrders" :key="order.customerId" class="order-card">
                         <img :src="order.image" alt="Order Image" class="order-image" />
                         <div class="order-details">
                             <h3>{{ order.restaurant }} – {{ order.location }}</h3>
                             <p class="delivery-info">Delivered on {{ order.deliveryDate }}</p>
-                            <p class="order-id">Order #{{ order.orderId }}</p>
+                            <p class="order-id">Order #{{ order.customerId }}</p>
                             <p>{{ order.items }}</p>
                             <p class="price">Rs. {{ order.price }}</p>
                             <p class="rating">You rated this ⭐ {{ order.rating }}</p>
                         </div>
-                        <button class="reorder-button" @click="goToPrevOrderDetails(order.orderId)">Select items to reorder</button>
+                        <button class="reorder-button" @click="goToPrevOrderDetails(order.customerId)">Select items to reorder</button>
                     </div>
                 </div>
             </div>
@@ -70,8 +70,8 @@ export default {
     },
     setup() {
         const router = useRouter();
-        const goToPrevOrderDetails = (orderId) => {
-            router.push({ name: 'PrevorderDetails', params: { id: orderId } });
+        const goToPrevOrderDetails = (customerId) => {
+            router.push({ name: 'PrevorderDetails', params: { id: customerId } });
         };
 
         return {
