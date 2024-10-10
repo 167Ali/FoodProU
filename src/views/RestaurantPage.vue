@@ -2,6 +2,7 @@
 <template>
     <div class="restaurant-header">
         <RestaurantHeader />
+        <hr>
         <Deals />
     </div>
     <!-- Popular Section -->
