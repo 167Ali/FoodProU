@@ -2,11 +2,12 @@
 <template>
     <div>
       <addtocart/>
+      
     </div>
   </template>
   
   <script setup>
-  import addtocart from '../components/ProductAddToCart.vue';
+  import addtocart from '../components/ForgotPassword.vue';
   </script>
   
   <style scoped>
