@@ -49,9 +49,9 @@
 </template>
 
 <script>
-import { getActiveOrders, getPastOrders } from '../Services/OrderService';
-import LoginHeader from '../components/LoginHeader.vue';
-import PageFooter from '../components/PageFooter.vue';
+import { getActiveOrders, getPastOrders } from '../../Services/customer/OrderService';
+import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
+import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
 import { useRouter } from 'vue-router';
 
 export default {

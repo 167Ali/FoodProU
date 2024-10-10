@@ -24,6 +24,16 @@
                         <input type="number" class="form-control" id="price" v-model="productForm.price" required />
                     </div>
 
+                    <!-- Choices Section -->
+                    <div class="mb-3">
+                        <label class="form-label">Assign Choices</label>
+                        <div v-for="(choice, index) in availableChoices" :key="index" class="form-check">
+                            <input type="checkbox" class="form-check-input" :id="'choice' + index"
+                                v-model="productForm.assignedChoices" :value="choice" />
+                            <label class="form-check-label" :for="'choice' + index">{{ choice }}</label>
+                        </div>
+                    </div>
+
                     <!-- Image Upload Required Validation -->
                     <div class="mb-3" v-if="isFormValidated && !productForm.image">
                         <div class="text-danger">Image is required.</div>
@@ -68,6 +78,10 @@ const props = defineProps({
 });
 const emits = defineEmits(['save', 'cancel']);
 
+
+// Available choices for the product (can be fetched from an API later)
+const availableChoices = ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4', 'Choice 5'];
+
 // Refs and reactive data
 const productFormRef = ref(null);
 const isFormValidated = ref(false);
@@ -76,6 +90,7 @@ const productForm = reactive({
     description: '',
     price: 0,
     image: null, // Now directly storing the image data URL
+    assignedChoices: [], // Array to store selected choices
 });
 const fileInput = ref(null);
 
@@ -103,6 +118,7 @@ const submitForm = () => {
     isFormValidated.value = true;
     // Check if image is uploaded
     if (productFormRef.value.checkValidity() && productForm.image) {
+        console.log(productForm, " pf")
         emits('save', { ...productForm });
         isFormValidated.value = false; // Reset validation
     } else {

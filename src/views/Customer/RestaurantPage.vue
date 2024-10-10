@@ -14,10 +14,10 @@
 </template>
   
 <script setup>
-import RestaurantHeader from '../components/RestaurantHeader.vue'
-import Deals from '../components/Deals.vue'
-import PopularSection from '../components/PopularSection.vue'
-import Cart from '../components/PopularItem.vue'
+import RestaurantHeader from '../../components/HeaderFooter/RestaurantHeader.vue'
+import Deals from '../../components/Customer/Deals.vue'
+import PopularSection from '../../components/Customer/PopularSection.vue'
+import Cart from '../../components/Customer/PopularItem.vue'
 </script>
   
 <style scoped>

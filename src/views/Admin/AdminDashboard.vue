@@ -25,12 +25,12 @@
   
   <script setup>
   // Import your components
-  import SideBar from '../components/SideBar.vue'
-  import AdminHeader from '../components/AdminHeader.vue'
-  import DiscountBanner from '../components/DiscountBanner.vue'
-  import CategorySection from '../components/CategorySection.vue'
-  import RestaurantList from '../components/RestaurantList.vue'
-  import OrderDetail from '../components/OrderDetail.vue'
+  import SideBar from '../../components/Admin/SideBar.vue'
+  import AdminHeader from '../../components/Admin/AdminHeader.vue'
+  import DiscountBanner from '../../components/Admin/DiscountBanner.vue'
+  import CategorySection from '../../components/Admin/CategorySection.vue'
+  import RestaurantList from '../../components/Admin/RestaurantList.vue'
+  import OrderDetail from '../../components/Admin/OrderDetail.vue'
   </script>
   
   <style scoped>

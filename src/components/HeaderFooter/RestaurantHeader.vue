@@ -27,8 +27,8 @@
 <script setup>
 import { ref } from 'vue'
 import img from '../assets/logo.jpeg';
-import SeeReviews from '../components/SeeReviews.vue'
-import Moreinfo from '../components/Moreinfo.vue'
+import SeeReviews from '../Customer/SeeReviews.vue'
+import Moreinfo from '../Customer/Moreinfo.vue'
 const isLiked = ref(false)
 
 // Function to toggle the liked state

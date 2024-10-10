@@ -23,9 +23,9 @@
 </template>
 
 <script setup>
-import RestaurantCard from '../components/RestaurantCard.vue'
-import DashboardFilter from '../components/DashboardFilter.vue'
-import Searchbar from '../components/Searchbar.vue'
+import RestaurantCard from '../../components/Customer/RestaurantCard.vue'
+import DashboardFilter from '../../components/Customer/DashboardFilter.vue'
+import Searchbar from '../../components/OtherComponents/Searchbar.vue'
 
 
 

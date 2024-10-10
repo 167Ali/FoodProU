@@ -1,13 +1,13 @@
 <template>
   <div>
-    <Header/>
-    <charts/>
+    <Header />
+    <charts />
   </div>
 </template>
 
 <script setup>
-import Header from '../components/Headersection.vue'
-import charts from '../components/DataChart.vue'
+import Header from '../HeaderFooter/Headersection.vue'
+import charts from './DataChart.vue'
 </script>
 
 <style scoped>

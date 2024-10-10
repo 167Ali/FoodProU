@@ -7,8 +7,8 @@
 
 <script setup>
 import { ref } from 'vue';
-import FilterAndSearch from '../components/ViewAllOrdersFilterSearch.vue';
-import Table from '../components/ViewAllOrdersTbl.vue';
+import FilterAndSearch from '../../components/Admin/ViewAllOrdersFilterSearch.vue';
+import Table from '../../components/Admin/ViewAllOrdersTbl.vue';
 
 // Sample orders data (can be more complex with 100+ orders)
 const orders = ref([

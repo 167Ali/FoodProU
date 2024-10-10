@@ -18,7 +18,7 @@
   </template>
   
   <script setup>
-  import OrderItem from '../components/OrderItem.vue'
+  import OrderItem from './OrderItem.vue'
   
   const orderItems = [
     {

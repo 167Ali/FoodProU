@@ -32,7 +32,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import MenuCreateChoice from './MenuCreateChoice.vue'; // Import the form component
+import MenuCreateChoice from '../Menu&Choices/MenuCreateChoice.vue'; // Import the form component
 
 // Mock data for choices
 const choices = ref([

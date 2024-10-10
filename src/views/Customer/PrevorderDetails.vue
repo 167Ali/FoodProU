@@ -73,9 +73,9 @@
 </template>
 
 <script>
-import { getOrderDetails, downloadOrderInvoice } from '../Services/PrevorderdetailService';
-import LoginHeader from '../components/LoginHeader.vue';
-import PageFooter from '../components/PageFooter.vue';
+import { getOrderDetails, downloadOrderInvoice } from '../../Services/customer/PrevorderdetailService';
+import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
+import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
 
 export default {
     props: {

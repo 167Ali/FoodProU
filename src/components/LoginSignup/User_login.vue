@@ -1,37 +1,38 @@
 <template>
-<div v-if="showModal" class="modal-overlay" @click.self="closeModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">Welcome!</h5>
-            <button type="button" class="btn-close" @click="closeModal"></button>
-        </div>
+    <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Welcome!</h5>
+                <button type="button" class="btn-close" @click="closeModal"></button>
+            </div>
 
-        <div class="modal-body">
-            <button class="btn btn-google mb-3">
-                <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google Logo" class="me-2">
-                Continue with Google
-            </button>
+            <div class="modal-body">
+                <button class="btn btn-google mb-3">
+                    <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google Logo" class="me-2">
+                    Continue with Google
+                </button>
 
-            <div class="separator mb-3"></div>
+                <div class="separator mb-3"></div>
 
-            <form @submit.prevent="login">
-                <div class="mb-3">
-                    <input type="email" class="form-control" placeholder="Email" v-model="email" required>
-                </div>
-                <div class="mb-3">
-                    <input type="password" class="form-control" placeholder="Password" v-model="password" required>
-                </div>
+                <form @submit.prevent="login">
+                    <div class="mb-3">
+                        <input type="email" class="form-control" placeholder="Email" v-model="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" placeholder="Password" v-model="password" required>
+                    </div>
 
-                <button type="submit" class="btn btn-login w-100 mb-3">Log in</button>
-            </form>
+                    <button type="submit" class="btn btn-login w-100 mb-3">Log in</button>
+                </form>
 
-        </div>
+            </div>
 
-        <div class="modal-footer">
-            <p>By signing up, you agree to our <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>.</p>
+            <div class="modal-footer">
+                <p>By signing up, you agree to our <a href="#">Terms and Conditions</a> and <a href="#">Privacy
+                        Policy</a>.</p>
+            </div>
         </div>
     </div>
-</div>
 </template>
 
 <script>

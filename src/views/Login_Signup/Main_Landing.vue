@@ -23,8 +23,8 @@
   
   <script>
   import { defineComponent, ref } from 'vue';
-  import LoginModal from '../components/User_login.vue';
-  import SignUpModal from '../components/User_signup.vue';
+  import LoginModal from '../../components/LoginSignup/User_login.vue';
+  import SignUpModal from '../../components/LoginSignup/User_signup.vue';
   
   export default defineComponent({
     name: 'Main_Landing',
