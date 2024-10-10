@@ -13,14 +13,15 @@ import ModalView from '../components/restOwnReciept.vue'
 import RestOwnerProfile from '../components/restOwnerProfile.vue'
 import ViewAllOrdersAdm from '../views/ViewAllOrdersAdm.vue'
 import DashboardResturantPage from '../views/DashboardResturantPage.vue'
+
 const routes = [
   {
-    path: '/c',
-    name: 'header',
+    path: '/Navbarheader',
+    name: 'Navbarheader',
     component: NavbarHeader,
     children: [
       {
-        path: '/c',
+        path: '/checkout',
         name: 'checkout',
         component: CheckOut
       },
@@ -32,7 +33,7 @@ const routes = [
     ]
   },
   {
-    path: '/rp',
+    path: '/',
     name: 'RestaurantPage',
     component: Restaurantpage
   },
@@ -47,24 +48,13 @@ const routes = [
     component: DashboardResturantPage
   },
   {
-    path: '/',
-    name: 'Home',
-    component: OrderReorder
-  },
-  {
-    path: '/order-details/:id', // Define dynamic route with 'id' parameter
-    name: 'PrevorderDetails',
-    component: PrevorderDetails,
-    props: true // Pass route params as props to the component
-  },
-  {
-    path: '/ps',
+    path: '/profilesettings',
     name: 'ProfileSettings',
     component: ProfileSettings
   },
   {
-    path: '/fav',
-    name: 'Favorites',
+    path: '/favoritespage',
+    name: 'Favoritespage',
     component: FavoritesPage
   },
   {
@@ -92,7 +82,19 @@ const routes = [
     name: 'RestOwnerProfile',
     component: RestOwnerProfile
 
+  },
+  {
+    path: '/OrderReorder',
+    name: 'OrderReorder',
+    component: OrderReorder,
+  },
+  {
+    path: '/order-details/:id',  // Define dynamic route with 'id' parameter
+    name: 'PrevorderDetails',
+    component: PrevorderDetails,
+    props: true, // Pass route params as props to the component
   }
+
 ]
 
 const router = createRouter({
