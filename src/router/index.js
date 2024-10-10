@@ -20,6 +20,7 @@ import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_D
 // import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
 // import Moreinfo from '../components/Customer/Moreinfo.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
+
 const routes = [
   {
     path: '/Navbarheader',
@@ -129,3 +130,4 @@ const router = createRouter({
 })
 
 export default router
+
