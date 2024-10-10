@@ -4,24 +4,31 @@
         <form ref="choiceFormRef" @submit.prevent="submitForm" :class="{ 'was-validated': isFormValidated }">
             <div class="mb-3">
                 <label for="choiceName" class="form-label">Choice Name</label>
-                <input type="text" class="form-control" id="choiceName" v-model="choiceForm.choiceName" required />
+                <input type="text" class="form-control" id="choiceName" v-model="choiceForm.choicename" required />
             </div>
 
             <div class="mb-3">
                 <label for="min" class="form-label">Min</label>
-                <select class="form-select" id="min" v-model="choiceForm.min" required>
-                    <option value="0">0</option>
-                    <option value="1">1</option>
+                <select class="form-select" id="min" v-model="choiceForm.ischoice" required>
+                    <option value="0">0 Optional (add-on)</option>
+                    <option value="1">1 Required (variations)</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="min" class="form-label">Choice Type</label>
+                <select class="form-select" id="min" v-model="choiceForm.choicetype" required>
+                    <option v-if="choiceForm.ischoice == 1" value="size">Size (Fix Price)</option>
+                    <option value="additional">Additional (Add in Price)</option>
                 </select>
             </div>
 
             <div class="mb-3">
                 <h6>Choices</h6>
-                <div v-for="(item, idx) in choiceForm.items" :key="idx" class="d-flex align-items-center mb-2">
+                <div v-for="(item, idx) in choiceForm.choiceitems" :key="idx" class="d-flex align-items-center mb-2">
                     <input type="text" class="form-control me-2" v-model="item.name" placeholder="Name" required />
                     <input type="number" class="form-control me-2" v-model="item.price" placeholder="Price" required />
                     <button class="btn btn-danger" @click.prevent="removeItem(idx)"
-                        :disabled="choiceForm.items.length === 1">
+                        :disabled="choiceForm.choiceitems.length === 1">
                         Delete
                     </button>
                 </div>
@@ -50,25 +57,27 @@ const choiceFormRef = ref(null);
 const isFormValidated = ref(false);
 
 const choiceForm = reactive({
-    choiceName: '',
-    min: '0',
-    items: [{ name: '', price: 0 }],
+    choicename: '',
+    choicetype: '',
+    ischoice: '0',
+    choiceitems: [{ name: '', price: 0 }],
 });
 
 const addItem = () => {
-    choiceForm.items.push({ name: '', price: 0 });
+    choiceForm.choiceitems.push({ name: '', price: 0 });
 };
 
 const removeItem = (index) => {
-    if (choiceForm.items.length > 1) {
-        choiceForm.items.splice(index, 1);
+    if (choiceForm.choiceitems.length > 1) {
+        choiceForm.choiceitems.splice(index, 1);
     }
 };
 
 const resetForm = () => {
-    choiceForm.choiceName = '';
-    choiceForm.min = '0';
-    choiceForm.items = [{ name: '', price: 0 }];
+    choiceForm.choicename = '';
+    choiceForm.ischoice = '0';
+    choiceForm.choicetype = '';
+    choiceForm.choiceitems = [{ name: '', price: 0 }];
 };
 
 watch(

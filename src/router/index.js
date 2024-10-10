@@ -17,7 +17,8 @@ import Main_landing from '../views/Login_Signup/Main_Landing.vue'
 import Business_Landing from '../views/Login_Signup/Bussiness_Landing.vue'
 import AdminFinanceDashboard from '../components/Admin/AdminFinanceDashboard.vue'
 import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_Dashboard.vue'
-// import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
+import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
+import ModalZaha from '../components/OtherComponents/ModalHurara.vue'
 // import Moreinfo from '../components/Customer/Moreinfo.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
 
@@ -48,6 +49,16 @@ const routes = [
     path: '/admin-dashboard',
     name: 'AdminDashboard',
     component: AdminDashboard
+  },
+  {
+    path: '/ModalZaha',
+    name: 'ModalZaha',
+    component: ModalZaha
+  },
+  {
+    path: '/ProductAddToCart',
+    name: 'ProductAddToCart',
+    component: ProductAddToCart
   },
   {
     path: '/AdminFinanceDashboard',
