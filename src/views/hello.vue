@@ -7,10 +7,9 @@
   </template>
   
   <script setup>
-  import addtocart from '../components/ForgotPassword.vue';
+  import addtocart from '../components/SetNewPassword.vue';
   </script>
   
   <style scoped>
-  /* Add any additional styles here for the view */
   </style>
   

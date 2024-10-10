@@ -1,6 +1,6 @@
 <template>
     
-  <div class="container d-flex justify-content-center align-items-center min-vh-100 ">
+  <div class="container col-lg-8 d-flex justify-content-center align-items-center min-vh-100 ">
     <div class="row w-100 shadow-lg p-4 rounded">
       <!-- GIF Section -->
       <div class="col-md-6 d-flex justify-content-center align-items-center mb-4 mb-md-0">
@@ -8,7 +8,7 @@
       </div>
 
       <!-- Form Section -->
-      <div class="col-md-6 d-flex flex-column justify-content-center p-4">
+      <div class="col-md-5 d-flex flex-column justify-content-center p-4">
         <h3 class="mb-4 text-primary-custom">Forgot Your Password?</h3>
         <form @submit.prevent="handleForgotPassword">
           <div class="mb-3">
