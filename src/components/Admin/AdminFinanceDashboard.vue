@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD:src/components/AdminFinanceDashboard.vue
   <div class="container main-body mt-5">
     <!-- Dropdown filters for Time Period and Restaurant -->
     <div class="row mb-4 justify-content-center mt-5">
@@ -40,16 +39,10 @@
         <canvas ref="topRestaurantsChartCanvas" class="small-bar-chart"></canvas>
       </div>
     </div>
-=======
-  <div>
-    <Header />
-    <charts />
->>>>>>> dc494b7fd631f769a3d79f4a3933a615370fffee:src/components/Admin/AdminFinanceDashboard.vue
   </div>
 </template>
 
 <script setup>
-<<<<<<< HEAD:src/components/AdminFinanceDashboard.vue
 import { ref, onMounted } from 'vue';
 import { Chart } from 'chart.js/auto';
 
@@ -211,10 +204,6 @@ const updateCharts = () => {
 onMounted(() => {
   createTopRestaurantsChart(chartData.restaurant1.daily.topRestaurants);
 });
-=======
-import Header from '../HeaderFooter/Headersection.vue'
-import charts from './DataChart.vue'
->>>>>>> dc494b7fd631f769a3d79f4a3933a615370fffee:src/components/Admin/AdminFinanceDashboard.vue
 </script>
 
 <style scoped>

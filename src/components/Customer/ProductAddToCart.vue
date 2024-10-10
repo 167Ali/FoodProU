@@ -4,8 +4,7 @@
     <button class="btn btn-primary" @click="showModal = true">Add to cart</button>
 
     <!-- Modal -->
-    <div class="modal fade" :class="{ show: showModal }" tabindex="-1" role="dialog" style="display: block;"
-      v-if="showModal">
+    <div class="modal fade" :class="{ show: showModal }" tabindex="-1" role="dialog" style="display: block;" v-if="showModal">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <!-- Modal Header with Fixed Full-Width Image -->
@@ -19,16 +18,18 @@
               <strong>
                 <h4 class="font-weight-bold">{{ productName }}</h4>
               </strong>
-              <h6 class="current-price">Rs. {{ discountedPrice.toFixed(2) }} <span class="original-price">Rs. {{
-                originalPrice }}</span></h6>
+              <h6 class="current-price">Rs. {{ discountedPrice.toFixed(2) }} <span class="original-price">Rs. {{ originalPrice }}</span></h6>
               <p>{{ productDescription }}</p>
             </div>
 
             <!-- Dynamically Render "Choose Your Sub" Sections -->
             <div v-for="(section, sectionIndex) in sections" :key="sectionIndex" class="choose-sub-card mt-3">
-              <div class="card p-3" :style="{
-                backgroundColor: section.required ? '#f8d7da' : '#f0f0f0'
-              }">
+              <div
+                class="card p-3"
+                :style="{
+                  backgroundColor: section.required ? '#f8d7da' : '#f0f0f0'
+                }"
+              >
                 <div class="d-flex justify-content-between align-items-center">
                   <h5 class="font-weight-bold">{{ section.title }}</h5>
                   <span v-if="section.required" class="badge required-badge">Required</span>
@@ -36,9 +37,15 @@
                 <p class="mb-1">Select {{ section.selectLimit }}</p>
                 <div class="scrollable-options">
                   <div class="form-check mb-2" v-for="(option, optionIndex) in section.options" :key="optionIndex">
-                    <input class="form-check-input" :class="section.required ? 'square-checkbox' : 'circle-checkbox'"
-                      type="radio" :id="'section-' + sectionIndex + '-option-' + optionIndex" :value="option"
-                      v-model="section.selectedOption" @change="scrollToNext(sectionIndex)" />
+                    <input
+                      class="form-check-input"
+                      :class="section.required ? 'square-checkbox' : 'circle-checkbox'"
+                      type="radio"
+                      :id="'section-' + sectionIndex + '-option-' + optionIndex"
+                      :value="option"
+                      v-model="section.selectedOption"
+                      @change="scrollToNext(sectionIndex)"
+                    />
                     <label class="form-check-label" :for="'section-' + sectionIndex + '-option-' + optionIndex">
                       {{ option.name }}
                       <span v-if="option.popular" class="ml-1 text-muted">
@@ -56,8 +63,7 @@
 
             <!-- Text Field -->
             <div class="mt-3">
-              <textarea id="notes" class="form-control" v-model="cartNotes" rows="2"
-                placeholder="Any special instructions?"></textarea>
+              <textarea id="notes" class="form-control" v-model="cartNotes" rows="2" placeholder="Any special instructions?"></textarea>
             </div>
           </div>
 
@@ -159,13 +165,11 @@ const scrollToNext = (currentSectionIndex) => {
   max-width: 600px;
   max-height: 70vh;
   margin: auto;
-  border-radius: 20px;
-  /* Added border-radius */
+  border-radius: 20px; /* Added border-radius */
 }
 
 .modal-content {
-  border-radius: 20px;
-  /* Added border-radius */
+  border-radius: 20px; /* Added border-radius */
   max-height: 100%;
   display: flex;
   flex-direction: column;
@@ -211,13 +215,11 @@ const scrollToNext = (currentSectionIndex) => {
 }
 
 .form-check-input.square-checkbox {
-  border-radius: 0;
-  /* Square checkbox for required options */
+  border-radius: 0; /* Square checkbox for required options */
 }
 
 .form-check-input.circle-checkbox {
-  border-radius: 50%;
-  /* Circular checkbox for non-required options */
+  border-radius: 50%; /* Circular checkbox for non-required options */
 }
 
 .modal-footer {
