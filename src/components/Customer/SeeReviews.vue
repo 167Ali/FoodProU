@@ -112,9 +112,12 @@
   }
   
   .modal-dialog {
-    max-width: 600px;
-    margin: 100px auto;
-  }
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
   /* More Info button styling */
   .btn-more-info {
     border-radius: 15px;
