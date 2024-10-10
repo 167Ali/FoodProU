@@ -127,7 +127,8 @@
           </div>
           <div class="general-terms">
             <p>By making this purchase you agree to our terms and conditions.</p>
-            <p>I agree that placing the order places me under an obligation to make a payment in accordance with the General Terms and Conditions.</p>
+            <p>I agree that placing the order places me under an obligation to make
+               a payment in accordance with the General Terms and Conditions.</p>
           </div>
 
         </div>          
@@ -149,6 +150,7 @@
   }
   .card h3, h4{
     font-family: 'Agrandir', 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bold;
   }
 
   /* Map container styles */

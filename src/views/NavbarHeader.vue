@@ -1,8 +1,8 @@
 <template>
     <div class="fullpage">
-        <div class="navbar">
+        <!-- <div class="navbar">
             <p class="navbarheading">FoodPro</p>
-        </div>
+        </div> -->
         <div class="container">
             <router-view></router-view>
         </div>

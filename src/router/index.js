@@ -11,6 +11,7 @@ import FavoritesPage from '../views/favs.vue'
 import OrderScreen from '../views/OrderScreen.vue'
 import ModalView from '../components/restOwnReciept.vue'
 import RestOwnerProfile from '../components/restOwnerProfile.vue'
+import AddtoCart from '../components/AddtoCart.vue'
 
 const routes = [
   {
@@ -27,7 +28,13 @@ const routes = [
         path: '/orderreq',
         name: 'orderreq',
         component: OrderReq
-      }
+      },
+      {
+        path: '/caart',
+        name: 'addtocard',
+        component: AddtoCart
+      },
+
     ]
   },
   {
