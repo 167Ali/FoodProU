@@ -1,5 +1,3 @@
-
-<<<<<<< HEAD
 // store/index.js
 import { createStore } from 'vuex';
 import axios from 'axios';
@@ -11,13 +9,7 @@ const store = createStore({
     Reviews,
    profile: profileModule, 
     auth:AuthStore,
-=======
-import { createStore } from 'vuex';
-import profileModule from './modules/profile'; 
-const store = createStore({
- modules: {
-    profile: profileModule, 
->>>>>>> b3eae5ffa25fc8b369dcd718d4da4757ea1c0c35
+
   },
   getters: {
     isAuthenticated: (state) => !!state.token,
