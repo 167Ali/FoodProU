@@ -1,16 +1,18 @@
+<!-- Main_Landing.vue -->
 <template>
+  <BeforeLoginHeader @open-login="showLoginModal = true" @open-signup="showSignUpModal = true" />
   <div class="main d-flex">
-    <!-- Left half for content -->
     <div class="content-wrapper d-flex flex-column justify-content-center align-items-start">
-      <h2 class="text-left mb-3">
-        It's the food and groceries you love,delivered
-      </h2>
+      <h2 class="text-left mb-3">It's the food and groceries you love, delivered</h2>
+
       <div class="button-group mb-5">
         <button class="btn btn-login me-3" @click="showLoginModal = true">Login</button>
         <button class="btn btn-signup" @click="showSignUpModal = true">Sign Up</button>
       </div>
-      <!-- Right half for image -->
     </div>
+
+
+
     <!-- Right half for image -->
     <div class="image-wrapper">
       <img src="../../assets/bg3.gif" alt="Landing Logo" class="logo" />
@@ -18,19 +20,25 @@
 
     <LoginModal :showModal="showLoginModal" @close="closeLoginModal" />
     <SignUpModal :showModal="showSignUpModal" @close="closeSignUpModal" />
+
   </div>
+
+
 </template>
 
 <script>
 import { defineComponent, ref } from 'vue';
 import LoginModal from '../../components/LoginSignup/User_login.vue';
 import SignUpModal from '../../components/LoginSignup/User_signup.vue';
+import BeforeLoginHeader from '../../components/HeaderFooter/BeforeLoginHeader.vue';
+
 
 export default defineComponent({
   name: 'Main_Landing',
   components: {
     LoginModal,
     SignUpModal,
+    BeforeLoginHeader,
   },
   setup() {
     const showLoginModal = ref(false);

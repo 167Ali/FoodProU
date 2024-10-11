@@ -9,7 +9,8 @@
                     <img :src="order.image" alt="Order Image" class="order-image" />
                     <div class="order-summary">
                         <h2>{{ order.restaurant }} – {{ order.location }}</h2>
-                        <p class="delivery-info">Delivered on {{ order.deliveryDate }}<br>Order #{{ order.customerId }}</p>
+                        <p class="delivery-info">Delivered on {{ order.deliveryDate }}<br>Order #{{ order.customerId }}
+                        </p>
 
                         <!-- Order From Section -->
                         <div class="order-from">
@@ -44,7 +45,8 @@
                     </div>
                     <hr>
                     <div class="payment-details">
-                        <p><span>Paid with</span> <span>{{ order.paymentMethod }} - Rs. {{ order.paymentAmount }}</span></p>
+                        <p><span>Paid with</span> <span>{{ order.paymentMethod }} - Rs. {{ order.paymentAmount }}</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -73,11 +75,13 @@
 </template>
 
 <script>
+import { ref, onMounted } from 'vue';
 import { getOrderDetails, downloadOrderInvoice } from '../../Services/customer/PrevorderdetailService';
 import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
 
 export default {
+    name: 'PrevOrderDetails',
     props: {
         id: {
             type: String,
@@ -88,35 +92,39 @@ export default {
         LoginHeader,
         PageFooter,
     },
-    data() {
-        return {
-            order: null,
-            error: null,
-        };
-    },
-    created() {
-        this.fetchOrderDetails();
-    },
-    methods: {
-        async fetchOrderDetails() {
+    setup(props) {
+        const order = ref(null);
+        const error = ref(null);
+
+        const fetchOrderDetails = async () => {
             try {
-                this.order = await getOrderDetails(this.id);
-            } catch (error) {
-                this.error = error.message;
+                order.value = await getOrderDetails(props.id);
+            } catch (err) {
+                error.value = err.message;
             }
-        },
-        async downloadInvoice() {
+        };
+
+        const downloadInvoice = async () => {
             try {
-                await downloadOrderInvoice(this.id);
-            } catch (error) {
-                console.error(error.message);
+                await downloadOrderInvoice(props.id);
+            } catch (err) {
+                console.error(err.message);
                 alert('Failed to download invoice');
             }
-        },
+        };
+
+        onMounted(() => {
+            fetchOrderDetails();
+        });
+
+        return {
+            order,
+            error,
+            downloadInvoice,
+        };
     },
 };
 </script>
-
 
 <style scoped>
 /* Same styles as before */
@@ -170,7 +178,8 @@ export default {
     margin: 10px 0;
 }
 
-.order-from, .delivered-to {
+.order-from,
+.delivered-to {
     display: flex;
     align-items: flex-start;
     margin: 10px 0;
