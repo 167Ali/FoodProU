@@ -3,6 +3,8 @@
 import { createStore } from 'vuex';
 import order from './modules/order'; // import the order module
 import Prevorder from './modules/PrevorderDetail';
+import Resturantownerreviews from './modules/Resturantownerreviews';
+import Reviews from './modules/customerReviews';
 import axios from 'axios';
 
 
@@ -12,6 +14,8 @@ const store = createStore({
   modules: {
     order, // register the order module
     Prevorder,
+    Resturantownerreviews,
+    Reviews,
   },
   state: {
 

@@ -62,6 +62,9 @@
                     <p>Need an invoice?</p>
                     <button class="invoice-button" @click="downloadInvoice">Download invoice</button>
                 </div>
+                <div>
+                    <OrderRating />
+                </div>
             </div>
         </div>
 
@@ -79,6 +82,7 @@ import { computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
+import OrderRating from '@/components/Customer/OrderRating.vue';
 
 export default {
     name: 'PrevOrderDetails',
@@ -91,6 +95,7 @@ export default {
     components: {
         LoginHeader,
         PageFooter,
+        OrderRating,
     },
     setup(props) {
         const store = useStore();
