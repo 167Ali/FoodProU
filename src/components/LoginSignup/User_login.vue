@@ -39,7 +39,8 @@
 
                     <div class="mb-3">
 
-                        <input type="password" class="form-control" placeholder="Password" v-model="password" required />
+                        <input type="password" class="form-control" placeholder="Password" v-model="password"
+                            required />
 
                     </div>
 
@@ -81,9 +82,9 @@
 
     </div>
 </template>
-    
-    
-    
+
+
+
 <script>
 
 import {
@@ -182,7 +183,7 @@ export default defineComponent({
                         router.push({ name: 'AdminDashboard' });
                         break;
                     case 'Customer':
-                        router.push({ name: 'Customer_Dashboard' });
+                        router.push({ name: 'DashboardResturantPage' });
                         break;
                     case 'Restaurant Owner':
                         router.push({ name: 'RestaurantOwner_Dashboard' });
@@ -227,9 +228,9 @@ export default defineComponent({
 });
 
 </script>
-    
-    
-    
+
+
+
 <style scoped>
 .modal-title {
 

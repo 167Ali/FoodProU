@@ -16,7 +16,7 @@
                         <!-- Display Assigned Choices -->
                         <div class="card-text">
                             <strong>Assigned Choices:</strong>
-                            <ul>
+                            <ul class="scroller-card">
                                 <li v-for="(choice, idx) in product.assignedchoices" :key="idx">{{ choice }}</li>
                             </ul>
                         </div>
@@ -42,7 +42,6 @@
 <script setup>
 import { ref } from 'vue';
 import MenuUpdate_AddProduct from './MenuUpdate_AddProduct.vue'; // Import the form component
-
 // Mock data for products
 const products = ref([
     {
@@ -55,7 +54,7 @@ const products = ref([
     },
     {
         category: 'Pizza',
-        name: 'Coke',
+        productname: 'Coke',
         description: 'Refreshing soft drink.',
         price: 1.5,
         image: '/src/assets/img2.jpg',
@@ -63,7 +62,7 @@ const products = ref([
     },
     {
         category: 'Pizza',
-        name: 'Cheeseburger',
+        productname: 'Cheeseburger',
         description: 'Juicy burger with cheese.',
         price: 5,
         image: '/src/assets/img1.jpg',
@@ -130,11 +129,16 @@ const deleteProduct = (index) => {
     align-items: center;
 }
 
+.scroller-card {
+    overflow-y: auto;
+    height: 100px;
+}
+
 .modal-content {
     background: #fff;
     padding: 20px;
     border-radius: 8px;
-    width: 500px;
+    width: 800px;
     max-width: 100%;
 }
 </style>

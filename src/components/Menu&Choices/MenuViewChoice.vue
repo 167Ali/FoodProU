@@ -11,8 +11,9 @@
                         <h5 class="card-title">{{ choice.choicename }}</h5>
                         <p class="card-text">Min: {{ choice.ischoice }}</p>
                         <p class="card-text">Choice Type: {{ choice.choicetype }}</p>
-                        <ul>
-                            <li v-for="(item, idx) in choice.choiceitems" :key="idx">{{ item.name }} - ${{ item.price }}
+                        <ul class="scroller-card">
+                            <li v-for="(item, idx) in choice.choiceitems" :key="idx">{{ item.name
+                                }} - ${{ item.price }}
                             </li>
                         </ul>
                         <button class="btn btn-secondary me-2" @click="viewChoice(index)">View/Edit</button>
@@ -106,6 +107,11 @@ const deleteChoice = (index) => {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.scroller-card {
+    overflow-y: auto;
+    height: 100px;
 }
 
 .modal-content {
