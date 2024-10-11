@@ -19,11 +19,19 @@ import AdminFinanceDashboard from '../components/Admin/AdminFinanceDashboard.vue
 import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_Dashboard.vue'
 import ResturantOwner from '@/components/RestaurantOwner/ResturantOwner.vue'
 import RestaurantCard from '@/components/Customer/RestaurantCard.vue'
+import adminRoutes from './adminRoutes';
+import customerRoutes from './customerRoutes';
+import restaurantOwnerRoutes from './restaurantownerRoutes';
+import otherRoutes from './otherRoutes'; // Miscellaneous routes
 // import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
 // import Moreinfo from '../components/Customer/Moreinfo.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
 
 const routes = [
+  ...adminRoutes,
+  ...customerRoutes,
+  ...restaurantOwnerRoutes,
+  ...otherRoutes,
   {
     path: '/Navbarheader',
     name: 'Navbarheader',

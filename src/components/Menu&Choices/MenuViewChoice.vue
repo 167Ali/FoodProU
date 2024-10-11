@@ -8,10 +8,12 @@
             <div v-for="(choice, index) in choices" :key="index" class="col-md-4 mb-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">{{ choice.choiceName }}</h5>
-                        <p class="card-text">Min: {{ choice.min }}</p>
+                        <h5 class="card-title">{{ choice.choicename }}</h5>
+                        <p class="card-text">Min: {{ choice.ischoice }}</p>
+                        <p class="card-text">Choice Type: {{ choice.choicetype }}</p>
                         <ul>
-                            <li v-for="(item, idx) in choice.items" :key="idx">{{ item.name }} - ${{ item.price }}</li>
+                            <li v-for="(item, idx) in choice.choiceitems" :key="idx">{{ item.name }} - ${{ item.price }}
+                            </li>
                         </ul>
                         <button class="btn btn-secondary me-2" @click="viewChoice(index)">View/Edit</button>
                         <button class="btn btn-danger" @click="deleteChoice(index)">Delete</button>
@@ -37,19 +39,22 @@ import MenuCreateChoice from '../Menu&Choices/MenuCreateChoice.vue'; // Import t
 // Mock data for choices
 const choices = ref([
     {
-        choiceName: 'Pizza Toppings',
-        min: '1',
-        items: [{ name: 'Cheese', price: 2 }, { name: 'Pepperoni', price: 3 }],
+        choicename: 'Pizza Toppings',
+        ischoice: '1',
+        choicetype: 'size',
+        choiceitems: [{ name: 'Cheese', price: 2 }, { name: 'Pepperoni', price: 3 }],
     },
     {
-        choiceName: 'Drink Sizes',
-        min: '0',
-        items: [{ name: 'Small', price: 1 }, { name: 'Medium', price: 1.5 }, { name: 'Large', price: 2 }],
+        choicename: 'Drink Sizes',
+        ischoice: '0',
+        choicetype: 'additional',
+        choiceitems: [{ name: 'Small', price: 1 }, { name: 'Medium', price: 1.5 }, { name: 'Large', price: 2 }],
     },
     {
-        choiceName: 'Burger Add-ons',
-        min: '1',
-        items: [{ name: 'Bacon', price: 1.5 }, { name: 'Extra Cheese', price: 1 }],
+        choicename: 'Burger Add-ons',
+        ischoice: '1',
+        choicetype: 'additional',
+        choiceitems: [{ name: 'Bacon', price: 1.5 }, { name: 'Extra Cheese', price: 1 }],
     },
 ]);
 

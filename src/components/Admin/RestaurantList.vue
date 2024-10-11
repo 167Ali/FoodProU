@@ -1,17 +1,13 @@
 <template>
-    <div class="restaurant-list">
-      <RestaurantItem
-        v-for="item in restaurants"
-        :key="item.id"
-        :restaurant="item"
-      />
-    </div>
-  </template>
+  <div class="restaurant-list">
+    <RestaurantItem v-for="item in restaurants" :key="item.id" :restaurant="item" />
+  </div>
+</template>
   
-  <script setup>
-  import RestaurantItem from './RestaurantItem.vue';
-  
-  const restaurants = [
+<script setup>
+import RestaurantItem from './RestaurantItem.vue';
+
+const restaurants = [
   {
     id: 1,
     name: 'Snow Ramen, Kyoto',
@@ -37,7 +33,7 @@
     deliveryTime: '20 mins',
     rating: '4.7',
     reviews: '1800',
-    image: 'https://images.unsplash.com/photo-1551601651-141d9c278c35?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cGhvfGVufDB8fDB8fHww'
+    image: 'https://images.unsplash.com/photo-1456404823214-a69ef7a1fae5?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzR8fGZvb2R8ZW58MHx8MHx8fDA%3D'
   },
   {
     id: 4,
@@ -46,7 +42,7 @@
     deliveryTime: '35 mins',
     rating: '4.6',
     reviews: '2200',
-    image: 'https://images.unsplash.com/photo-1618221191747-d14a5b0f2d22?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dGFjb3N8ZW58MHx8MHx8MA%3D%3D'
+    image: 'https://plus.unsplash.com/premium_photo-1695132236644-1cc276ec81f6?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzN8fGZvb2R8ZW58MHx8MHx8fDA%3D'
   },
   {
     id: 5,
@@ -55,7 +51,7 @@
     deliveryTime: '40 mins',
     rating: '4.9',
     reviews: '1700',
-    image: 'https://images.unsplash.com/photo-1518133910546-b6c2fb7d67c7?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFzdGF8ZW58MHx8MHx8MA%3D%3D'
+    image: 'https://plus.unsplash.com/premium_photo-1675453377179-22d446fe10ad?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nzd8fGZvb2R8ZW58MHx8MHx8fDA%3D'
   },
   {
     id: 6,
@@ -64,7 +60,7 @@
     deliveryTime: '30 mins',
     rating: '4.7',
     reviews: '2500',
-    image: 'https://images.unsplash.com/photo-1594037029753-3d8d4e05e617?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y3Vycnl8ZW58MHx8MHx8MA%3D%3D'
+    image: 'https://images.unsplash.com/photo-1508615263227-c5d58c1e5821?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nzh8fGZvb2R8ZW58MHx8MHx8fDA%3D'
   },
   {
     id: 7,
@@ -73,7 +69,7 @@
     deliveryTime: '25 mins',
     rating: '4.5',
     reviews: '3000',
-    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YnVyZ2Vyc3xlbnwwfHwwfHx8MA%3D%3D'
+    image: 'https://images.unsplash.com/photo-1468577760773-139c2f1c335f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8ODJ8fGZvb2R8ZW58MHx8MHx8fDA%3D'
   },
   {
     id: 8,
@@ -82,7 +78,7 @@
     deliveryTime: '30 mins',
     rating: '4.8',
     reviews: '2800',
-    image: 'https://images.unsplash.com/photo-1576780902622-3b98a2f9d5dd?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGRpbSUyMHN1bXxlbnwwfHwwfHx8MA%3D%3D'
+    image: 'https://plus.unsplash.com/premium_photo-1675731118517-c85b8cd0904c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8ODF8fGZvb2R8ZW58MHx8MHx8fDA%3D'
   },
   {
     id: 9,
@@ -91,7 +87,7 @@
     deliveryTime: '45 mins',
     rating: '4.9',
     reviews: '1600',
-    image: 'https://images.unsplash.com/photo-1590062592589-894838b7b3b7?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFyaXN8ZW58MHx8MHx8MA%3D%3D'
+    image: 'https://images.unsplash.com/photo-1475332363216-323c9b7f1e81?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OTJ8fGZvb2R8ZW58MHx8MHx8fDA%3D'
   },
   {
     id: 10,
@@ -104,12 +100,12 @@
   }
 ];
 
-  </script>
+</script>
   
-  <style scoped>
-  .restaurant-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-  </style>
+<style scoped>
+.restaurant-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+</style>

@@ -73,36 +73,37 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-
-const showModal = ref(false);
-const ratings = [80, 10, 5, 3, 2]; // Example percentages for 5-star, 4-star, etc.
-const activeFilter = ref('top'); // Track which filter is active
-
-const closeModal = () => {
-  showModal.value = false;
-};
-
-const setActiveFilter = (filter) => {
-  activeFilter.value = filter; // Update active filter
-};
-</script>
-
-<style scoped>
-/* Modal styling */
-.modal {
-  display: block;
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1050;
-}
-
-.modal-dialog {
+  
+  <script setup>
+  import { ref } from 'vue';
+  
+  const showModal = ref(false);
+  const ratings = [80, 10, 5, 3, 2]; // Example percentages for 5-star, 4-star, etc.
+  const activeFilter = ref('top'); // Track which filter is active
+  
+  const closeModal = () => {
+    showModal.value = false;
+  };
+  
+  const setActiveFilter = (filter) => {
+    activeFilter.value = filter; // Update active filter
+  };
+  </script>
+  
+  <style scoped>
+  /* Modal styling */
+  .modal {
+    display: block;
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1050;
+  }
+  
+  .modal-dialog {
   max-width: 600px;
   width: 100%;
   display: flex;
