@@ -1,4 +1,5 @@
 <template>
+    <LoginHeader />
     <div class="row me-xl-5 me-lg-2">
         <div class="d-none d-lg-block col-lg-3">
             <DashboardFilter />
@@ -12,21 +13,26 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-4" v-for="(restaurant, index) in restaurants"
                     :key="index">
-                    <RestaurantCard :image="restaurant.image" :name="restaurant.name" :cuisine="restaurant.cuisine"
-                        :rating="restaurant.rating" :reviews="restaurant.reviews" :price="restaurant.price"
-                        :deliveryTime="restaurant.deliveryTime" :deliveryFee="restaurant.deliveryFee"
-                        :discounts="restaurant.discounts" />
+                    <router-link :to="{ name: 'RestaurantPage', params: { id: restaurant.id } }" class="card-link">
+                        <RestaurantCard :image="restaurant.image" :name="restaurant.name" :cuisine="restaurant.cuisine"
+                            :rating="restaurant.rating" :reviews="restaurant.reviews" :price="restaurant.price"
+                            :deliveryTime="restaurant.deliveryTime" :deliveryFee="restaurant.deliveryFee"
+                            :discounts="restaurant.discounts" />
+                    </router-link>
                 </div>
             </div>
         </div>
     </div>
+    <PageFooter />
 </template>
+
 
 <script setup>
 import RestaurantCard from '../../components/Customer/RestaurantCard.vue'
 import DashboardFilter from '../../components/Customer/DashboardFilter.vue'
 import Searchbar from '../../components/OtherComponents/Searchbar.vue'
-
+import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
+import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
 
 
 const restaurants = [
