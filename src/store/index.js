@@ -1,12 +1,33 @@
 // store/index.js
 
 import { createStore } from 'vuex';
+
 import profileModule from './modules/profile'; 
 import AuthStore from './Auth/AuthStore';
+import order from './modules/order'; // import the order module
+import Prevorder from './modules/PrevorderDetail';
+import Resturantownerreviews from './modules/Resturantownerreviews';
+import Reviews from './modules/customerReviews';
+import axios from 'axios';
+
+
+
+
 const store = createStore({
- modules: {
-    profile: profileModule, 
-    auth:AuthStore
+  modules: {
+    order, // register the order module
+    Prevorder,
+    Resturantownerreviews,
+    Reviews,
+   profile: profileModule, 
+    auth:AuthStore,
+  },
+  state: {
+
+    token: localStorage.getItem('token') || null,
+
+    user: { role: null, userId: null },  // Initialize user state
+
   },
 
   getters: {

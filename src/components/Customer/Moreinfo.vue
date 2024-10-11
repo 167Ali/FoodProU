@@ -137,6 +137,7 @@
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: -20px;
   }
   
   .btn-more-info:hover,

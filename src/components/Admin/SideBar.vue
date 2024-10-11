@@ -15,10 +15,10 @@
           </router-link>
         </li>
         <li>
-          <a href="#" class="nav-link">
+          <router-link to="/admin-dashboard/viewallorders" class="nav-link">
             <font-awesome-icon :icon="['fas', 'shopping-cart']" />
             <span>Orders</span>
-          </a>
+          </router-link>
         </li>
         <li>
           <router-link to="/adminfinance" class="nav-link">
