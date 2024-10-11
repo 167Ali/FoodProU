@@ -20,9 +20,7 @@
         <div class="navbar-right">
           <button class="auth-button login" @click="$emit('open-login')">Log in</button>
           <button class="auth-button signup" @click="$emit('open-signup')">Sign up</button>
-          <div class="cart-icon">
-            <font-awesome-icon :icon="['fas', 'shopping-cart']" />
-          </div>
+          
         </div>
       </nav>
     </div>
