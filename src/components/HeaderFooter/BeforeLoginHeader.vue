@@ -1,80 +1,59 @@
+<!-- BeforeLoginHeader.vue -->
 <template>
     <div>
-        <!-- Business Banner -->
-        <div class="business-banner" v-if="showBanner">
-            <div class="business-banner-content">
-                <!-- Business Icon and Text -->
-                <font-awesome-icon :icon="['fas', 'briefcase']" class="business-icon" />
-                <span class="business-text">Do you need a business account?</span>
-                <button class="signup-button" @click="goToBusinessSignup">SIGN UP NOW</button>
-            </div>
+      <!-- Business Banner -->
+      <div class="business-banner" v-if="showBanner">
+        <div class="business-banner-content">
+          <font-awesome-icon :icon="['fas', 'briefcase']" class="business-icon" />
+          <span class="business-text">Do you need a business account?</span>
+          <button class="signup-button" @click="goToBusinessSignup">SIGN UP NOW</button>
         </div>
-
-        <!-- Main Navbar -->
-        <nav class="navbar">
-            <div class="navbar-left">
-                <!-- Logo -->
-                <font-awesome-icon :icon="['fas', 'utensils']" class="logo" />
-                <span class="brand-name">foodpro</span>
-            </div>
-
-            <div class="navbar-right">
-                <!-- Log In and Sign Up buttons -->
-                <button class="auth-button login" @click="goToLogin">Log in</button>
-                <button class="auth-button signup" @click="goToSignup">Sign up</button>
-
-                <!-- Cart Icon -->
-                <div class="cart-icon">
-                    <font-awesome-icon :icon="['fas', 'shopping-cart']" />
-                </div>
-            </div>
-        </nav>
+      </div>
+  
+      <!-- Main Navbar -->
+      <nav class="navbar">
+        <div class="navbar-left">
+          <font-awesome-icon :icon="['fas', 'utensils']" class="logo" />
+          <span class="brand-name">foodpro</span>
+        </div>
+  
+        <div class="navbar-right">
+          <button class="auth-button login" @click="$emit('open-login')">Log in</button>
+          <button class="auth-button signup" @click="$emit('open-signup')">Sign up</button>
+          <div class="cart-icon">
+            <font-awesome-icon :icon="['fas', 'shopping-cart']" />
+          </div>
+        </div>
+      </nav>
     </div>
-</template>
-
-<script>
-import { ref } from 'vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { useRouter } from 'vue-router';
-
-export default {
-    name: 'LoginHeader',
+  </template>
+  
+  <script>
+  import { ref } from 'vue';
+  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+  import { useRouter } from 'vue-router';
+  
+  export default {
+    name: 'BeforeLoginHeader',
     components: {
-        FontAwesomeIcon,
+      FontAwesomeIcon,
     },
     setup() {
-        const router = useRouter();
-        const showBanner = ref(true);
-
-        // Function to close the business banner
-        const closeBanner = () => {
-            showBanner.value = false;
-        };
-
-        // Navigation functions
-        const goToLogin = () => {
-            router.push('/login');
-        };
-
-        const goToSignup = () => {
-            router.push('/signup');
-        };
-
-        const goToBusinessSignup = () => {
-            router.push('/business-signup');
-        };
-
-        return {
-            showBanner,
-            closeBanner,
-            goToLogin,
-            goToSignup,
-            goToBusinessSignup,
-        };
+      const router = useRouter();
+      const showBanner = ref(true);
+  
+      const goToBusinessSignup = () => {
+        router.push('/businesslanding');
+      };
+  
+      return {
+        showBanner,
+        goToBusinessSignup,
+      };
     },
-};
-</script>
-
+  };
+  </script>
+  
 <style scoped>
 /* Business Banner */
 .business-banner {

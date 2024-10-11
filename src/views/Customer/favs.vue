@@ -1,5 +1,6 @@
 
 <template>
+  <LoginHeader />
   <div class="container mt-4">
     <h2 class="text-center">Favorite Foods</h2>
     <div class="row">
@@ -17,13 +18,21 @@
       </transition-group>
     </div>
   </div>
+  <PageFooter />
 </template>
 
 <script>
+import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
+ import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
 export default {
   name: "FavoriteCards",
+  components: {
+        LoginHeader,
+        PageFooter,
+    },
   data() {
     return {
+      
       foods: [
         {
           id: 1,
