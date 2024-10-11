@@ -1,29 +1,12 @@
 // store/index.js
 
 import { createStore } from 'vuex';
-<<<<<<< HEAD
 import profileModule from './modules/profile'; 
 import AuthStore from './Auth/AuthStore';
 const store = createStore({
  modules: {
     profile: profileModule, 
     auth:AuthStore
-=======
-
-import axios from 'axios';
-
-
-
-
-const store = createStore({
-
-  state: {
-
-    token: localStorage.getItem('token') || null,
-
-    user: { role: null, userId: null },  // Initialize user state
-
->>>>>>> 07fac950d5ae53fca06da9155055cd5e77396210
   },
 
   getters: {
