@@ -11,9 +11,7 @@
 
             <div class="navbar-right">
                 <!-- Log In  buttons -->
-                <button class="auth-button login" @click="goToLogin">Log in</button>
-                
-
+                <p>Already have Account ? <button class="auth-button login" @click="goToLogin">Back</button></p>
             </div>
         </nav>
     </div>
@@ -40,7 +38,7 @@ export default {
 
         // Navigation functions
         const goToLogin = () => {
-            router.push('/login');
+            router.push('/');
         };
 
 
