@@ -2,7 +2,7 @@
     <div class="dashboard-layout">
       <!-- Sidebar -->
       <SideBar />
-  
+      <router-view />
       <div class="main-content">
         <!-- Header Section -->
         <AdminHeader />
@@ -20,6 +20,7 @@
   
       <!-- Order Detail -->
       <OrderDetail />
+      
     </div>
   </template>
   
@@ -45,4 +46,3 @@
     overflow-y: auto;
   }
   </style>
-  

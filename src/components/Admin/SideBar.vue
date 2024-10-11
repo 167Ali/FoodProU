@@ -15,10 +15,10 @@
           </a>
         </li>
         <li>
-          <a href="#" class="nav-link">
+          <router-link to="/admin-dashboard/viewallorders" class="nav-link">
             <font-awesome-icon :icon="['fas', 'shopping-cart']" />
             <span>Orders</span>
-          </a>
+          </router-link>
         </li>
         <li>
           <a href="#" class="nav-link">
@@ -57,12 +57,14 @@ library.add(faUtensils, faHome, faShoppingCart, faLock, faImage, faCog);
 .sidebar {
   width: 100px;
   height: 100vh;
-  background-color: #1d1d1d; /* Dark sidebar background for contrast */
+  background-color: #1d1d1d;
+  /* Dark sidebar background for contrast */
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px 0;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  /* Add subtle shadow */
 }
 
 /* Logo Container */
@@ -73,7 +75,8 @@ library.add(faUtensils, faHome, faShoppingCart, faLock, faImage, faCog);
 /* Sidebar logo icon */
 .logo {
   font-size: 48px;
-  color: #ffffff; /* White logo for better contrast */
+  color: #ffffff;
+  /* White logo for better contrast */
 }
 
 /* Navigation styling */
@@ -109,8 +112,10 @@ nav ul {
 
 /* Hover effects on navigation links */
 .nav-link:hover {
-  background-color: #00754a; /* Change background on hover */
-  border-radius: 10px; /* Add subtle rounding on hover */
+  background-color: #00754a;
+  /* Change background on hover */
+  border-radius: 10px;
+  /* Add subtle rounding on hover */
 }
 
 /* Add spacing between nav items */

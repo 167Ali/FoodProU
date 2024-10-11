@@ -18,6 +18,7 @@ import Business_Landing from '../views/Login_Signup/Bussiness_Landing.vue'
 import AdminFinanceDashboard from '../components/Admin/AdminFinanceDashboard.vue'
 import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_Dashboard.vue'
 import ResturantOwner from '@/components/RestaurantOwner/ResturantOwner.vue'
+import RestaurantCard from '@/components/Customer/RestaurantCard.vue'
 // import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
 // import Moreinfo from '../components/Customer/Moreinfo.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
@@ -41,14 +42,26 @@ const routes = [
     ]
   },
   {
-    path: '/',
+    path: '/RestaurantPage',
     name: 'RestaurantPage',
     component: Restaurantpage
   },
   {
+    path: '/Restaurantcard',
+    name: 'RestaurantCard',
+    component: RestaurantCard
+  },
+  {
     path: '/admin-dashboard',
     name: 'AdminDashboard',
-    component: AdminDashboard
+    component: AdminDashboard,
+    children: [
+      {
+        path: '/viewallorders',
+        name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
+        component: ViewAllOrdersAdm // This is fine if you need this route
+      },
+    ]
   },
  
   {
@@ -93,13 +106,9 @@ const routes = [
     name: 'ModalView',
     component: ModalView
   },
+  
   {
-    path: '/viewallorders',
-    name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
-    component: ViewAllOrdersAdm // This is fine if you need this route
-  },
-  {
-    path: '/mainlanding',
+    path: '/',
     name: 'Main_landing', // Change name to avoid duplicates
     component: Main_landing // This is fine if you need this route
   },
