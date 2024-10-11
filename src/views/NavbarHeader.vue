@@ -1,8 +1,8 @@
 <template>
     <div class="fullpage">
-        <!-- <div class="navbar">
+        <div class="navbar">
             <p class="navbarheading">FoodPro</p>
-        </div> -->
+        </div>
         <div class="container">
             <router-view></router-view>
         </div>
@@ -12,6 +12,7 @@
 <style scoped>
     .fullpage{
         background-color: #f7f7f7;
+        /* background-color: aqua; */
         margin-bottom: -50px;
     }
     .navbar{

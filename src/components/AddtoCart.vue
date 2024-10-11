@@ -6,37 +6,53 @@
     </button>
 
     <!-- Cart Modal / Drawer for Desktop & Mobile -->
-    <div v-if="cartVisible || !isMobile" class="cart-modal">
+    <div :class="['cart-modal', { 'cart-visible': cartVisible }]">
       <button @click="toggleCart" class="close-btn" v-if="isMobile">X</button>
-      <h3>Your Cart</h3>
-      <div v-for="item in cart" :key="item.id" class="cart-item">
-        <img :src="item.image" alt="item.name" class="item-img" />
-        <div class="item-details">
-          <p class="item-name">{{ item.name }}</p>
-          <p class="item-price">Rs. {{ item.price }}</p>
-        </div>
-        <div class="item-quantity d-flex align-items-center">
-          <button v-if="item.quantity > 1" @click="decrementItem(item)" class="btn btn-outline-secondary">-</button>
-          <button v-else @click="removeItem(item)" class="btn btn-outline-danger">🗑️</button>
-          <span class="mx-2">{{ item.quantity }}</span>
-          <button @click="incrementItem(item)" class="btn btn-outline-secondary">+</button>
-        </div>
-      </div>
+      <h5 v-if="cart.length >0">Your items</h5>
 
-      <div class="cart-summary">
-        <p>Subtotal: Rs. {{ cartSubtotal }}</p>
-        <p>Delivery Fee: Rs. {{ deliveryFee }}</p>
-        <p>Service Fee: Rs. {{ serviceFee }}</p>
-        <p>Total: Rs. {{ cartTotal }}</p>
+      <div v-if="cart.length === 0" class="empty-cart">
+        <h6>Hungry?</h6>
+        <p>You haven't added anything to your cart!</p>
       </div>
+      <div v-else>
+        <div v-for="item in cart" :key="item.id" class="cart-item">
+          <img :src="item.image" alt="item.name" class="item-img" />
+          <div class="item-details">
+            <p class="item-name">{{ item.name }}</p>
+            <p class="item-price">Rs. {{ item.price }}</p>
+          </div>
+          <div class="item-quantity">
+            <button v-if="item.quantity > 1" @click="decrementItem(item)"><i class="fa-solid fa-minus fa1"></i></button>
+            <button v-else @click="removeItem(item)"><i class="fa-regular fa-trash-can fa2"></i></button>
+            <span>{{ item.quantity }}</span>
+            <button @click="incrementItem(item)"><i class="fa-solid fa-plus fa3"></i></button>
+          </div>
+        </div>
 
-      <button class="checkout-btn">Review Payment and Address</button>
+        <div class="cart-summary">
+          <p class="d-flex justify-content-between">Subtotal<span>Rs. {{ cartSubtotal }}</span></p>
+          <p class="d-flex justify-content-between">Delivery Fee<span>Rs. {{ deliveryFee }}</span></p>
+          <p class="d-flex justify-content-between">Service Fee<span>Rs. {{ serviceFee }}</span></p>
+        </div>
+        <!--  -->
+      </div>
     </div>
+    <p class="d-flex justify-content-between cart-summary-total" v-if="cart.length >0">
+      <span>
+        Total 
+        <span class="fee-tax">
+          (incl. fees and tax)
+        </span>
+      </span>
+      <span>
+        Rs. {{ cartTotal }}
+      </span>
+    </p>
+    <button class="checkout-btn" v-if="cart.length >0">Review Payment and Address</button>
   </div>
+
 </template>
-
-  
-
+<!--  -->
 <script setup>
   import { reactive, ref, computed, onMounted } from 'vue';
   import kulchaImg from '@/assets/images/kulcha.png';
@@ -142,47 +158,44 @@
 
 <style scoped>
 .cart-container {
+  /* background-color: aqua; */
   position: fixed;
   right: 0px;
   top: 64px;
-  /* margin-right: 50px; */
-  width: 320px;
-  height: calc(100vh - 64px);
-  background-color: red;
-  /* background-color: #ffffff; */
-  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+  margin-top: 80px;
+  margin-right: 80px;
+  width: 350px;
+  height: calc(85vh - 64px);
   padding: 20px;
   display: flex;
   flex-direction: column;
-  border-radius: 8px 0 0 8px;
+  border-radius: 8px;
+  border: 1px solid rgb(223, 222, 222);
   z-index: 999; /* Ensure it appears above other content */
 }
 
 .cart-item {
   display: flex;
   align-items: center;
-  margin-bottom: 16px;
-  background-color: #f9f9f9;
-  padding: 12px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgb(225, 225, 225);
+  padding: 15px 12px 15px 12px;
 }
 .item-img {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 8px;
+  border: 1px solid rgb(214, 211, 211);
   object-fit: cover;
   margin-right: 16px;
 }
-
-
-
+/*  */
 .item-details {
   flex-grow: 1;
 }
 
 .item-name {
-  font-weight: bold;
+  font-weight: 600;
+  font-family: agrandir;
   font-size: 16px;
   margin-bottom: 4px;
   color: #333;
@@ -197,50 +210,55 @@
   align-items: center;
   background-color: #fff;
   border: 1px solid #ddd;
-  border-radius: 6px;
+  border-radius: 50px;
 }
 
 .item-quantity button {
-  background-color: #f2f2f2;
+  background-color: white;
+  border-radius: 50%;
   border: none;
-  padding: 8px;
-  font-size: 18px;
+  margin: 4px;
+  /* font-size: 18px; */
   cursor: pointer;
 }
 
 .item-quantity span {
-  padding: 0 8px;
+  
   font-size: 16px;
 }
-
-.remove-item-btn {
-  background-color: transparent;
-  border: none;
-  color: red;
-  font-size: 24px;
-  margin-left: 8px;
-  cursor: pointer;
+.fa2, .fa3, .fa1{
+  font-weight: 100;
+  padding: 0px 0px 0px 5px;
+}
+.fa1{
+  font-weight: 600;
+  color: #3e3e3e;
 }
 
 .cart-summary {
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid #e0e0e0;
-  background-color: #f9f9f9;
-  padding: 12px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 12px 0;
 }
 
 .cart-summary p {
-  display: flex;
-  justify-content: space-between;
+  margin: 4px 0;  
   font-size: 14px;
-  margin: 4px 0;
-}
-  
-.checkout-btn {
-  background-color: #ff3366;
+
+}  
+.cart-summary span {
+  padding-right: 10px;
+}  
+  .cart-summary-total{
+    margin: 10px 0px 0px 0px;
+    font-size: 18px;
+    font-weight: bold
+  }
+  .fee-tax{
+    font-size: 13px;
+    color: #787878;
+    font-weight: 400;
+  }
+  .checkout-btn {
+  background-color:#00754A;
   color: white;
   padding: 12px;
   border: none;
@@ -252,7 +270,7 @@
 }
 
 .checkout-btn:hover {
-  background-color: #ff6699;
+  background-color:#076241;
 }
 
   /* Responsive Mobile Styles */
@@ -273,16 +291,34 @@
   }
 
   .cart-modal {
-    width: 100%;
-    padding-top: 20px;
-    height: calc(100vh - 64px);
-    /* position: relative; */
-    /* right: 30px; */
-    /* top: 0; */
-    /* background-color: white; */
-    /* background-color: aqua; */
+    background-color: white;
     z-index: 800;
+    width: 100%;
     overflow-y: auto;
+    height: calc(100vh - 64px);
+  }
+  h5{
+    font-weight: 1000;
+    font-family: 'Agrandir', 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+  .empty-cart{
+    height: 100%;
+    width: 100%;
+    padding-top: 40%;
+    text-align: center;
+  }
+  .empty-cart h6{
+    font-family: agrandir;
+    font-size: 22px;
+    font-weight: bolder;
+    margin: 0 auto;
+    padding-bottom: 10px;
+  }
+  .empty-cart p{
+    text-align: center;
+    width: 67%;
+    margin: auto;
+    color: #838383;
   }
 
   .close-btn {
@@ -297,11 +333,19 @@
 
   @media (min-width: 960px) {
     .cart-modal {
-        /* height: 200px; */
+
       height: calc(100vh - 64px);
       top: 64px;
-      width: 300px;
+      width: 310px;
     }
   }
+  /* @media (max-width: 959px) {
+    .cart-modal {
+
+      height: calc(100vh - 64px);
+      top: 64px;
+      width: 310px;
+    }
+  } */
 </style>
 
