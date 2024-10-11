@@ -132,8 +132,8 @@ const toggleHelpCenter = () => {
 <style scoped>
 .help-center-container {
   position: fixed;
-  bottom: 0;
-  right: 0;
+  bottom: 20px;
+  right: 20px;  
   width: 100%;
   max-width: 350px;
   background-color: #fff;
@@ -141,8 +141,7 @@ const toggleHelpCenter = () => {
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
   font-family: Arial, sans-serif;
-  padding-right: 20px; /* Padding to the right */
-  padding-bottom: 10px; /* Padding to the bottom */
+  
 }
 
 .help-center-header {

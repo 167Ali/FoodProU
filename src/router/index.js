@@ -117,16 +117,21 @@ const routes = [
     component: OrderReorder,
   },
   {
-    path: '/order-details/:id',  // Define dynamic route with 'id' parameter
+    path: '/order-details/:id',  
     name: 'PrevorderDetails',
     component: PrevorderDetails,
-    props: true, // Pass route params as props to the component
+    props: true, 
   },
 
   {
     path: '/user-guide',
-    name: 'UserGuide', // Change name to avoid duplicates
-    component: () => import('../components/Customer/UserGuide.vue') // This is fine if you need this route
+    name: 'UserGuide', 
+    component: () => import('../components/Customer/UserGuide.vue') 
+  },
+  {
+    path: '/recipe-blog',
+    name: 'RecipeBlog', 
+    component: () => import('../views/Customer/RecipeBlog.vue') 
   },
 
 ]
