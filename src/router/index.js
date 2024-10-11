@@ -87,23 +87,23 @@ const routes = [
   },
   {
     path: '/viewallorders',
-    name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
-    component: ViewAllOrdersAdm // This is fine if you need this route
+    name: 'ViewAllOrdersAdm', 
+    component: ViewAllOrdersAdm 
   },
   {
     path: '/mainlanding',
-    name: 'Main_landing', // Change name to avoid duplicates
-    component: Main_landing // This is fine if you need this route
+    name: 'Main_landing',
+    component: Main_landing 
   },
   {
     path: '/businesslanding',
-    name: 'Business_Landing', // Change name to avoid duplicates
-    component: Business_Landing // This is fine if you need this route
+    name: 'Business_Landing', 
+    component: Business_Landing 
   },
   {
     path: '/ownermenu',
-    name: 'OwnerMenu', // Change name to avoid duplicates
-    component: () => import('../views/Menu/OwnerMenu.vue') // This is fine if you need this route
+    name: 'OwnerMenu', 
+    component: () => import('../views/Menu/OwnerMenu.vue') 
   },
   {
     path: '/restOwnerProfile',
@@ -121,7 +121,13 @@ const routes = [
     name: 'PrevorderDetails',
     component: PrevorderDetails,
     props: true, // Pass route params as props to the component
-  }
+  },
+
+  {
+    path: '/user-guide',
+    name: 'UserGuide', // Change name to avoid duplicates
+    component: () => import('../components/Customer/UserGuide.vue') // This is fine if you need this route
+  },
 
 ]
 
