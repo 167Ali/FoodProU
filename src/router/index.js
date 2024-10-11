@@ -90,17 +90,16 @@ const routes = [
     children: [
       {
         path: '/viewallorders',
-        name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
-        component: ViewAllOrdersAdm // This is fine if you need this route
+        name: 'ViewAllOrdersAdm', 
+        component: ViewAllOrdersAdm 
+      },
+      {
+        path: '/AdminFinanceDashboard',
+        name: 'AdminFinanceDashboard',
+        component: AdminFinanceDashboard
       },
     ]
-  },
- 
-  {
-    path: '/AdminFinanceDashboard',
-    name: 'AdminFinanceDashboard',
-    component: AdminFinanceDashboard
-  },
+  }, 
   {
     path: '/RestaurantOwnerDashboard',
     name: 'RestaurantOwner_Dashboard',
@@ -110,7 +109,13 @@ const routes = [
         path: '/Resturant-owner',
         name: 'RestaurantOwner',
         component: ResturantOwner
-      }
+      },
+      {
+        path: '/restOwnerProfile',
+        name: 'RestOwnerProfile',
+        component: RestOwnerProfile
+    
+      },
     ]
   },
   {
@@ -154,12 +159,7 @@ const routes = [
     name: 'OwnerMenu', // Change name to avoid duplicates
     component: () => import('../views/Menu/OwnerMenu.vue') // This is fine if you need this route
   },
-  {
-    path: '/restOwnerProfile',
-    name: 'RestOwnerProfile',
-    component: RestOwnerProfile
-
-  },
+  
   {
     path: '/OrderReorder',
     name: 'OrderReorder',

@@ -1,116 +1,117 @@
 <template>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<div class="dashboard-container d-flex">
-    <!-- Sidebar -->
-    <nav class="sidebar bg-light d-flex flex-column align-items-center">
+    <div class="dashboard-container d-flex">
+      <!-- Sidebar -->
+      <nav class="sidebar bg-light d-flex flex-column align-items-center">
         <img src="https://via.placeholder.com/50" alt="Logo" class="my-4" />
         <ul class="nav flex-column text-center">
-            <li class="nav-item mb-3">
-                <a href="#" class="nav-link text-dark">
-                    <i class="fas fa-home fs-4"></i>
-                </a>
-            </li>
-            <li class="nav-item mb-3">
-                <a href="#" class="nav-link text-dark">
-                    <i class="fas fa-chart-line fs-4"></i>
-                </a>
-            </li>
-            <li class="nav-item mb-3">
-                <a href="#" class="nav-link text-dark">
-                    <i class="fas fa-utensils fs-4"></i>
-                </a>
-            </li>
-            <li class="nav-item mb-3">
-                <a href="#" class="nav-link text-dark">
-                    <i class="fas fa-cogs fs-4"></i>
-                </a>
-            </li>
+          <li>
+            <router-link to="/RestaurantOwnerDashboard" class="nav-link">
+              <i class="fas fa-home fs-4"></i>
+            </router-link>
+          </li>
+          <li class="nav-item mb-3">
+            <router-link to="/restaurantStatistics" class="nav-link text-dark">
+              <i class="fas fa-chart-line fs-4"></i>
+            </router-link>
+          </li>
+          <li class="nav-item mb-3">
+            <router-link to="/restaurantMenu" class="nav-link text-dark">
+              <i class="fas fa-utensils fs-4"></i>
+            </router-link>
+          </li>
+          <li>
+            <router-link to="/restOwnerProfile" class="nav-link">
+              <i class="fas fa-cogs fs-4"></i>
+            </router-link>
+          </li>
         </ul>
-    </nav>
+      </nav>
 
-    <!-- Main Content -->
-    <div class="main-content flex-grow-1 p-4">
-        <!-- Top Bar -->
-        <div class="top-bar d-flex justify-content-between align-items-center mb-4">
-            <div class="d-flex align-items-center">
-                <img src="https://via.placeholder.com/100x50" alt="Restaurant Logo" class="restaurant-logo me-3" />
-                <input type="text" class="form-control search-input" placeholder="Search for orders..." />
+        <!-- Main Content -->
+        <div class="main-content flex-grow-1 p-4">
+            <!-- Top Bar -->
+            <div class="top-bar d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex align-items-center">
+                    <img src="https://via.placeholder.com/100x50" alt="Restaurant Logo" class="restaurant-logo me-3" />
+                    <input type="text" class="form-control search-input" placeholder="Search for orders..." />
+                </div>
+                <button @click="toggleRestaurantStatus" class="btn btn-toggle">
+                    {{ restaurantStatus ? 'Deactivate' : 'Activate' }}
+                </button>
             </div>
-            <button @click="toggleRestaurantStatus" class="btn btn-toggle">
-                {{ restaurantStatus ? 'Deactivate' : 'Activate' }}
-            </button>
-        </div>
-
-        <!-- Banner -->
-        <div class="banner mb-4 p-4 d-flex justify-content-between align-items-center">
 
             <!-- Banner -->
-            <div class="banner mb-4">
-                <img src="../assets/bg8.gif" alt="Banner" class="img-fluid rounded" />
+            <div class="banner mb-4 p-4 d-flex justify-content-between align-items-center">
+
+                <!-- Banner -->
+                <div class="banner mb-4">
+                    <img src="../assets/bg8.gif" alt="Banner" class="img-fluid rounded" />
+                </div>
+
             </div>
 
-        </div>
+            <!-- Accepted and Rejected Orders Section -->
+            <div class="orders-section">
+                <!-- Accepted Orders -->
+                <div class="accepted-orders mb-4">
+                    <h4>Accepted Orders</h4>
+                    <div class="accepted-orders-container d-flex flex-wrap">
+                        <div class="card accepted-order-card mb-3 d-flex" v-for="order in acceptedOrders"
+                            :key="order.id">
+                            <img :src="order.image" class="card-img" alt="Order Image" />
+                            <div class="card-body">
+                                <h5>{{ order.user }}</h5>
+                                <p>{{ order.location }}</p>
+                                <div class="order-details d-flex justify-content-between align-items-center">
+                                    <h5 class="text-price">$ {{ order.totalPrice }}</h5>
+                                    <button class="btn btn-order">View</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- Accepted and Rejected Orders Section -->
-        <div class="orders-section">
-            <!-- Accepted Orders -->
-            <div class="accepted-orders mb-4">
-                <h4>Accepted Orders</h4>
-                <div class="accepted-orders-container d-flex flex-wrap">
-                    <div class="card accepted-order-card mb-3 d-flex" v-for="order in acceptedOrders" :key="order.id">
-                        <img :src="order.image" class="card-img" alt="Order Image" />
-                        <div class="card-body">
-                            <h5>{{ order.user }}</h5>
-                            <p>{{ order.location }}</p>
-                            <div class="order-details d-flex justify-content-between align-items-center">
-                                <h5 class="text-price">$ {{ order.totalPrice }}</h5>
-                                <button class="btn btn-order">View</button>
+                <!-- Rejected Orders -->
+                <div class="rejected-orders mb-4">
+                    <h4>Rejected Orders</h4>
+                    <div class="rejected-orders-container d-flex flex-wrap">
+                        <div class="card rejected-order-card mb-3 d-flex" v-for="order in rejectedOrders"
+                            :key="order.id">
+                            <img :src="order.image" class="card-img" alt="Order Image" />
+                            <div class="card-body">
+                                <h5>{{ order.user }}</h5>
+                                <p>{{ order.location }}</p>
+                                <div class="order-details d-flex justify-content-between align-items-center">
+                                    <h5 class="text-price">$ {{ order.totalPrice }}</h5>
+                                    <button class="btn btn-order">View</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Rejected Orders -->
-            <div class="rejected-orders mb-4">
-                <h4>Rejected Orders</h4>
-                <div class="rejected-orders-container d-flex flex-wrap">
-                    <div class="card rejected-order-card mb-3 d-flex" v-for="order in rejectedOrders" :key="order.id">
-                        <img :src="order.image" class="card-img" alt="Order Image" />
-                        <div class="card-body">
+        <!-- Right Sidebar (Current Orders) -->
+        <div class="right-sidebar p-4">
+            <h4>Current Orders</h4>
+            <div class="current-order-card card mb-3" v-for="order in currentOrders" :key="order.id">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-map-marker-alt fs-3 me-3"></i>
+                        <div>
                             <h5>{{ order.user }}</h5>
-                            <p>{{ order.location }}</p>
-                            <div class="order-details d-flex justify-content-between align-items-center">
-                                <h5 class="text-price">$ {{ order.totalPrice }}</h5>
-                                <button class="btn btn-order">View</button>
-                            </div>
+                            <p class="small text-muted">{{ order.location }}</p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Right Sidebar (Current Orders) -->
-    <div class="right-sidebar p-4">
-        <h4>Current Orders</h4>
-        <div class="current-order-card card mb-3" v-for="order in currentOrders" :key="order.id">
-            <div class="card-body d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-map-marker-alt fs-3 me-3"></i>
-                    <div>
-                        <h5>{{ order.user }}</h5>
-                        <p class="small text-muted">{{ order.location }}</p>
+                    <div class="order-total text-end">
+                        <h5 class="text-price">$ {{ order.totalPrice }}</h5>
                     </div>
+                    <button class="btn btn-order">View</button>
                 </div>
-                <div class="order-total text-end">
-                    <h5 class="text-price">$ {{ order.totalPrice }}</h5>
-                </div>
-                <button class="btn btn-order">View</button>
             </div>
         </div>
     </div>
-</div>
 </template>
 
 <script>
@@ -128,39 +129,39 @@ export default {
 
         // Dummy data
         const currentOrders = ref([{
-                id: 1,
-                user: "John Doe",
-                location: "New York",
-                totalPrice: 45.99
-            },
-            {
-                id: 2,
-                user: "Jane Smith",
-                location: "California",
-                totalPrice: 30.49
-            },
-            {
-                id: 3,
-                user: "Michael Johnson",
-                location: "Texas",
-                totalPrice: 52.00
-            },
+            id: 1,
+            user: "John Doe",
+            location: "New York",
+            totalPrice: 45.99
+        },
+        {
+            id: 2,
+            user: "Jane Smith",
+            location: "California",
+            totalPrice: 30.49
+        },
+        {
+            id: 3,
+            user: "Michael Johnson",
+            location: "Texas",
+            totalPrice: 52.00
+        },
         ]);
 
         const acceptedOrders = ref([{
-                id: 1,
-                user: "John Doe",
-                location: "New York",
-                totalPrice: 45.99,
-                image: 'https://via.placeholder.com/100'
-            },
-            {
-                id: 2,
-                user: "Jane Smith",
-                location: "California",
-                totalPrice: 30.49,
-                image: 'https://via.placeholder.com/100'
-            },
+            id: 1,
+            user: "John Doe",
+            location: "New York",
+            totalPrice: 45.99,
+            image: 'https://via.placeholder.com/100'
+        },
+        {
+            id: 2,
+            user: "Jane Smith",
+            location: "California",
+            totalPrice: 30.49,
+            image: 'https://via.placeholder.com/100'
+        },
         ]);
 
         const rejectedOrders = ref([{
@@ -169,7 +170,7 @@ export default {
             location: "Texas",
             totalPrice: 52.00,
             image: 'https://via.placeholder.com/100'
-        }, ]);
+        },]);
 
         return {
             restaurantStatus,
@@ -241,7 +242,7 @@ export default {
 .banner img {
     width: 1000px;
     height: 250px;
-    object-fit:fill;
+    object-fit: fill;
     border-radius: 10px;
 }
 
