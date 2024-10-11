@@ -71,7 +71,7 @@ const routes = [
       },
     ]
   },
- 
+
   {
     path: '/AdminFinanceDashboard',
     name: 'AdminFinanceDashboard',
@@ -80,12 +80,12 @@ const routes = [
   {
     path: '/RestaurantOwnerDashboard',
     name: 'RestaurantOwner_Dashboard',
-    component: RestaurantOwner_Dashboard,
+    component: RestaurantOwner_Dashboard, // This should be your main dashboard component
     children: [
       {
-        path: '/Resturant-owner',
+        path: 'Resturant-owner', // No leading slash
         name: 'RestaurantOwner',
-        component: ResturantOwner
+        component: ResturantOwner // This can be another component if needed
       }
     ]
   },
@@ -114,7 +114,7 @@ const routes = [
     name: 'ModalView',
     component: ModalView
   },
-  
+
   {
     path: '/',
     name: 'Main_landing', // Change name to avoid duplicates
