@@ -1,35 +1,35 @@
 <template>
-  <div class="container my-5">
-    <div class="row">
-      <!-- Left side: Delivery Address Section -->
-      <div class="col-lg-7 mb-4">
-        <div class="card p-4">
-          <h3>Delivery address</h3>
-          <router-link to="/orderreq"><a class="nxt-btn">Order Request</a></router-link>
-          <div class="map-container mb-3 mt-2">
+    <div class="container my-5">
+      <div class="row">
+        <!-- Left side: Delivery Address Section -->
+        <div class="col-lg-7 mb-4">
+          <div class="card p-4">
+            <h3>Delivery address</h3>
+            <router-link to="/orderreq"><a class="nxt-btn">Order Request</a></router-link>
+            <div class="map-container mb-3 mt-2">
 
-            <img src="../../assets/images/Screenshot 2024-10-07 151047.png" alt="Map" class="img-fluid rounded">
-          </div>
-          <div>
-            <i class="fa-solid fa-location-crosshairs"></i>
-            <p class="address">
-              <strong>Haris Boys Hostel Haji Muhammad Ali Road</strong>
-              <br />
-              Lahore
-            </p>
-          </div>
-          <!--  -->
-          <div class="mt-3">
-            <textarea class="form-control" rows="3" placeholder="Note to rider - e.g., building, landmark"></textarea>
-          </div>
-          <!--  -->
-          <hr>
-          <p class="contactless-toggle">
-            Contactless delivery
-            <label class="switch">
-              <input type="checkbox">
-              <span class="slider round"></span>
-            </label>
+              <img src="../../assets/images/Screenshot 2024-10-07 151047.png" alt="Map" class="img-fluid rounded">
+            </div>
+            <div>
+              <i class="fa-solid fa-location-crosshairs"></i>
+              <p class="address">
+                <strong>Haris Boys Hostel Haji Muhammad Ali Road</strong>
+                <br />
+                Lahore
+              </p>
+            </div>  
+            <!--  -->
+            <div class="mt-3">
+              <textarea class="form-control" rows="3" placeholder="Note to rider - e.g., building, landmark"></textarea>
+            </div>
+            <!--  -->
+            <hr>
+            <p class="contactless-toggle">
+                Contactless delivery
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
           </p>
         </div>
       </div>
@@ -136,53 +136,47 @@
     </div>
   </div>
 </template>
+  
+  <script>
+  export default {
+    name: "CheckOut",
+  };
+  </script>
+  
+  <style scoped>
 
-<script>
-export default {
-  name: "CheckOut",
-};
-</script>
+  .card{
+    border: none;
+  }
+  .card h3, h4{
+    font-family: 'Agrandir', 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bold;
+  }
 
-<style scoped>
-.card {
-  border: none;
-}
-
-.card h3,
-h4 {
-  font-family: 'Agrandir', 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
-/* Map container styles */
-.my-5 {
-  padding: 60px 80px 60px 80px;
-}
-
-.map-container img {
-  width: 100%;
-  height: auto;
-}
-
-.fa-location-crosshairs,
-.address {
-  display: inline-block;
-}
-
-.fa-location-crosshairs {
-  position: relative;
-  bottom: 20px;
-  margin: 10px;
-  font-size: 20px;
-}
-
-.total {
-  font-size: 1.5rem;
-  margin-bottom: -5px;
-}
-
-.total-inc {
-  font-size: 14px;
-}
+  /* Map container styles */
+  .my-5 {
+    padding: 60px 80px 60px 80px;
+  }
+  .map-container img {
+    width: 100%;
+    height: auto;
+  }
+  .fa-location-crosshairs, .address{
+    display: inline-block;
+  }
+  .fa-location-crosshairs{
+    position: relative;
+    bottom: 20px;
+    margin: 10px;
+    font-size: 20px;
+  }
+  .total {
+    font-size: 1.5rem;
+    margin-bottom: -5px;
+  }
+  .total-inc{
+    font-size: 14px;
+  }
 
 /* The switch - the container */
 .switch {
