@@ -12,6 +12,7 @@
 <style scoped>
     .fullpage{
         background-color: #f7f7f7;
+        /* background-color: aqua; */
         margin-bottom: -50px;
     }
     .navbar{
