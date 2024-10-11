@@ -9,7 +9,7 @@
                 <div class="card">
                     <img v-if="product.image" :src="product.image" alt="Product Image" class="card-img-top" />
                     <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
+                        <h5 class="card-title">{{ product.productname }}</h5>
                         <p class="card-text">Description: {{ product.description }}</p>
                         <p class="card-text">Price: ${{ product.price }}</p>
 
@@ -17,7 +17,7 @@
                         <div class="card-text">
                             <strong>Assigned Choices:</strong>
                             <ul>
-                                <li v-for="(choice, idx) in product.assignedChoices" :key="idx">{{ choice }}</li>
+                                <li v-for="(choice, idx) in product.assignedchoices" :key="idx">{{ choice }}</li>
                             </ul>
                         </div>
 
@@ -46,25 +46,28 @@ import MenuUpdate_AddProduct from './MenuUpdate_AddProduct.vue'; // Import the f
 // Mock data for products
 const products = ref([
     {
-        name: 'Margherita Pizza',
+        category: 'Pizza',
+        productname: 'Margherita Pizza',
         description: 'Classic cheese and tomato pizza.',
         price: 10,
         image: '/src/assets/img3.jpeg',
-        assignedChoices: ['Choice 1', 'Choice 2'], // Assigned choices displayed here
+        assignedchoices: ['Choice 1', 'Choice 2'], // Assigned choices displayed here
     },
     {
+        category: 'Pizza',
         name: 'Coke',
         description: 'Refreshing soft drink.',
         price: 1.5,
         image: '/src/assets/img2.jpg',
-        assignedChoices: ['Choice 4'], // Assigned choices displayed here
+        assignedchoices: ['Choice 4'], // Assigned choices displayed here
     },
     {
+        category: 'Pizza',
         name: 'Cheeseburger',
         description: 'Juicy burger with cheese.',
         price: 5,
         image: '/src/assets/img1.jpg',
-        assignedChoices: ['Choice 1', 'Choice 3', 'Choice 5'], // Assigned choices displayed here
+        assignedchoices: ['Choice 1', 'Choice 3', 'Choice 5'], // Assigned choices displayed here
     },
 ]);
 
@@ -82,7 +85,7 @@ const openModal = () => {
         description: '',
         price: null,
         image: null,
-        assignedChoices: [], // Initialize as an empty array for new product
+        assignedchoices: [], // Initialize as an empty array for new product
     };
     isEditMode.value = false;
 };
