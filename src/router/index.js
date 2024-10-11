@@ -20,6 +20,9 @@ import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_D
 // import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
 // import Moreinfo from '../components/Customer/Moreinfo.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
+
+// import SetNewPassword from '../components/LoginSignup/SetNewPassword.vue'
+import hello from '@/views/hello.vue'
 const routes = [
   {
     path: '/Navbarheader',
@@ -37,7 +40,12 @@ const routes = [
         component: OrderReq
       }
     ]
-  },
+  },{
+    path: '/reset-password',
+        name: 'SetNewPassword',
+        component: hello
+  }
+,
   {
     path: '/',
     name: 'RestaurantPage',

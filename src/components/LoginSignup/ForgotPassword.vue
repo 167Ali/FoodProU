@@ -1,5 +1,4 @@
 <template>
-    
   <div class="container col-lg-8 d-flex justify-content-center align-items-center min-vh-100 ">
     <div class="row w-100 shadow-lg p-4 rounded">
       <!-- GIF Section -->
@@ -39,27 +38,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
 
 const email = ref('');
-const loading = ref(false);
-const successMessage = ref('');
-const errorMessage = ref('');
+const store = useStore();
+
+// Access the Vuex store's state using computed properties
+const loading = computed(() => store.getters['auth/isLoading']);
+const successMessage = computed(() => store.getters['auth/successMessage']);
+const errorMessage = computed(() => store.getters['auth/errorMessage']);
 
 const handleForgotPassword = async () => {
-  loading.value = true;
-  successMessage.value = '';
-  errorMessage.value = '';
-
-  // Simulate an API call for password reset
-  setTimeout(() => {
-    if (email.value === 'test@example.com') {
-      successMessage.value = 'Password reset link has been sent to your email.';
-    } else {
-      errorMessage.value = 'Email not found. Please try again.';
-    }
-    loading.value = false;
-  }, 2000);
+  await store.dispatch('auth/forgotPassword', email.value);
 };
 </script>
 
