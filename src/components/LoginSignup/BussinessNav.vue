@@ -38,7 +38,7 @@ export default {
 
         // Navigation functions
         const goToLogin = () => {
-            router.push('/mainlanding');
+            router.push('/');
         };
 
 
