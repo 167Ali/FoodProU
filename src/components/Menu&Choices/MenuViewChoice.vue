@@ -1,11 +1,12 @@
 <template>
-    <div class="container mt-4">
-        <!-- Button to trigger modal for creating a choice -->
-        <button class="btn btn-primary mb-4" @click="openModal()">Create Choice</button>
 
-        <!-- Cards displaying choice names -->
-        <div class="row">
-            <div v-for="(choice, index) in choices" :key="index" class="col-md-4 mb-4">
+    <div class="container">
+        <div class="card p-4">
+            <h4 class="fw-bold">Choices</h4>
+
+
+
+            <div v-for="(choice, index) in choices" :key="index" class="col-md-12 mb-4">
                 <div class="card p-3 shadow-lg">
                     <div class="card-body">
                         <h5 class="card-title">{{ choice.choicename }}</h5>
@@ -21,6 +22,71 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Invoice Items -->
+            <!-- <div v-for="(item, index) in items1" :key="index"
+                class="d-flex justify-content-between align-items-center mt-3">
+                <div class="d-flex align-items-center">
+                    <img :src="item.image" alt="item.name" class="rounded img-fluid me-3"
+                        style="width: 60px; height: 60px;" />
+                    <div>
+                        <h5 class="mb-0">{{ item.name }}</h5>
+                        <small>{{ item.quantity }}x</small>
+                        <p class="mb-0"><small>{{ item.note }}</small></p>
+                    </div>
+                </div>
+                <h6 class="fw-bold">$55</h6>
+            </div> -->
+
+            <!-- Payment Summary -->
+            <div class="card p-3 mt-4 bg-light">
+                <h5 class="fw-bold">Payment Summary</h5>
+                <div class="d-flex justify-content-between">
+                    <span>Sub Total</span>
+                    <span>$44</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span>Tax</span>
+                    <span>$44</span>
+                </div>
+                <hr />
+                <div class="d-flex justify-content-between">
+                    <span>Total Payment</span>
+                    <span>$$44 </span>
+                </div>
+            </div>
+
+            <!-- Payment Options -->
+            <div class="d-flex justify-content-between mt-3">
+                <button class="btn btn-light flex-fill me-2" :class="{ active: selectedPaymentMethod === 'creditCard' }"
+                    @click="selectPaymentMethod('creditCard')">
+                    <i class="bi bi-credit-card"></i> Credit Card
+                </button>
+                <button class="btn btn-light flex-fill me-2" :class="{ active: selectedPaymentMethod === 'payLater' }"
+                    @click="selectPaymentMethod('payLater')">
+                    <i class="bi bi-wallet2"></i> Pay Later
+                </button>
+                <button class="btn btn-light flex-fill" :class="{ active: selectedPaymentMethod === 'cashPayout' }"
+                    @click="selectPaymentMethod('cashPayout')">
+                    <i class="bi bi-cash"></i> Cash Payout
+                </button>
+            </div>
+
+            <!-- Place Order Button -->
+            <button class="btn btn-primary btn-lg w-100 mt-4" @click="placeOrder">Place An Order</button>
+        </div>
+    </div>
+
+
+
+
+    <div class="container mt-4">
+        <!-- Button to trigger modal for creating a choice -->
+        <button class="btn btn-primary mb-4" @click="openModal()">Create Choice</button>
+
+        <!-- Cards displaying choice names -->
+        <div class="row">
+
         </div>
 
         <!-- Modal for Create/Edit Choice -->
@@ -93,6 +159,46 @@ const saveChoice = (choice) => {
 const deleteChoice = (index) => {
     choices.value.splice(index, 1);
 };
+
+
+
+
+const items1 = ref([
+    {
+        name: 'Pasta Bolognese',
+        quantity: 2,
+        note: 'Dont Add Vegetables',
+        price: 50.50,
+        image: '/src/assets/img3.jpeg',
+    },
+    {
+        name: 'Spicy Fried Chicken',
+        quantity: 2,
+        note: 'Dont Add Vegetables',
+        price: 45.70,
+        image: '/src/assets/img3.jpeg',
+    },
+    {
+        name: 'Spaghetti Carbonara',
+        quantity: 2,
+        note: 'Dont Add Vegetables',
+        price: 35.00,
+        image: '/src/assets/img3.jpeg',
+    },
+]);
+
+
+
+const selectedPaymentMethod = ref('creditCard');
+
+function selectPaymentMethod(method) {
+    selectedPaymentMethod.value = method;
+}
+
+function placeOrder() {
+    console.log('Order placed with method:', selectedPaymentMethod.value);
+}
+
 </script>
 
 <style>
@@ -122,11 +228,11 @@ const deleteChoice = (index) => {
     max-width: 100%;
 }
 
-.card {
+/* .card {
     max-width: 700px;
     border-radius: 8px;
     border: none;
-}
+} */
 
 .card-title {
     font-size: 1.25rem;
@@ -144,5 +250,32 @@ const deleteChoice = (index) => {
 
 .btn-danger {
     border-radius: 20px;
+}
+
+
+.active {
+    border-color: #007bff;
+}
+
+.card {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+img {
+    border-radius: 10px;
+}
+
+button.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+button i {
+    margin-right: 5px;
 }
 </style>

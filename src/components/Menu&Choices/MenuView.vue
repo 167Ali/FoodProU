@@ -4,28 +4,19 @@
         <button class="btn btn-primary mb-4" @click="openModal()">Add Product</button>
 
         <!-- Cards displaying product details -->
-        <div class="row">
-            <div v-for="(product, index) in products" :key="index" class="col-md-12 mb-4">
-                <div class="card p-3 shadow-lg">
-                    <div class="row g-0 align-items-center">
-
-                        <div class="col-md-5 borderr">
+        <div class="row g-4">
+            <div v-for="(product, index) in products" :key="index" class="col-md-4">
+                <div class="card h-100 p-3 shadow-sm">
+                    <div class="row g-0">
+                        <div class="col-4">
                             <img v-if="product.image" :src="product.image" alt="Product Image"
-                                class="img-fluid product-image  rounded-start" />
+                                class="img-fluid rounded" />
                         </div>
-
-
-                        <!-- Content Section -->
-                        <div class="col-md-7">
+                        <div class="col-8">
                             <div class="card-body">
                                 <h5 class="card-title">{{ product.productname }}</h5>
-
-                                <p class="card-text d-flex align-items-center mb-1">
-                                    Price: {{ product.price }}
-                                </p>
-
-                                <p class="card-text">Description:{{ product.description }}</p>
-
+                                <p class="card-text text-muted">Price: {{ product.price }}</p>
+                                <p class="card-text">Description: {{ product.description }}</p>
                                 <div class="card-text">
                                     <strong>Assigned Choices:</strong>
                                     <ul class="scroller-card">
@@ -33,13 +24,10 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <!-- <p class="card-text">
-                                    <small class="text-muted">Destinations: France, Spain, Italy, Germany</small>
-                                </p> -->
                                 <!-- Buttons -->
                                 <div class="d-flex justify-content-end">
-                                    <button class="btn btn-outline-secondary me-2" @click="
-                                        viewProduct(index)">View/Edit</button>
+                                    <button class="btn btn-outline-secondary me-2"
+                                        @click="viewProduct(index)">View/Edit</button>
                                     <button class="btn btn-danger" @click="deleteProduct(index)">Delete</button>
                                 </div>
                             </div>
@@ -62,7 +50,7 @@
 <script setup>
 import { ref } from 'vue';
 import MenuUpdate_AddProduct from './MenuUpdate_AddProduct.vue'; // Import the form component
-// Mock data for products
+
 const products = ref([
     {
         category: 'Pizza',
@@ -89,7 +77,6 @@ const products = ref([
         assignedchoices: ['Choice 1', 'Choice 3', 'Choice 5'], // Assigned choices displayed here
     },
 ]);
-
 
 const isFormVisible = ref(false);
 const isEditMode = ref(false);
@@ -121,10 +108,8 @@ const viewProduct = (index) => {
 const saveProduct = (product) => {
     if (isEditMode.value && currentEditIndex.value !== null) {
         products.value[currentEditIndex.value] = product;
-        console.log(product, "kk");
     } else {
         products.value.push(product);
-        console.log(product, "oo");
     }
     isFormVisible.value = false;
 };
@@ -136,7 +121,6 @@ const deleteProduct = (index) => {
 </script>
 
 <style scoped>
-/* Modal overlay styling */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -149,11 +133,6 @@ const deleteProduct = (index) => {
     align-items: center;
 }
 
-.scroller-card {
-    overflow-y: auto;
-    height: 100px;
-}
-
 .modal-content {
     background: #fff;
     padding: 20px;
@@ -163,37 +142,30 @@ const deleteProduct = (index) => {
 }
 
 .product-image {
-    width: 400px;
-    max-height: 400px;
-    height: auto;
-
-}
-
-.borderr {
-    border-style: inset outset outset inset;
-
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
 .card {
-    max-width: 1000px;
-    border-radius: 8px;
-    border: none;
+    border-radius: 12px;
 }
 
 .card-title {
-    font-size: 1.25rem;
     font-weight: bold;
 }
 
-.card-text i {
-    font-size: 1.2rem;
-    color: #666;
+.card-text {
+    font-size: 0.9rem;
 }
 
-.btn-outline-secondary {
-    border-radius: 20px;
+.scroller-card {
+    max-height: 100px;
+    overflow-y: auto;
 }
 
+.btn-outline-secondary,
 .btn-danger {
     border-radius: 20px;
 }

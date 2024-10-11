@@ -11,7 +11,7 @@
                     <div class="col-md-6 col-12 ps-4 py-4">
                         <div class="mb-3">
                             <label for="productName" class="form-label">Product Name</label>
-                            <input type="text" class="form-control" id="productName" v-model="productForm.name"
+                            <input type="text" class="form-control" id="productName" v-model="productForm.productname"
                                 required />
                         </div>
                         <!-- Product Price -->
@@ -31,7 +31,7 @@
                             <div class="scroller-card">
                                 <div v-for="(choice, index) in availableChoices" :key="index" class="form-check">
                                     <input type="checkbox" class="form-check-input" :id="'choice' + index"
-                                        v-model="productForm.assignedChoices" :value="choice" />
+                                        v-model="productForm.assignedchoices" :value="choice" />
                                     <label class="form-check-label" :for="'choice' + index">{{ choice }}</label>
                                 </div>
                             </div>
@@ -89,11 +89,11 @@ const availableChoices = ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4', 'Choic
 const productFormRef = ref(null);
 const isFormValidated = ref(false);
 const productForm = reactive({
-    name: '',
+    productname: '',
     description: '',
     price: 0,
     image: null, // Now directly storing the image data URL
-    assignedChoices: [], // Array to store selected choices
+    assignedchoices: [], // Array to store selected choices
 });
 const fileInput = ref(null);
 

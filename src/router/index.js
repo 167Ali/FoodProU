@@ -145,7 +145,7 @@ const routes = [
     component: RestOwnerProfile,
   },
   {
-    path: '/order-reorder',
+    path: '/orderreorder',
     name: 'OrderReorder',
     component: OrderReorder,
   },
