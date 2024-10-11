@@ -1,14 +1,18 @@
 // store/index.js
 
 import { createStore } from 'vuex';
-
+import order from './modules/order'; // import the order module
+import Prevorder from './modules/PrevorderDetail';
 import axios from 'axios';
 
 
 
 
 const store = createStore({
-
+  modules: {
+    order, // register the order module
+    Prevorder,
+  },
   state: {
 
     token: localStorage.getItem('token') || null,

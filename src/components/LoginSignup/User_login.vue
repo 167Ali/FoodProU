@@ -182,7 +182,7 @@ export default defineComponent({
                         router.push({ name: 'AdminDashboard' });
                         break;
                     case 'Customer':
-                        router.push({ name: 'Customer_Dashboard' });
+                        router.push({ name: 'DashboardResturantPage' });
                         break;
                     case 'Restaurant Owner':
                         router.push({ name: 'RestaurantOwner_Dashboard' });
