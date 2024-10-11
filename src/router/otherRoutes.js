@@ -14,5 +14,10 @@ export default [
         name: 'ModalHurara',
         component: () => import('../components/OtherComponents/ModalHurara.vue')
     },
+    {
+        path: '/testingFileHurara',
+        name: 'testingFileHurara',
+        component: () => import('../components/testingFIleHurara.vue')
+    },
 
 ];

@@ -1,8 +1,9 @@
 <script setup>
+import hello from './views/hello.vue';
 </script>
 
 <template>
-<router-view></router-view>
+<hello/>    
 </template>
 
 
