@@ -21,11 +21,9 @@ import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_D
 // import Moreinfo from '../components/Customer/Moreinfo.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
 
-<<<<<<< HEAD
 // import SetNewPassword from '../components/LoginSignup/SetNewPassword.vue'
 import hello from '@/views/hello.vue'
-=======
->>>>>>> 07fac950d5ae53fca06da9155055cd5e77396210
+
 const routes = [
   {
     path: '/Navbarheader',
