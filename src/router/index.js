@@ -22,11 +22,7 @@ import RestaurantCard from '@/components/Customer/RestaurantCard.vue'
 import adminRoutes from './adminRoutes';
 import customerRoutes from './customerRoutes';
 import restaurantOwnerRoutes from './restaurantownerRoutes';
-import ReviewsAdmin from '@/components/Admin/ReviewsAdmin.vue'
-import ResturantReviews from '@/components/RestaurantOwner/ResturantReviews.vue'
-import OrderRating from '@/components/Customer/OrderRating.vue'
 import otherRoutes from './otherRoutes'; // Miscellaneous routes
-import hello from '@/views/hello.vue'
 // import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
 // import Moreinfo from '../components/Customer/Moreinfo.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
@@ -57,26 +53,6 @@ const routes = [
     path: '/RestaurantPage',
     name: 'RestaurantPage',
     component: Restaurantpage
-  },
-  {
-    path: '/reset-password',
-        name: 'SetNewPassword',
-        component: hello
-  },
-  {
-    path: '/orderrating',
-    name: 'OrderRating',
-    component: OrderRating
-  },
-  {
-    path: '/ReviewAdmin',
-    name: 'ReviewAdmin',
-    component: ReviewsAdmin
-  },
-  {
-    path: '/ResturantReviews',
-    name: 'ResturantReviews',
-    component: ResturantReviews
   },
   {
     path: '/Restaurantcard',

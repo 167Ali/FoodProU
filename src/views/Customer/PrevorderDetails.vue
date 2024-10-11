@@ -62,9 +62,6 @@
                     <p>Need an invoice?</p>
                     <button class="invoice-button" @click="downloadInvoice">Download invoice</button>
                 </div>
-                <div>
-                    <OrderRating />
-                </div>
             </div>
         </div>
 
@@ -78,11 +75,10 @@
 </template>
 
 <script>
-import { computed, onMounted } from 'vue';
-import { useStore } from 'vuex';
+import { ref, onMounted } from 'vue';
+import { getOrderDetails, downloadOrderInvoice } from '../../Services/customer/PrevorderdetailService';
 import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
-import OrderRating from '@/components/Customer/OrderRating.vue';
 
 export default {
     name: 'PrevOrderDetails',
@@ -95,23 +91,24 @@ export default {
     components: {
         LoginHeader,
         PageFooter,
-        OrderRating,
     },
     setup(props) {
-        const store = useStore();
+        const order = ref(null);
+        const error = ref(null);
 
-        const order = computed(() => store.getters['order/order']);
-        const error = computed(() => store.getters['order/error']);
-        const loading = computed(() => store.getters['order/loading']);
-
-        const fetchOrderDetails = () => {
-            store.dispatch('order/fetchOrderDetails', props.id);
+        const fetchOrderDetails = async () => {
+            try {
+                order.value = await getOrderDetails(props.id);
+            } catch (err) {
+                error.value = err.message;
+            }
         };
 
         const downloadInvoice = async () => {
             try {
-                await store.dispatch('order/downloadInvoice', props.id);
-            } catch (error) {
+                await downloadOrderInvoice(props.id);
+            } catch (err) {
+                console.error(err.message);
                 alert('Failed to download invoice');
             }
         };
@@ -123,7 +120,6 @@ export default {
         return {
             order,
             error,
-            loading,
             downloadInvoice,
         };
     },
