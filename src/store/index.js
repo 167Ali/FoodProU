@@ -1,12 +1,15 @@
+
 // store/index.js
 import { createStore } from 'vuex';
 import axios from 'axios';
-
-
-const store =  createStore({
-  state: {
-    token: localStorage.getItem('token') || null,
-    user: { role: null, userId: null },  // Initialize user state
+const store = createStore({
+  modules: {
+    order, // register the order module
+    Prevorder,
+    Resturantownerreviews,
+    Reviews,
+   profile: profileModule, 
+    auth:AuthStore,
   },
   getters: {
     isAuthenticated: (state) => !!state.token,
@@ -69,3 +72,5 @@ const store =  createStore({
   }
 });
 export default store;
+
+

@@ -1,76 +1,4 @@
-<<<<<<< HEAD
-// router/index.js
-import { createRouter, createWebHistory } from 'vue-router';
-import store from '../store/index'; // Import the Vuex store
-import Hello from '../views/Main_Landing.vue';
-import UserLogin from '../components/User_login.vue';
-import UserSignup from '../components/User_signup.vue';
-import RestaurantOwnerDashboard from '../views/RestaurantOwner_Dashboard.vue';
-import AdminDashboard from '../views/Admin_Dashboard.vue';
-import CustomerDashboard from '../views/Customer_Dashboard.vue';
 
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Hello,
-  },
-  {
-    path: '/User_login',
-    name: 'UserLogin',
-    component: UserLogin,
-  },
-  {
-    path: '/User_signup',
-    name: 'UserSignup',
-    component: UserSignup,
-  },
-  {
-    path: '/restaurant-owner-dashboard',
-    name: 'RestaurantOwnerDashboard',
-    component: RestaurantOwnerDashboard,
-    meta: { requiresAuth: true, role: 'Restaurant Owner' },
-  },
-  {
-    path: '/admin-dashboard',
-    name: 'AdminDashboard',
-    component: AdminDashboard,
-    meta: { requiresAuth: true, role: 'Admin' },
-  },
-  {
-    path: '/customer-dashboard',
-    name: 'CustomerDashboard',
-    component: CustomerDashboard,
-    meta: { requiresAuth: true, role: 'Customer' },
-  },
-];
-
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-});
-
-// Navigation Guard to check user role and authentication
-router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  const userRole = store.state.user.role;
-
-  if (requiresAuth && !store.getters.isAuthenticated) {
-    // Not authenticated, redirect to login
-    next({ name: 'UserLogin' });
-  } else if (requiresAuth && to.meta.role && userRole !== to.meta.role) {
-    // Role doesn't match, redirect to appropriate dashboard
-    if (store.getters.isAdmin) next({ name: 'AdminDashboard' });
-    else if (store.getters.isCustomer) next({ name: 'CustomerDashboard' });
-    else if (store.getters.isRestaurantOwner) next({ name: 'RestaurantOwnerDashboard' });
-    else next('/');
-  } else {
-    next(); // Proceed to the route
-  }
-});
-
-export default router;
-=======
 import { createRouter, createWebHistory } from 'vue-router'
 import NavbarHeader from '../views/NavbarHeader.vue'
 import Restaurantpage from '../views/Customer/RestaurantPage.vue'
@@ -90,11 +18,25 @@ import Main_landing from '../views/Login_Signup/Main_Landing.vue'
 import Business_Landing from '../views/Login_Signup/Bussiness_Landing.vue'
 import AdminFinanceDashboard from '../components/Admin/AdminFinanceDashboard.vue'
 import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_Dashboard.vue'
+import ResturantOwner from '@/components/RestaurantOwner/ResturantOwner.vue'
+import RestaurantCard from '@/components/Customer/RestaurantCard.vue'
+import adminRoutes from './adminRoutes';
+import customerRoutes from './customerRoutes';
+import restaurantOwnerRoutes from './restaurantownerRoutes';
+import ReviewsAdmin from '@/components/Admin/ReviewsAdmin.vue'
+import ResturantReviews from '@/components/RestaurantOwner/ResturantReviews.vue'
+import OrderRating from '@/components/Customer/OrderRating.vue'
+import otherRoutes from './otherRoutes'; // Miscellaneous routes
+import hello from '@/views/hello.vue'
 // import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
 // import Moreinfo from '../components/Customer/Moreinfo.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
 
 const routes = [
+  ...adminRoutes,
+  ...customerRoutes,
+  ...restaurantOwnerRoutes,
+  ...otherRoutes,
   {
     path: '/Navbarheader',
     name: 'Navbarheader',
@@ -113,15 +55,48 @@ const routes = [
     ]
   },
   {
-    path: '/',
+    path: '/RestaurantPage',
     name: 'RestaurantPage',
     component: Restaurantpage
   },
   {
+    path: '/reset-password',
+        name: 'SetNewPassword',
+        component: hello
+  },
+  {
+    path: '/orderrating',
+    name: 'OrderRating',
+    component: OrderRating
+  },
+  {
+    path: '/ReviewAdmin',
+    name: 'ReviewAdmin',
+    component: ReviewsAdmin
+  },
+  {
+    path: '/ResturantReviews',
+    name: 'ResturantReviews',
+    component: ResturantReviews
+  },
+  {
+    path: '/Restaurantcard',
+    name: 'RestaurantCard',
+    component: RestaurantCard
+  },
+  {
     path: '/admin-dashboard',
     name: 'AdminDashboard',
-    component: AdminDashboard
+    component: AdminDashboard,
+    children: [
+      {
+        path: '/viewallorders',
+        name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
+        component: ViewAllOrdersAdm // This is fine if you need this route
+      },
+    ]
   },
+ 
   {
     path: '/AdminFinanceDashboard',
     name: 'AdminFinanceDashboard',
@@ -130,7 +105,14 @@ const routes = [
   {
     path: '/RestaurantOwnerDashboard',
     name: 'RestaurantOwner_Dashboard',
-    component: RestaurantOwner_Dashboard
+    component: RestaurantOwner_Dashboard,
+    children: [
+      {
+        path: '/Resturant-owner',
+        name: 'RestaurantOwner',
+        component: ResturantOwner
+      }
+    ]
   },
   {
     path: '/dashboardresturantpage',
@@ -157,13 +139,9 @@ const routes = [
     name: 'ModalView',
     component: ModalView
   },
+  
   {
-    path: '/viewallorders',
-    name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
-    component: ViewAllOrdersAdm // This is fine if you need this route
-  },
-  {
-    path: '/mainlanding',
+    path: '/',
     name: 'Main_landing', // Change name to avoid duplicates
     component: Main_landing // This is fine if you need this route
   },
@@ -203,4 +181,4 @@ const router = createRouter({
 })
 
 export default router
->>>>>>> dc494b7fd631f769a3d79f4a3933a615370fffee
+ 
