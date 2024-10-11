@@ -9,17 +9,8 @@
         <button class="btn btn-login me-3" @click="showLoginModal = true">Login</button>
         <button class="btn btn-signup" @click="showSignUpModal = true">Sign Up</button>
       </div>
-
       <!-- Right half for image -->
-      <div class="image-wrapper">
-        <img src="../../assets/bg3.gif" alt="Landing Logo" class="logo" />
-      </div>
-
-      <LoginModal :showModal="showLoginModal" @close="closeLoginModal" />
-      <SignUpModal :showModal="showSignUpModal" @close="closeSignUpModal" />
-
     </div>
-
     <!-- Right half for image -->
     <div class="image-wrapper">
       <img src="../../assets/bg3.gif" alt="Landing Logo" class="logo" />
