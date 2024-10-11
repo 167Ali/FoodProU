@@ -6,7 +6,7 @@
         <!-- Cards displaying choice names -->
         <div class="row">
             <div v-for="(choice, index) in choices" :key="index" class="col-md-4 mb-4">
-                <div class="card">
+                <div class="card p-3 shadow-lg">
                     <div class="card-body">
                         <h5 class="card-title">{{ choice.choicename }}</h5>
                         <p class="card-text">Min: {{ choice.ischoice }}</p>
@@ -16,7 +16,7 @@
                                 }} - ${{ item.price }}
                             </li>
                         </ul>
-                        <button class="btn btn-secondary me-2" @click="viewChoice(index)">View/Edit</button>
+                        <button class="btn btn-outline-secondary me-2" @click="viewChoice(index)">View/Edit</button>
                         <button class="btn btn-danger" @click="deleteChoice(index)">Delete</button>
                     </div>
                 </div>
@@ -120,5 +120,29 @@ const deleteChoice = (index) => {
     border-radius: 8px;
     width: 500px;
     max-width: 100%;
+}
+
+.card {
+    max-width: 700px;
+    border-radius: 8px;
+    border: none;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card-text i {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.btn-outline-secondary {
+    border-radius: 20px;
+}
+
+.btn-danger {
+    border-radius: 20px;
 }
 </style>

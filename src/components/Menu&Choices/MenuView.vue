@@ -5,25 +5,45 @@
 
         <!-- Cards displaying product details -->
         <div class="row">
-            <div v-for="(product, index) in products" :key="index" class="col-md-4 mb-4">
-                <div class="card">
-                    <img v-if="product.image" :src="product.image" alt="Product Image" class="card-img-top" />
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.productname }}</h5>
-                        <p class="card-text">Description: {{ product.description }}</p>
-                        <p class="card-text">Price: ${{ product.price }}</p>
+            <div v-for="(product, index) in products" :key="index" class="col-md-12 mb-4">
+                <div class="card p-3 shadow-lg">
+                    <div class="row g-0 align-items-center">
 
-                        <!-- Display Assigned Choices -->
-                        <div class="card-text">
-                            <strong>Assigned Choices:</strong>
-                            <ul class="scroller-card">
-                                <li v-for="(choice, idx) in product.assignedchoices" :key="idx">{{ choice }}</li>
-                            </ul>
+                        <div class="col-md-5 borderr">
+                            <img v-if="product.image" :src="product.image" alt="Product Image"
+                                class="img-fluid product-image  rounded-start" />
                         </div>
 
 
-                        <button class="btn btn-secondary me-2" @click="viewProduct(index)">View/Edit</button>
-                        <button class="btn btn-danger" @click="deleteProduct(index)">Delete</button>
+                        <!-- Content Section -->
+                        <div class="col-md-7">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.productname }}</h5>
+
+                                <p class="card-text d-flex align-items-center mb-1">
+                                    Price: {{ product.price }}
+                                </p>
+
+                                <p class="card-text">Description:{{ product.description }}</p>
+
+                                <div class="card-text">
+                                    <strong>Assigned Choices:</strong>
+                                    <ul class="scroller-card">
+                                        <li v-for="(choice, idx) in product.assignedchoices" :key="idx">{{ choice }}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- <p class="card-text">
+                                    <small class="text-muted">Destinations: France, Spain, Italy, Germany</small>
+                                </p> -->
+                                <!-- Buttons -->
+                                <div class="d-flex justify-content-end">
+                                    <button class="btn btn-outline-secondary me-2" @click="
+                                        viewProduct(index)">View/Edit</button>
+                                    <button class="btn btn-danger" @click="deleteProduct(index)">Delete</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -115,7 +135,7 @@ const deleteProduct = (index) => {
 };
 </script>
 
-<style>
+<style scoped>
 /* Modal overlay styling */
 .modal-overlay {
     position: fixed;
@@ -140,5 +160,41 @@ const deleteProduct = (index) => {
     border-radius: 8px;
     width: 800px;
     max-width: 100%;
+}
+
+.product-image {
+    width: 400px;
+    max-height: 400px;
+    height: auto;
+
+}
+
+.borderr {
+    border-style: inset outset outset inset;
+
+}
+
+.card {
+    max-width: 1000px;
+    border-radius: 8px;
+    border: none;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card-text i {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.btn-outline-secondary {
+    border-radius: 20px;
+}
+
+.btn-danger {
+    border-radius: 20px;
 }
 </style>

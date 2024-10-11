@@ -1,74 +1,33 @@
-// store/authStore.js (Vuex Example)
-
-// import { login, resetPassword } from '@/services/authService';
+// import { postData } from '../../Services/menu/menuServices';
 
 // const state = {
-
-//     user: null,
-
-//     isAuthenticated: false,
-
+//     postResponse: null,
 //     error: null,
-
 // };
 
 // const mutations = {
-
-//     SET_USER(state, user) {
-
-//         state.user = user;
-
-//         state.isAuthenticated = true;
-
+//     SET_POST_RESPONSE(state, data) {
+//         state.postResponse = data;
 //     },
-
 //     SET_ERROR(state, error) {
-
 //         state.error = error;
-
 //     },
-
-//     LOGOUT(state) {
-
-//         state.user = null;
-
-//         state.isAuthenticated = false;
-
-//     },
-
 // };
 
 // const actions = {
-
-//     async login({ commit }, { email, password }) {
-
+//     async sendPostData({ commit }, { category, id }) {
 //         try {
-//             const userData = await login(email, password);
-//             commit('SET_USER', userData);
+//             const data = await postData(category, id);
+//             commit('SET_POST_RESPONSE', data);
 //         } catch (error) {
-//             commit('SET_ERROR', error.message);
+//             commit('SET_ERROR', error);
 //         }
 //     },
-//     async resetPassword({ commit }, { email }) {
-//         try {
-//             await resetPassword(email);
-//         } catch (error) {
-//             commit('SET_ERROR', error.message);
-//         }
-//     },
-//     logout({ commit }) {
-//         commit('LOGOUT');
-//     },
 // };
-// const getters = {
-//     isAuthenticated: (state) => state.isAuthenticated,
-//     getUser: (state) => state.user,
-//     getError: (state) => state.error,
-// };
+
 // export default {
 //     namespaced: true,
 //     state,
 //     mutations,
 //     actions,
-//     getters,
 // };
