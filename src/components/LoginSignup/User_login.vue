@@ -66,15 +66,7 @@
 
             <div class="modal-footer">
 
-                <p>
-
-                    By signing up, you agree to our
-
-                    <a href="#">Terms and Conditions</a> and
-
-                    <a href="#">Privacy Policy</a>.
-
-                </p>
+                <p>By signing up, you agree to our <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>.</p>
 
             </div>
 
@@ -84,148 +76,36 @@
 </template>
 
 
+<script setup>
+import { ref, toRefs, defineProps, defineEmits } from 'vue';
 
-<script>
-
-import {
-
-    defineComponent,
-
-    ref,
-
-    toRefs
-
-} from 'vue';
-
-import axios from 'axios';
-
-import {
-
-    useStore
-
-} from 'vuex';
-
-import {
-
-    useRouter
-
-} from 'vue-router';
-
-
-
-export default defineComponent({
-
-    name: 'Login_modal',
-
-    props: {
-
-        showModal: {
-
-            type: Boolean,
-
-            required: true,
-
-        },
-
-    },
-
-    setup(props, {
-
-        emit
-
-    }) {
-
-        const {
-
-            showModal
-
-        } = toRefs(props);
-
-        const email = ref('');
-
-        const password = ref('');
-
-        const error = ref(null);
-
-        const isLoading = ref(false);
-
-        const store = useStore();
-
-        const router = useRouter();
-
-
-
-        const closeModal = () => {
-
-            emit('close');
-
-        };
-
-
-
-        const login = async () => {
-            error.value = null;
-            isLoading.value = true;
-
-            try {
-                // Dispatch the login action and pass the credentials
-                const response = await store.dispatch('login', {
-                    email: email.value,
-                    password: password.value,
-                });
-
-                // Destructure the role and permissions from the response
-                const { role } = response;
-
-                // Redirect the user based on their role
-                switch (role) {
-                    case 'Admin':
-                        router.push({ name: 'AdminDashboard' });
-                        break;
-                    case 'Customer':
-                        router.push({ name: 'DashboardResturantPage' });
-                        break;
-                    case 'Restaurant Owner':
-                        router.push({ name: 'RestaurantOwner_Dashboard' });
-                        break;
-                    default:
-                        router.push({ name: 'Home' });
-                        break;
-                }
-
-                // Close the modal after successful login
-                closeModal();
-            } catch (err) {
-                // Handle any errors that occur during login
-                error.value = err.message || 'Login failed. Please check your credentials.';
-            } finally {
-                isLoading.value = false; // Ensure loading state is reset
-            }
-        };
-
-
-
-        return {
-
-            showModal,
-
-            email,
-
-            password,
-
-            closeModal,
-
-            login,
-
-            error,
-
-            isLoading,
-
-        };
+// Props
+const props = defineProps({
+    showModal: {
+        type: Boolean,
+        required: true,
 
     },
 
 });
+
+
+// Emits
+const emit = defineEmits(['close']);
+
+// State
+const { showModal } = toRefs(props);
+const email = ref('');
+const password = ref('');
+
+// Functions
+const closeModal = () => {
+    emit('close');
+};
+
+const login = () => {
+    console.log('Email:', email.value, 'Password:', password.value);
+};
 
 </script>
 
