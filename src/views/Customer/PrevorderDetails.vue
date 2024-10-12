@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+
       <LoginHeader />
   
       <div v-if="order" class="order-details-container">
@@ -28,9 +29,11 @@
                 <div class="order-text">
                   <p>Delivered to</p>
                   <p>{{ order.deliveryAddress }}</p>
+
                 </div>
               </div>
             </div>
+
           </div>
   
           <div class="order-summary-details">
@@ -47,6 +50,7 @@
             <hr />
             <div class="payment-details">
               <p><span>Paid with</span> <span>{{ order.paymentMethod }} - Rs. {{ order.paymentAmount }}</span></p>
+
             </div>
           </div>
         </div>
@@ -72,6 +76,7 @@
   
       <PageFooter />
     </div>
+
   </template>
   
   <script setup>
@@ -120,6 +125,7 @@
   <style scoped>
   /* Same styles as before */
   .order-details-container {
+
     display: flex;
     max-width: 100%;
     margin: 0 auto;
@@ -167,10 +173,12 @@
     color: #888;
     font-size: 0.95rem;
     margin: 10px 0;
+
   }
   
   .order-from,
   .delivered-to {
+
     display: flex;
     align-items: flex-start;
     margin: 10px 0;

@@ -1,4 +1,5 @@
 <template>
+  <BussinessNav />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <div class="form-page d-flex">
     <!-- Left Image Section -->
@@ -158,10 +159,13 @@
     </div>
   </div>
 </template>
+
 <script setup>
+
 import {
   ref
 } from "vue";
+
 
 
 const currentPage = ref(1);
@@ -240,6 +244,7 @@ const validatePage = () => {
 const handleFileUpload = (event) => {
   const file = event.target.files[0];
   form.value.logo = file;
+
 };
 
 const submitForm = () => {
@@ -262,7 +267,7 @@ const submitForm = () => {
 }
 
 .background-image {
-  background: url('../assets/chef.gif') no-repeat center center;
+  background: url('../../assets/chef.gif') no-repeat center center;
   background-size: cover;
   width: 50%;
   background-color: #e6ebe7;

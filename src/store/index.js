@@ -1,24 +1,41 @@
-
-
 import { createStore } from 'vuex';
-import profileModule from './modules/profile'; 
+
+
 const store = createStore({
- modules: {
-    profile: profileModule, 
-    
+
+import profileModule from './modules/profile'; 
+import AuthStore from './Auth/AuthStore';
+import order from './modules/order'; // import the order module
+import Prevorder from './modules/PrevorderDetail';
+import Resturantownerreviews from './modules/Resturantownerreviews';
+import Reviews from './modules/customerReviews';
+import axios from 'axios';
+
+
+
+
+const store = createStore({
+  modules: {
+    order, // register the order module
+    Prevorder,
+    Resturantownerreviews,
+    Reviews,
+   profile: profileModule, 
+    auth:AuthStore,
   },
-  state:{
+
+  state: {
+
+  },
+  getters: {
   },
   mutations: {
 
   },
   actions: {
+    // Define actions for async calls and committing mutations
 
-  },
-  getters: {
- 
   },
 });
 
 export default store;
-

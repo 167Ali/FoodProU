@@ -1,4 +1,5 @@
 <template>
+
   <div class="container my-5">
     <div class="row">
       <!-- Left side: Delivery Address Section -->
@@ -121,9 +122,11 @@
           <p>I agree that placing the order places me under an obligation to make a payment in accordance with the General Terms and Conditions.</p>
         </div>
       </div>
+
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { defineComponent } from 'vue';
@@ -210,12 +213,12 @@ h4 {
 }
 
 /* When the checkbox is checked */
-input:checked + .slider {
+input:checked+.slider {
   background-color: #00754ad9;
 }
 
 /* Move the slider to the right */
-input:checked + .slider:before {
+input:checked+.slider:before {
   transform: translateX(16px);
 }
 
@@ -237,17 +240,23 @@ input:checked + .slider:before {
 .restaurant-name {
   font-weight: 500;
 }
+
 .order-placed-content {
   font-size: 15px;
 }
+
 .delivery-check {
   border: 1px solid rgb(53, 53, 53);
   padding: 20px 40px;
   border-radius: 10px;
 }
+
+
 .general-terms {
   margin-top: 20px;
   color: rgb(97, 97, 97);
   font-size: 12px;
 }
+
 </style>
+

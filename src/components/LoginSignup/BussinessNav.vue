@@ -9,8 +9,10 @@
             </div>
 
             <div class="navbar-right">
+
                 <!-- Log In buttons -->
                 <button class="auth-button login" @click="goToLogin">Log in</button>
+
             </div>
         </nav>
     </div>
@@ -24,8 +26,10 @@ import { useRouter } from 'vue-router';
 // Router instance
 const router = useRouter();
 
+
 // State management
 const showBanner = ref(true);
+
 
 // Function to close the business banner
 const closeBanner = () => {

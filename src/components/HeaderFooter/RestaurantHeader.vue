@@ -35,7 +35,7 @@ const toggleLike = () => {
   isLiked.value = !isLiked.value
 }
 
-const logo = ref('../assets/logo.jpeg')
+const logo = ref('../../assets/logo.jpeg')
 const name = ref('Burger Lab — Johar Town South')
 const categories = ref(['Burgers', 'Fast Food', 'Western', 'Shakes'])
 const deliveryFee = ref(79)

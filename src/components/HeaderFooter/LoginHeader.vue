@@ -12,34 +12,57 @@
                 <div v-show="dropdownOpen" class="dropdownmenu">
                     <ul>
                         <li>
-                            <font-awesome-icon :icon="['fas', 'shopping-bag']" />
-                            Order & Reorder
-                        </li>
-                        <li>
-                            <font-awesome-icon :icon="['fas', 'user']" />
-                            Profile
+                            <router-link to="/OrderReorder" class="nav-link">
+                                <font-awesome-icon :icon="['fas', 'shopping-bag']" />
+                                <span>Order & Reorder</span>
+                            </router-link>
                         </li>
 
                         <li>
-                            <font-awesome-icon :icon="['fas', 'question-circle']" />
-                            Help center
+                            <router-link to="/profilesettings" class="nav-link">
+                                <font-awesome-icon :icon="['fas', 'user']" />
+                                <span>Profile</span>
+                            </router-link>
                         </li>
+
                         <li>
-                            <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
-                            Logout
+                            <router-link to="/help-center" class="nav-link">
+                                <font-awesome-icon :icon="['fas', 'question-circle']" />
+                                <span>User Guide</span>
+                            </router-link>
                         </li>
+
+                        <li>
+                            <router-link to="/logout" class="nav-link">
+                                <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
+                                <span>Logout</span>
+                            </router-link>
+                        </li>
+
                     </ul>
                 </div>
             </div>
 
-            <div class="cart-icon">
-                <font-awesome-icon :icon="['fas', 'shopping-cart']" />
-            </div>
+            <!-- Heart Button -->
+            <router-link to="/favoritespage" class="favorites-button">
+                <button class="heart-icon-button">
+                    <font-awesome-icon :icon="['fas', 'heart']" />
+                </button>
+            </router-link>
+
+            <!-- Cart Button -->
+            <router-link to="/RestaurantPage" class="cart-button">
+                <button class="cart-icon-button">
+                    <font-awesome-icon :icon="['fas', 'shopping-cart']" />
+                </button>
+            </router-link>
         </div>
     </nav>
 </template>
 
+
 <script setup>
+
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -50,6 +73,7 @@ import {
     faUser,
     faQuestionCircle,
     faSignOutAlt,
+    faHeart, // Added heart icon
 } from '@fortawesome/free-solid-svg-icons';
 
 // Add icons to the library
@@ -60,6 +84,7 @@ library.add(
     faUser,
     faQuestionCircle,
     faSignOutAlt,
+    faHeart // Added heart icon to library
 );
 
 // Reactive state
@@ -80,6 +105,7 @@ const closeDropdown = (event) => {
     }
 };
 
+
 // Lifecycle hooks
 onMounted(() => {
     document.addEventListener('click', closeDropdown);
@@ -89,6 +115,7 @@ onBeforeUnmount(() => {
     document.removeEventListener('click', closeDropdown);
 });
 </script>
+
 
 <style scoped>
 .navbar {
@@ -146,6 +173,8 @@ onBeforeUnmount(() => {
     border-radius: 8px;
     min-width: 200px;
     z-index: 1000;
+
+
 }
 
 .dropdownmenu ul {
@@ -168,14 +197,39 @@ onBeforeUnmount(() => {
     border-radius: 5px;
 }
 
+
 .cart-icon {
+
     margin-left: 20px;
     display: flex;
     align-items: center;
+}
+
+.heart-icon-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
     font-size: 25px;
 }
 
-.cart-icon:hover {
+.heart-icon-button:hover {
+    color: #ff4b4b;
+}
+
+.cart-button {
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.cart-icon-button {
+    background-color: transparent;
+    border: none;
     cursor: pointer;
+    font-size: 25px;
+}
+
+.cart-icon-button:hover {
+    color: #00754a;
 }
 </style>

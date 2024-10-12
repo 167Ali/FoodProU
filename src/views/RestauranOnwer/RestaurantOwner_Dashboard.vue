@@ -1,4 +1,5 @@
 <template>
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -119,12 +120,14 @@
             </div>
             <div class="order-total text-end">
               <h5 class="text-price">$ {{ order.totalPrice }}</h5>
+
             </div>
             <button class="btn btn-order">View</button>
           </div>
         </div>
       </div>
     </div>
+
   </template>
   
   <script setup>
@@ -323,3 +326,4 @@
   }
   </style>
   
+
