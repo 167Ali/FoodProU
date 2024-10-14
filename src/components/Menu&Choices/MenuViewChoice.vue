@@ -1,26 +1,64 @@
 <template>
 
     <div class="container">
-        <div class="card p-4">
-            <h4 class="fw-bold">Choices</h4>
-
-
+        <div class="card p-4 scroller">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="fw-bold">Choices</h4>
+                <button class="btn btn-primary" @click="openModal()" title="Add Choice">Add</button>
+            </div>
 
             <div v-for="(choice, index) in choices" :key="index" class="col-md-12 mb-4">
-                <div class="card p-3 shadow-lg">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ choice.choicename }}</h5>
-                        <p class="card-text">Min: {{ choice.ischoice }}</p>
-                        <p class="card-text">Choice Type: {{ choice.choicetype }}</p>
-                        <ul class="scroller-card">
+                <div class="card p-2 shadow-lg">
+                    <div class="row solo-card">
+                        <div class=" col-10">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ choice.choicename }}</h5>
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <p class="card-text py-1 my-1 mb-0 mr-2">
+                                        <strong>Selection:</strong>
+                                        {{ choice.ischoice == 1 ? ' Required' : ' Optional' }}
+                                    </p>
+                                    <p class="card-text py-0 my-0 text-capital mb-0">
+                                        <strong>Choice Type:</strong> {{ choice.choicetype }}
+                                    </p>
+                                </div>
+                                <!-- <ol class="scroller-card">
                             <li v-for="(item, idx) in choice.choiceitems" :key="idx">{{ item.name
                                 }} - ${{ item.price }}
                             </li>
-                        </ul>
-                        <button class="btn btn-outline-secondary me-2" @click="viewChoice(index)">View/Edit</button>
-                        <button class="btn btn-danger" @click="deleteChoice(index)">Delete</button>
+                        </ol> -->
+
+                                <div class="table-responsive scroller-card">
+                                    <table class="table table-striped">
+                                        <!-- <thead>
+                                            <tr>
+                                                <th class="fs-6">Name</th> 
+                                                <th class="fs-6">Price</th> 
+                                            </tr>
+                                        </thead> -->
+                                        <tbody>
+                                            <tr v-for="(item, idx) in choice.choiceitems" :key="idx">
+                                                <td class="small">{{ item.name }}</td>
+                                                <!-- Smaller text for data -->
+                                                <td class="small">{{ item.price }} pkr</td>
+                                                <!-- Smaller text for data -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 d-flex flex-column justify-content-center">
+                            <button class="btn btn-outline mb-2" @click="viewChoice(index)">
+                                <i class="fa-regular fa-pen-to-square fa-xl" style="color: #343f50;"></i>
+                            </button>
+                            <button class="btn btn-outline" @click="deleteChoice(index)">
+                                <i class="fa-regular fa-trash-can fa-xl" style="color: #444e5f;"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
             <!-- Invoice Items -->
@@ -38,42 +76,11 @@
                 <h6 class="fw-bold">$55</h6>
             </div> -->
 
-            <!-- Payment Summary -->
-            <div class="card p-3 mt-4 bg-light">
-                <h5 class="fw-bold">Payment Summary</h5>
-                <div class="d-flex justify-content-between">
-                    <span>Sub Total</span>
-                    <span>$44</span>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <span>Tax</span>
-                    <span>$44</span>
-                </div>
-                <hr />
-                <div class="d-flex justify-content-between">
-                    <span>Total Payment</span>
-                    <span>$$44 </span>
-                </div>
-            </div>
+
 
             <!-- Payment Options -->
-            <div class="d-flex justify-content-between mt-3">
-                <button class="btn btn-light flex-fill me-2" :class="{ active: selectedPaymentMethod === 'creditCard' }"
-                    @click="selectPaymentMethod('creditCard')">
-                    <i class="bi bi-credit-card"></i> Credit Card
-                </button>
-                <button class="btn btn-light flex-fill me-2" :class="{ active: selectedPaymentMethod === 'payLater' }"
-                    @click="selectPaymentMethod('payLater')">
-                    <i class="bi bi-wallet2"></i> Pay Later
-                </button>
-                <button class="btn btn-light flex-fill" :class="{ active: selectedPaymentMethod === 'cashPayout' }"
-                    @click="selectPaymentMethod('cashPayout')">
-                    <i class="bi bi-cash"></i> Cash Payout
-                </button>
-            </div>
 
             <!-- Place Order Button -->
-            <button class="btn btn-primary btn-lg w-100 mt-4" @click="placeOrder">Place An Order</button>
         </div>
     </div>
 
@@ -82,12 +89,6 @@
 
     <div class="container mt-4">
         <!-- Button to trigger modal for creating a choice -->
-        <button class="btn btn-primary mb-4" @click="openModal()">Create Choice</button>
-
-        <!-- Cards displaying choice names -->
-        <div class="row">
-
-        </div>
 
         <!-- Modal for Create/Edit Choice -->
         <div v-if="isFormVisible" class="modal-overlay">
@@ -115,7 +116,19 @@ const choices = ref([
         choicename: 'Drink Sizes',
         ischoice: '0',
         choicetype: 'additional',
-        choiceitems: [{ name: 'Small', price: 1 }, { name: 'Medium', price: 1.5 }, { name: 'Large', price: 2 }],
+        choiceitems: [{ name: 'Small', price: 1 }, { name: 'Medium', price: 1.5 }, { name: 'Large', price: 2 }, { name: 'Medium', price: 1.5 }, { name: 'Medium', price: 1.5 }, { name: 'Medium', price: 1.5 }],
+    },
+    {
+        choicename: 'Burger Add-ons',
+        ischoice: '1',
+        choicetype: 'additional',
+        choiceitems: [{ name: 'Bacon', price: 1.5 }, { name: 'Extra Cheese', price: 1 }],
+    },
+    {
+        choicename: 'Drink Sizes',
+        ischoice: '0',
+        choicetype: 'additional',
+        choiceitems: [{ name: 'Small', price: 1 }, { name: 'Medium', price: 1.5 }, { name: 'Large', price: 2 }, { name: 'Medium', price: 1.5 }, { name: 'Medium', price: 1.5 }, { name: 'Medium', price: 1.5 }],
     },
     {
         choicename: 'Burger Add-ons',
@@ -187,21 +200,9 @@ const items1 = ref([
     },
 ]);
 
-
-
-const selectedPaymentMethod = ref('creditCard');
-
-function selectPaymentMethod(method) {
-    selectedPaymentMethod.value = method;
-}
-
-function placeOrder() {
-    console.log('Order placed with method:', selectedPaymentMethod.value);
-}
-
 </script>
 
-<style>
+<style scoped>
 /* Modal overlay styling */
 .modal-overlay {
     position: fixed;
@@ -217,7 +218,13 @@ function placeOrder() {
 
 .scroller-card {
     overflow-y: auto;
-    height: 100px;
+    height: 120px;
+}
+
+/* SCROLLER CHOICES */
+.scroller {
+    overflow-y: auto;
+    height: 910px;
 }
 
 .modal-content {
@@ -244,6 +251,11 @@ function placeOrder() {
     color: #666;
 }
 
+.text-capital {
+    text-transform: capitalize;
+    /* Capitalizes the first letter of the text */
+}
+
 .btn-outline-secondary {
     border-radius: 20px;
 }
@@ -255,6 +267,10 @@ function placeOrder() {
 
 .active {
     border-color: #007bff;
+}
+
+.solo-card {
+    height: 225px;
 }
 
 .card {

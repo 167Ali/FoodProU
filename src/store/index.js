@@ -1,18 +1,11 @@
+// store/index.js
 import { createStore } from 'vuex';
+import { menuCategory } from '../store/menu/menuCategory';
+import { menuProduct } from '../store/menu/menuProduct';
 
-const store = createStore({
-  state: {
-
-  },
-  getters: {
-  },
-  mutations: {
-
-  },
-  actions: {
-    // Define actions for async calls and committing mutations
-
+export default createStore({
+  modules: {
+    menuCategory,
+    menuProduct,
   },
 });
-
-export default store;
