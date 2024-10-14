@@ -99,19 +99,6 @@ onMounted(() => {
   fetchPastOrders();
 });
 
-
-// Getting the orders from Vuex state
-activeOrders.value = store.getters['order/activeOrders'];
-pastOrders.value = store.getters['order/pastOrders'];
-loadingActive.value = store.getters['order/loadingActive'];
-loadingPast.value = store.getters['order/loadingPast'];
-
-
-
-// Fetch orders when the component is mounted
-onMounted(() => {
-  fetchOrders();
-});
 </script>
 
 <style scoped>

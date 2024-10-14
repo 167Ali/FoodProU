@@ -1,4 +1,5 @@
 <template>
+
     <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
 
         <div class="modal-content">
@@ -11,8 +12,6 @@
 
             </div>
 
-
-
             <div class="modal-body">
 
                 <button class="btn btn-google mb-3">
@@ -23,11 +22,7 @@
 
                 </button>
 
-
-
                 <div class="separator mb-3"></div>
-
-
 
                 <form @submit.prevent="login">
 
@@ -39,12 +34,9 @@
 
                     <div class="mb-3">
 
-                        <input type="password" class="form-control" placeholder="Password" v-model="password"
-                            required />
+                        <input type="password" class="form-control" placeholder="Password" v-model="password" required />
 
                     </div>
-
-
 
                     <button type="submit" class="btn btn-login w-100 mb-3" :disabled="isLoading">
 
@@ -56,62 +48,162 @@
 
                 </form>
 
-
-
                 <div v-if="error" class="alert alert-danger mt-2">{{ error }}</div>
 
             </div>
 
-
-
             <div class="modal-footer">
 
-                <p>By signing up, you agree to our <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>.</p>
+                <p>
+
+                    By signing up, you agree to our
+
+                    <a href="#">Terms and Conditions</a> and
+
+                    <a href="#">Privacy Policy</a>.
+
+                </p>
 
             </div>
 
         </div>
 
     </div>
+
 </template>
 
+<script>
 
-<script setup>
-import { ref, toRefs, defineProps, defineEmits } from 'vue';
+import { defineComponent, ref, toRefs } from 'vue';
 
-// Props
-const props = defineProps({
-    showModal: {
-        type: Boolean,
-        required: true,
+import { useStore } from 'vuex';
+
+import { useRouter } from 'vue-router';
+
+export default defineComponent({
+
+    name: 'Login_modal',
+
+    props: {
+
+        showModal: {
+
+            type: Boolean,
+
+            required: true,
+
+        },
+
+    },
+
+    setup(props, { emit }) {
+
+        const { showModal } = toRefs(props);
+
+        const email = ref('');
+
+        const password = ref('');
+
+        const error = ref(null);
+
+        const isLoading = ref(false);
+
+        const store = useStore();
+
+        const router = useRouter();
+
+        const closeModal = () => {
+
+            emit('close');
+
+        };
+
+        const login = async () => {
+
+            error.value = null;
+
+            isLoading.value = true;
+
+            try {
+
+                const response = await store.dispatch('auth/login', {
+
+                    email: email.value,
+
+                    password: password.value,
+
+                });
+
+                const { role } = response;
+
+                switch (role) {
+
+                    case 'Admin':
+
+                        router.push({ name: 'AdminDashboard' });
+
+                        break;
+
+                    case 'Customer':
+
+                        router.push({ name: 'DashboardResturantPage' });
+
+                        break;
+
+                    case 'Restaurant Owner':
+
+                        router.push({ name: 'RestaurantOwner_Dashboard' });
+
+                        break;
+
+                    default:
+
+                        router.push({ name: 'Home' });
+
+                        break;
+
+                }
+
+                closeModal();
+
+            } catch (err) {
+
+                error.value = err.message || 'Login failed. Please check your credentials.';
+
+            } finally {
+
+                isLoading.value = false;
+
+            }
+
+        };
+
+        return {
+
+            showModal,
+
+            email,
+
+            password,
+
+            closeModal,
+
+            login,
+
+            error,
+
+            isLoading,
+
+        };
 
     },
 
 });
 
-
-// Emits
-const emit = defineEmits(['close']);
-
-// State
-const { showModal } = toRefs(props);
-const email = ref('');
-const password = ref('');
-
-// Functions
-const closeModal = () => {
-    emit('close');
-};
-
-const login = () => {
-    console.log('Email:', email.value, 'Password:', password.value);
-};
-
 </script>
 
-
-
 <style scoped>
+
 .modal-title {
 
     text-align: center;
@@ -121,8 +213,6 @@ const login = () => {
     font-weight: bolder;
 
 }
-
-
 
 .modal-overlay {
 
@@ -148,8 +238,6 @@ const login = () => {
 
 }
 
-
-
 .modal-content {
 
     background-color: white;
@@ -166,8 +254,6 @@ const login = () => {
 
 }
 
-
-
 .modal-header {
 
     display: flex;
@@ -180,15 +266,11 @@ const login = () => {
 
 }
 
-
-
 .modal-header h5 {
 
     margin: 0;
 
 }
-
-
 
 .btn-close {
 
@@ -200,15 +282,11 @@ const login = () => {
 
 }
 
-
-
 .modal-body {
 
     padding: 20px 0;
 
 }
-
-
 
 .separator {
 
@@ -222,8 +300,6 @@ const login = () => {
 
 }
 
-
-
 .separator:before {
 
     content: 'or';
@@ -233,8 +309,6 @@ const login = () => {
     padding: 0 10px;
 
 }
-
-
 
 .btn-google {
 
@@ -254,8 +328,6 @@ const login = () => {
 
 }
 
-
-
 .btn-login {
 
     background-color: #00754A;
@@ -266,8 +338,6 @@ const login = () => {
 
 }
 
-
-
 .btn-login:hover {
 
     background-color: #00925d;
@@ -276,15 +346,11 @@ const login = () => {
 
 }
 
-
-
 .modal-footer {
 
     font-size: 0.85rem;
 
 }
-
-
 
 .modal-footer a {
 
@@ -293,8 +359,6 @@ const login = () => {
     text-decoration: none;
 
 }
-
-
 
 @media (max-width: 768px) {
 
@@ -306,8 +370,6 @@ const login = () => {
 
 }
 
-
-
 @media (max-width: 576px) {
 
     .modal-header {
@@ -316,23 +378,17 @@ const login = () => {
 
     }
 
-
-
     .modal-header h5 {
 
         margin-bottom: 10px;
 
     }
 
-
-
     .modal-body {
 
         padding: 10px 0;
 
     }
-
-
 
     .separator {
 
@@ -341,4 +397,5 @@ const login = () => {
     }
 
 }
+
 </style>
