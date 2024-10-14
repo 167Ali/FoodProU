@@ -98,7 +98,6 @@ onMounted(() => {
   fetchActiveOrders();
   fetchPastOrders();
 });
-</script>
 
 
 // Getting the orders from Vuex state
@@ -107,10 +106,7 @@ pastOrders.value = store.getters['order/pastOrders'];
 loadingActive.value = store.getters['order/loadingActive'];
 loadingPast.value = store.getters['order/loadingPast'];
 
-// Navigate to previous order details page
-const goToPrevOrderDetails = (customerId) => {
-  router.push({ name: 'PrevorderDetails', params: { id: customerId } });
-};
+
 
 // Fetch orders when the component is mounted
 onMounted(() => {

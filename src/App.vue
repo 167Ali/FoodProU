@@ -1,13 +1,18 @@
-<script setup>
-import hello from './views/hello.vue';
-</script>
-
 <template>
-<hello/>    
+    <RouterView></RouterView>
+
+
 </template>
 
 
-<style scoped>
+<script setup>
 
-</style>
 
+
+import { RouterView } from 'vue-router';
+
+
+
+</script>
+
+<style scoped></style>
