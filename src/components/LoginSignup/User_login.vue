@@ -34,8 +34,7 @@
 
                     <div class="mb-3">
 
-                        <input type="password" class="form-control" placeholder="Password" v-model="password"
-                            required />
+                        <input type="password" class="form-control" placeholder="Password" v-model="password" required />
 
                     </div>
 
@@ -204,6 +203,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
+
 .modal-title {
 
     text-align: center;
@@ -397,4 +397,5 @@ export default defineComponent({
     }
 
 }
+
 </style>
