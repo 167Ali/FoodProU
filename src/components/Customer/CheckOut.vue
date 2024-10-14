@@ -5,9 +5,10 @@
       <div class="col-lg-7 mb-4">
         <div class="card p-4">
           <h3>Delivery address</h3>
-          <router-link to="/orderreq"><a class="nxt-btn">Order Request</a></router-link>
+          <router-link to="/orderreq">
+            <a class="nxt-btn">Order Request</a>
+          </router-link>
           <div class="map-container mb-3 mt-2">
-
             <img src="../../assets/images/Screenshot 2024-10-07 151047.png" alt="Map" class="img-fluid rounded">
           </div>
           <div>
@@ -18,11 +19,9 @@
               Lahore
             </p>
           </div>
-          <!--  -->
           <div class="mt-3">
             <textarea class="form-control" rows="3" placeholder="Note to rider - e.g., building, landmark"></textarea>
           </div>
-          <!--  -->
           <hr>
           <p class="contactless-toggle">
             Contactless delivery
@@ -40,7 +39,6 @@
           <h3>Your order from</h3>
           <div class="order-placed-content">
             <p class="restaurant-name">Sam's Kitchen</p>
-
             <div class="order-item d-flex justify-content-between my-1">
               <p>1 × Classic Chicken Momos</p>
               <span>Rs. 400</span>
@@ -53,17 +51,13 @@
               <p>1 × Roghni Naan</p>
               <span>Rs. 60</span>
             </div>
-
             <hr />
-
             <div class="price-breakdown">
               <p class="d-flex justify-content-between">Subtotal <span>Rs. 600</span></p>
               <p class="d-flex justify-content-between">Standard delivery <span>Free</span></p>
               <p class="d-flex justify-content-between">Service fee <span>Rs. 9.99</span></p>
               <p class="d-flex justify-content-between">VAT <span>Rs. 0</span></p>
             </div>
-
-
             <div>
               <div class="d-flex justify-content-between fw-bold">
                 <p class="total">Total</p>
@@ -71,7 +65,13 @@
               </div>
               <span class="total-inc">(Incl. VAT)</span>
             </div>
-
+          </div>
+          <!-- Apply Voucher Component -->
+          <div class="apply-voucher mt-4">
+            <h4>Apply Voucher</h4>
+            <input type="text" v-model="appliedCode" class="form-control mb-3" placeholder="Enter Voucher Code" />
+            <button @click="applyVoucher" class="btn btn-green">Apply</button>
+            <p v-if="discountApplied" class="mt-2">Discount Applied: {{ discount }}%</p>
           </div>
         </div>
       </div>
@@ -84,7 +84,6 @@
         <div class="card mb-4">
           <div class="card-body">
             <h4 class="card-title">Delivery options</h4>
-            <!-- Delivery options content -->
             <div class="form-check mt-3 delivery-check">
               <input class="form-check-input" type="radio" name="deliveryOption" id="standard" checked>
               <label class="form-check-label" for="standard">
@@ -118,28 +117,45 @@
           </div>
         </div>
 
-        <!-- Payment Card -->
-        <div>
-          <!-- Save and Continue Button -->
-          <div class="mt-4">
-            <button class="btn btn-green w-100">Place Order</button>
-          </div>
+        <!-- Save and Continue Button -->
+        <div class="mt-4">
+          <button class="btn btn-green w-100">Place Order</button>
         </div>
         <div class="general-terms">
           <p>By making this purchase you agree to our terms and conditions.</p>
           <p>I agree that placing the order places me under an obligation to make a payment in accordance with the
             General Terms and Conditions.</p>
         </div>
-
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
+import { ref } from 'vue';
+
 export default {
   name: "CheckOut",
+  setup() {
+    const appliedCode = ref('');
+    const discount = ref(0);
+    const vouchers = ref([{ code: 'SAVE10', discount: 10 }, { code: 'OFFER20', discount: 20 }]);
+    const discountApplied = ref(false);
+
+    const applyVoucher = () => {
+      const found = vouchers.value.find(voucher => voucher.code === appliedCode.value);
+      if (found) {
+        discount.value = found.discount;
+        discountApplied.value = true;
+        alert(`Voucher applied! You received a ${discount.value}% discount.`);
+      } else {
+        alert('Invalid voucher code.');
+        discountApplied.value = false;
+      }
+    };
+
+    return { appliedCode, discount, applyVoucher, discountApplied };
+  },
 };
 </script>
 
@@ -153,9 +169,8 @@ h4 {
   font-family: 'Agrandir', 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-/* Map container styles */
 .my-5 {
-  padding: 60px 80px 60px 80px;
+  padding: 60px 80px;
 }
 
 .map-container img {
@@ -184,7 +199,6 @@ h4 {
   font-size: 14px;
 }
 
-/* The switch - the container */
 .switch {
   position: relative;
   top: 4.5px;
@@ -193,14 +207,12 @@ h4 {
   height: 20px;
 }
 
-/* Hide the default checkbox */
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* The slider */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -225,17 +237,14 @@ h4 {
   border-radius: 50%;
 }
 
-/* When the checkbox is checked */
 input:checked+.slider {
   background-color: #00754ad9;
 }
 
-/* Move the slider to the right */
 input:checked+.slider:before {
   transform: translateX(16px);
 }
 
-/* Rounded slider (optional) */
 .slider.round {
   border-radius: 34px;
 }
@@ -270,5 +279,19 @@ input:checked+.slider:before {
   font-size: 12px;
 }
 
-/**/
-</style>
+.apply-voucher h4 {
+  font-family: 'Agrandir', 'Open Sans', sans-serif;
+  color: #00754a;
+}
+
+.apply-voucher .form-control {
+  width: 80%;
+}
+
+.apply-voucher .btn {
+  width: 18%;
+}
+
+.apply-voucher .mt-2 {
+  color: green;
+}</style>

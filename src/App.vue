@@ -1,11 +1,8 @@
-<script setup>
-import hello from './views/hello.vue';
-</script>
-
 <template>
-<hello/>    
+    <RouterView></RouterView>
 </template>
 
+<<<<<<< HEAD
 <style scoped>
 .logo {
   height: 6em;
@@ -20,3 +17,11 @@ import hello from './views/hello.vue';
   filter: drop-shadow(0 0 2em #42b883aa);
 }
 </style>
+=======
+<script setup>
+import { RouterView } from 'vue-router';
+</script>
+
+<style scoped>
+</style>
+>>>>>>> a39dc36dc41fd215846a34e1123d81289e2d0342

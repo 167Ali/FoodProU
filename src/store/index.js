@@ -1,6 +1,17 @@
 // store/index.js
 import { createStore } from 'vuex';
+<<<<<<< HEAD
 import axios from 'axios';
+=======
+import profileModule from './modules/profile'; 
+import AuthStore from './Auth/AuthStore';
+import order from './modules/order'; // import the order module
+import Prevorder from './modules/PrevorderDetail';
+import Resturantownerreviews from './modules/Resturantownerreviews';
+import Reviews from './modules/customerReviews';
+import axios from 'axios';
+
+>>>>>>> a39dc36dc41fd215846a34e1123d81289e2d0342
 const store = createStore({
   modules: {
     order, // register the order module
@@ -12,10 +23,14 @@ const store = createStore({
 
   },
   getters: {
+<<<<<<< HEAD
     isAuthenticated: (state) => !!state.token,
     isAdmin: (state) => state.user.role === 'Admin',
     isCustomer: (state) => state.user.role === 'Customer',
     isRestaurantOwner: (state) => state.user.role === 'Restaurant Owner',
+=======
+    
+>>>>>>> a39dc36dc41fd215846a34e1123d81289e2d0342
   },
   mutations: {
     SET_TOKEN(state, token) {
@@ -71,6 +86,11 @@ const store = createStore({
     }
   }
 });
+<<<<<<< HEAD
 export default store;
 
 
+=======
+
+export default store;
+>>>>>>> a39dc36dc41fd215846a34e1123d81289e2d0342
