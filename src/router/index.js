@@ -17,10 +17,8 @@ import Main_landing from '../views/Login_Signup/Main_Landing.vue'
 import Business_Landing from '../views/Login_Signup/Bussiness_Landing.vue'
 import AdminFinanceDashboard from '../components/Admin/AdminFinanceDashboard.vue'
 import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_Dashboard.vue'
-import AddtoCart from '../components/AddtoCart.vue'
-<<<<<<< HEAD
 import CategoryNavbar from '../components/Customer/CategoryNavbar.vue'
-=======
+import AddtoCart from '../components/AddtoCart.vue'
 import ResturantOwner from '@/components/RestaurantOwner/ResturantOwner.vue'
 import RestaurantCard from '@/components/Customer/RestaurantCard.vue'
 import adminRoutes from './adminRoutes';
@@ -31,17 +29,13 @@ import ResturantReviews from '@/components/RestaurantOwner/ResturantReviews.vue'
 import OrderRating from '@/components/Customer/OrderRating.vue'
 import otherRoutes from './otherRoutes'; // Miscellaneous routes
 import hello from '@/views/hello.vue'
-
->>>>>>> 8e7a37c70ff82fca6db4f2441cf36ce47fb172b7
 // import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
 // import Moreinfo from '../components/Customer/Moreinfo.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
 
 const routes = [
-  ...adminRoutes,
-  ...customerRoutes,
-  ...restaurantOwnerRoutes,
-  ...otherRoutes,
+
+
   {
     path: '/Navbarheader',
     name: 'Navbarheader',
@@ -64,67 +58,21 @@ const routes = [
       },
     ]
   },
-    ]
-  },
   {
-<<<<<<< HEAD
     path: '/catnvbr',
     name: 'categorynavbar',
     component: CategoryNavbar
   },
   {
-    path: '/',
-=======
     path: '/RestaurantPage',
-
->>>>>>> 8e7a37c70ff82fca6db4f2441cf36ce47fb172b7
     name: 'RestaurantPage',
     component: Restaurantpage
   },
   {
-
     path: '/admin-dashboard',
     name: 'AdminDashboard',
     component: AdminDashboard
   },
-
-    path: '/reset-password',
-        name: 'SetNewPassword',
-        component: hello
-  },
-  {
-    path: '/orderrating',
-    name: 'OrderRating',
-    component: OrderRating
-  },
-  {
-    path: '/ReviewAdmin',
-    name: 'ReviewAdmin',
-    component: ReviewsAdmin
-  },
-  {
-    path: '/ResturantReviews',
-    name: 'ResturantReviews',
-    component: ResturantReviews
-  },
-  {
-    path: '/Restaurantcard',
-    name: 'RestaurantCard',
-    component: RestaurantCard
-  },
-  {
-    path: '/admin-dashboard',
-    name: 'AdminDashboard',
-    component: AdminDashboard,
-    children: [
-      {
-        path: '/viewallorders',
-        name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
-        component: ViewAllOrdersAdm // This is fine if you need this route
-      },
-    ]
-  },
- 
   {
     path: '/AdminFinanceDashboard',
     name: 'AdminFinanceDashboard',
@@ -133,14 +81,7 @@ const routes = [
   {
     path: '/RestaurantOwnerDashboard',
     name: 'RestaurantOwner_Dashboard',
-    component: RestaurantOwner_Dashboard,
-    children: [
-      {
-        path: '/Resturant-owner',
-        name: 'RestaurantOwner',
-        component: ResturantOwner
-      }
-    ]
+    component: RestaurantOwner_Dashboard
   },
   {
     path: '/dashboardresturantpage',
@@ -169,32 +110,28 @@ const routes = [
   },
   {
     path: '/viewallorders',
-    name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
-    component: ViewAllOrdersAdm // This is fine if you need this route
+    name: 'ViewAllOrdersAdm', 
+    component: ViewAllOrdersAdm 
   },
   {
     path: '/mainlanding',
-  
-  {
-    path: '/',
-    name: 'Main_landing', // Change name to avoid duplicates
-    component: Main_landing // This is fine if you need this route
+    name: 'Main_landing',
+    component: Main_landing 
   },
   {
     path: '/businesslanding',
-    name: 'Business_Landing', // Change name to avoid duplicates
-    component: Business_Landing // This is fine if you need this route
+    name: 'Business_Landing', 
+    component: Business_Landing 
   },
   {
     path: '/ownermenu',
-    name: 'OwnerMenu', // Change name to avoid duplicates
-    component: () => import('../views/Menu/OwnerMenu.vue') // This is fine if you need this route
+    name: 'OwnerMenu', 
+    component: () => import('../views/Menu/OwnerMenu.vue') 
   },
   {
     path: '/restOwnerProfile',
     name: 'RestOwnerProfile',
     component: RestOwnerProfile
-
   },
   {
     path: '/OrderReorder',
@@ -202,12 +139,21 @@ const routes = [
     component: OrderReorder,
   },
   {
-    path: '/order-details/:id',  // Define dynamic route with 'id' parameter
+    path: '/order-details/:id',  
     name: 'PrevorderDetails',
     component: PrevorderDetails,
-    props: true, // Pass route params as props to the component
-  }
-
+    props: true, 
+  },
+  {
+    path: '/user-guide',
+    name: 'UserGuide', 
+    component: () => import('../components/Customer/UserGuide.vue') 
+  },
+  {
+    path: '/recipe-blog',
+    name: 'RecipeBlog', 
+    component: () => import('../views/Customer/RecipeBlog.vue') 
+  },
 ]
 
 const router = createRouter({
