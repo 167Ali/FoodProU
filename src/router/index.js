@@ -1,7 +1,7 @@
 
 
 import { createRouter, createWebHistory } from 'vue-router'
-import NavbarHeader from '../views/NavbarHeader.vue'
+//import NavbarHeader from '../views/NavbarHeader.vue'
 import Restaurantpage from '../views/Customer/RestaurantPage.vue'
 import AdminDashboard from '../views/Admin/AdminDashboard.vue'
 import CheckOut from '../components/Customer/CheckOut.vue'
@@ -24,23 +24,23 @@ import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_D
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
 
 const routes = [
-  {
-    path: '/Navbarheader',
-    name: 'Navbarheader',
-    component: NavbarHeader,
-    children: [
-      {
-        path: '/checkout',
-        name: 'checkout',
-        component: CheckOut
-      },
-      {
-        path: '/orderreq',
-        name: 'orderreq',
-        component: OrderReq
-      }
-    ]
-  },
+  // {
+  //   path: '/Navbarheader',
+  //   name: 'Navbarheader',
+  //   component: NavbarHeader,
+  //   children: [
+  //     {
+  //       path: '/checkout',
+  //       name: 'checkout',
+  //       component: CheckOut
+  //     },
+  //     {
+  //       path: '/orderreq',
+  //       name: 'orderreq',
+  //       component: OrderReq
+  //     }
+  //   ]
+  // },
   {
     path: '/',
     name: 'RestaurantPage',
