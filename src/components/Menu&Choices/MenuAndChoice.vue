@@ -74,17 +74,30 @@ const messageType = ref('alert-success'); // Default message type
 const isChoiceGroupsVisible = ref(false);
 const isProductCategoryVisibile = ref(false);
 
-const addCategory = () => {
-    if (newCategory.value.trim() !== '') {
-        // Logic to add the category can be added here
-        message.value = `Category added: ${newCategory.value}`;
-        messageType.value = 'alert-success'; // Success message type
-        newCategory.value = ''; // Clear the input field after adding
-    } else {
-        message.value = 'Please enter a category name.';
-        messageType.value = 'alert-danger'; // Error message type
+
+const addCategory = async () => {
+    try {
+        if (newCategory.value.trim() !== '') {
+            // const success = await store.dispatch('', { category: category.value, id: id.value });
+            // if (success) {
+            //     console.log(success)
+            // }
+            // Logic to add the category can be added here
+            message.value = `Category added: ${newCategory.value}`;
+            messageType.value = 'alert-success'; // Success message type
+            newCategory.value = ''; // Clear the input field after adding
+        } else {
+            message.value = 'Please enter a category name.';
+            messageType.value = 'alert-danger'; // Error message type
+        }
+
+    } catch (error) {
+        console.error('Error submitting profile:', error);
+    } finally {
+
     }
 };
+
 // Method to toggle the visibility
 const showChoices = () => {
     isChoiceGroupsVisible.value = true; // Toggle visibility

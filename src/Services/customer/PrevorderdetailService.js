@@ -6,7 +6,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const getOrderDetails = async (customerId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/orders/${customerId}`);
+        const response = await axios.get(`${API_BASE_URL}/api/customers/${customerId}/active-order`);
         return response.data;
     } catch (error) {
         console.error('Error fetching order details:', error);

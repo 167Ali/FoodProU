@@ -1,4 +1,5 @@
 <template>
+  <LoginHeader />
   <div class="container mt-4">
     <h2 class="text-center">Favorite Foods</h2>
     <div class="row">
@@ -16,7 +17,9 @@
       </transition-group>
     </div>
   </div>
+  <PageFooter />
 </template>
+
 
 <script setup>
 import { reactive } from 'vue';
@@ -46,6 +49,7 @@ const foods = reactive([
     name: "Seekh Kebabs",
     price: 350,
     image: "#",
+
   },
 ]);
 </script>

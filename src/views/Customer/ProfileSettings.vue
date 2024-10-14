@@ -23,7 +23,8 @@
                             @focus="onFocus($event)" @blur="onBlur($event)" placeholder="" />
                         <label for="mobile" class="floating-label">Mobile number</label>
                     </div>
-                    <button type="submit" class="btn btn-primary scale-on-hover" :disabled="isProfileFormInvalid">Save</button>
+                    <button type="submit" class="btn btn-primary scale-on-hover"
+                        :disabled="isProfileFormInvalid">Save</button>
                 </form>
             </div>
             <hr />
@@ -39,7 +40,8 @@
                         <span v-if="isEmailVerified" class="badge bg-warning mt-2">Verified</span>
                         <span v-else class="badge bg-danger mt-2">Not Verified</span>
                     </div>
-                    <button type="submit" class="btn btn-primary scale-on-hover" :disabled="!profile.email">Save</button>
+                    <button type="submit" class="btn btn-primary scale-on-hover"
+                        :disabled="!profile.email">Save</button>
                 </form>
             </div>
             <hr />
@@ -60,7 +62,8 @@
                             required @focus="onFocus($event)" @blur="onBlur($event)" placeholder=" " />
                         <label for="newPassword" class="floating-label">New password</label>
                     </div>
-                    <button type="submit" class="btn btn-primary scale-on-hover" :disabled="isPasswordFormInvalid">Save</button>
+                    <button type="submit" class="btn btn-primary scale-on-hover"
+                        :disabled="isPasswordFormInvalid">Save</button>
                     <hr>
                     <router-link to="/fav">View Favorites</router-link> <br>
                     <router-link to="/orderScreen">View Order Screen</router-link> <br>
@@ -140,14 +143,22 @@ const onBlur = (event) => {
 .input-wrapper {
     position: relative;
     margin-bottom: 1.5rem;
-    opacity: 0; 
-    animation: fadeIn 0.5s forwards; 
-    animation-delay: 0.2s; 
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+    animation-delay: 0.2s;
 }
 
-.input-wrapper:nth-child(1) { animation-delay: 0.2s; }
-.input-wrapper:nth-child(2) { animation-delay: 0.3s; }
-.input-wrapper:nth-child(3) { animation-delay: 0.4s; }
+.input-wrapper:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.input-wrapper:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.input-wrapper:nth-child(3) {
+    animation-delay: 0.4s;
+}
 
 input.form-control {
     width: 100%;
