@@ -1,3 +1,4 @@
+
 import { createRouter, createWebHistory } from 'vue-router'
 import NavbarHeader from '../views/NavbarHeader.vue'
 import Restaurantpage from '../views/Customer/RestaurantPage.vue'
@@ -22,7 +23,11 @@ import RestaurantCard from '@/components/Customer/RestaurantCard.vue'
 import adminRoutes from './adminRoutes';
 import customerRoutes from './customerRoutes';
 import restaurantOwnerRoutes from './restaurantownerRoutes';
+import ReviewsAdmin from '@/components/Admin/ReviewsAdmin.vue'
+import ResturantReviews from '@/components/RestaurantOwner/ResturantReviews.vue'
+import OrderRating from '@/components/Customer/OrderRating.vue'
 import otherRoutes from './otherRoutes'; // Miscellaneous routes
+import hello from '@/views/hello.vue'
 // import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
 // import Moreinfo from '../components/Customer/Moreinfo.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
@@ -58,6 +63,7 @@ const routes = [
     component: Restaurantpage
   },
   {
+
     path: '/voucher',
     name: 'Voucher',
     component: Voucher
@@ -66,6 +72,26 @@ const routes = [
     path: '/deals',
     name: 'DealsSection',
     component: Deals
+  },
+  {
+    path: '/reset-password',
+    name: 'SetNewPassword',
+    component: hello
+  },
+  {
+    path: '/orderrating',
+    name: 'OrderRating',
+    component: OrderRating
+  },
+  {
+    path: '/ReviewAdmin',
+    name: 'ReviewAdmin',
+    component: ReviewsAdmin
+  },
+  {
+    path: '/ResturantReviews',
+    name: 'ResturantReviews',
+    component: ResturantReviews
   },
   {
     path: '/Restaurantcard',
@@ -93,12 +119,12 @@ const routes = [
   {
     path: '/RestaurantOwnerDashboard',
     name: 'RestaurantOwner_Dashboard',
-    component: RestaurantOwner_Dashboard, // This should be your main dashboard component
+    component: RestaurantOwner_Dashboard,
     children: [
       {
-        path: 'Resturant-owner', // No leading slash
+        path: '/Resturant-owner',
         name: 'RestaurantOwner',
-        component: ResturantOwner // This can be another component if needed
+        component: ResturantOwner
       }
     ]
   },
@@ -169,3 +195,4 @@ const router = createRouter({
 })
 
 export default router
+

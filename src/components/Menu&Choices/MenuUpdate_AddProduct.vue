@@ -1,70 +1,73 @@
 <template>
-    <div class="row">
-        <!-- Product Form Fields -->
-        <div class="col-md-6">
-            <div class="card p-4">
-                <h5>{{ isEditMode ? 'Edit Product' : 'Create Product' }}</h5>
-                <form ref="productFormRef" @submit.prevent="submitForm" :class="{ 'was-validated': isFormValidated }">
-                    <!-- Product Name -->
-                    <div class="mb-3">
-                        <label for="productName" class="form-label">Product Name</label>
-                        <input type="text" class="form-control" id="productName" v-model="productForm.name" required />
-                    </div>
 
-                    <!-- Product Description -->
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" v-model="productForm.description" rows="3"
-                            required></textarea>
-                    </div>
-
-                    <!-- Product Price -->
-                    <div class="mb-3">
-                        <label for="price" class="form-label">Price</label>
-                        <input type="number" class="form-control" id="price" v-model="productForm.price" required />
-                    </div>
-
-                    <!-- Choices Section -->
-                    <div class="mb-3">
-                        <label class="form-label">Assign Choices</label>
-                        <div v-for="(choice, index) in availableChoices" :key="index" class="form-check">
-                            <input type="checkbox" class="form-check-input" :id="'choice' + index"
-                                v-model="productForm.assignedChoices" :value="choice" />
-                            <label class="form-check-label" :for="'choice' + index">{{ choice }}</label>
-                        </div>
-                    </div>
-
-                    <!-- Image Upload Required Validation -->
-                    <div class="mb-3" v-if="isFormValidated && !productForm.image">
-                        <div class="text-danger">Image is required.</div>
-                    </div>
-
-                    <div class="mt-3">
-                        <button class="btn btn-primary me-2" type="submit">{{ isEditMode ? 'Update' : 'Create'
-                            }}</button>
-                        <button class="btn btn-secondary" type="button" @click="cancelForm">Cancel</button>
-                    </div>
-                </form>
-            </div>
+    <div class="p-2">
+        <div class="mb-3">
+            <h5 class="card-title">{{ isEditMode ? 'Edit Product' : 'Add Product' }}</h5>
         </div>
+        <form ref="productFormRef" @submit.prevent="submitForm" :class="{ 'was-validated': isFormValidated }">
+            <!-- Product Name -->
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-6 col-12 ps-4 py-4">
+                        <div class="mb-3">
+                            <label for="productName" class="form-label">Product Name</label>
+                            <input type="text" class="form-control" id="productName" v-model="productForm.name"
+                                required />
+                        </div>
+                        <!-- Product Price -->
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="price" v-model="productForm.price" required />
+                        </div>
+                        <!-- Product Description -->
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" v-model="productForm.description" rows="3"
+                                style="resize: none;" required></textarea>
+                        </div>
+                        <!-- Choices Section -->
+                        <div class="mb-3">
+                            <label class="form-label">Assign Choices</label>
+                            <div class="scroller-card">
+                                <div v-for="(choice, index) in availableChoices" :key="index" class="form-check">
+                                    <input type="checkbox" class="form-check-input" :id="'choice' + index"
+                                        v-model="productForm.assignedChoices" :value="choice" />
+                                    <label class="form-check-label" :for="'choice' + index">{{ choice }}</label>
+                                </div>
+                            </div>
+                        </div>
 
-        <!-- Image Upload with Preview -->
-        <div class="col-md-6">
-            <div class="card p-4 text-center">
-                <div class="drop-zone" @click="triggerFileInput">
-                    <input type="file" ref="fileInput" @change="handleImageUpload" accept="image/*" class="d-none"
-                        required />
-                    <img v-if="productForm.image" :src="productForm.image" alt="Uploaded Image" class="img-fluid"
-                        @click="triggerFileInput" />
-                    <div v-else>
-                        <i class="bi bi-upload" style="font-size: 48px;"></i>
-                        <p>Drop to upload your photo or <br />
-                            <button class="btn btn-outline-primary">Select file</button>
-                        </p>
+                        <!-- Image Upload Required Validation -->
+                        <div class="mb-3" v-if="isFormValidated && !productForm.image">
+                            <div class="text-danger">Image is required.</div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="p-4 text-center">
+                            <div class="drop-zone" @click="triggerFileInput">
+                                <input type="file" ref="fileInput" @change="handleImageUpload" accept="image/*"
+                                    class="d-none" required />
+                                <img v-if="productForm.image" :src="productForm.image" alt="Uploaded Image"
+                                    class="img-fluid" />
+                                <div v-else>
+                                    <i class="fa-solid fa-arrow-up-from-bracket fa-4x" style="color: #373d49;"></i>
+                                    <p>Click to upload Product photo <br />
+                                        <!-- <button class="btn btn-outline-primary">Select file</button> -->
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="mt-3">
+                <button class="btn btn-primary me-2 px-5 py-2" type="submit">{{ isEditMode ? 'Update' : 'Add'
+                    }}</button>
+                <button class="btn btn-secondary px-5 py-2" type="button" @click="cancelForm">Cancel</button>
+            </div>
+        </form>
     </div>
 </template>
 
@@ -168,6 +171,11 @@ watch(
 
 .drop-zone:hover {
     background-color: #e9ecef;
+}
+
+.scroller-card {
+    overflow-y: auto;
+    height: 100px;
 }
 
 .drop-zone img {

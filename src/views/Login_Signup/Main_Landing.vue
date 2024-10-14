@@ -13,17 +13,17 @@
 
 
 
-      <!-- Right half for image -->
-      <div class="image-wrapper">
-        <img src="../../assets/bg3.gif" alt="Landing Logo" class="logo" />
-      </div>
-
-      <LoginModal :showModal="showLoginModal" @close="closeLoginModal" />
-      <SignUpModal :showModal="showSignUpModal" @close="closeSignUpModal" />
-
+    <!-- Right half for image -->
+    <div class="image-wrapper">
+      <img src="../../assets/bg3.gif" alt="Landing Logo" class="logo" />
     </div>
 
-    
+    <LoginModal :showModal="showLoginModal" @close="closeLoginModal" />
+    <SignUpModal :showModal="showSignUpModal" @close="closeSignUpModal" />
+
+  </div>
+
+
 </template>
 
 <script>
