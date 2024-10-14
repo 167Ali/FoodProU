@@ -11,7 +11,7 @@
                 <div class="points-value">
 
                     <h1>{{ totalPoints }} <i class=" fa-greater-than"></i></h1>
-
+                    <img src="../../assets/bg3.gif" alt="Points Image" class="points-image">
                 </div>
 
             </div>
@@ -97,15 +97,12 @@ const redeemPoints = (reward) => {
 
 /* Points Section */
 .points-section {
-    background-color: #ec008c;
+    background-color: #00754A;
     padding: 30px;
-    /* Increased padding for a more spacious look */
-    border-radius: 10px;
     text-align: center;
     color: white;
     margin-bottom: 20px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    /* Added shadow */
     transition: transform 0.3s;
 }
 
@@ -121,12 +118,25 @@ const redeemPoints = (reward) => {
     padding: 10px;
 }
 
-.points-value h1 {
-    font-size: 30px;
+.points-value {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+}
 
-    margin-right: 90%;
+.points-value h1 {
+    margin: 0;
+   font-size: x-large;
+}
+
+.points-value img {
+    max-width: 100px;
+    height: auto;
+    mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent); 
 
 }
+
 
 .points-link {
     color: white;
@@ -267,8 +277,7 @@ const redeemPoints = (reward) => {
 /* Responsive Styles */
 @media (max-width: 600px) {
     .points-value h1 {
-        font-size: 50px;
-        /* Adjusted for medium screens */
+        font-size: x-large;
     }
 
     .info-boxes {
@@ -291,19 +300,35 @@ const redeemPoints = (reward) => {
 
 
 @media (max-width: 576px) {
-
     /* Make points section text smaller for mobile */
-    .points-value h1 {
-        font-size: 19px;
-        margin-right: 210px;
-    }
+    .points-value {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+}
 
+.points-value h1 {
+    margin: 0;
+   font-size: larger;
+   margin-bottom: auto
+}
+
+.points-value img {
+    max-width: 80px;
+    height: auto;
+    margin-bottom: 50px;
+    mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent); /* Transparency on sides */
+    -webkit-mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent); /* For better browser support */
+
+}
 
     /* Center align the points section for mobile */
     .points-section {
         padding: 25px;
         text-align: center;
     }
+
+ 
 
     /* Stack the info boxes vertically on small screens */
     .info-boxes {
@@ -315,58 +340,23 @@ const redeemPoints = (reward) => {
     /* Adjust the rewards list to show one item per row */
     .voucher-text {
         font-size: 12px;
-        /* Smaller font size for voucher text */
         font-weight: bold;
-        /* Keep it bold for readability */
     }
 
     .rewards-list {
         grid-template-columns: repeat(2, 1fr);
-        /* 2 boxes per row on small screens */
         gap: 10px;
     }
 
     .reward-box {
         font-size: 14px;
-        /* Adjust the font size for smaller screens */
         padding: 10px;
-        /* Reduce padding for better fit */
     }
 
     .terms-link {
         color: #ec008c;
         font-size: 10px;
         text-decoration: underline;
-    }
-
-    .reward-box img {
-        max-width: 50px;
-        /* Slightly smaller image on small screens */
-    }
-
-    .reward-box h4 {
-        font-size: 16px;
-        /* Reduce heading size on small screens */
-    }
-
-    .rewards-title {
-        font-size: 16px;
-        font-weight: bold;
-    }
-
-
-    .reward-box p {
-        font-size: 12px;
-        /* Smaller text for points or descriptions */
-    }
-
-    .points-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px;
-        margin-right: 10px;
-        font-weight: bold;
     }
 
     /* Adjust gift icon size on small screens */
@@ -380,22 +370,8 @@ const redeemPoints = (reward) => {
         max-width: 300px;
         max-height: 100px;
     }
-
-    .gift-icon {
-    font-size: 4px; /* Reduced icon size */
-    margin-bottom: 6px; /* Adjusted space between icon and text */
-    background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transition: transform 0.3s ease; /* Smoother hover animation */
 }
 
-/* Optional hover effect */
-.gift-icon:hover {
-    transform: scale(1.1); /* Slightly increases size on hover */
-}
-
-}
 
 /* Gift Icon Styles */
 .gift-icon {
