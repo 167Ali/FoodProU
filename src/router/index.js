@@ -18,6 +18,7 @@ import Business_Landing from '../views/Login_Signup/Bussiness_Landing.vue'
 import AdminFinanceDashboard from '../components/Admin/AdminFinanceDashboard.vue'
 import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_Dashboard.vue'
 import AddtoCart from '../components/AddtoCart.vue'
+import CategoryNavbar from '../components/Customer/CategoryNavbar.vue'
 // import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
 // import Moreinfo from '../components/Customer/Moreinfo.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
@@ -42,8 +43,13 @@ const routes = [
         path: '/caart',
         name: 'addtocard',
         component: AddtoCart
-      }
+      },
     ]
+  },
+  {
+    path: '/catnvbr',
+    name: 'categorynavbar',
+    component: CategoryNavbar
   },
   {
     path: '/',
