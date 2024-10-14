@@ -154,6 +154,16 @@ const routes = [
     name: 'RecipeBlog', 
     component: () => import('../views/Customer/RecipeBlog.vue') 
   },
+
+  {
+    path: '/rewards',
+    name: 'Rewards', 
+    component: () => import('../views/Customer//Rewards.vue') 
+  },
+
+
+
+
 ]
 
 const router = createRouter({

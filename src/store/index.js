@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
 import profileModule from './modules/profile'; 
+import { rewards } from './modules/rewards'; 
 import AuthStore from './Auth/AuthStore';
 import order from './modules/order'; // import the order module
 import Prevorder from './modules/PrevorderDetail';
@@ -15,8 +16,10 @@ const store = createStore({
     Prevorder,
     Resturantownerreviews,
     Reviews,
+    rewards,
    profile: profileModule, 
     auth:AuthStore,
+
   },
 
   state: {

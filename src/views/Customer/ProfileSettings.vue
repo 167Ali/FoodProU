@@ -1,7 +1,7 @@
 <template>
     <div class="container mt-5 d-flex justify-content-center">
         <div class="form-container">
-            <!-- Profile  -->
+            <!-- Profile -->
             <div class="mb-4">
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <h5 class="fw-bold">My profile</h5>
@@ -9,17 +9,17 @@
                 </div>
                 <form @submit.prevent="saveProfile" class="animate__animated animate__fadeIn">
                     <div class="mb-3 input-wrapper">
-                        <input type="text" v-model="profile.firstName" class="form-control" id="firstName" required
+                        <input type="text" v-model="profile.first_name" class="form-control" id="firstName" required
                             @focus="onFocus($event)" @blur="onBlur($event)" placeholder="" />
                         <label for="firstName" class="floating-label">First name</label>
                     </div>
                     <div class="mb-3 input-wrapper">
-                        <input type="text" v-model="profile.lastName" class="form-control" id="lastName" required
+                        <input type="text" v-model="profile.last_name" class="form-control" id="lastName" required
                             @focus="onFocus($event)" @blur="onBlur($event)" placeholder=" " />
                         <label for="lastName" class="floating-label">Last name</label>
                     </div>
                     <div class="mb-3 input-wrapper">
-                        <input type="text" v-model="profile.mobile" class="form-control" id="mobile" required
+                        <input type="text" v-model="profile.phone_number" class="form-control" id="mobile" required
                             @focus="onFocus($event)" @blur="onBlur($event)" placeholder="" />
                         <label for="mobile" class="floating-label">Mobile number</label>
                     </div>
@@ -28,7 +28,7 @@
                 </form>
             </div>
             <hr />
-            <!-- Email  -->
+            <!-- Email -->
             <div class="mb-4">
                 <h5 class="fw-bold">Email</h5>
                 <br>
@@ -46,10 +46,10 @@
             </div>
             <hr />
             <br />
-            <!-- Password  -->
+            <!-- Password -->
             <div>
                 <h5 class="fw-bold">Password</h5>
-                <br>
+                <br />
                 <form @submit.prevent="savePassword" class="animate__animated animate__fadeIn">
                     <div class="mb-3 input-wrapper">
                         <input type="password" v-model="profile.currentPassword" class="form-control"
@@ -82,13 +82,13 @@ import { useStore } from 'vuex';
 const store = useStore();
 
 const profile = computed(() => store.state.profile);
-const isEmailVerified = computed(() => store.state.profile.isEmailVerified);
+const isEmailVerified = computed(() => profile.value.isEmailVerified);
 
 const isProfileFormInvalid = computed(() => {
     return (
-        !profile.value.firstName ||
-        !profile.value.lastName ||
-        !profile.value.mobile
+        !profile.value.first_name ||
+        !profile.value.last_name ||
+        !profile.value.phone_number
     );
 });
 
@@ -99,9 +99,24 @@ const isPasswordFormInvalid = computed(() => {
     );
 });
 
-const saveProfile = () => store.dispatch('saveProfile');
-const saveEmail = () => store.dispatch('saveEmail');
-const savePassword = () => store.dispatch('savePassword');
+const saveProfile = async () => {
+    try {
+        await store.dispatch('profile/saveProfile', profile.value);
+    } catch (error) {
+        console.error('Failed to save profile:', error);
+    }
+};
+
+const saveEmail = async () => {
+    await store.dispatch('profile/saveEmail', { email: profile.value.email });
+};
+
+const savePassword = async () => {
+    await store.dispatch('profile/savePassword', { 
+        currentPassword: profile.value.currentPassword, 
+        newPassword: profile.value.newPassword 
+    });
+};
 
 const onFocus = (event) => {
     const input = event.target;
@@ -114,7 +129,6 @@ const onBlur = (event) => {
         input.classList.remove('active');
     }
 };
-
 </script>
 
 <style scoped>
@@ -179,7 +193,6 @@ input.form-control:not(:placeholder-shown)+.floating-label {
     background: white;
     padding: 0 5px;
 }
-
 
 .scale-on-hover {
     transition: transform 0.2s ease;
