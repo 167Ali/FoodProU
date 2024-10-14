@@ -98,8 +98,8 @@ onMounted(() => {
   fetchActiveOrders();
   fetchPastOrders();
 });
-
 </script>
+
 
 <style scoped>
   .orders-container {

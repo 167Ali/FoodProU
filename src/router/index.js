@@ -5,7 +5,7 @@ import AdminDashboard from '../views/Admin/AdminDashboard.vue'
 import CheckOut from '../components/Customer/CheckOut.vue'
 import OrderReq from '../components/RestaurantOwner/OrderRequest.vue'
 import OrderReorder from '../views/Customer/OrderReorder.vue'
-import PrevorderDetails from '../views/Customer/PrevorderDetails.vue' // Import new component
+import PrevorderDetails from '../views/Customer/PrevorderDetails.vue'
 import ProfileSettings from '../views/Customer/ProfileSettings.vue'
 import FavoritesPage from '../views/Customer/favs.vue'
 import OrderScreen from '../views/Customer/OrderScreen.vue'

@@ -7,6 +7,7 @@ import Prevorder from './modules/PrevorderDetail';
 import Resturantownerreviews from './modules/Resturantownerreviews';
 import Reviews from './modules/customerReviews';
 import axios from 'axios';
+import ResturantDetailsStore from './customer/ResturantDetailsStore';
 
 
 
@@ -19,7 +20,7 @@ const store = createStore({
     rewards,
    profile: profileModule, 
     auth:AuthStore,
-
+    resturantDetails: ResturantDetailsStore,
   },
 
   state: {
