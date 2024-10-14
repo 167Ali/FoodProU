@@ -18,9 +18,9 @@ import Business_Landing from '../views/Login_Signup/Bussiness_Landing.vue'
 import AdminFinanceDashboard from '../components/Admin/AdminFinanceDashboard.vue'
 import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_Dashboard.vue'
 import AddtoCart from '../components/AddtoCart.vue'
-<<<<<<< HEAD
+
 import CategoryNavbar from '../components/Customer/CategoryNavbar.vue'
-=======
+
 import ResturantOwner from '@/components/RestaurantOwner/ResturantOwner.vue'
 import RestaurantCard from '@/components/Customer/RestaurantCard.vue'
 import adminRoutes from './adminRoutes';
@@ -31,8 +31,7 @@ import ResturantReviews from '@/components/RestaurantOwner/ResturantReviews.vue'
 import OrderRating from '@/components/Customer/OrderRating.vue'
 import otherRoutes from './otherRoutes'; // Miscellaneous routes
 import hello from '@/views/hello.vue'
-
->>>>>>> 8e7a37c70ff82fca6db4f2441cf36ce47fb172b7
+// 
 // import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
 // import Moreinfo from '../components/Customer/Moreinfo.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
@@ -64,20 +63,18 @@ const routes = [
       },
     ]
   },
-    ]
-  },
+
   {
-<<<<<<< HEAD
+  
     path: '/catnvbr',
     name: 'categorynavbar',
     component: CategoryNavbar
   },
+  
   {
-    path: '/',
-=======
+  
     path: '/RestaurantPage',
-
->>>>>>> 8e7a37c70ff82fca6db4f2441cf36ce47fb172b7
+  // 
     name: 'RestaurantPage',
     component: Restaurantpage
   },
@@ -87,10 +84,10 @@ const routes = [
     name: 'AdminDashboard',
     component: AdminDashboard
   },
-
+  {
     path: '/reset-password',
-        name: 'SetNewPassword',
-        component: hello
+    name: 'SetNewPassword',
+    component: hello
   },
   {
     path: '/orderrating',
@@ -172,9 +169,7 @@ const routes = [
     name: 'ViewAllOrdersAdm', // Change name to avoid duplicates
     component: ViewAllOrdersAdm // This is fine if you need this route
   },
-  {
-    path: '/mainlanding',
-  
+  // 
   {
     path: '/',
     name: 'Main_landing', // Change name to avoid duplicates
