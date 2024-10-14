@@ -4,24 +4,24 @@
             <!-- Profile -->
             <div class="mb-4">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h5 class="fw-bold">My profile</h5>
+                    <h5 class="fw-bold">My Profile</h5>
                     <i class="fa-regular fa-user"></i>
                 </div>
                 <form @submit.prevent="saveProfile" class="animate__animated animate__fadeIn">
                     <div class="mb-3 input-wrapper">
                         <input type="text" v-model="profile.first_name" class="form-control" id="firstName" required
                             @focus="onFocus($event)" @blur="onBlur($event)" placeholder="" />
-                        <label for="firstName" class="floating-label">First name</label>
+                        <label for="firstName" class="floating-label">First Name</label>
                     </div>
                     <div class="mb-3 input-wrapper">
                         <input type="text" v-model="profile.last_name" class="form-control" id="lastName" required
                             @focus="onFocus($event)" @blur="onBlur($event)" placeholder=" " />
-                        <label for="lastName" class="floating-label">Last name</label>
+                        <label for="lastName" class="floating-label">Last Name</label>
                     </div>
                     <div class="mb-3 input-wrapper">
                         <input type="text" v-model="profile.phone_number" class="form-control" id="mobile" required
                             @focus="onFocus($event)" @blur="onBlur($event)" placeholder="" />
-                        <label for="mobile" class="floating-label">Mobile number</label>
+                        <label for="mobile" class="floating-label">Mobile Number</label>
                     </div>
                     <button type="submit" class="btn btn-primary scale-on-hover"
                         :disabled="isProfileFormInvalid">Save</button>
@@ -31,7 +31,6 @@
             <!-- Email -->
             <div class="mb-4">
                 <h5 class="fw-bold">Email</h5>
-                <br>
                 <form @submit.prevent="saveEmail" class="animate__animated animate__fadeIn">
                     <div class="mb-3 input-wrapper">
                         <input type="email" v-model="profile.email" class="form-control" id="email" required
@@ -49,25 +48,24 @@
             <!-- Password -->
             <div>
                 <h5 class="fw-bold">Password</h5>
-                <br />
                 <form @submit.prevent="savePassword" class="animate__animated animate__fadeIn">
                     <div class="mb-3 input-wrapper">
                         <input type="password" v-model="profile.currentPassword" class="form-control"
                             id="currentPassword" required @focus="onFocus($event)" @blur="onBlur($event)"
                             placeholder="" />
-                        <label for="currentPassword" class="floating-label">Current password</label>
+                        <label for="currentPassword" class="floating-label">Current Password</label>
                     </div>
                     <div class="mb-3 input-wrapper">
                         <input type="password" v-model="profile.newPassword" class="form-control" id="newPassword"
                             required @focus="onFocus($event)" @blur="onBlur($event)" placeholder=" " />
-                        <label for="newPassword" class="floating-label">New password</label>
+                        <label for="newPassword" class="floating-label">New Password</label>
                     </div>
                     <button type="submit" class="btn btn-primary scale-on-hover"
                         :disabled="isPasswordFormInvalid">Save</button>
                     <hr>
                     <router-link to="/fav">View Favorites</router-link> <br>
                     <router-link to="/orderScreen">View Order Screen</router-link> <br>
-                    <router-link to="/modalView">View modal</router-link> <br>
+                    <router-link to="/modalView">View Modal</router-link> <br>
                     <router-link to="/restOwnerProfile">View Rest Owner Profile</router-link> <br>
                 </form>
             </div>
@@ -76,7 +74,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
@@ -101,21 +99,38 @@ const isPasswordFormInvalid = computed(() => {
 
 const saveProfile = async () => {
     try {
-        await store.dispatch('profile/saveProfile', profile.value);
+        await store.dispatch('profile/saveProfile', {
+            first_name: profile.value.first_name,
+            last_name: profile.value.last_name,
+            phone_number: profile.value.phone_number,
+            email: profile.value.email // Include email if you want to update it here
+        });
+        alert('Profile updated successfully!'); // Add success message
     } catch (error) {
         console.error('Failed to save profile:', error);
     }
 };
 
+
 const saveEmail = async () => {
-    await store.dispatch('profile/saveEmail', { email: profile.value.email });
+    try {
+        await store.dispatch('profile/saveEmail', { email: profile.value.email });
+        alert('Email updated successfully!'); // Add success message
+    } catch (error) {
+        console.error('Failed to save email:', error);
+    }
 };
 
 const savePassword = async () => {
-    await store.dispatch('profile/savePassword', { 
-        currentPassword: profile.value.currentPassword, 
-        newPassword: profile.value.newPassword 
-    });
+    try {
+        await store.dispatch('profile/savePassword', { 
+            currentPassword: profile.value.currentPassword, 
+            newPassword: profile.value.newPassword 
+        });
+        alert('Password updated successfully!'); // Add success message
+    } catch (error) {
+        console.error('Failed to save password:', error);
+    }
 };
 
 const onFocus = (event) => {
@@ -145,20 +160,11 @@ const onBlur = (event) => {
     margin-bottom: 1.5rem;
     opacity: 0;
     animation: fadeIn 0.5s forwards;
-    animation-delay: 0.2s;
 }
 
-.input-wrapper:nth-child(1) {
-    animation-delay: 0.2s;
-}
-
-.input-wrapper:nth-child(2) {
-    animation-delay: 0.3s;
-}
-
-.input-wrapper:nth-child(3) {
-    animation-delay: 0.4s;
-}
+.input-wrapper:nth-child(1) { animation-delay: 0.2s; }
+.input-wrapper:nth-child(2) { animation-delay: 0.3s; }
+.input-wrapper:nth-child(3) { animation-delay: 0.4s; }
 
 input.form-control {
     width: 100%;
@@ -184,8 +190,8 @@ input.form-control:focus {
     pointer-events: none;
 }
 
-input.form-control:focus+.floating-label,
-input.form-control:not(:placeholder-shown)+.floating-label {
+input.form-control:focus + .floating-label,
+input.form-control:not(:placeholder-shown) + .floating-label {
     top: -10px;
     left: 15px;
     font-size: 12px;

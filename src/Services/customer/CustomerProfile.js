@@ -1,13 +1,22 @@
-// services/profileService.js
+// src/services/profileService.js
 import axios from 'axios';
 
-const API_URL = 'http://192.168.15.90:8000/api/customers/';
+const BASE_URL = 'https://your-api-url.com/api'; // Replace with your API base URL
 
-export const updateProfile = async (profileData) => {
-    try {
-        const response = await axios.patch(`${API_URL}edit-profile`, profileData);
-        return response.data;
-    } catch (error) {
-        throw error.response.data; // Handle the error appropriately
-    }
+const updateProfile = async (token, customerId, profileData) => {
+    const response = await axios.patch(
+        `${BASE_URL}/customers/${customerId}`, 
+        profileData, 
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+    return response.data;
+};
+
+export default {
+    updateProfile,
 };
