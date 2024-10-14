@@ -1,4 +1,5 @@
-
+<template>
+  <header>
       <!-- User Profile Section -->
       <div class="user-profile">
         <img src="../../assets/Ali.jpeg" alt="User" class="avatar" />

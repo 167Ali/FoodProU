@@ -1,8 +1,4 @@
 import { createStore } from 'vuex';
-
-
-const store = createStore({
-
 import profileModule from './modules/profile'; 
 import AuthStore from './Auth/AuthStore';
 import order from './modules/order'; // import the order module
