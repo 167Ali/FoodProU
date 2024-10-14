@@ -26,6 +26,9 @@ import otherRoutes from './otherRoutes'; // Miscellaneous routes
 // import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
 // import Moreinfo from '../components/Customer/Moreinfo.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
+import Voucher from '../components/RestaurantOwner/Voucher.vue';
+import Deals from '../components/RestaurantOwner/DealsSection.vue'
+
 
 const routes = [
   ...adminRoutes,
@@ -53,6 +56,16 @@ const routes = [
     path: '/RestaurantPage',
     name: 'RestaurantPage',
     component: Restaurantpage
+  },
+  {
+    path: '/voucher',
+    name: 'Voucher',
+    component: Voucher
+  },
+  {
+    path: '/deals',
+    name: 'DealsSection',
+    component: Deals
   },
   {
     path: '/Restaurantcard',
