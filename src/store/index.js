@@ -12,7 +12,6 @@ import axios from 'axios';
 
 
 
-
 const store = createStore({
   modules: {
     order, // register the order module
