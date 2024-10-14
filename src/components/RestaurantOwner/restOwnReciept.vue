@@ -81,70 +81,60 @@
     </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed } from 'vue';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
-export default {
-    data() {
-        return {
-            orders: [
-                { id: 1, name: "Ahmed Ali", phone: "0300-1234567", address: "Karachi", totalPrice: 1200, foodCommission: 50 },
-                { id: 2, name: "Sara Khan", phone: "0312-9876543", address: "Lahore", totalPrice: 1500, foodCommission: 70 },
-                { id: 3, name: "Bilal Siddiqui", phone: "0345-5556677", address: "Islamabad", totalPrice: 1800, foodCommission: 80 },
-                { id: 4, name: "Asma Sheikh", phone: "0301-2345678", address: "Quetta", totalPrice: 1400, foodCommission: 60 },
-                { id: 5, name: "Hina Raza", phone: "0307-9988776", address: "Peshawar", totalPrice: 2000, foodCommission: 90 },
-                { id: 6, name: "Zainab Farooq", phone: "0322-4442233", address: "Faisalabad", totalPrice: 1600, foodCommission: 75 },
-                { id: 7, name: "Omer Malik", phone: "0302-1122334", address: "Multan", totalPrice: 1100, foodCommission: 55 },
-            ],
-            orderDetails: {},
-        };
-    },
-    computed: {
-        gstAmount() {
-            return (this.orderDetails.totalPrice * 0.16).toFixed(2);
-        },
-        totalRestaurantGot() {
-            return (this.orderDetails.totalPrice - this.gstAmount - this.orderDetails.foodCommission + 200).toFixed(2);
-        },
-        profit() {
-            return (this.orderDetails.foodCommission / 2).toFixed(2);
-        },
-    },
-    methods: {
-        openModal(order) {
-            const currentDate = new Date();
-            const formattedDate = currentDate.toLocaleDateString();
-            const formattedTime = currentDate.toLocaleTimeString();
+// Orders data
+const orders = ref([
+    { id: 1, name: "Ahmed Ali", phone: "0300-1234567", address: "Karachi", totalPrice: 1200, foodCommission: 50 },
+    { id: 2, name: "Sara Khan", phone: "0312-9876543", address: "Lahore", totalPrice: 1500, foodCommission: 70 },
+    { id: 3, name: "Bilal Siddiqui", phone: "0345-5556677", address: "Islamabad", totalPrice: 1800, foodCommission: 80 },
+    { id: 4, name: "Asma Sheikh", phone: "0301-2345678", address: "Quetta", totalPrice: 1400, foodCommission: 60 },
+    { id: 5, name: "Hina Raza", phone: "0307-9988776", address: "Peshawar", totalPrice: 2000, foodCommission: 90 },
+    { id: 6, name: "Zainab Farooq", phone: "0322-4442233", address: "Faisalabad", totalPrice: 1600, foodCommission: 75 },
+    { id: 7, name: "Omer Malik", phone: "0302-1122334", address: "Multan", totalPrice: 1100, foodCommission: 55 },
+]);
 
-            this.orderDetails = {
-                ...order,
-                date: formattedDate,
-                time: formattedTime,
-            };
-            const modal = new bootstrap.Modal(document.getElementById("orderModal"));
-            modal.show();
-        },
-        async downloadReceiptAsPDF() {
-            const receiptElement = this.$refs.receiptContent;
+const orderDetails = ref({});
 
-            // Use html2canvas to take a snapshot of the receipt content
-            const canvas = await html2canvas(receiptElement, { scale: 2 });
-            const imgData = canvas.toDataURL('image/png');
-            
-            // Create a PDF using jsPDF
-            const pdf = new jsPDF('p', 'mm', 'a4');
-            const pageWidth = pdf.internal.pageSize.getWidth();
-            const pageHeight = pdf.internal.pageSize.getHeight();
-            const imgWidth = pageWidth - 20; // Leave some margin
-            const imgHeight = canvas.height * imgWidth / canvas.width; // Maintain aspect ratio
-            
-            pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
-            
-            // Save the PDF with the order ID
-            pdf.save(`Receipt_${this.orderDetails.id}.pdf`);
-        },
-    },
+// Computed properties for receipt
+const gstAmount = computed(() => (orderDetails.value.totalPrice * 0.16).toFixed(2));
+const totalRestaurantGot = computed(() => (
+    orderDetails.value.totalPrice - gstAmount.value - orderDetails.value.foodCommission + 200
+).toFixed(2));
+const profit = computed(() => (orderDetails.value.foodCommission / 2).toFixed(2));
+
+// Method to open the modal and display order details
+const openModal = (order) => {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString();
+    const formattedTime = currentDate.toLocaleTimeString();
+
+    orderDetails.value = {
+        ...order,
+        date: formattedDate,
+        time: formattedTime,
+    };
+    
+    const modal = new bootstrap.Modal(document.getElementById("orderModal"));
+    modal.show();
+};
+
+// Method to download the receipt as a PDF
+const downloadReceiptAsPDF = async () => {
+    const receiptElement = document.querySelector('.receipt');
+    const canvas = await html2canvas(receiptElement, { scale: 2 });
+    const imgData = canvas.toDataURL('image/png');
+    
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const imgWidth = pageWidth - 20;
+    const imgHeight = canvas.height * imgWidth / canvas.width;
+    
+    pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+    pdf.save(`Receipt_${orderDetails.value.id}.pdf`);
 };
 </script>
 
