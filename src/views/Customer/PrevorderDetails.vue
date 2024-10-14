@@ -9,7 +9,8 @@
                     <img :src="order.image" alt="Order Image" class="order-image" />
                     <div class="order-summary">
                         <h2>{{ order.restaurant }} – {{ order.location }}</h2>
-                        <p class="delivery-info">Delivered on {{ order.deliveryDate }}<br>Order #{{ order.customerId }}</p>
+                        <p class="delivery-info">Delivered on {{ order.deliveryDate }}<br>Order #{{ order.customerId }}
+                        </p>
 
                         <!-- Order From Section -->
                         <div class="order-from">
@@ -44,7 +45,8 @@
                     </div>
                     <hr>
                     <div class="payment-details">
-                        <p><span>Paid with</span> <span>{{ order.paymentMethod }} - Rs. {{ order.paymentAmount }}</span></p>
+                        <p><span>Paid with</span> <span>{{ order.paymentMethod }} - Rs. {{ order.paymentAmount }}</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -60,6 +62,9 @@
                     <p>Need an invoice?</p>
                     <button class="invoice-button" @click="downloadInvoice">Download invoice</button>
                 </div>
+                <div>
+                    <OrderRating />
+                </div>
             </div>
         </div>
 
@@ -73,11 +78,14 @@
 </template>
 
 <script>
-import { getOrderDetails, downloadOrderInvoice } from '../../Services/customer/PrevorderdetailService';
+import { computed, onMounted } from 'vue';
+import { useStore } from 'vuex';
 import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
+import OrderRating from '@/components/Customer/OrderRating.vue';
 
 export default {
+    name: 'PrevOrderDetails',
     props: {
         id: {
             type: String,
@@ -87,36 +95,40 @@ export default {
     components: {
         LoginHeader,
         PageFooter,
+        OrderRating,
     },
-    data() {
-        return {
-            order: null,
-            error: null,
+    setup(props) {
+        const store = useStore();
+
+        const order = computed(() => store.getters['order/order']);
+        const error = computed(() => store.getters['order/error']);
+        const loading = computed(() => store.getters['order/loading']);
+
+        const fetchOrderDetails = () => {
+            store.dispatch('order/fetchOrderDetails', props.id);
         };
-    },
-    created() {
-        this.fetchOrderDetails();
-    },
-    methods: {
-        async fetchOrderDetails() {
+
+        const downloadInvoice = async () => {
             try {
-                this.order = await getOrderDetails(this.id);
+                await store.dispatch('order/downloadInvoice', props.id);
             } catch (error) {
-                this.error = error.message;
-            }
-        },
-        async downloadInvoice() {
-            try {
-                await downloadOrderInvoice(this.id);
-            } catch (error) {
-                console.error(error.message);
                 alert('Failed to download invoice');
             }
-        },
+        };
+
+        onMounted(() => {
+            fetchOrderDetails();
+        });
+
+        return {
+            order,
+            error,
+            loading,
+            downloadInvoice,
+        };
     },
 };
 </script>
-
 
 <style scoped>
 /* Same styles as before */
@@ -170,7 +182,8 @@ export default {
     margin: 10px 0;
 }
 
-.order-from, .delivered-to {
+.order-from,
+.delivered-to {
     display: flex;
     align-items: flex-start;
     margin: 10px 0;
