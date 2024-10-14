@@ -1,4 +1,3 @@
-
 import { createRouter, createWebHistory } from 'vue-router'
 import NavbarHeader from '../views/NavbarHeader.vue'
 import Restaurantpage from '../views/Customer/RestaurantPage.vue'

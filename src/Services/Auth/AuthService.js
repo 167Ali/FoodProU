@@ -26,3 +26,14 @@ export const setPassword = async (payload) => {
     throw new Error(error.response?.data?.message || 'Set password failed');
   }
 };
+
+export const login = async (credentials) => {
+  try {
+      const response = await axios.post(`${API_BASE_URL}/api/login`, credentials);
+      console.log('Login response', response);
+      const { access_token, role, permissions } = response.data.data; // Adjust based on the response structure
+      return { access_token, role, permissions }; // Return the relevant data
+  } catch (error) {
+      throw new Error(error.response?.data?.message || 'Login failed');
+  }
+};
