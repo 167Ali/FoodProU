@@ -152,7 +152,6 @@ const selectItem = (index, id, title) => {
     categoryId.value = id;
 
     console.log("selected item ", id, title)
-
     isProductCategoryVisibile.value = true;
 };
 
