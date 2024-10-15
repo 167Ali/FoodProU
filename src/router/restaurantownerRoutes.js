@@ -1,41 +1,32 @@
-import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_Dashboard.vue'
-import ResturantOwner from '@/components/RestaurantOwner/ResturantOwner.vue'
-import RestOwnerProfile from '@/components/RestaurantOwner/restOwnerProfile.vue'
-import ResturantReviews from '@/components/RestaurantOwner/ResturantReviews.vue'
-import OrderReq from '../components/RestaurantOwner/OrderRequest.vue'
-import ModalView from '../components/RestaurantOwner/restOwnReciept.vue'
-
 export default [
-  {
-    path: '/RestaurantOwnerDashboard',
-    name: 'RestaurantOwner_Dashboard',
-    component: RestaurantOwner_Dashboard,
-    children: [
-      {
-        path: '/Resturant-owner',
-        name: 'RestaurantOwner',
-        component: ResturantOwner
-      },
-      {
+    {
+        path: '/orderreq',
+        name: 'orderreq',
+        component: () => import('../components/RestaurantOwner/OrderRequest.vue')
+    },
+    {
+        path: '/modalView',
+        name: 'ModalView',
+        component: () => import('../components/RestaurantOwner/restOwnReciept.vue')
+    },
+    {
         path: '/restOwnerProfile',
         name: 'RestOwnerProfile',
-        component: RestOwnerProfile
-      },
-    ]
-  },
-  {
-    path: '/ResturantReviews',
-    name: 'ResturantReviews',
-    component: ResturantReviews
-  },
-  {
-    path: '/orderreq',
-    name: 'OrderReq',
-    component: OrderReq
-  },
-  {
-    path: '/modalView',
-    name: 'ModalView',
-    component: ModalView
-  }
-]
+        component: () => import('../components/RestaurantOwner/restOwnerProfile.vue')
+    },
+    {
+        path: '/RestaurantOwnerDashboard',
+        name: 'RestaurantOwner_Dashboard',
+        component: () => import('../views/RestauranOnwer/RestaurantOwner_Dashboard.vue')
+    },
+    {
+        path: '/orderreq',
+        name: 'orderreq',
+        component: () => import('../components/RestaurantOwner/OrderRequest.vue')
+    },
+    {
+        path: '/ownermenu',
+        name: 'OwnerMenu',
+        component: () => import('../views/Menu/OwnerMenu.vue')
+    },
+];

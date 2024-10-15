@@ -15,19 +15,19 @@
           </router-link>
         </li>
         <li>
-          <router-link to="/viewallorders" class="nav-link">
+          <router-link to="/admin-dashboard/viewallorders" class="nav-link">
             <font-awesome-icon :icon="['fas', 'shopping-cart']" />
             <span>Orders</span>
           </router-link>
         </li>
         <li>
-          <router-link to="/AdminFinanceDashboard" class="nav-link">
+          <router-link to="/adminfinance" class="nav-link">
             <font-awesome-icon :icon="['fas', 'dollar-sign']" />
             <span>Revenue</span>
           </router-link>
         </li>
         <li>
-          <a href="/" class="nav-link">
+          <a href="#" class="nav-link">
             <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
             <span>Log Out</span>
           </a>

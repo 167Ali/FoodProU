@@ -24,32 +24,34 @@
         </div>
       </nav>
     </div>
-
-</template>
-
-<script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
-const router = useRouter();
-const showBanner = ref(true);
-
-// Navigation functions
-const goToLogin = () => {
-    router.push('/login');
-};
-
-const goToSignup = () => {
-    router.push('/signup');
-};
-
-const goToBusinessSignup = () => {
-    router.push('/business-signup');
-};
-</script>
-
-
+  </template>
+  
+  <script>
+  import { ref } from 'vue';
+  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+  import { useRouter } from 'vue-router';
+  
+  export default {
+    name: 'BeforeLoginHeader',
+    components: {
+      FontAwesomeIcon,
+    },
+    setup() {
+      const router = useRouter();
+      const showBanner = ref(true);
+  
+      const goToBusinessSignup = () => {
+        router.push('/businesslanding');
+      };
+  
+      return {
+        showBanner,
+        goToBusinessSignup,
+      };
+    },
+  };
+  </script>
+  
 <style scoped>
 /* Business Banner */
 .business-banner {
@@ -173,5 +175,6 @@ const goToBusinessSignup = () => {
 .cart-icon {
     font-size: 30px;
     cursor: pointer;
-}
-</style>
+  }
+  
+</style>  
