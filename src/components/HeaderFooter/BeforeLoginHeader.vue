@@ -45,7 +45,7 @@ const goToSignup = () => {
 };
 
 const goToBusinessSignup = () => {
-    router.push('/business-signup');
+    router.push('/businesslanding');
 };
 </script>
 
