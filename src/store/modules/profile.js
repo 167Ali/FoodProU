@@ -1,6 +1,5 @@
-// src/store/modules/profile.js
-import profileService from '../../Services/customer/CustomerProfile'; // Adjust the path as necessary
-import { getToken, getCustomerId } from '../../utilies/auth'; // Utility functions to retrieve token and customer ID
+// store/modules/profile.js
+import { api } from '../../Services/customer/CustomerProfile'; // Import the API service
 
 const state = {
     profile: {
@@ -8,43 +7,34 @@ const state = {
         last_name: '',
         phone_number: '',
         email: '',
-        isEmailVerified: false,
-    },
+        isEmailVerified: false, // Adjust this based on your logic
+    }
 };
 
 const mutations = {
-    SET_PROFILE(state, profile) {
-        state.profile = { ...state.profile, ...profile };
+    SET_PROFILE(state, profileData) {
+        state.profile = { ...state.profile, ...profileData };
     },
 };
 
 const actions = {
     async saveProfile({ commit }, profileData) {
-        const token = getToken(); // Function to get the auth token
-        const customerId = getCustomerId(); // Function to get the customer ID
         try {
-            const response = await profileService.updateProfile(token, customerId, profileData);
-            commit('SET_PROFILE', response.data); // Update profile in Vuex store
+            // Make the API call to update the profile
+            const response = await api.updateProfile(profileData);
+            // Update the state with the new profile data
+            commit('SET_PROFILE', response.data);
+            return response; // Return the response for further handling
         } catch (error) {
             console.error('Error updating profile:', error);
-            throw error; // Rethrow the error to handle it in the component
+            throw error; // Rethrow the error for handling in the component
         }
     },
-
-    async saveEmail({ commit }, { email }) {
-        // Add logic for saving email if needed
-        // This can also use the `saveProfile` action to update the email
-    },
-
-    async savePassword({ commit }, { currentPassword, newPassword }) {
-        // Add logic for saving password if needed
-    },
+    // Add more actions for other profile-related functionalities if needed
 };
 
 const getters = {
     profile: (state) => state.profile,
-    isEmailVerified: (state) => state.profile.isEmailVerified,
-    saveProfile:(state) => state.SET_PROFILE
 };
 
 export default {

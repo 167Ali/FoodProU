@@ -107,16 +107,17 @@ const saveProfile = async () => {
         });
         alert('Profile updated successfully!'); // Add success message
     } catch (error) {
+        alert('Failed to save profile. Please try again.'); // User-friendly error message
         console.error('Failed to save profile:', error);
     }
 };
-
 
 const saveEmail = async () => {
     try {
         await store.dispatch('profile/saveEmail', { email: profile.value.email });
         alert('Email updated successfully!'); // Add success message
     } catch (error) {
+        alert('Failed to save email. Please try again.'); // User-friendly error message
         console.error('Failed to save email:', error);
     }
 };
@@ -129,9 +130,11 @@ const savePassword = async () => {
         });
         alert('Password updated successfully!'); // Add success message
     } catch (error) {
+        alert('Failed to save password. Please try again.'); // User-friendly error message
         console.error('Failed to save password:', error);
     }
 };
+
 
 const onFocus = (event) => {
     const input = event.target;

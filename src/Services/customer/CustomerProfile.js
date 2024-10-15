@@ -1,22 +1,18 @@
-// src/services/profileService.js
+// services/customer/customerProfile.js
 import axios from 'axios';
 
-const BASE_URL = 'https://your-api-url.com/api'; // Replace with your API base URL
+const apiClient = axios.create({
+    baseURL: import.meta.env.VITE_API_BASE_URL_H,
+    headers: {
+        'Content-Type': 'application/json',
+        // Assuming you are using a token stored in local storage for authorization
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
 
-const updateProfile = async (token, customerId, profileData) => {
-    const response = await axios.patch(
-        `${BASE_URL}/customers/${customerId}`, 
-        profileData, 
-        {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        }
-    );
-    return response.data;
-};
-
-export default {
-    updateProfile,
+export const api = {
+    async updateProfile(profileData) {
+        const response = await apiClient.patch('/api/customers/edit-profile', profileData);
+        return response.data; // Return the response data for the store to handle
+    },
 };
