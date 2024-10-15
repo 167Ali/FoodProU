@@ -1,10 +1,13 @@
 // src/Services/Auth/AuthServices.js
-
 import axios from 'axios';
+
+
 
 // Use Vite's way of accessing environment variables
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Backend API URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL_H; // Backend API URL
+
+
 
 export const resetPassword = async (email) => {
 
@@ -23,6 +26,7 @@ throw new Error(error.response?.data?.message || 'Reset password failed');
 }
 
 };
+
 
 export const setPassword = async (payload) => {
 
@@ -44,6 +48,8 @@ throw new Error(error.response?.data?.message || 'Set password failed');
 
 };
 
+
+
 export const login = async (credentials) => {
 
 try {
@@ -64,6 +70,8 @@ throw new Error(error.response?.data?.message || 'Login failed');
 
 };
 
+
+
 export const register = async (formData) => {
 
 try {
@@ -83,6 +91,8 @@ throw new Error(error.response?.data?.message || 'Registration failed');
 }
 
 };
+
+
 
 // New business registration function
 

@@ -1,4 +1,3 @@
-// src/store/Auth/AuthStore.js
 
 import { resetPassword, setPassword, login ,register,registerBusiness} from '../../Services/Auth/AuthService';
 
@@ -15,6 +14,8 @@ token: localStorage.getItem('token') || null,
 user: { role: null, userId: null },
 
 });
+
+
 
 const mutations = {
 
@@ -114,6 +115,8 @@ state.errorMessage = '';
 
 };
 
+
+
 const actions = {
 
 async forgotPassword({ commit }, email) {
@@ -179,7 +182,6 @@ throw new Error(error.message);
 },
 
 async register({ commit }, formData) {
-
 try {
 
 const { access_token, user } = await register(formData);
@@ -239,19 +241,81 @@ isAdmin: (state) => state.user.role === 'Admin',
 isCustomer: (state) => state.user.role === 'Customer',
 
 isRestaurantOwner: (state) => state.user.role === 'Restaurant Owner',
+=======
+
+try {
+
+const { access_token, user } = await register(formData);
+
+commit('SET_TOKEN', access_token);
+
+commit('SET_USER', user);
+
+return user;
+
+} catch (error) {
+
+console.error('Registration error:', error.message);
+
+throw new Error(error.message);
+
+}
+
+},
+
+async registerBusiness({ commit }, formData) {
+
+try {
+
+const response = await registerBusiness(formData);
+
+return response; // Return the response if needed
+
+} catch (error) {
+
+console.error('Business registration error:', error.message);
+
+throw new Error(error.message);
+
+}
+
+},
+
+logout({ commit }) {
+
+commit('LOGOUT');
+
+}
 
 };
+
+
+
+const getters = {
+
+isLoading: (state) => state.loading,
+
+successMessage: (state) => state.successMessage,
+
+errorMessage: (state) => state.errorMessage,
+
+isAdmin: (state) => state.user.role === 'Admin',
+
+isCustomer: (state) => state.user.role === 'Customer',
+
+isRestaurantOwner: (state) => state.user.role === 'Restaurant Owner',
+
+};
+
+
 
 export default {
 
 namespaced: true,
 
 state,
-
 mutations,
-
 actions,
-
 getters,
 
 };

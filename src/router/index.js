@@ -1,6 +1,5 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
-
 // Import route modules
 import adminRoute from './adminRoutes'
 import restaurantownerRoutes from './restaurantownerRoutes'
