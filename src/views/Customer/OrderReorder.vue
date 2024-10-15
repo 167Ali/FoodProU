@@ -49,27 +49,24 @@
     <PageFooter />
   </div>
 
-  <PageFooter />
 
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router'; // Import useRouter from vue-router
 
 import { getActiveOrders, getPastOrders } from '../../Services/customer/OrderService';
 
 import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
 
-
-const router = useRouter();
-
+const router = useRouter(); // Initialize useRouter
 
 const activeOrders = ref([]);
 const pastOrders = ref([]);
 const loadingActive = ref(false);
 const loadingPast = ref(false);
-
 
 const fetchActiveOrders = async () => {
   loadingActive.value = true;
@@ -101,8 +98,8 @@ onMounted(() => {
   fetchActiveOrders();
   fetchPastOrders();
 });
-
 </script>
+
 
 <style scoped>
 .orders-container {

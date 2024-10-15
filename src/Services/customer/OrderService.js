@@ -4,7 +4,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Vite uses 'VITE_' pre
 
 export const getActiveOrders = async (customerId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/api/orders/${customerId}/active-order`);
+        const response = await axios.get(`${API_BASE_URL}/api/orders/active-order`);
         
         return response.data;
     } catch (error) {
@@ -15,7 +15,7 @@ export const getActiveOrders = async (customerId) => {
 
 export const getPastOrders = async (customerId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/api/orders/${customerId}/history`);
+        const response = await axios.get(`${API_BASE_URL}/api/orders/history`);
         return response.data;
     } catch (error) {
         console.error('Error fetching past orders:', error);
