@@ -1,4 +1,5 @@
 <template>
+
     <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
 
         <div class="modal-content">
@@ -11,8 +12,6 @@
 
             </div>
 
-
-
             <div class="modal-body">
 
                 <button class="btn btn-google mb-3">
@@ -23,11 +22,7 @@
 
                 </button>
 
-
-
                 <div class="separator mb-3"></div>
-
-
 
                 <form @submit.prevent="login">
 
@@ -39,12 +34,9 @@
 
                     <div class="mb-3">
 
-                        <input type="password" class="form-control" placeholder="Password" v-model="password"
-                            required />
+                        <input type="password" class="form-control" placeholder="Password" v-model="password" required />
 
                     </div>
-
-
 
                     <button type="submit" class="btn btn-login w-100 mb-3" :disabled="isLoading">
 
@@ -56,13 +48,9 @@
 
                 </form>
 
-
-
                 <div v-if="error" class="alert alert-danger mt-2">{{ error }}</div>
 
             </div>
-
-
 
             <div class="modal-footer">
 
@@ -81,37 +69,16 @@
         </div>
 
     </div>
+
 </template>
-
-
 
 <script>
 
-import {
+import { defineComponent, ref, toRefs } from 'vue';
 
-    defineComponent,
+import { useStore } from 'vuex';
 
-    ref,
-
-    toRefs
-
-} from 'vue';
-
-import axios from 'axios';
-
-import {
-
-    useStore
-
-} from 'vuex';
-
-import {
-
-    useRouter
-
-} from 'vue-router';
-
-
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
 
@@ -129,17 +96,9 @@ export default defineComponent({
 
     },
 
-    setup(props, {
+    setup(props, { emit }) {
 
-        emit
-
-    }) {
-
-        const {
-
-            showModal
-
-        } = toRefs(props);
+        const { showModal } = toRefs(props);
 
         const email = ref('');
 
@@ -153,57 +112,71 @@ export default defineComponent({
 
         const router = useRouter();
 
-
-
         const closeModal = () => {
 
             emit('close');
 
         };
 
-
-
         const login = async () => {
+
             error.value = null;
+
             isLoading.value = true;
 
             try {
-                // Dispatch the login action and pass the credentials
-                const response = await store.dispatch('login', {
+
+                const response = await store.dispatch('auth/login', {
+
                     email: email.value,
+
                     password: password.value,
+
                 });
 
-                // Destructure the role and permissions from the response
                 const { role } = response;
 
-                // Redirect the user based on their role
                 switch (role) {
+
                     case 'Admin':
+
                         router.push({ name: 'AdminDashboard' });
+
                         break;
+
                     case 'Customer':
+
                         router.push({ name: 'DashboardResturantPage' });
+
                         break;
+
                     case 'Restaurant Owner':
+
                         router.push({ name: 'RestaurantOwner_Dashboard' });
+
                         break;
+
                     default:
+
                         router.push({ name: 'Home' });
+
                         break;
+
                 }
 
-                // Close the modal after successful login
                 closeModal();
+
             } catch (err) {
-                // Handle any errors that occur during login
+
                 error.value = err.message || 'Login failed. Please check your credentials.';
+
             } finally {
-                isLoading.value = false; // Ensure loading state is reset
+
+                isLoading.value = false;
+
             }
+
         };
-
-
 
         return {
 
@@ -229,9 +202,8 @@ export default defineComponent({
 
 </script>
 
-
-
 <style scoped>
+
 .modal-title {
 
     text-align: center;
@@ -241,8 +213,6 @@ export default defineComponent({
     font-weight: bolder;
 
 }
-
-
 
 .modal-overlay {
 
@@ -268,8 +238,6 @@ export default defineComponent({
 
 }
 
-
-
 .modal-content {
 
     background-color: white;
@@ -286,8 +254,6 @@ export default defineComponent({
 
 }
 
-
-
 .modal-header {
 
     display: flex;
@@ -300,15 +266,11 @@ export default defineComponent({
 
 }
 
-
-
 .modal-header h5 {
 
     margin: 0;
 
 }
-
-
 
 .btn-close {
 
@@ -320,15 +282,11 @@ export default defineComponent({
 
 }
 
-
-
 .modal-body {
 
     padding: 20px 0;
 
 }
-
-
 
 .separator {
 
@@ -342,8 +300,6 @@ export default defineComponent({
 
 }
 
-
-
 .separator:before {
 
     content: 'or';
@@ -353,8 +309,6 @@ export default defineComponent({
     padding: 0 10px;
 
 }
-
-
 
 .btn-google {
 
@@ -374,8 +328,6 @@ export default defineComponent({
 
 }
 
-
-
 .btn-login {
 
     background-color: #00754A;
@@ -386,8 +338,6 @@ export default defineComponent({
 
 }
 
-
-
 .btn-login:hover {
 
     background-color: #00925d;
@@ -396,15 +346,11 @@ export default defineComponent({
 
 }
 
-
-
 .modal-footer {
 
     font-size: 0.85rem;
 
 }
-
-
 
 .modal-footer a {
 
@@ -413,8 +359,6 @@ export default defineComponent({
     text-decoration: none;
 
 }
-
-
 
 @media (max-width: 768px) {
 
@@ -426,8 +370,6 @@ export default defineComponent({
 
 }
 
-
-
 @media (max-width: 576px) {
 
     .modal-header {
@@ -436,23 +378,17 @@ export default defineComponent({
 
     }
 
-
-
     .modal-header h5 {
 
         margin-bottom: 10px;
 
     }
 
-
-
     .modal-body {
 
         padding: 10px 0;
 
     }
-
-
 
     .separator {
 
@@ -461,4 +397,5 @@ export default defineComponent({
     }
 
 }
+
 </style>
