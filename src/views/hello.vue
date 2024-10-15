@@ -6,7 +6,6 @@
       <Moreinfo/>
       <CreateDeals/>
       <ProductAddToCart/>
-
     </div>
   </template>
   
@@ -15,9 +14,10 @@
   import Moreinfo from '@/components/Customer/Moreinfo.vue';
   import CreateDeals from '@/components/Admin/CreateDeals.vue'
   import ProductAddToCart from '@/components/Customer/ProductAddToCart.vue';
-  import AdminFinanceDashboard from '@/components/Admin/AdminFinanceDashboard.vue';
+  
   
   </script>
   
   <style scoped>
   </style>
+

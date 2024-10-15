@@ -1,14 +1,17 @@
 <template>
 
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
+
     <div class="dashboard-container d-flex">
       <!-- Sidebar -->
       <nav class="sidebar bg-light d-flex flex-column align-items-center">
         <img src="https://via.placeholder.com/50" alt="Logo" class="my-4" />
         <ul class="nav flex-column text-center">
+
           <li class="nav-item mb-3">
             <a href="#" class="nav-link text-dark">
               <i class="fas fa-home fs-4"></i>
@@ -99,11 +102,13 @@
                     <h5 class="text-price">$ {{ order.totalPrice }}</h5>
                     <button class="btn btn-order">View</button>
                   </div>
+
                 </div>
               </div>
             </div>
           </div>
         </div>
+
       </div>
   
       <!-- Right Sidebar (Current Orders) -->
@@ -117,6 +122,7 @@
                 <h5>{{ order.user }}</h5>
                 <p class="small text-muted">{{ order.location }}</p>
               </div>
+
             </div>
             <div class="order-total text-end">
               <h5 class="text-price">$ {{ order.totalPrice }}</h5>
@@ -152,6 +158,7 @@
       location: "New York",
       totalPrice: 45.99,
       image: "https://via.placeholder.com/100"
+
     },
     {
       id: 2,

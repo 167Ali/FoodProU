@@ -1,6 +1,6 @@
 <!-- Main_Landing.vue -->
 <template>
-
+<BeforeLoginHeader />
   <div class="main d-flex">
     <!-- Left half for content -->
     <div class="content-wrapper d-flex flex-column justify-content-center align-items-start">
@@ -30,6 +30,7 @@
 import { ref } from 'vue';
 import LoginModal from '../../components/LoginSignup/User_login.vue';
 import SignUpModal from '../../components/LoginSignup/User_signup.vue';
+import BeforeLoginHeader from '@/components/HeaderFooter/BeforeLoginHeader.vue';
 
 const showLoginModal = ref(false);
 const showSignUpModal = ref(false);

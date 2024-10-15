@@ -1,4 +1,3 @@
-// src/store/modules/profile.js
 
 //import { updateProfile, updateEmail, updatePassword } from '../../Services/customer/CustomerProfile';
 
