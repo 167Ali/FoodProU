@@ -1,3 +1,4 @@
+
 <template>
   <LoginHeader />
   <div class="container mt-4">
@@ -20,38 +21,47 @@
   <PageFooter />
 </template>
 
-
-<script setup>
-import { reactive } from 'vue';
-
-// Defining the foods list as a reactive object
-const foods = reactive([
-  {
-    id: 1,
-    name: "Biriyani",
-    price: 350,
-    image: "#",
+<script>
+import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
+ import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
+export default {
+  name: "FavoriteCards",
+  components: {
+        LoginHeader,
+        PageFooter,
+    },
+  data() {
+    return {
+      
+      foods: [
+        {
+          id: 1,
+          name: "Biriyani",
+          price: 350,
+          image: "#",
+        },
+        {
+          id: 2,
+          name: "Seekh Kebabs",
+          price: 350,
+          image: "#",
+        },
+        {
+          id: 3,
+          name: "Haleem",
+          price: 350,
+          image: "#",
+        },
+        {
+          id: 4,
+          name: "Seekh Kebabs",
+          price: 350,
+          image: "#",
+        },
+      ],
+    };
   },
-  {
-    id: 2,
-    name: "Seekh Kebabs",
-    price: 350,
-    image: "#",
-  },
-  {
-    id: 3,
-    name: "Haleem",
-    price: 350,
-    image: "#",
-  },
-  {
-    id: 4,
-    name: "Seekh Kebabs",
-    price: 350,
-    image: "#",
-
-  },
-]);
+};
 </script>
 
 <style scoped>

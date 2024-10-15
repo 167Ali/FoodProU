@@ -47,8 +47,10 @@
   </footer>
 </template>
 
+
 <script setup>
 // No need for defineComponent here
+
 </script>
 
 <style scoped>
