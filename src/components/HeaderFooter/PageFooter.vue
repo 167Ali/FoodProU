@@ -50,10 +50,10 @@
     
   </footer>
 </template>
-<script setup>
-defineComponent({
+<script>
+export default {
   name: 'Footer',
-});
+};
 </script>
 <style scoped>
 .footer {

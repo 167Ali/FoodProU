@@ -1,70 +1,48 @@
-import Restaurantpage from '../views/Customer/RestaurantPage.vue'
-import CheckOut from '../components/Customer/CheckOut.vue'
-import AddtoCart from '../components/AddtoCart.vue'
-import CategoryNavbar from '../components/Customer/CategoryNavbar.vue'
-import DashboardResturantPage from '../views/Customer/DashboardResturantPage.vue'
-import ProfileSettings from '../views/Customer/ProfileSettings.vue'
-import FavoritesPage from '../views/Customer/favs.vue'
-import OrderScreen from '../views/Customer/OrderScreen.vue'
-import OrderReorder from '../views/Customer/OrderReorder.vue'
-import PrevorderDetails from '../views/Customer/PrevorderDetails.vue'
-import OrderRating from '@/components/Customer/OrderRating.vue'
-
 export default [
-  {
-    path: '/RestaurantPage',
-    name: 'RestaurantPage',
-    component: Restaurantpage
-  },
-  {
-    path: '/checkout',
-    name: 'checkout',
-    component: CheckOut
-  },
-  {
-    path: '/caart',
-    name: 'addtocart',
-    component: AddtoCart
-  },
-  {
-    path: '/catnvbr',
-    name: 'categorynavbar',
-    component: CategoryNavbar
-  },
-  {
-    path: '/dashboardresturantpage',
-    name: 'DashboardResturantPage',
-    component: DashboardResturantPage
-  },
-  {
-    path: '/profilesettings',
-    name: 'ProfileSettings',
-    component: ProfileSettings
-  },
-  {
-    path: '/favoritespage',
-    name: 'Favoritespage',
-    component: FavoritesPage
-  },
-  {
-    path: '/orderScreen',
-    name: 'OrderScreen',
-    component: OrderScreen
-  },
-  {
-    path: '/OrderReorder',
-    name: 'OrderReorder',
-    component: OrderReorder
-  },
-  {
-    path: '/order-details/:id',  
-    name: 'PrevorderDetails',
-    component: PrevorderDetails,
-    props: true,
-  },
-  {
-    path: '/OrderRating',
-    name: 'OrderRating',
-    component: OrderRating
-  }
-]
+    {
+        path: '/',
+        name: 'RestaurantPage',
+        component: () => import('../views/Customer/RestaurantPage.vue')
+    },
+    {
+        path: '/OrderReorder',
+        name: 'OrderReorder',
+        component: () => import('../views/Customer/OrderReorder.vue')
+    },
+    {
+        path: '/order-details/:id',
+        name: 'PrevorderDetails',
+        component: () => import('../views/Customer/PrevorderDetails.vue'),
+        props: true
+    },
+    {
+        path: '/profilesettings',
+        name: 'ProfileSettings',
+        component: () => import('../views/Customer/ProfileSettings.vue')
+    },
+    {
+        path: '/favoritespage',
+        name: 'FavoritesPage',
+        component: () => import('../views/Customer/favs.vue')
+    },
+    {
+        path: '/orderScreen',
+        name: 'OrderScreen',
+        component: () => import('../views/Customer/OrderScreen.vue')
+    },
+    {
+        path: '/dashboardresturantpage',
+        name: 'DashboardResturantPage',
+        component: () => import('../views/Customer/DashboardResturantPage.vue')
+    },
+    {
+        path: '/ProductAddToCart',
+        name: 'ProductAddToCart',
+        component: () => import('../components/Customer/ProductAddToCart.vue')
+    },
+    {
+        path: '/checkout',
+        name: 'checkout',
+        component: () => import('../components/Customer/CheckOut.vue')
+    },
+];

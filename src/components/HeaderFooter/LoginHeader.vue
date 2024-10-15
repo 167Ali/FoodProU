@@ -33,7 +33,7 @@
                         </li>
 
                         <li>
-                            <router-link to="/" class="nav-link">
+                            <router-link to="/logout" class="nav-link">
                                 <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
                                 <span>Logout</span>
                             </router-link>
@@ -60,9 +60,7 @@
     </nav>
 </template>
 
-
-<script setup>
-
+<script>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -76,7 +74,6 @@ import {
     faHeart, // Added heart icon
 } from '@fortawesome/free-solid-svg-icons';
 
-// Add icons to the library
 library.add(
     faShoppingCart,
     faUtensils,
@@ -87,35 +84,45 @@ library.add(
     faHeart // Added heart icon to library
 );
 
-// Reactive state
-const dropdownOpen = ref(false);
-const username = ref('Guest');
-const dropdown = ref(null);
+export default {
+    name: 'LoginHeader',
+    components: {
+        FontAwesomeIcon,
+    },
+    setup() {
+        const dropdownOpen = ref(false);
+        const username = ref('Guest');
+        const dropdown = ref(null);
 
-// Toggle dropdown visibility
-const toggleDropdown = (event) => {
-    event.stopPropagation(); // Prevent bubbling to the document click listener
-    dropdownOpen.value = !dropdownOpen.value;
+        const toggleDropdown = (event) => {
+            event.stopPropagation(); // Prevent bubbling to the document click listener
+            dropdownOpen.value = !dropdownOpen.value;
+        };
+
+        const closeDropdown = (event) => {
+            // Only close if the click is outside the dropdown
+            if (dropdown.value && !dropdown.value.contains(event.target)) {
+                dropdownOpen.value = false;
+            }
+        };
+
+        onMounted(() => {
+            document.addEventListener('click', closeDropdown);
+        });
+
+        onBeforeUnmount(() => {
+            document.removeEventListener('click', closeDropdown);
+        });
+
+        return {
+            dropdownOpen,
+            username,
+            toggleDropdown,
+            dropdown,
+        };
+    },
 };
-
-// Close dropdown if clicked outside
-const closeDropdown = (event) => {
-    if (dropdown.value && !dropdown.value.contains(event.target)) {
-        dropdownOpen.value = false;
-    }
-};
-
-
-// Lifecycle hooks
-onMounted(() => {
-    document.addEventListener('click', closeDropdown);
-});
-
-onBeforeUnmount(() => {
-    document.removeEventListener('click', closeDropdown);
-});
 </script>
-
 
 <style scoped>
 .navbar {
@@ -163,6 +170,11 @@ onBeforeUnmount(() => {
     margin-right: 5px;
 }
 
+.arrow {
+    font-size: 16px;
+    margin-left: 5px;
+}
+
 .dropdownmenu {
     position: absolute;
     top: 100%;
@@ -173,8 +185,12 @@ onBeforeUnmount(() => {
     border-radius: 8px;
     min-width: 200px;
     z-index: 1000;
+}
 
-
+[v-show="true"] .dropdownmenu {
+    display: block;
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .dropdownmenu ul {
@@ -197,9 +213,12 @@ onBeforeUnmount(() => {
     border-radius: 5px;
 }
 
+.dropdownmenu li i {
+    margin-right: 10px;
+    font-size: 18px;
+}
 
-.cart-icon {
-
+.favorites-button {
     margin-left: 20px;
     display: flex;
     align-items: center;
@@ -210,7 +229,6 @@ onBeforeUnmount(() => {
     border: none;
     cursor: pointer;
     font-size: 25px;
-    color: #000;
 }
 
 .heart-icon-button:hover {
@@ -232,5 +250,9 @@ onBeforeUnmount(() => {
 
 .cart-icon-button:hover {
     color: #00754a;
+}
+
+.icon {
+    font-size: 20px;
 }
 </style>

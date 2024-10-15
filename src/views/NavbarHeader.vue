@@ -3,9 +3,6 @@
         <div class="navbar">
             <p class="navbarheading">FoodPro</p>
         </div>
-        <!-- <div class="category-navbar">
-            <router-view></router-view>
-        </div> -->
         <div class="container">
             <router-view></router-view>
         </div>
@@ -17,7 +14,6 @@
         background-color: #f7f7f7;
         /* background-color: aqua; */
         margin-bottom: -50px;
-        min-height: 100vh;
     }
     .navbar{
         background-color: #FFFFFFFF;
@@ -36,7 +32,4 @@
         font-size: 30px;
         display: inline-block;
     }
-    /* .category-navbar{
-        margin: 150px;
-    } */
 </style>

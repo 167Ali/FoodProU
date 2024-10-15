@@ -1,24 +1,15 @@
 <template>
-  <div class="cart-container">
-    <!-- View Cart Button for Mobile -->
-    <button
-      v-if="isMobile && !cartVisible"
-      @click="toggleCart"
-      class="cart-toggle-btn"
-    >
+  <div class="cart-container" :class="{ 'cart-button-mode': isMobile }">
+    <!-- Cart Button for Mobile -->
+    <button v-if="isMobile && !cartVisible" @click="toggleCart" class="cart-toggle-btn">
       View Cart ({{ totalItems }} items) - Rs. {{ cartTotal }}
     </button>
 
-    <!-- Cart Modal for Desktop & Mobile -->
-    <div
-      :class="['cart-modal', { 'cart-visible': cartVisible, 'fullscreen': isMobile }]"
-    >
-      <!-- Close Button for Mobile -->
-      <button v-if="isMobile" @click="toggleCart" class="close-btn">
-        &times;
-      </button>
-      <!-- Cart Content -->
-      <h5 v-if="cart.length > 0">Your items</h5>
+    <!-- Cart Modal / Drawer for Desktop & Mobile -->
+    <div :class="['cart-modal', { 'cart-visible': cartVisible }]">
+      <button @click="toggleCart" class="close-btn" v-if="isMobile">X</button>
+      <h5 v-if="cart.length >0">Your items</h5>
+
       <div v-if="cart.length === 0" class="empty-cart">
         <h6>Hungry?</h6>
         <p>You haven't added anything to your cart!</p>
@@ -31,58 +22,36 @@
             <p class="item-price">Rs. {{ item.price }}</p>
           </div>
           <div class="item-quantity">
-            <button
-              v-if="item.quantity > 1"
-              @click="decrementItem(item)"
-            >
-              <i class="fa-solid fa-minus fa1"></i>
-            </button>
-            <button v-else @click="removeItem(item)">
-              <i class="fa-regular fa-trash-can fa2"></i>
-            </button>
+            <button v-if="item.quantity > 1" @click="decrementItem(item)"><i class="fa-solid fa-minus fa1"></i></button>
+            <button v-else @click="removeItem(item)"><i class="fa-regular fa-trash-can fa2"></i></button>
             <span>{{ item.quantity }}</span>
-            <button @click="incrementItem(item)">
-              <i class="fa-solid fa-plus fa3"></i>
-            </button>
+            <button @click="incrementItem(item)"><i class="fa-solid fa-plus fa3"></i></button>
           </div>
         </div>
 
         <div class="cart-summary">
-          <p class="d-flex justify-content-between">
-            Subtotal<span>Rs. {{ cartSubtotal }}</span>
-          </p>
-          <p class="d-flex justify-content-between">
-            Delivery Fee<span>Rs. {{ deliveryFee }}</span>
-          </p>
-          <p class="d-flex justify-content-between">
-            Service Fee<span>Rs. {{ serviceFee }}</span>
-          </p>
+          <p class="d-flex justify-content-between">Subtotal<span>Rs. {{ cartSubtotal }}</span></p>
+          <p class="d-flex justify-content-between">Delivery Fee<span>Rs. {{ deliveryFee }}</span></p>
+          <p class="d-flex justify-content-between">Service Fee<span>Rs. {{ serviceFee }}</span></p>
         </div>
-        
+        <!--  -->
       </div>
     </div>
-
-    <!-- Total and Checkout Button for Desktop -->
-    <p
-      class="d-flex justify-content-between cart-summary-total"
-      v-if="!isMobile && cart.length > 0"
-    >
+    <p class="d-flex justify-content-between cart-summary-total" v-if="cart.length >0">
       <span>
-        Total
-        <span class="fee-tax">(incl. fees and tax)</span>
+        Total 
+        <span class="fee-tax">
+          (incl. fees and tax)
+        </span>
       </span>
-      <span>Rs. {{ cartTotal }}</span>
+      <span>
+        Rs. {{ cartTotal }}
+      </span>
     </p>
-    <button
-      class="checkout-btn"
-      v-if="!isMobile && cart.length > 0"
-    >
-      Review Payment and Address
-    </button>
+    <button class="checkout-btn" v-if="cart.length >0">Review Payment and Address</button>
   </div>
 
 </template>
-
 <!--  -->
 <script setup>
   import { reactive, ref, computed, onMounted } from 'vue';
@@ -188,9 +157,8 @@
 
 
 <style scoped>
-
 .cart-container {
-  background-color: white;
+  /* background-color: aqua; */
   position: fixed;
   right: 0px;
   top: 64px;
@@ -203,34 +171,7 @@
   flex-direction: column;
   border-radius: 8px;
   border: 1px solid rgb(223, 222, 222);
-  z-index: 999;
-}
-
-.cart-modal {
-  background-color: white;
-  display: none;
-  width: 100%;
-  height: calc(100vh - 64px);
-  overflow-y: auto;
-  z-index: 800;
-}
-
-h5{
-  font-weight: 1000;
-  font-family: 'Agrandir', 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-.cart-visible {
-  display: block;
-}
-
-.fullscreen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1000;
-  padding: 20px;
+  z-index: 999; /* Ensure it appears above other content */
 }
 
 .cart-item {
@@ -339,7 +280,7 @@ h5{
     width: 100%;
     padding: 0;
   }
-  
+
   .cart-toggle-btn {
     width: 100%;
     background-color: #ff3366;
@@ -349,7 +290,17 @@ h5{
     font-size: 16px;
   }
 
-
+  .cart-modal {
+    background-color: white;
+    z-index: 800;
+    width: 100%;
+    overflow-y: auto;
+    height: calc(100vh - 64px);
+  }
+  h5{
+    font-weight: 1000;
+    font-family: 'Agrandir', 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
   .empty-cart{
     height: 100%;
     width: 100%;
@@ -380,22 +331,21 @@ h5{
     cursor: pointer;
   }
 
-/* Hide the cart by default on mobile */
-@media (max-width: 959px) {
-  .cart-container {
-    /* display: none; */
-  }
-  .cart-visible {
-    display: none;
-  }
-}
+  @media (min-width: 960px) {
+    .cart-modal {
 
-/* Desktop view - keep original style */
-@media (min-width: 960px) {
-  .cart-modal {
-    display: block;
+      height: calc(100vh - 64px);
+      top: 64px;
+      width: 310px;
+    }
   }
-}
-/*  */
+  /* @media (max-width: 959px) {
+    .cart-modal {
+
+      height: calc(100vh - 64px);
+      top: 64px;
+      width: 310px;
+    }
+  } */
 </style>
 

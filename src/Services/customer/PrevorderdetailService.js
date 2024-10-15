@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Vite uses 'VITE_' prefix for env variables
 
-// Fetch order details
 export const getOrderDetails = async (customerId) => {
     try {
         const response = await axios.get(`${API_BASE_URL}/api/customers/${customerId}/active-order`);
@@ -13,28 +12,20 @@ export const getOrderDetails = async (customerId) => {
     }
 };
 
-// Download order invoice
 export const downloadOrderInvoice = async (customerId) => {
     try {
         const response = await axios.get(`${API_BASE_URL}/orders/${customerId}/invoice`, {
-            responseType: 'blob', // For binary data
+            responseType: 'blob', // Important for handling binary data
         });
 
-        // Validate if it's a PDF file
-        const contentType = response.headers['content-type'];
-        if (contentType !== 'application/pdf') {
-            throw new Error('Unexpected content type, expected PDF');
-        }
-
-        // Process Blob for download
-        const blob = new Blob([response.data], { type: 'application/pdf' });
+        const blob = response.data;
         const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', `Invoice_${customerId}.pdf`); // Set file name
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link); // Cleanup
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Invoice_${customerId}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
         window.URL.revokeObjectURL(url);
     } catch (error) {
         console.error('Error downloading invoice:', error);

@@ -1,20 +1,16 @@
 <!-- HomeView.vue -->
 <!-- HomeView.vue -->
 <template>
-  <div>
-    <SeeReviews />
-    <Moreinfo />
-    <CreateDeals />
-    <AdminFinanceDashboard />
+    <div>
+      <addtocart/>
+      
+    </div>
+  </template>
+  
+  <script setup>
 
-  </div>
-</template>
-
-<script setup>
-import SeeReviews from '@/components/Customer/SeeReviews.vue';
-import Moreinfo from '@/components/Customer/Moreinfo.vue';
-import CreateDeals from '@/components/Admin/CreateDeals.vue'
-
-</script>
-
-<style scoped></style>
+  import addtocart from '../components/Customer/ProductAddToCart.vue';
+  </script>
+  
+  <style scoped>
+  </style>
