@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Authorization token and headers
-const token = `Bearer ${'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTkyLjE2OC4xNS4yMDU6ODAwMC9hcGkvbG9naW4iLCJpYXQiOjE3Mjg5MDg4NzAsImV4cCI6MTcyODkxMjQ3MCwibmJmIjoxNzI4OTA4ODcwLCJqdGkiOiI5aWFBN29ZSFdKUEF6M0RMIiwic3ViIjoiMjciLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3Iiwicm9sZSI6bnVsbH0.FDvCPiiYh5nQrKPpuSDAEdeTO1JKkA19guHWlagz2T4'}`;
+const token = `Bearer ${'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTkyLjE2OC4xNS4yMDU6ODAwMC9hcGkvbG9naW4iLCJpYXQiOjE3Mjg5OTE0NTYsImV4cCI6MTcyODk5NTA1NiwibmJmIjoxNzI4OTkxNDU2LCJqdGkiOiJrdDhwQjB1VWhqMjNsTkVVIiwic3ViIjoiMjciLCJwcnYiOiJiOTEyNzk5NzhmMTFhYTdiYzU2NzA0ODdmZmYwMWUyMjgyNTNmZTQ4Iiwicm9sZSI6bnVsbH0.T8RVwI9X71P2Nd8OpNLLDebUR_znEB_TRL6qqTXMRFE'}`;
 const headers = { Authorization: token };
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
@@ -25,9 +25,9 @@ const createProductFormData = (productData) => {
     if (productData.image_file) {
         formData.append('image_file', productData.image_file); // Send file, not data URL
     }
-    for (const [key, value] of formData.entries()) {
-        console.log(`${key}:`, value);
-    }
+    // for (const [key, value] of formData.entries()) {
+    //     console.log(`${key}:`, value);
+    // }
     return formData;
 };
 
@@ -59,6 +59,6 @@ export const deleteProductService = (productId, restaurantid = 8) => {
 };
 
 // Service to display all products
-export const displayProductsService = (restaurantid = 8) => {
-    return axios.get(`${baseURL}/get-products/${restaurantid}`, { headers });
+export const displayProductsService = (categoryId) => {
+    return axios.get(`${baseURL}/menu-with-item/${categoryId}`, { headers });
 };

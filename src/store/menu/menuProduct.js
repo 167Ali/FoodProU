@@ -25,9 +25,9 @@ export const menuProduct = {
     actions: {
         async addProduct({ commit }, productData) {
             try {
-                console.log("store id", productData)
                 const response = await addProductService(productData.product, productData.categoryId);
                 commit('ADD_PRODUCT', response.data);
+                return response.data;
             } catch (error) {
                 console.error('Error adding product:', error);
                 throw error;
@@ -37,6 +37,7 @@ export const menuProduct = {
             try {
                 const response = await editProductService(productId, productData);
                 commit('UPDATE_PRODUCT', response.data);
+                return response.data;
             } catch (error) {
                 console.error('Error editing product:', error);
                 throw error;
@@ -46,14 +47,16 @@ export const menuProduct = {
             try {
                 await deleteProductService(productId);
                 commit('DELETE_PRODUCT', productId);
+                return response.data;
             } catch (error) {
                 console.error('Error deleting product:', error);
                 throw error;
             }
         },
-        async displayProducts({ commit }) {
+        async displayProducts({ commit }, categoryId) {
             try {
-                const response = await displayProductsService();
+                const response = await displayProductsService(categoryId);
+                console.log("Display category ", response.data)
                 commit('SET_PRODUCTS', response.data);
             } catch (error) {
                 console.error('Error displaying products:', error);
