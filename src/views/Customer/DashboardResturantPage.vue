@@ -14,9 +14,6 @@
                 <DashboardFilter />
             </div>
             <div class="row">
-
-                
-
                 <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-4" v-for="(restaurant, index) in restaurants"
                     :key="index">
                     <router-link :to="{ name: 'RestaurantPage', params: { id: restaurant.id } }" class="card-link">
@@ -37,12 +34,10 @@
 import RestaurantCard from '../../components/Customer/RestaurantCard.vue'
 import DashboardFilter from '../../components/Customer/DashboardFilter.vue'
 import Searchbar from '../../components/OtherComponents/Searchbar.vue'
-import discounts from '../../components/Customer/discounts.vue';
 import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
 
 import Cuisines from '@/components/Customer/Cuisines.vue';
-
 
 const restaurants = [
     {

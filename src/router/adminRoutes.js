@@ -1,17 +1,29 @@
+import AdminDashboard from '../views/Admin/AdminDashboard.vue'
+import ViewAllOrdersAdm from '../views/Admin/ViewAllOrdersAdm.vue'
+import AdminFinanceDashboard from '../components/Admin/AdminFinanceDashboard.vue'
+import ReviewsAdmin from '@/components/Admin/ReviewsAdmin.vue'
+
 export default [
-    {
-        path: '/admin-dashboard',
-        name: 'AdminDashboard',
-        component: () => import('../views/Admin/AdminDashboard.vue')
-    },
-    {
+  {
+    path: '/admin-dashboard',
+    name: 'AdminDashboard',
+    component: AdminDashboard,
+    children: [
+      {
+        path: '/viewallorders',
+        name: 'ViewAllOrdersAdm', 
+        component: ViewAllOrdersAdm 
+      },
+      {
         path: '/AdminFinanceDashboard',
         name: 'AdminFinanceDashboard',
-        component: () => import('../components/Admin/AdminFinanceDashboard.vue')
-    },
-    {
-        path: '/viewallorders',
-        name: 'ViewAllOrdersAdm',
-        component: () => import('../views/Admin/ViewAllOrdersAdm.vue')
-    }
-];
+        component: AdminFinanceDashboard
+      },
+    ]
+  },
+  {
+    path: '/ReviewsAdmin',
+    name: 'ReviewsAdmin',
+    component: ReviewsAdmin
+  }
+]

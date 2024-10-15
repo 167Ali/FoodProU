@@ -1,12 +1,11 @@
 <!-- HomeView.vue -->
 <!-- HomeView.vue -->
 <template>
-    <div>
-      <SeeReviews/>
-      <Moreinfo/>
-      <CreateDeals/>
-      <AdminFinanceDashboard/>
-
+  <div>
+    <SeeReviews />
+    <Moreinfo />
+    <CreateDeals />
+    <AdminFinanceDashboard />
     </div>
   </template>
   
@@ -20,3 +19,4 @@
   
   <style scoped>
   </style>
+
