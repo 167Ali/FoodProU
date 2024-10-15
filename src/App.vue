@@ -1,13 +1,12 @@
 <template>
 
-    <RouterView></RouterView>
-
+    <ResturantOwner/>
 </template>
 
 
 
 <script setup>
-
+import ResturantOwner from './components/RestaurantOwner/ResturantOwner.vue';
 import { RouterView } from 'vue-router';
 
 </script>

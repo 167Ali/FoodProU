@@ -5,19 +5,24 @@ import axios from 'axios';
 const state = () => ({
   restaurants: [],
   deals: [],
-  searchResults: [], // New state variable for search results
+  searchResults: [],
 });
 
 const getters = {
   allRestaurants: (state) => state.restaurants,
   allDeals: (state) => state.deals,
-  searchResults: (state) => state.searchResults, // New getter for search results
+  searchResults: (state) => state.searchResults,
 };
 
 const actions = {
   async fetchRestaurants({ commit }) {
     try {
-      const response = await axios.get('http://192.168.15.90:8000/api/customers/restaurants');
+      const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+      const response = await axios.get('http://192.168.15.90:8000/api/customers/restaurants', {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+        },
+      });
       if (response.status === 200 && response.data.status === 200) {
         commit('setRestaurants', response.data.data);
       } else {
@@ -29,7 +34,12 @@ const actions = {
   },
   async fetchDeals({ commit }) {
     try {
-      const response = await axios.get('http://192.168.15.90:8000/api/customers/deals');
+      const token = localStorage.getItem('token');
+      const response = await axios.get('http://192.168.15.90:8000/api/customers/deals', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response.status === 200 && response.data.status === 200) {
         commit('setDeals', response.data.data);
       } else {
@@ -39,13 +49,18 @@ const actions = {
       console.error('Error fetching deals:', error);
     }
   },
-  // New action for searching restaurants
   async searchRestaurants({ commit }, searchTerm) {
     try {
+      const token = localStorage.getItem('token');
       const response = await axios.get(
         `http://192.168.15.90:8000/api/customers/search-restaurant?search_term=${encodeURIComponent(
           searchTerm
-        )}`
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (response.status === 200 && response.data.status === 200) {
         commit('setSearchResults', response.data.data);
@@ -66,7 +81,6 @@ const mutations = {
   setDeals(state, deals) {
     state.deals = deals;
   },
-  // New mutation to set search results
   setSearchResults(state, results) {
     state.searchResults = results;
   },
