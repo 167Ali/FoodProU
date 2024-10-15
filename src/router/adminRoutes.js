@@ -19,11 +19,12 @@ export default [
         name: 'AdminFinanceDashboard',
         component: AdminFinanceDashboard
       },
+      {
+        path: '/ReviewsAdmin',
+        name: 'ReviewsAdmin',
+        component: ReviewsAdmin
+      }
     ]
   },
-  {
-    path: '/ReviewsAdmin',
-    name: 'ReviewsAdmin',
-    component: ReviewsAdmin
-  }
+  
 ]
