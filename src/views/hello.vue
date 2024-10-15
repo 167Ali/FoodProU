@@ -5,7 +5,7 @@
       <SeeReviews/>
       <Moreinfo/>
       <CreateDeals/>
-      <AdminFinanceDashboard/>
+      <ProductAddToCart/>
 
     </div>
   </template>
@@ -14,6 +14,7 @@
   import SeeReviews from '@/components/Customer/SeeReviews.vue';
   import Moreinfo from '@/components/Customer/Moreinfo.vue';
   import CreateDeals from '@/components/Admin/CreateDeals.vue'
+  import ProductAddToCart from '@/components/Customer/ProductAddToCart.vue';
   import AdminFinanceDashboard from '@/components/Admin/AdminFinanceDashboard.vue';
   
   </script>
