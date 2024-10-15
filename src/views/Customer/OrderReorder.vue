@@ -52,44 +52,53 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
+
+import { getActiveOrders, getPastOrders } from '../../Services/customer/OrderService';
+
 import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
 
-// Router instance
+
 const router = useRouter();
 
-// Vuex store instance
-const store = useStore();
 
-// Accessing state from the Vuex store
 const activeOrders = ref([]);
 const pastOrders = ref([]);
 const loadingActive = ref(false);
 const loadingPast = ref(false);
 
-// Fetching orders using Vuex actions
-const fetchOrders = async () => {
-  await store.dispatch('order/fetchActiveOrders', 1); // assuming customerId is 1 for demo
-  await store.dispatch('order/fetchPastOrders', 1);
+
+const fetchActiveOrders = async () => {
+  loadingActive.value = true;
+  try {
+    activeOrders.value = await getActiveOrders();
+  } catch (error) {
+    console.error('Error fetching active orders:', error);
+  } finally {
+    loadingActive.value = false;
+  }
 };
 
-// Getting the orders from Vuex state
-activeOrders.value = store.getters['order/activeOrders'];
-pastOrders.value = store.getters['order/pastOrders'];
-loadingActive.value = store.getters['order/loadingActive'];
-loadingPast.value = store.getters['order/loadingPast'];
+const fetchPastOrders = async () => {
+  loadingPast.value = true;
+  try {
+    pastOrders.value = await getPastOrders();
+  } catch (error) {
+    console.error('Error fetching past orders:', error);
+  } finally {
+    loadingPast.value = false;
+  }
+};
 
-// Navigate to previous order details page
 const goToPrevOrderDetails = (customerId) => {
   router.push({ name: 'PrevorderDetails', params: { id: customerId } });
 };
 
-// Fetch orders when the component is mounted
 onMounted(() => {
-  fetchOrders();
+  fetchActiveOrders();
+  fetchPastOrders();
 });
+
 </script>
 
 <style scoped>

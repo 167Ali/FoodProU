@@ -7,6 +7,8 @@
         <div class="col-lg-9">
             <Searchbar />
             <discounts :restaurants="restaurants" />
+            <Cuisines/>
+
             <div class="d-lg-none">
                 <!-- Different placement of filter for non-lg screens -->
                 <DashboardFilter />
@@ -39,6 +41,7 @@ import discounts from '../../components/Customer/discounts.vue';
 import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
 
+import Cuisines from '@/components/Customer/Cuisines.vue';
 
 
 const restaurants = [
