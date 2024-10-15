@@ -29,7 +29,7 @@ const actions = {
   async submitCustomerReview({ commit }, reviewData) {
     commit('SET_LOADING', true);
     commit('SET_ERROR', null);
-    
+
     try {
       const response = await submitReview(reviewData);
       commit('ADD_REVIEW', response);
