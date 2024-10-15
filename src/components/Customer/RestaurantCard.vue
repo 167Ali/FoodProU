@@ -1,84 +1,95 @@
 <template>
-    <div class="card m-2">
+    <div>
+      <div class="card m-2" v-for="(restaurant, index) in restaurants" :key="index">
         <div class="position-relative">
-            <img :src="image" class="card-img-top" alt="Restaurant Image">
-            <div class="position-absolute top-0 start-0 m-2 d-flex flex-column">
-                <span class="badge bg-success mb-1" v-for="(discount, index) in discounts" :key="index">
-                    {{ discount }}
-                </span>
-            </div>
+          <img :src="getImageUrl(restaurant.image)" class="card-img-top" alt="Restaurant Image">
+          <!-- If there are any discounts, display them -->
+          <div
+            class="position-absolute top-0 start-0 m-2 d-flex flex-column"
+            v-if="restaurant.discounts && restaurant.discounts.length"
+          >
+            <span class="badge bg-success mb-1" v-for="(discount, idx) in restaurant.discounts" :key="idx">
+              {{ discount }}
+            </span>
+          </div>
         </div>
         <div class="card-body">
-            <h5 class="card-title">{{ name }}</h5>
-            <p class="card-cuisine text-muted mb-1">{{ cuisine }}</p>
-            <div class="card-info d-flex justify-content-between align-items-center mb-2">
-                <span class="rating">⭐ {{ rating }} ({{ reviews }}+)</span>
-                <span class="price">{{ price }}</span>
-            </div>
-            <div class="delivery-info text-muted">
-                <span>{{ deliveryTime }} min</span> · <span>{{ deliveryFee }}</span>
-            </div>
+          <h5 class="card-title">{{ restaurant.name }}</h5>
+          <p class="card-cuisine text-muted mb-1">{{ restaurant.cuisine }}</p>
+          <div class="card-info d-flex justify-content-between align-items-center mb-2">
+            <!-- Additional info can be added here -->
+          </div>
+          <div class="delivery-info text-muted">
+            <span>{{ restaurant.deliveryTime }}</span> · <span>{{ formatDeliveryFee(restaurant.deliveryFee) }}</span>
+          </div>
         </div>
+      </div>
     </div>
-</template>
-
-<script setup>
-import { defineProps } from 'vue';
-
-defineProps({
-    image: String,
-    name: String,
-    cuisine: String,
-    rating: Number,
-    reviews: Number,
-    price: String,
-    deliveryTime: Number,
-    deliveryFee: String,
-    discounts: Array
-});
-</script>
-
-<style scoped>
-.card {
+  </template>
+  
+  <script setup>
+  import { computed, onMounted } from 'vue';
+  import { useStore } from 'vuex';
+  
+  const store = useStore();
+  
+  const restaurants = computed(() => store.getters['resturantDetails/allRestaurants']);
+  
+  const getImageUrl = (imagePath) => {
+    return `http://192.168.15.90:8000/media/${imagePath}`;
+  };
+  
+  const formatDeliveryFee = (fee) => {
+    return fee === 0 ? 'Free Delivery' : `$${fee} Delivery Fee`;
+  };
+  
+  onMounted(() => {
+    store.dispatch('resturantDetails/fetchRestaurants');
+  });
+  </script>
+  
+  <style scoped>
+  .card {
     max-width: 550px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     border: none;
     border-radius: 0.5rem;
-}
-
-.card:hover {
+  }
+  
+  .card:hover {
     transform: scale(1.02);
     cursor: pointer;
-}
-
-.card-img-top {
+  }
+  
+  .card-img-top {
     height: 180px;
     object-fit: cover;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
-}
-
-.discount-tag {
+  }
+  
+  .discount-tag {
     font-size: 0.8rem;
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
-}
-
-.card-title {
+  }
+  
+  .card-title {
     font-size: 1.125rem;
     font-weight: bold;
-}
-
-.card-cuisine {
+  }
+  
+  .card-cuisine {
     font-size: 0.875rem;
-}
-
-.rating,
-.price {
+  }
+  
+  .rating,
+  .price {
     font-size: 0.875rem;
-}
-
-.delivery-info {
+  }
+  
+  .delivery-info {
     font-size: 0.875rem;
-}
-</style>
+  }
+  </style>
+  

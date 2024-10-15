@@ -1,18 +1,29 @@
 <template>
-    <div class="container main-body mt-5">
+  <div class="container main-body mt-5">
+    <!-- Loading Indicator -->
+    <div v-if="loading" class="text-center my-5">
+      <p>Loading data...</p>
+    </div>
+
+    <!-- Error Message -->
+    <div v-if="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Charts -->
+    <div v-else>
       <!-- Dropdown filter -->
       <div class="row mb-4 justify-content-center">
         <div class="col-md-4">
           <label for="timeFilter">Filter by:</label>
-          <select v-model="selectedFilter" @change="updateCharts" class="form-select">
+          <select v-model="selectedFilter" @change="processData" class="form-select">
             <option value="daily">Daily</option>
             <option value="weekly">Weekly</option>
             <option value="monthly">Monthly</option>
-            
           </select>
         </div>
       </div>
-  
+
       <!-- First Row: Total Revenue and Order Volume -->
       <div class="row">
         <div class="col-md-6">
@@ -24,150 +35,201 @@
           <canvas ref="orderVolumeChartCanvas" class="small-bar-chart"></canvas>
         </div>
       </div>
-  
-      <!-- Second Row: Top Performing Restaurants -->
-      <div class="row mt-5 justify-content-center">
-        <div class="col-md-8">
-          <h3>Top Performing Restaurants</h3>
-          <canvas ref="topRestaurantsChartCanvas" class="small-bar-chart"></canvas>
+
+      <!-- Second Row: Average Order Value -->
+      <div class="row mt-5">
+        <div class="col-md-12">
+          <h3>Average Order Value</h3>
+          <canvas ref="aovChartCanvas" class="small-bar-chart"></canvas>
         </div>
       </div>
     </div>
-  </template>
-  
-  <script setup>
-  import { ref, onMounted, watch } from 'vue';
-  import { Chart } from 'chart.js/auto';
-  
-  // References for each chart
-  const revenueChartCanvas = ref(null);
-  const orderVolumeChartCanvas = ref(null);
-  const topRestaurantsChartCanvas = ref(null);
-  
-  // Store the selected filter value
-  const selectedFilter = ref('daily');
-  
-  // Dummy data based on filter type
-  const chartData = {
-    daily: {
-      revenue: [200, 150, 250, 300],
-      orderVolume: [50, 40, 60, 70],
-      topRestaurants: [400, 350, 300, 200]
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted, watch, computed } from 'vue';
+import { Chart } from 'chart.js/auto';
+import { useStore } from 'vuex';
+import moment from 'moment';
+
+// References for each chart
+const revenueChartCanvas = ref(null);
+const orderVolumeChartCanvas = ref(null);
+const aovChartCanvas = ref(null);
+
+// Store the selected filter value
+const selectedFilter = ref('daily');
+
+// Access the Vuex store
+const store = useStore();
+
+// Computed properties to access Vuex store state
+const totalRevenue = computed(() => store.getters['resturantRevinue/getTotalRevenue']);
+const revenueDates = computed(() => store.getters['resturantRevinue/getRevenueDates']);
+const orderVolume = computed(() => store.getters['resturantRevinue/getOrderVolume']);
+const orderDates = computed(() => store.getters['resturantRevinue/getOrderDates']);
+const loading = computed(() => store.getters['resturantRevinue/isLoading']);
+const errorMessage = computed(() => store.getters['resturantRevinue/errorMessage']);
+
+// Initialize charts
+let revenueChart, orderVolumeChart, aovChart;
+
+// Function to create the revenue chart
+const createRevenueChart = (labels, data) => {
+  if (revenueChart) revenueChart.destroy();
+  const ctx = revenueChartCanvas.value.getContext('2d');
+  revenueChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Total Revenue',
+        data: data,
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1,
+      }],
     },
-    weekly: {
-      revenue: [1500, 2000, 1750, 2200],
-      orderVolume: [300, 350, 320, 380],
-      topRestaurants: [4500, 4000, 3500, 3200]
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true },
+      },
     },
-    monthly: {
-      revenue: [6000, 7500, 8000, 9500],
-      orderVolume: [1000, 1200, 1100, 1300],
-      topRestaurants: [15000, 14000, 13500, 12000]
-    },
-    
-  };
-  
-  // Functions to create the charts
-  let revenueChart, orderVolumeChart, topRestaurantsChart;
-  
-  const createRevenueChart = (data) => {
-    if (revenueChart) revenueChart.destroy();
-    const ctx = revenueChartCanvas.value.getContext('2d');
-    revenueChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Period 1', 'Period 2', 'Period 3', 'Period 4'],
-        datasets: [{
-          label: 'Total Revenue',
-          data: data,
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: { beginAtZero: true }
-        }
-      }
-    });
-  };
-  
-  const createOrderVolumeChart = (data) => {
-    if (orderVolumeChart) orderVolumeChart.destroy();
-    const ctx = orderVolumeChartCanvas.value.getContext('2d');
-    orderVolumeChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Period 1', 'Period 2', 'Period 3', 'Period 4'],
-        datasets: [{
-          label: 'Order Volume',
-          data: data,
-          borderColor: 'rgba(255, 99, 132, 1)',
-          fill: false,
-          tension: 0.1
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: { beginAtZero: true }
-        }
-      }
-    });
-  };
-  
-  const createTopRestaurantsChart = (data) => {
-    if (topRestaurantsChart) topRestaurantsChart.destroy();
-    const ctx = topRestaurantsChartCanvas.value.getContext('2d');
-    topRestaurantsChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Restaurant A', 'Restaurant B', 'Restaurant C', 'Restaurant D'],
-        datasets: [{
-          label: 'Sales (in $)',
-          data: data,
-          backgroundColor: 'rgba(153, 102, 255, 0.2)',
-          borderColor: 'rgba(153, 102, 255, 1)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: { beginAtZero: true }
-        }
-      }
-    });
-  };
-  
-  // Function to update charts based on the selected filter
-  const updateCharts = () => {
-    const filter = selectedFilter.value;
-    createRevenueChart(chartData[filter].revenue);
-    createOrderVolumeChart(chartData[filter].orderVolume);
-    createTopRestaurantsChart(chartData[filter].topRestaurants);
-  };
-  
-  // Initialize charts when component is mounted
-  onMounted(() => {
-    updateCharts();
   });
-  </script>
-  
-  <style scoped>
-  .container {
-    max-width: 1000px;
-  }
-  h3 {
-    text-align: center;
-  }
-  
-  /* Adjust the size of the bar charts */
-  .small-bar-chart {
-    height: 300px;
-    width: 100%;
-  }
-  </style>
-  
+};
+
+// Function to create the order volume chart
+const createOrderVolumeChart = (labels, data) => {
+  if (orderVolumeChart) orderVolumeChart.destroy();
+  const ctx = orderVolumeChartCanvas.value.getContext('2d');
+  orderVolumeChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Order Volume',
+        data: data,
+        borderColor: 'rgba(255, 99, 132, 1)',
+        fill: false,
+        tension: 0.1,
+      }],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true },
+      },
+    },
+  });
+};
+
+// Function to create the Average Order Value chart
+const createAOVChart = (labels, data) => {
+  if (aovChart) aovChart.destroy();
+  const ctx = aovChartCanvas.value.getContext('2d');
+  aovChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Average Order Value',
+        data: data,
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+      }],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true },
+      },
+    },
+  });
+};
+
+// Function to process data based on the selected filter
+const processData = () => {
+  const filter = selectedFilter.value;
+
+  // Process total revenue data
+  const revenueData = {};
+  totalRevenue.value.forEach((amount, index) => {
+    const date = moment(revenueDates.value[index]);
+    let key;
+    if (filter === 'daily') {
+      key = date.format('YYYY-MM-DD');
+    } else if (filter === 'weekly') {
+      key = date.format('YYYY-[W]WW');
+    } else if (filter === 'monthly') {
+      key = date.format('YYYY-MM');
+    }
+    revenueData[key] = (revenueData[key] || 0) + amount;
+  });
+
+  const revenueLabels = Object.keys(revenueData);
+  const revenueAmounts = Object.values(revenueData);
+
+  // Process order volume data
+  const orderData = {};
+  orderVolume.value.forEach((count, index) => {
+    const date = moment(orderDates.value[index]);
+    let key;
+    if (filter === 'daily') {
+      key = date.format('YYYY-MM-DD');
+    } else if (filter === 'weekly') {
+      key = date.format('YYYY-[W]WW');
+    } else if (filter === 'monthly') {
+      key = date.format('YYYY-MM');
+    }
+    orderData[key] = (orderData[key] || 0) + count;
+  });
+
+  const orderLabels = Object.keys(orderData);
+  const orderCounts = Object.values(orderData);
+
+  // Compute Average Order Value
+  const aovData = {};
+  revenueLabels.forEach((label) => {
+    const revenue = revenueData[label] || 0;
+    const orders = orderData[label] || 0;
+    aovData[label] = orders > 0 ? (revenue / orders).toFixed(2) : 0;
+  });
+
+  const aovLabels = Object.keys(aovData);
+  const aovValues = Object.values(aovData);
+
+  // Update the charts
+  createRevenueChart(revenueLabels, revenueAmounts);
+  createOrderVolumeChart(orderLabels, orderCounts);
+  createAOVChart(aovLabels, aovValues);
+};
+
+// Fetch data and initialize charts when component is mounted
+onMounted(async () => {
+  await store.dispatch('resturantRevinue/fetchRevenueData');
+  processData();
+});
+
+// Watch for changes in the selected filter
+watch(selectedFilter, () => {
+  processData();
+});
+</script>
+
+<style scoped>
+.container {
+  max-width: 1000px;
+}
+h3 {
+  text-align: center;
+}
+
+/* Adjust the size of the bar charts */
+.small-bar-chart {
+  height: 300px;
+  width: 100%;
+}
+</style>
