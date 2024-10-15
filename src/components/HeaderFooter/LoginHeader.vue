@@ -33,7 +33,7 @@
                         </li>
 
                         <li>
-                            <router-link to="/logout" class="nav-link">
+                            <router-link to="/" class="nav-link">
                                 <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
                                 <span>Logout</span>
                             </router-link>
@@ -210,6 +210,7 @@ onBeforeUnmount(() => {
     border: none;
     cursor: pointer;
     font-size: 25px;
+    color: #000;
 }
 
 .heart-icon-button:hover {

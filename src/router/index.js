@@ -71,17 +71,39 @@ const routes = [
   {
     path: '/admin-dashboard',
     name: 'AdminDashboard',
-    component: AdminDashboard
-  },
-  {
-    path: '/AdminFinanceDashboard',
-    name: 'AdminFinanceDashboard',
-    component: AdminFinanceDashboard
-  },
+
+    component: AdminDashboard,
+    children: [
+      {
+        path: '/viewallorders',
+        name: 'ViewAllOrdersAdm', 
+        component: ViewAllOrdersAdm 
+      },
+      {
+        path: '/AdminFinanceDashboard',
+        name: 'AdminFinanceDashboard',
+        component: AdminFinanceDashboard
+      },
+    ]
+  }, 
   {
     path: '/RestaurantOwnerDashboard',
     name: 'RestaurantOwner_Dashboard',
-    component: RestaurantOwner_Dashboard
+    component: RestaurantOwner_Dashboard,
+    children: [
+      {
+        path: '/Resturant-owner',
+        name: 'RestaurantOwner',
+        component: ResturantOwner
+      },
+      {
+        path: '/restOwnerProfile',
+        name: 'RestOwnerProfile',
+        component: RestOwnerProfile
+    
+      },
+    ]
+
   },
   {
     path: '/dashboardresturantpage',
@@ -128,11 +150,7 @@ const routes = [
     name: 'OwnerMenu', 
     component: () => import('../views/Menu/OwnerMenu.vue') 
   },
-  {
-    path: '/restOwnerProfile',
-    name: 'RestOwnerProfile',
-    component: RestOwnerProfile
-  },
+
   {
     path: '/OrderReorder',
     name: 'OrderReorder',
