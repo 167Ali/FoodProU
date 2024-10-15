@@ -1,38 +1,38 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import NavbarHeader from '../views/NavbarHeader.vue';
-import Restaurantpage from '../views/Customer/RestaurantPage.vue';
-import AdminDashboard from '../views/Admin/AdminDashboard.vue';
-import CheckOut from '../components/Customer/CheckOut.vue';
-import OrderReq from '../components/RestaurantOwner/OrderRequest.vue';
-import OrderReorder from '../views/Customer/OrderReorder.vue';
-import PrevorderDetails from '../views/Customer/PrevorderDetails.vue'; // Import new component
-import ProfileSettings from '../views/Customer/ProfileSettings.vue';
-import FavoritesPage from '../views/Customer/favs.vue';
-import OrderScreen from '../views/Customer/OrderScreen.vue';
-import ModalView from '../components/RestaurantOwner/restOwnReciept.vue';
-import RestOwnerProfile from '../components/RestaurantOwner/restOwnerProfile.vue';
-import ViewAllOrdersAdm from '../views/Admin/ViewAllOrdersAdm.vue';
-import DashboardResturantPage from '../views/Customer/DashboardResturantPage.vue';
-import Main_landing from '../views/Login_Signup/Main_Landing.vue';
-import Business_Landing from '../views/Login_Signup/Bussiness_Landing.vue';
-import AdminFinanceDashboard from '../components/Admin/AdminFinanceDashboard.vue';
-import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_Dashboard.vue';
-import AddtoCart from '../components/AddtoCart.vue';
-import ResturantOwner from '@/components/RestaurantOwner/ResturantOwner.vue';
-import RestaurantCard from '@/components/Customer/RestaurantCard.vue';
-import hello from '@/views/hello.vue';
-
-// Import additional routes
+import { createRouter, createWebHistory } from 'vue-router'
+import NavbarHeader from '../views/NavbarHeader.vue'
+import Restaurantpage from '../views/Customer/RestaurantPage.vue'
+import AdminDashboard from '../views/Admin/AdminDashboard.vue'
+import CheckOut from '../components/Customer/CheckOut.vue'
+import OrderReq from '../components/RestaurantOwner/OrderRequest.vue'
+import OrderReorder from '../views/Customer/OrderReorder.vue'
+import PrevorderDetails from '../views/Customer/PrevorderDetails.vue' // Import new component
+import ProfileSettings from '../views/Customer/ProfileSettings.vue'
+import FavoritesPage from '../views/Customer/favs.vue'
+import OrderScreen from '../views/Customer/OrderScreen.vue'
+import ModalView from '../components/RestaurantOwner/restOwnReciept.vue'
+import RestOwnerProfile from '../components/RestaurantOwner/restOwnerProfile.vue'
+import ViewAllOrdersAdm from '../views/Admin/ViewAllOrdersAdm.vue'
+import DashboardResturantPage from '../views/Customer/DashboardResturantPage.vue'
+import Main_landing from '../views/Login_Signup/Main_Landing.vue'
+import Business_Landing from '../views/Login_Signup/Bussiness_Landing.vue'
+import AdminFinanceDashboard from '../components/Admin/AdminFinanceDashboard.vue'
+import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_Dashboard.vue'
+import CategoryNavbar from '../components/Customer/CategoryNavbar.vue'
+import AddtoCart from '../components/AddtoCart.vue'
+import ResturantOwner from '@/components/RestaurantOwner/ResturantOwner.vue'
+import RestaurantCard from '@/components/Customer/RestaurantCard.vue'
 import adminRoutes from './adminRoutes';
 import customerRoutes from './customerRoutes';
 import restaurantOwnerRoutes from './restaurantownerRoutes';
 import otherRoutes from './otherRoutes'; // Miscellaneous routes
+import hello from '@/views/hello.vue'
+// import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
+// import Moreinfo from '../components/Customer/Moreinfo.vue'
+// import SeeReviews from '../components/Customer/SeeReviews.vue'
 
 const routes = [
-  ...adminRoutes,
-  ...customerRoutes,
-  ...restaurantOwnerRoutes,
-  ...otherRoutes,
+
+
   {
     path: '/Navbarheader',
     name: 'NavbarHeader',
@@ -49,16 +49,22 @@ const routes = [
         component: OrderReq,
       },
       {
-        path: 'cart',
-        name: 'AddToCart',
-        component: AddtoCart,
+
+        path: '/cart',
+        name: 'addtocard',
+        component: AddtoCart
       },
-    ],
+    ]
+  },
+  {
+    path: '/catnvbr',
+    name: 'categorynavbar',
+    component: CategoryNavbar
   },
   {
     path: '/RestaurantPage',
     name: 'RestaurantPage',
-    component: Restaurantpage,
+    component: Restaurantpage
   },
   {
     path: '/admin-dashboard',
@@ -95,9 +101,15 @@ const routes = [
       {
         path: 'restaurant-owner',
         name: 'RestaurantOwner',
-        component: ResturantOwner,
+        component: ResturantOwner
       },
-    ],
+      {
+        path: '/restOwnerProfile',
+        name: 'RestOwnerProfile',
+        component: RestOwnerProfile
+
+      },
+    ]
   },
   {
     path: '/dashboardrestaurantpage',
