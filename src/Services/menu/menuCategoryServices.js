@@ -25,7 +25,7 @@ const headers = { Authorization: token };
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 export const addMenuCategoryService = (categoryData, restaurantid = 8) =>
-    axios.post(`${baseURL}/create-menu/${restaurantid}`, categoryData, { headers });
+    axios.post(`${baseURL}/api/create-menu/${restaurantid}`, categoryData, { headers });
 
 export const displayMenuCategoryService = () =>
-    axios.get(`${baseURL}/get-count`, { headers });
+    axios.get(`${baseURL}/api/get-count`, { headers });

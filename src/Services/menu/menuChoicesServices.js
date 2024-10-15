@@ -25,7 +25,7 @@ export const choiceService = {
     // Create a new choice
     createChoice(choiceData) {
         const formData = createProductFormData(choiceData);
-        return axios.post(`${baseURL}/create-choice-group`, formData, {
+        return axios.post(`${baseURL}/api/create-choice-group`, formData, {
             headers: {
                 ...headers,
                 'Content-Type': 'multipart/form-data', // Set the appropriate content type
@@ -35,16 +35,16 @@ export const choiceService = {
 
     // Update an existing choice
     updateChoice(menuId, choiceId, choiceData) {
-        return axios.put(`${baseURL}/menu/${menuId}/choices/${choiceId}`, choiceData);
+        return axios.put(`${baseURL}/api/menu/${menuId}/choices/${choiceId}`, choiceData);
     },
 
     // Delete a choice
     deleteChoice(id) {
-        return axios.delete(`${baseURL}/delete-choice-group`, { headers }, id);
+        return axios.delete(`${baseURL}/api/delete-choice-group`, { headers }, id);
     },
 
     // Get choices for a specific menu
     getChoices() {
-        return axios.get(`${baseURL}/choice-groups`, { headers });
+        return axios.get(`${baseURL}/api/choice-groups`, { headers });
     },
 };

@@ -34,7 +34,7 @@ const createProductFormData = (productData) => {
 // Service to add a new product
 export const addProductService = (productData, id) => {
     const formData = createProductFormData(productData);
-    return axios.post(`${baseURL}/add-item/menu/${id}`, formData, {
+    return axios.post(`${baseURL}/api/add-item/menu/${id}`, formData, {
         headers: {
             ...headers,
             'Content-Type': 'multipart/form-data', // Set the appropriate content type
@@ -45,7 +45,7 @@ export const addProductService = (productData, id) => {
 // Service to edit an existing product
 export const editProductService = (productData, productId, restaurantid = 8) => {
     const formData = createProductFormData(productData);
-    return axios.put(`${baseURL}/edit-product/${restaurantid}/${productId}`, formData, {
+    return axios.put(`${baseURL}/api/edit-product/${restaurantid}/${productId}`, formData, {
         headers: {
             ...headers,
             'Content-Type': 'multipart/form-data', // Set the appropriate content type
@@ -55,10 +55,10 @@ export const editProductService = (productData, productId, restaurantid = 8) => 
 
 // Service to delete a product
 export const deleteProductService = (productId, restaurantid = 8) => {
-    return axios.delete(`${baseURL}/delete-product/${restaurantid}/${productId}`, { headers });
+    return axios.delete(`${baseURL}/api/delete-product/${restaurantid}/${productId}`, { headers });
 };
 
 // Service to display all products
 export const displayProductsService = (categoryId) => {
-    return axios.get(`${baseURL}/menu-with-item/${categoryId}`, { headers });
+    return axios.get(`${baseURL}/api/api/menu-with-item/${categoryId}`, { headers });
 };

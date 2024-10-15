@@ -1,12 +1,12 @@
-<script setup>
-</script>
-
 <template>
-<router-view></router-view>
+    <RouterView></RouterView>
 </template>
 
 
-<style scoped>
 
-</style>
+<script setup>
+import { RouterView } from 'vue-router';
 
+</script>
+
+<style scoped></style>
