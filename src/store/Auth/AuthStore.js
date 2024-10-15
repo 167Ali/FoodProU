@@ -1,6 +1,6 @@
 // src/store/Auth/AuthStore.js
 
-import { resetPassword, setPassword,login } from '../../Services/Auth/AuthService';
+import { resetPassword, setPassword, login ,register,registerBusiness} from '../../Services/Auth/AuthService';
 
 const state = () => ({
   loading: false,
@@ -83,15 +83,38 @@ const actions = {
   },
   async login({ commit }, credentials) {
     try {
-        const { access_token, role, permissions } = await login(credentials); // Call the login service
-        commit('SET_TOKEN', access_token);
-        commit('SET_USER', { role, permissions }); // Store role and permissions in the user state
-        return { role, permissions: permissions || [] };
+      const { access_token, role, permissions } = await login(credentials); // Call the login service
+      commit('SET_TOKEN', access_token);
+      commit('SET_USER', { role, permissions }); // Store role and permissions in the user state
+      return { role, permissions: permissions || [] };
     } catch (error) {
-        console.error('Login error:', error.message);
-        throw new Error(error.message);
+      console.error('Login error:', error.message);
+      throw new Error(error.message);
     }
-},
+  },
+  async register({ commit }, formData) {
+    try {
+      const { access_token, user } = await register(formData);
+      commit('SET_TOKEN', access_token);
+      commit('SET_USER', user);
+      return user;
+    } catch (error) {
+      console.error('Registration error:', error.message);
+      throw new Error(error.message);
+    }
+  },
+  async registerBusiness({ commit }, formData) {
+    try {
+      const response = await registerBusiness(formData);
+      return response; // Return the response if needed
+    } catch (error) {
+      console.error('Business registration error:', error.message);
+      throw new Error(error.message);
+    }
+  },
+  logout({ commit }) {
+    commit('LOGOUT');
+  }
 };
 
 const getters = {
