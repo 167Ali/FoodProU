@@ -1,7 +1,7 @@
 // services/profileService.js
 import axios from 'axios';
 
-const API_URL = 'http://192.168.15.90:8000/api/customers/';
+const API_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const updateProfile = async (profileData) => {
     try {

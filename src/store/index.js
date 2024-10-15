@@ -1,6 +1,11 @@
+// store/index.js
 import { createStore } from 'vuex';
-import profileModule from './modules/profile'; 
-import { rewards } from './modules/rewards'; 
+
+import { menuCategory } from '../store/menu/menuCategory';
+import { menuProduct } from '../store/menu/menuProduct';
+import { menuChoices } from '../store/menu/menuChoices';
+import profileModule from './modules/profile';
+import { rewards } from './modules/rewards';
 import AuthStore from './Auth/AuthStore';
 import order from './modules/order'; // import the order module
 import Prevorder from './modules/PrevorderDetail';
@@ -17,9 +22,11 @@ const store = createStore({
     Resturantownerreviews,
     Reviews,
     rewards,
-   profile: profileModule, 
-    auth:AuthStore,
-
+    profile: profileModule,
+    auth: AuthStore,
+    menuCategory,
+    menuProduct,
+    menuChoices
   },
 
   state: {
@@ -32,8 +39,6 @@ const store = createStore({
   },
   actions: {
     // Define actions for async calls and committing mutations
-
   },
 });
-
 export default store;

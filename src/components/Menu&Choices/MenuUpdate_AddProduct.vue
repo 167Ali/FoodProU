@@ -2,12 +2,13 @@
 
     <div class="p-2">
         <div class="mb-3">
-            <h5 class="card-title">{{ isEditMode ? 'Edit Product' : 'Add Product' }}</h5>
+            <h4 class="card-title">{{ isEditMode ? 'Edit Product' : 'Add Product' }}</h4>
         </div>
         <form ref="productFormRef" @submit.prevent="submitForm" :class="{ 'was-validated': isFormValidated }">
             <!-- Product Name -->
             <div class="card">
                 <div class="row">
+                    <h5 class="m-3 card-title"><strong>Category: </strong>{{ categoryTitle }}</h5>
                     <div class="col-md-6 col-12 ps-4 py-4">
                         <div class="mb-3">
                             <label for="productName" class="form-label">Product Name</label>
@@ -31,35 +32,40 @@
                             <div class="scroller-card">
                                 <div v-for="(choice, index) in availableChoices" :key="index" class="form-check">
                                     <input type="checkbox" class="form-check-input" :id="'choice' + index"
-                                        v-model="productForm.assignedChoices" :value="choice" />
+                                        v-model="productForm.variation_id" :value="choice" />
                                     <label class="form-check-label" :for="'choice' + index">{{ choice }}</label>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Image Upload Required Validation -->
-                        <div class="mb-3" v-if="isFormValidated && !productForm.image">
+                        <div class="mb-3" v-if="isFormValidated && !productForm.image_path">
                             <div class="text-danger">Image is required.</div>
                         </div>
 
 
                     </div>
+
                     <div class="col-md-6 col-12">
                         <div class="p-4 text-center">
                             <div class="drop-zone" @click="triggerFileInput">
+                                <!-- <input type="file" ref="fileInput" @change="handleImageUpload" accept="image/*"
+                                    :required="!productForm.image" class="d-none" /> -->
+
                                 <input type="file" ref="fileInput" @change="handleImageUpload" accept="image/*"
-                                    class="d-none" required />
-                                <img v-if="productForm.image" :src="productForm.image" alt="Uploaded Image"
+                                    class="d-none" />
+
+                                <img v-if="productForm.image_path" :src="productForm.image_path" alt="Uploaded Image"
                                     class="img-fluid" />
                                 <div v-else>
                                     <i class="fa-solid fa-arrow-up-from-bracket fa-4x" style="color: #373d49;"></i>
-                                    <p>Click to upload Product photo <br />
-                                        <!-- <button class="btn btn-outline-primary">Select file</button> -->
-                                    </p>
+                                    <p>Click to upload Product photo</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
             </div>
             <div class="mt-3">
@@ -78,6 +84,7 @@ import { ref, reactive, watch } from 'vue';
 const props = defineProps({
     product: Object,
     isEditMode: Boolean,
+    categoryTitle: String,
 });
 const emits = defineEmits(['save', 'cancel']);
 
@@ -89,11 +96,13 @@ const availableChoices = ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4', 'Choic
 const productFormRef = ref(null);
 const isFormValidated = ref(false);
 const productForm = reactive({
-    name: '',
-    description: '',
-    price: 0,
-    image: null, // Now directly storing the image data URL
-    assignedChoices: [], // Array to store selected choices
+    name: '', //name
+    description: '', //price
+    price: 0,               //category // description//variation_id
+    image_path: null, // Now directly storing the image data URL // image_path
+    variation_id: {
+        choices: [], addons: []
+    }, // Array to store selected choices 
 });
 const fileInput = ref(null);
 
@@ -106,28 +115,35 @@ const triggerFileInput = () => {
 const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file && file.type.startsWith('image/')) {
+        productForm.image_file = file; // Store the image file for submission
+        // Use FileReader to display the image preview
         const reader = new FileReader();
         reader.onload = (e) => {
-            productForm.image = e.target.result; // Set uploaded image source directly in productForm
+            productForm.image_path = e.target.result; // This is for displaying the image preview
         };
         reader.readAsDataURL(file);
     } else {
+        isFormValidated.value = false;
         alert('Please upload a valid image file.');
     }
 };
 
 // Submit form
+
+
 const submitForm = () => {
     isFormValidated.value = true;
-    // Check if image is uploaded
-    if (productFormRef.value.checkValidity() && productForm.image) {
-        console.log(productForm, " pf")
+    if (productForm.image_file && productFormRef.value.checkValidity()) {
         emits('save', { ...productForm });
         isFormValidated.value = false; // Reset validation
     } else {
         productFormRef.value.reportValidity();
+        if (!productForm.image_file) {
+            // Optionally alert if no image is uploaded
+        }
     }
 };
+
 
 // Cancel form
 const cancelForm = () => {
@@ -139,7 +155,7 @@ const resetForm = () => {
     productForm.name = '';
     productForm.description = '';
     productForm.price = 0;
-    productForm.image = null; // Reset the image as well
+    productForm.image_path = null; // Reset the image as well
 };
 
 // Watch for changes in the product prop

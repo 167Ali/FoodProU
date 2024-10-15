@@ -1,6 +1,6 @@
 // src/store/Auth/AuthStore.js
 
-import { resetPassword, setPassword,login } from '../../Services/Auth/AuthService';
+import { resetPassword, setPassword, login } from '../Services/Auth/AuthService';
 
 const state = () => ({
 
@@ -160,23 +160,23 @@ const actions = {
 
     try {
 
-        const { access_token, role, permissions } = await login(credentials); // Call the login service
+      const { access_token, role, permissions } = await login(credentials); // Call the login service
 
-        commit('SET_TOKEN', access_token);
+      commit('SET_TOKEN', access_token);
 
-        commit('SET_USER', { role, permissions }); // Store role and permissions in the user state
+      commit('SET_USER', { role, permissions }); // Store role and permissions in the user state
 
-        return { role, permissions: permissions || [] };
+      return { role, permissions: permissions || [] };
 
     } catch (error) {
 
-        console.error('Login error:', error.message);
+      console.error('Login error:', error.message);
 
-        throw new Error(error.message);
+      throw new Error(error.message);
 
     }
 
-},
+  },
 
 };
 
