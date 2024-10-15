@@ -72,7 +72,7 @@ commit('RESET_PASSWORD_SUCCESS', response.message || 'Password reset link has be
 commit('RESET_PASSWORD_FAILURE', error.message || 'An error occurred. Please try again.');
 }
 
-},
+    },
 
 async setPassword({ commit }, payload) {
 commit('SET_PASSWORD_REQUEST');
@@ -87,7 +87,7 @@ commit('SET_PASSWORD_FAILURE', error.message || 'An error occurred. Please try a
 async login({ commit }, credentials) {
 try {
 
-const { access_token, role, permissions } = await login(credentials); // Call the login service
+            const { access_token, role, permissions } = await login(credentials); // Call the login service
 
 commit('SET_TOKEN', access_token);
 commit('SET_USER', { role, permissions }); // Store role and permissions in the user state
@@ -120,11 +120,11 @@ throw new Error(error.message);
 logout({ commit }) {
 commit('LOGOUT');
 
-}
+    }
 
 };
 
-const getters = {
+ const getters = {
 
 isLoading: (state) => state.loading,
 successMessage: (state) => state.successMessage,
@@ -137,7 +137,7 @@ isRestaurantOwner: (state) => state.user.role === 'Restaurant Owner',
 
 export default {
 
-namespaced: true,
+    namespaced: true,
 
 state,
 
