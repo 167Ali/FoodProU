@@ -23,15 +23,6 @@
                             @focus="onFocus($event)" @blur="onBlur($event)" placeholder="" />
                         <label for="mobile" class="floating-label">Mobile Number</label>
                     </div>
-                    <button type="submit" class="btn btn-primary scale-on-hover"
-                        :disabled="isProfileFormInvalid">Save</button>
-                </form>
-            </div>
-            <hr />
-            <!-- Email -->
-            <div class="mb-4">
-                <h5 class="fw-bold">Email</h5>
-                <form @submit.prevent="saveEmail" class="animate__animated animate__fadeIn">
                     <div class="mb-3 input-wrapper">
                         <input type="email" v-model="profile.email" class="form-control" id="email" required
                             @focus="onFocus($event)" @blur="onBlur($event)" placeholder="" />
@@ -40,11 +31,10 @@
                         <span v-else class="badge bg-danger mt-2">Not Verified</span>
                     </div>
                     <button type="submit" class="btn btn-primary scale-on-hover"
-                        :disabled="!profile.email">Save</button>
+                        :disabled="isProfileFormInvalid">Save</button>
                 </form>
             </div>
             <hr />
-            <br />
             <!-- Password -->
             <div>
                 <h5 class="fw-bold">Password</h5>
@@ -86,7 +76,8 @@ const isProfileFormInvalid = computed(() => {
     return (
         !profile.value.first_name ||
         !profile.value.last_name ||
-        !profile.value.phone_number
+        !profile.value.phone_number ||
+        !profile.value.email
     );
 });
 
@@ -103,34 +94,24 @@ const saveProfile = async () => {
             first_name: profile.value.first_name,
             last_name: profile.value.last_name,
             phone_number: profile.value.phone_number,
-            email: profile.value.email // Include email if you want to update it here
+            email: profile.value.email // Include email in the profile update
         });
-        alert('Profile updated successfully!'); // Add success message
+        alert('Profile updated successfully!');
     } catch (error) {
-        alert('Failed to save profile. Please try again.'); // User-friendly error message
+        alert('Failed to save profile. Please try again.');
         console.error('Failed to save profile:', error);
-    }
-};
-
-const saveEmail = async () => {
-    try {
-        await store.dispatch('profile/saveEmail', { email: profile.value.email });
-        alert('Email updated successfully!'); // Add success message
-    } catch (error) {
-        alert('Failed to save email. Please try again.'); // User-friendly error message
-        console.error('Failed to save email:', error);
     }
 };
 
 const savePassword = async () => {
     try {
-        await store.dispatch('profile/savePassword', { 
-            currentPassword: profile.value.currentPassword, 
-            newPassword: profile.value.newPassword 
+        await store.dispatch('profile/savePassword', {
+            currentPassword: profile.value.currentPassword,
+            newPassword: profile.value.newPassword
         });
-        alert('Password updated successfully!'); // Add success message
+        alert('Password updated successfully!');
     } catch (error) {
-        alert('Failed to save password. Please try again.'); // User-friendly error message
+        alert('Failed to save password. Please try again.');
         console.error('Failed to save password:', error);
     }
 };
@@ -165,9 +146,17 @@ const onBlur = (event) => {
     animation: fadeIn 0.5s forwards;
 }
 
-.input-wrapper:nth-child(1) { animation-delay: 0.2s; }
-.input-wrapper:nth-child(2) { animation-delay: 0.3s; }
-.input-wrapper:nth-child(3) { animation-delay: 0.4s; }
+.input-wrapper:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.input-wrapper:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.input-wrapper:nth-child(3) {
+    animation-delay: 0.4s;
+}
 
 input.form-control {
     width: 100%;
@@ -193,8 +182,8 @@ input.form-control:focus {
     pointer-events: none;
 }
 
-input.form-control:focus + .floating-label,
-input.form-control:not(:placeholder-shown) + .floating-label {
+input.form-control:focus+.floating-label,
+input.form-control:not(:placeholder-shown)+.floating-label {
     top: -10px;
     left: 15px;
     font-size: 12px;
