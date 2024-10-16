@@ -25,7 +25,6 @@
         </nav>
     </div>
     <LoginModal :showModal="showLoginModal" @close="closeLoginModal" />
-
     <SignUpModal :showModal="showSignUpModal" @close="closeSignUpModal" />
 </template>
 
