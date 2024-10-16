@@ -32,8 +32,13 @@
                             <div class="scroller-card">
                                 <div v-for="(choice, index) in availableChoices" :key="index" class="form-check">
                                     <input type="checkbox" class="form-check-input" :id="'choice' + index"
-                                        v-model="productForm.variation_id" :value="choice" />
-                                    <label class="form-check-label" :for="'choice' + index">{{ choice }}</label>
+                                        v-model="choice.id" :value="choice.id" />
+                                    <label class="form-check-label" :for="'choice' + index">
+                                        <!-- Displaying choice name, required/optional status, and choice type in a line -->
+                                        {{ choice.name }} -
+                                        <span>{{ choice.is_required == 1 ? 'Required' : 'Optional' }}</span> -
+                                        <span>{{ choice.choice_type }}</span>
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -78,8 +83,10 @@
 </template>
 
 <script setup>
-import { ref, reactive, watch } from 'vue';
+import { ref, reactive, watch, computed } from 'vue';
+import { useStore } from 'vuex';
 
+const store = useStore();
 // Props and emits
 const props = defineProps({
     product: Object,
@@ -88,9 +95,10 @@ const props = defineProps({
 });
 const emits = defineEmits(['save', 'cancel']);
 
+const availableChoices = computed(() => store.getters['menuChoice/allChoices']);
 
 // Available choices for the product (can be fetched from an API later)
-const availableChoices = ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4', 'Choice 5'];
+//const availableChoices = ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4', 'Choice 5'];
 
 // Refs and reactive data
 const productFormRef = ref(null);
