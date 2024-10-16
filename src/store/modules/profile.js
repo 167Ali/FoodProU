@@ -1,86 +1,58 @@
-// store/modules/profile.js
+
+//import { updateProfile, updateEmail, updatePassword } from '../../Services/customer/CustomerProfile';
 
 const state = {
+    profile: {
+        first_name: '',
+        last_name: '',
+        phone_number: '',
+        email: '',
+        isEmailVerified: false,
+    },
+};
 
-    firstName: 'Muhammad',
-    
-    lastName: 'Ali',
-    
-    mobile: '0323 8890511',
-    
-    email: 'muhammadali908@gmail.com',
-    
-    isEmailVerified: true,
-    
-    currentPassword: '',
-    
-    newPassword: ''
-    
-    };
-    
-    const mutations = {
-    
-    UPDATE_PROFILE(state, payload) {
-    
-    state.firstName = payload.firstName || state.firstName;
-    
-    state.lastName = payload.lastName || state.lastName;
-    
-    state.mobile = payload.mobile || state.mobile;
-    
-    state.email = payload.email || state.email;
-    
+const mutations = {
+    SET_PROFILE(state, profile) {
+        state.profile = { ...state.profile, ...profile };
     },
-    
-    UPDATE_EMAIL(state, email) {
-    
-    state.email = email;
-    
+    // You can add more mutations if needed
+};
+
+const actions = {
+    async saveProfile({ commit }, profileData) {
+        try {
+            const response = await updateProfile(profileData);
+            commit('SET_PROFILE', response); // Update the store with the new profile data
+        } catch (error) {
+            console.error('Failed to save profile:', error);
+            // Handle error appropriately (e.g., show a notification)
+        }
     },
-    
-    UPDATE_PASSWORD(state, passwords) {
-    
-    state.currentPassword = passwords.currentPassword;
-    
-    state.newPassword = passwords.newPassword;
-    
-    }
-    
-    };
-    
-    const actions = {
-    
-    saveProfile({ commit }, profile) {
-    
-    commit('UPDATE_PROFILE', profile);
-    
+    async saveEmail({ commit }, emailData) {
+        try {
+            const response = await updateEmail(emailData);
+            commit('SET_PROFILE', { email: response.email });
+        } catch (error) {
+            console.error('Failed to save email:', error);
+            // Handle error appropriately
+        }
     },
-    
-    saveEmail({ commit }, email) {
-    
-    commit('UPDATE_EMAIL', email);
-    
+    async savePassword({ commit }, passwordData) {
+        try {
+            await updatePassword(passwordData);
+            // Optionally handle any state updates if necessary
+        } catch (error) {
+            console.error('Failed to save password:', error);
+            // Handle error appropriately
+        }
     },
-    
-    savePassword({ commit }, passwords) {
-    
-    commit('UPDATE_PASSWORD', passwords);
-    
-    }
-    
-    };
-    
-    export default {
-    
+};
+
+export default {
     namespaced: true,
     
     state,
     
     mutations,
-    
-    actions
-    
-    };
-    
-    
-    
+    actions,
+};

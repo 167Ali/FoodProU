@@ -1,47 +1,57 @@
 <template>
     <div class="container mt-4">
         <!-- Button to trigger modal for creating a product -->
-        <button class="btn btn-primary mb-4" @click="openModal()">Add Product</button>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>{{ categoryTitle }}</h2>
+            <button class="btn btn-primary" @click="openModal()">Add Product</button>
+        </div>
 
         <!-- Cards displaying product details -->
-        <div class="row">
-            <div v-for="(product, index) in products" :key="index" class="col-md-12 mb-4">
-                <div class="card p-3 shadow-lg">
-                    <div class="row g-0 align-items-center">
+        <div class="row g-4">
+            <div v-for="(product, index) in products" :key="index" class="col-md-6">
+                <div class="card h-100 px-3 pt-3 shadow-sm">
+                    <div class="row g-0">
+                        <div class="col-3">
+                            <img v-if="product.image_file" :src="product.image_file" alt="Product Image"
+                                class="img-fluid rounded mx-auto d-block border border-2 product-image" />
 
-                        <div class="col-md-5 borderr">
-                            <img v-if="product.image" :src="product.image" alt="Product Image"
-                                class="img-fluid product-image  rounded-start" />
                         </div>
-
-
-                        <!-- Content Section -->
-                        <div class="col-md-7">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ product.productname }}</h5>
-
-                                <p class="card-text d-flex align-items-center mb-1">
-                                    Price: {{ product.price }}
-                                </p>
-
-                                <p class="card-text">Description:{{ product.description }}</p>
-
-                                <div class="card-text">
+                        <div class="col-6">
+                            <div class="ms-3 ard-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <!-- <p class="card-text">Description: {{ product.description }}</p> -->
+                                <div class="card-text mt-3">
+                                    <strong>Description:</strong>
+                                    <p class="scroller-card">
+                                        {{ product.description }}
+                                    </p>
+                                </div>
+                                <!-- <div class="card-text">
                                     <strong>Assigned Choices:</strong>
                                     <ul class="scroller-card">
                                         <li v-for="(choice, idx) in product.assignedchoices" :key="idx">{{ choice }}
                                         </li>
                                     </ul>
+                                </div> -->
+                                <div class="card-text">
+                                    <strong>Assigned Choices:</strong>
+                                    <!-- <p class="scroller-card">
+                                        {{ product.variation_id.join(', ') }}
+                                    </p> -->
                                 </div>
-                                <!-- <p class="card-text">
-                                    <small class="text-muted">Destinations: France, Spain, Italy, Germany</small>
-                                </p> -->
-                                <!-- Buttons -->
-                                <div class="d-flex justify-content-end">
-                                    <button class="btn btn-outline-secondary me-2" @click="
-                                        viewProduct(index)">View/Edit</button>
-                                    <button class="btn btn-danger" @click="deleteProduct(index)">Delete</button>
-                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center mb-1"> <!-- align-items-center ensures vertical alignment -->
+                        <div class="col text-start">
+                            <h3 class="card-title mt-2 ms-3">{{ product.price }} PKR</h3>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-outline me-2" @click="viewProduct(index)"><i
+                                        class="fa-regular fa-pen-to-square fa-xl" style="color: #343f50;"></i></button>
+                                <button class="btn btn-outline" @click="deleteProduct(index)"><i
+                                        class="fa-regular fa-trash-can fa-xl" style="color: #444e5f;"></i></button>
                             </div>
                         </div>
                     </div>
@@ -52,49 +62,76 @@
         <!-- Modal for Create/Edit Product -->
         <div v-if="isFormVisible" class="modal-overlay">
             <div class="modal-content">
-                <MenuUpdate_AddProduct :product="currentProduct" :is-edit-mode="isEditMode" @save="saveProduct"
-                    @cancel="isFormVisible = false" />
+                <MenuUpdate_AddProduct :product="currentProduct" :categoryTitle="categoryTitle"
+                    :is-edit-mode="isEditMode" @save="saveProduct" @cancel="isFormVisible = false" />
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import MenuUpdate_AddProduct from './MenuUpdate_AddProduct.vue'; // Import the form component
-// Mock data for products
-const products = ref([
-    {
-        category: 'Pizza',
-        productname: 'Margherita Pizza',
-        description: 'Classic cheese and tomato pizza.',
-        price: 10,
-        image: '/src/assets/img3.jpeg',
-        assignedchoices: ['Choice 1', 'Choice 2'], // Assigned choices displayed here
-    },
-    {
-        category: 'Pizza',
-        productname: 'Coke',
-        description: 'Refreshing soft drink.',
-        price: 1.5,
-        image: '/src/assets/img2.jpg',
-        assignedchoices: ['Choice 4'], // Assigned choices displayed here
-    },
-    {
-        category: 'Pizza',
-        productname: 'Cheeseburger',
-        description: 'Juicy burger with cheese.',
-        price: 5,
-        image: '/src/assets/img1.jpg',
-        assignedchoices: ['Choice 1', 'Choice 3', 'Choice 5'], // Assigned choices displayed here
-    },
-]);
+import { useStore } from 'vuex';
 
+const store = useStore();
+
+const { categoryTitle, categoryId } = defineProps({
+    categoryTitle: String,
+    categoryId: Number
+});
+
+
+const products = computed(() => store.getters['menuProduct/allProducts']);
+
+onMounted(async () => {
+    try {
+        await store.dispatch('menuProduct/displayProducts', categoryId);
+    } catch (error) {
+        console.error('Error fetching Choices:', error);
+    }
+});
+
+// const products = ref([
+//     {
+//         category: 'Pizza',
+//         name: 'Margherita Pizza',
+//         description: 'Classic cheese and tomato pizza.',
+//         price: 350,
+//         image_path: '/src/assets/img3.jpeg',
+//         variation_id: ['Choice 1', 'Choice 2'], // Assigned choices displayed here
+//     },
+//     {
+//         category: 'Pizza',
+//         name: 'Coke',
+//         description: 'Refreshing soft drink.',
+//         price: 200,
+//         image_path: '/src/assets/img2.jpg',
+//         variation_id: ['Choice 4'], // Assigned choices displayed here
+//     },
+//     {
+//         category: 'Pizza',
+//         name: 'Cheeseburger',
+//         description: 'Juicy burger with cheese.',
+//         price: 240,
+//         image_path: '/src/assets/img1.jpg',
+//         variation_id: ['Choice 1', 'Choice 3', 'Choice 5'], // Assigned choices displayed here
+//     },
+//     {
+//         category: 'Pizza',
+//         name: 'Coke',
+//         description: 'Refreshing soft drink.',
+//         price: 200,
+//         image_path: '/src/assets/img2.jpg',
+//         variation_id: ['Choice 4'], // Assigned choices displayed here
+//     },
+// ]);
 
 const isFormVisible = ref(false);
 const isEditMode = ref(false);
 const currentProduct = ref(null);
 const currentEditIndex = ref(null);
+
 
 // Function to open the form modal for creating a new product
 const openModal = () => {
@@ -103,8 +140,10 @@ const openModal = () => {
         name: '',
         description: '',
         price: null,
-        image: null,
-        assignedchoices: [], // Initialize as an empty array for new product
+        image_file: null,
+        variation_id: {
+            choices: [], addons: []
+        }, // Initialize as an empty array for new product
     };
     isEditMode.value = false;
 };
@@ -118,15 +157,23 @@ const viewProduct = (index) => {
 };
 
 // Save function for the form component
-const saveProduct = (product) => {
-    if (isEditMode.value && currentEditIndex.value !== null) {
-        products.value[currentEditIndex.value] = product;
-        console.log(product, "kk");
-    } else {
-        products.value.push(product);
-        console.log(product, "oo");
+const saveProduct = async (product) => {
+    try {
+        if (isEditMode.value && currentEditIndex.value !== null) {
+            products.value[currentEditIndex.value] = product;
+        } else {
+            // console.log("Category ID: ", categoryId);
+            // console.log("Product ", product);
+            const success = await store.dispatch('menuProduct/addProduct', { product, categoryId });
+            console.log("success ", success);
+            // Uncomment if you want to add the product after the category
+            // products.value.push(product);
+        }
+
+        isFormVisible.value = false;
+    } catch (error) {
+        console.error('Error Adding Product:', error);
     }
-    isFormVisible.value = false;
 };
 
 // Delete a product
@@ -136,7 +183,6 @@ const deleteProduct = (index) => {
 </script>
 
 <style scoped>
-/* Modal overlay styling */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -147,11 +193,7 @@ const deleteProduct = (index) => {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.scroller-card {
-    overflow-y: auto;
-    height: 100px;
+    z-index: 100;
 }
 
 .modal-content {
@@ -163,38 +205,28 @@ const deleteProduct = (index) => {
 }
 
 .product-image {
-    width: 400px;
-    max-height: 400px;
-    height: auto;
-
-}
-
-.borderr {
-    border-style: inset outset outset inset;
-
+    width: 150px;
+    height: 100%;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
 .card {
-    max-width: 1000px;
-    border-radius: 8px;
-    border: none;
+    border-radius: 12px;
+    height: 300px;
 }
 
 .card-title {
-    font-size: 1.25rem;
     font-weight: bold;
 }
 
-.card-text i {
-    font-size: 1.2rem;
-    color: #666;
+.card-text {
+    font-size: 0.9rem;
 }
 
-.btn-outline-secondary {
-    border-radius: 20px;
-}
-
-.btn-danger {
-    border-radius: 20px;
+.scroller-card {
+    max-height: 40px;
+    overflow-y: auto;
 }
 </style>

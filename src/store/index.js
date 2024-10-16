@@ -1,21 +1,37 @@
 // store/index.js
 import { createStore } from 'vuex';
-import axios from 'axios';
-
-import profileModule from './modules/profile'; 
+import { menuCategory } from '../store/menu/menuCategory';
+import { menuProduct } from '../store/menu/menuProduct';
+import { menuChoice } from '../store/menu/menuChoice';
+import profileModule from './modules/profile';
+import { rewards } from './modules/rewards';
 import AuthStore from './Auth/AuthStore';
 import order from './modules/order'; // import the order module
 import Prevorder from './modules/PrevorderDetail';
 import Resturantownerreviews from './modules/Resturantownerreviews';
 import Reviews from './modules/customerReviews';
+import axios from 'axios';
+import ResturantDetailsStore from './customer/ResturantDetailsStore';
+import ResturantRevinue from './customer/ResturantRevinue'; // Import the new module
+
+
 const store = createStore({
   modules: {
+    menuCategory,
+    menuProduct,
+    menuChoice,
     order, // register the order module
     Prevorder,
     Resturantownerreviews,
     Reviews,
-   profile: profileModule, 
-    auth:AuthStore,
+    rewards,
+    profile: profileModule,
+    auth: AuthStore,
+    resturantDetails: ResturantDetailsStore,
+    resturantRevinue: ResturantRevinue,
+  },
+
+  state: {
 
   },
   getters: {
@@ -80,4 +96,3 @@ const store = createStore({
 });
 
 export default store;
-

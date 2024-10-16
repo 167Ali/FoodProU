@@ -217,82 +217,101 @@
 </footer>
 </template>
 
-<script>
-import BussinessNav from "@/components/LoginSignup/BussinessNav.vue";
+
+<script setup>
+
 import {
     ref
 } from "vue";
 
-export default {
-    setup() {
-        const currentPage = ref(1);
-        const totalPages = 4;
-        const form = ref({
-            first_name: "",
-            last_name: "",
-            email: "",
-            password: "",
-            password_confirmation: "",
-            restaurant_name: "",
-            opening_time: "",
-            closing_time: "",
-            cuisine: "",
-            logo_path: "",
-            business_type: "",
-            address: "",
-            postal_code: "",
-            city: "",
-            cnic: "",
-            bank_name: "",
-            iban: "",
-            account_owner_title: "",
-        });
 
-        const nextPage = () => {
-            if (validateForm(currentPage.value)) {
-                currentPage.value++;
-            }
-        };
 
-        const prevPage = () => {
-            currentPage.value--;
-        };
+const currentPage = ref(1);
+const totalPages = 4;
+const form = ref({
+  first_name: "",
+  last_name: "",
+  email: "",
+  password: "",
+  password_confirmation: "",
+  no_of_branches: "",
+  address: "",
+  postal_code: "",
+  city: "",
+  opening_time: "",
+  closing_time: "",
+  cuisine: "",
+  logo: null,
+  business_type: "",
+  cnic: "",
+  bank_name: "",
+  iban: "",
+  account_owner_title: "",
+});
 
-        const validateForm = (page) => {
-            switch (page) {
-                case 1:
-                    return form.value.first_name && form.value.last_name && form.value.email && form.value.password && form.value.password_confirmation;
-                case 2:
-                    return form.value.restaurant_name && form.value.opening_time && form.value.closing_time && form.value.cuisine && form.value.logo_path && form.value.business_type;
-                case 3:
-                    return form.value.address && form.value.postal_code && form.value.city;
-                case 4:
-                    return form.value.cnic && form.value.bank_name && form.value.iban && form.value.account_owner_title;
-                default:
-                    return false;
-            }
-        };
-
-        const submitForm = () => {
-            console.log("Form Submitted", form.value);
-        };
-
-        const handleFileUpload = (event) => {
-            const file = event.target.files[0];
-            form.value.logo_path = file;
-        };
-
-        return {
-            currentPage,
-            totalPages,
-            form,
-            nextPage,
-            prevPage,
-            submitForm,
-            handleFileUpload,
-        };
-    },
+// Validate only fields relevant to the current page
+const nextPage = () => {
+  if (validatePage()) {
+    currentPage.value++;
+  } else {
+    alert("Please fill all the required fields.");
+  }
 };
+
+const prevPage = () => {
+  currentPage.value--;
+};
+
+const validatePage = () => {
+  switch (currentPage.value) {
+    case 1:
+      return (
+        form.value.first_name &&
+        form.value.last_name &&
+        form.value.email &&
+        form.value.password &&
+        form.value.password_confirmation
+      );
+    case 2:
+      return (
+        form.value.no_of_branches &&
+        form.value.address &&
+        form.value.postal_code &&
+        form.value.city
+      );
+    case 3:
+      return (
+        form.value.opening_time &&
+        form.value.closing_time &&
+        form.value.cuisine &&
+        form.value.logo &&
+        form.value.business_type
+      );
+    case 4:
+      return (
+        form.value.cnic &&
+        form.value.bank_name &&
+        form.value.iban &&
+        form.value.account_owner_title
+      );
+    default:
+      return false;
+  }
+};
+
+const handleFileUpload = (event) => {
+  const file = event.target.files[0];
+  form.value.logo = file;
+
+};
+
+const submitForm = () => {
+  console.log("Form data:", form.value);
+  alert("Form Submitted!");
+};
+
+     
+
 </script>
 
 <style scoped>

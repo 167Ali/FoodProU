@@ -20,9 +20,59 @@
                         </div>
                     </div>
                     <button class="btn btn-order">View</button>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
+  
+          <!-- Rejected Orders -->
+          <div class="rejected-orders mb-4">
+            <h4>Rejected Orders</h4>
+            <div class="rejected-orders-container d-flex flex-wrap">
+              <div
+                class="card rejected-order-card mb-3 d-flex"
+                v-for="order in rejectedOrders"
+                :key="order.id"
+              >
+                <img :src="order.image" class="card-img" alt="Order Image" />
+                <div class="card-body">
+                  <h5>{{ order.user }}</h5>
+                  <p>{{ order.location }}</p>
+                  <div class="order-details d-flex justify-content-between align-items-center">
+                    <h5 class="text-price">$ {{ order.totalPrice }}</h5>
+                    <button class="btn btn-order">View</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
+      </div>
+  
+      <!-- Right Sidebar (Current Orders) -->
+      <div class="right-sidebar p-4">
+        <h4>Current Orders</h4>
+        <div class="current-order-card card mb-3" v-for="order in currentOrders" :key="order.id">
+          <div class="card-body d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <i class="fas fa-map-marker-alt fs-3 me-3"></i>
+              <div>
+                <h5>{{ order.user }}</h5>
+                <p class="small text-muted">{{ order.location }}</p>
+              </div>
+
+            </div>
+            <div class="order-total text-end">
+              <h5 class="text-price">$ {{ order.totalPrice }}</h5>
+
+            </div>
+            <button class="btn btn-order">View</button>
+          </div>
+        </div>
+      </div>
     </div>
 </div>
 </template>
