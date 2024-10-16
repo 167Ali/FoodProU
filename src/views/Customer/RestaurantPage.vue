@@ -6,23 +6,19 @@
         <hr>
         <Deals />
     </div>
-    <!-- Popular Section -->
-    <PopularSection />
-
-    <!-- Cart Section -->
-    <div class="cart-section">
-        <Cart />
+    <div>
+        <CategoryNavbar/>
     </div>
+
     <PageFooter />
     
 </template>
 
 <script setup>
+import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
 import RestaurantHeader from '../../components/HeaderFooter/RestaurantHeader.vue'
 import Deals from '../../components/Customer/Deals.vue'
-import PopularSection from '../../components/Customer/PopularSection.vue'
-import Cart from '../../components/Customer/PopularItem.vue'
-import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
+import CategoryNavbar from '../../components/Customer/CategoryNavbar.vue'
 import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
  
 </script>
@@ -34,7 +30,12 @@ import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
     flex-direction: column;
 }
 
-.cart-section {
-    margin-top: 40px;
+.restaurant-header hr{
+    margin: 0;
+    color: rgb(128, 127, 127);
+    opacity: 0.1;
+    font-weight: lighter;
+    /* font-size: 1px; */
 }
+
 </style>

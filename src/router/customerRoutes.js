@@ -1,6 +1,6 @@
 import Restaurantpage from '../views/Customer/RestaurantPage.vue'
 import CheckOut from '../components/Customer/CheckOut.vue'
-import AddtoCart from '../components/AddtoCart.vue'
+import AddtoCart from '../components/Customer/AddtoCart.vue'
 import CategoryNavbar from '../components/Customer/CategoryNavbar.vue'
 import DashboardResturantPage from '../views/Customer/DashboardResturantPage.vue'
 import ProfileSettings from '../views/Customer/ProfileSettings.vue'
