@@ -74,6 +74,7 @@ const choiceForm = reactive({
     choice_type: '',
     is_required: '0',
     choices: [{ name: '', price: 0 }],
+    // newChoices: [{ name: '', price: 0 }],
 });
 
 const addItem = () => {
@@ -86,7 +87,7 @@ const addItem = () => {
 
 const removeItem = (index, id) => {
     if (choiceForm.choices.length > 1) {
-        //choiceForm.choices.isDeleted = true;
+        // choiceForm.choices.isDeleted = true;
         // if (props.isEditMode) {
         //     choiceForm.choices.isDeleted = true;
         // } else {

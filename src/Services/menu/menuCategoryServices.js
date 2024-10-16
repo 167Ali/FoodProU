@@ -29,4 +29,4 @@ export const addMenuCategoryService = (categoryData) =>
     axios.post(`${baseURL}/api/create-menu/${id}`, categoryData, { headers });
 
 export const displayMenuCategoryService = () =>
-    axios.get(`${baseURL}/api/get-count`, { headers });
+    axios.get(`${baseURL}/api/menu/count`, { headers });

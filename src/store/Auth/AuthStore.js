@@ -101,8 +101,9 @@ const actions = {
     },
     async login({ commit }, credentials) {
         try {
-            const { access_token, role, permissions } = await login(credentials); // Call the login service
+            const { access_token, role, permissions, id } = await login(credentials); // Call the login service
             commit('SET_TOKEN', access_token);
+            commit('SET_ID', id);
             commit('SET_USER', { role, permissions }); // Store role and permissions in the user state
             return { role, permissions: permissions || [] };
         } catch (error) {
