@@ -1,4 +1,5 @@
 // src/store/Auth/AuthStore.js
+
 import { resetPassword, setPassword, login ,register,registerBusiness} from '../../Services/Auth/AuthService';
 const state = () => ({
 loading: false,
@@ -61,67 +62,80 @@ state.errorMessage = '';
 },
 };
 const actions = {
-async forgotPassword({ commit }, email) {
-commit('RESET_PASSWORD_REQUEST');
 
-try {
-const response = await resetPassword(email);
-console.log(response);
-commit('RESET_PASSWORD_SUCCESS', response.message || 'Password reset link has been sent to your email.');
-} catch (error) {
-commit('RESET_PASSWORD_FAILURE', error.message || 'An error occurred. Please try again.');
-}
+  async forgotPassword({ commit }, email) {
 
-    },
+    commit('RESET_PASSWORD_REQUEST');
 
-async setPassword({ commit }, payload) {
-commit('SET_PASSWORD_REQUEST');
-try {
-const response = await setPassword(payload);
-console.log(response);
-commit('SET_PASSWORD_SUCCESS', response.message || 'Your password has been successfully set.');
-} catch (error) {
-commit('SET_PASSWORD_FAILURE', error.message || 'An error occurred. Please try again.');
-}
-},
-async login({ commit }, credentials) {
-try {
+    try {
 
-            const { access_token, role, permissions } = await login(credentials); // Call the login service
+      const response = await resetPassword(email);
 
-commit('SET_TOKEN', access_token);
-commit('SET_USER', { role, permissions }); // Store role and permissions in the user state
-return { role, permissions: permissions || [] };
-} catch (error) {
-console.error('Login error:', error.message);
-throw new Error(error.message);
-}
-},
-async register({ commit }, formData) {
-try {
-const { access_token, user } = await register(formData);
-commit('SET_TOKEN', access_token);
-commit('SET_USER', user);
-return user;
-} catch (error) {
-console.error('Registration error:', error.message);
-throw new Error(error.message);
-}
-},
-async registerBusiness({ commit }, formData) {
-try {
-const response = await registerBusiness(formData);
-return response; // Return the response if needed
-} catch (error) {
-console.error('Business registration error:', error.message);
-throw new Error(error.message);
-}
-},
-logout({ commit }) {
-commit('LOGOUT');
+      console.log(response);
+
+      commit('RESET_PASSWORD_SUCCESS', response.message || 'Password reset link has been sent to your email.');
+
+    } catch (error) {
+
+      commit('RESET_PASSWORD_FAILURE', error.message || 'An error occurred. Please try again.');
 
     }
 
+  },
+
+  async setPassword({ commit }, payload) {
+
+    commit('SET_PASSWORD_REQUEST');
+
+    try {
+
+      const response = await setPassword(payload);
+
+      console.log(response);
+
+      commit('SET_PASSWORD_SUCCESS', response.message || 'Your password has been successfully set.');
+
+    } catch (error) {
+
+      commit('SET_PASSWORD_FAILURE', error.message || 'An error occurred. Please try again.');
+
+    }
+
+  },
+  async login({ commit }, credentials) {
+    try {
+      const { access_token, role, permissions } = await login(credentials); // Call the login service
+      commit('SET_TOKEN', access_token);
+      commit('SET_USER', { role, permissions }); // Store role and permissions in the user state
+      return { role, permissions: permissions || [] };
+    } catch (error) {
+      console.error('Login error:', error.message);
+      throw new Error(error.message);
+    }
+  },
+  async register({ commit }, formData) {
+    try {
+      const { access_token, user } = await register(formData);
+      commit('SET_TOKEN', access_token);
+      commit('SET_USER', user);
+      return user;
+    } catch (error) {
+      console.error('Registration error:', error.message);
+      throw new Error(error.message);
+    }
+  },
+  async registerBusiness({ commit }, formData) {
+    try {
+      const response = await registerBusiness(formData);
+      return response; // Return the response if needed
+    } catch (error) {
+      console.error('Business registration error:', error.message);
+      throw new Error(error.message);
+    }
+  },
+  logout({ commit }) {
+    commit('LOGOUT');
+  }
 };
 
  const getters = {

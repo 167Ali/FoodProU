@@ -1,6 +1,5 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
-// 
 import adminRoute from './adminRoutes'
 import restaurantownerRoutes from './restaurantownerRoutes'
 import customerRoutes from './customerRoutes'
@@ -42,7 +41,6 @@ import hello from '@/views/hello.vue'
 // import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
 // import Moreinfo from '../components/Customer/Moreinfo.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
-
 const routes = [
   ...adminRoute,
   ...restaurantownerRoutes,
@@ -215,7 +213,6 @@ const routes = [
   //   name: 'test', 
   //   component: () => import('../components/Customer/TesterPage.vue') 
   // },
-  
 ]
 
 const router = createRouter({
@@ -224,5 +221,3 @@ const router = createRouter({
 })
 
 export default router
-
-

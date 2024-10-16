@@ -46,8 +46,9 @@ export const menuChoice = {
         },
         async deleteChoice({ commit }, choiceId) {
             try {
-                await choiceService.deleteChoice(choiceId);
+                const response = await choiceService.deleteChoice(choiceId);
                 commit('DELETE_CHOICE', choiceId);
+                return response.data;
             } catch (error) {
                 console.error('Error deleting choice:', error);
                 throw error;
