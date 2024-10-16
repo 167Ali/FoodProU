@@ -37,7 +37,7 @@ import UserGuide from '../components/Customer/UserGuide.vue'
 import RecipeBlog from '../views/Customer/RecipeBlog.vue'
 import Rewards from '../views/Customer/Rewards.vue'
 // import otherRoutes from './otherRoutes'; // Miscellaneous routes
-import hello from '@/views/hello.vue'
+import hello from '../views/Hello.vue'
 // import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
 // import Moreinfo from '../components/Customer/Moreinfo.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
