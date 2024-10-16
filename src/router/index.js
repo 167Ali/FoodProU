@@ -1,6 +1,6 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
-import NavbarHeader from '../views/NavbarHeader.vue'
+// 
 import adminRoute from './adminRoutes'
 import restaurantownerRoutes from './restaurantownerRoutes'
 import customerRoutes from './customerRoutes'
@@ -48,28 +48,23 @@ const routes = [
   ...restaurantownerRoutes,
   ...customerRoutes,
   ...otherRoutes,
+
   {
-    path: '/Navbarheader',
-    name: 'Navbarheader',
-    component: NavbarHeader,
-    children: [
-      {
-        path: '/checkout',
-        name: 'checkout',
-        component: CheckOut
-      },
-      {
-        path: '/orderreq',
-        name: 'orderreq',
-        component: OrderReq
-      },
-      {
-        path: '/caart',
-        name: 'addtocard',
-        component: AddtoCart
-      },
-    ]
+    path: '/checkout',
+    name: 'checkout',
+    component: CheckOut
   },
+  {
+    path: '/orderreq',
+    name: 'orderreq',
+    component: OrderReq
+  },
+  {
+    path: '/caart',
+    name: 'addtocard',
+    component: AddtoCart
+  },
+  
   {
     path: '/catnvbr',
     name: 'categorynavbar',
