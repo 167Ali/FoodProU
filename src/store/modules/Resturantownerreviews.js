@@ -1,5 +1,5 @@
 // store/modules/reviews.js
-import { getOwnerReviews } from '../../Services/resturant/ResturantreviewService';
+//import { getOwnerReviews } from '../../Services/customer/PrevorderdetailService';
 
 const state = {
     reviews: [],

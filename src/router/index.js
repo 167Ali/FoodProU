@@ -1,5 +1,11 @@
+// src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
 import NavbarHeader from '../views/NavbarHeader.vue'
+import adminRoute from './adminRoutes'
+import restaurantownerRoutes from './restaurantownerRoutes'
+import customerRoutes from './customerRoutes'
+import otherRoutes from './otherRoutes'
+import Get_Started_page from '@/views/Login_Signup/Get_Started_page.vue'
 import Restaurantpage from '../views/Customer/RestaurantPage.vue'
 import AdminDashboard from '../views/Admin/AdminDashboard.vue'
 import CheckOut from '../components/Customer/CheckOut.vue'
@@ -34,6 +40,10 @@ import hello from '@/views/hello.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
 
 const routes = [
+  ...adminRoute,
+  ...restaurantownerRoutes,
+  ...customerRoutes,
+  ...otherRoutes,
   {
     path: '/Navbarheader',
     name: 'Navbarheader',
@@ -183,13 +193,23 @@ const routes = [
   },
   {
     path: '/user-guide',
-    name: 'UserGuide', 
-    component: () => import('../components/Customer/UserGuide.vue') 
+    name: 'UserGuide',
+    component: () => import('../components/Customer/UserGuide.vue')
   },
   {
     path: '/recipe-blog',
-    name: 'RecipeBlog', 
-    component: () => import('../views/Customer/RecipeBlog.vue') 
+    name: 'RecipeBlog',
+    component: () => import('../views/Customer/RecipeBlog.vue')
+  },
+  {
+    path: '/rewards',
+    name: 'Rewards',
+    component: () => import('../views/Customer/Rewards.vue')
+  },
+  {
+    path: '/get-started',
+    name: 'Get_Started',
+    component: () => import('../views/Login_Signup/Get_Started_page.vue')
   },
   // {
   //   path: '/test',
@@ -205,3 +225,5 @@ const router = createRouter({
 })
 
 export default router
+
+

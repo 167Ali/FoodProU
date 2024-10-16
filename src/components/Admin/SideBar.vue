@@ -15,19 +15,25 @@
           </router-link>
         </li>
         <li>
-          <router-link to="/admin-dashboard/viewallorders" class="nav-link">
+          <router-link to="/viewallorders" class="nav-link">
             <font-awesome-icon :icon="['fas', 'shopping-cart']" />
             <span>Orders</span>
           </router-link>
         </li>
         <li>
-          <router-link to="/adminfinance" class="nav-link">
+          <router-link to="/AdminFinanceDashboard" class="nav-link">
             <font-awesome-icon :icon="['fas', 'dollar-sign']" />
             <span>Revenue</span>
           </router-link>
         </li>
         <li>
-          <a href="#" class="nav-link">
+          <router-link to="/ReviewsAdmin" class="nav-link">
+            <font-awesome-icon :icon="['fas', 'star']" />
+            <span>Reviews</span>
+          </router-link>
+        </li>
+        <li>
+          <a href="/" class="nav-link">
             <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
             <span>Log Out</span>
           </a>
@@ -40,10 +46,10 @@
 <script setup>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'; // Import Font Awesome icon
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faUtensils, faHome, faShoppingCart, faSignOutAlt, faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import { faUtensils, faHome, faShoppingCart, faSignOutAlt, faDollarSign, faStar } from '@fortawesome/free-solid-svg-icons';
 
 // Add icons to the library
-library.add(faUtensils, faHome, faShoppingCart, faDollarSign, faSignOutAlt);
+library.add(faUtensils, faHome, faShoppingCart, faDollarSign, faSignOutAlt, faStar);
 </script>
 
 <style scoped>
