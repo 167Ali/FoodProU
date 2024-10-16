@@ -13,20 +13,6 @@
 
     <!-- Order Details Sidebar (Visible on larger screens) -->
     <div class="order-detail">
-<<<<<<< HEAD
-      <h2 class="order-title">Restaurant Details</h2>
-      <div class="order-status">
-        <button class="status-btn active">Pending</button>
-        <button class="status-btn">Rejected</button>
-        <button class="status-btn">Deactivated</button>
-      </div>
-      <div class="order-items">
-        <OrderItem
-          v-for="item in orderItems"
-          :key="item.id"
-          :item="item"
-        />
-=======
       <div class="order-sidebar d-none d-md-block">
         <h2 class="order-title">Order Details</h2>
         <div class="order-status">
@@ -41,7 +27,6 @@
             :item="item"
           />
         </div>
->>>>>>> 5105dc37629a9645b62909af9a422e94a1d9f1f8
       </div>
 
       <!-- Off-canvas Sidebar (Visible on mobile when toggled) -->
