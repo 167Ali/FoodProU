@@ -84,5 +84,15 @@
     color: #888;
     font-size: 0.9rem;
   }
+  @media (max-width: 768px) {
+   
+    .restaurant-image {
+    width: 100%;
+    height: 150px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 15px;
+  }
+}
   </style>
   

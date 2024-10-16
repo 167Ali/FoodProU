@@ -1,65 +1,66 @@
 // src/store/Auth/AuthStore.js
 
 import { resetPassword, setPassword, login ,register,registerBusiness} from '../../Services/Auth/AuthService';
-
 const state = () => ({
-  loading: false,
-  successMessage: '',
-  errorMessage: '',
-  token: localStorage.getItem('token') || null,
-  user: { role: null, userId: null },
+loading: false,
+successMessage: '',
+errorMessage: '',
+token: localStorage.getItem('token') || null,
+user: { role: null, userId: null },
 });
-
 const mutations = {
-  SET_TOKEN(state, token) {
-    state.token = token;
-    localStorage.setItem('token', token);
-  },
-  SET_USER(state, user) {
-    state.user = user;
-    localStorage.setItem('user', JSON.stringify(user));
-  },
-  LOGOUT(state) {
-    state.token = null;
-    state.user = { role: null, userId: null }; // Reset user state
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-  },
-  RESET_PASSWORD_REQUEST(state) {
-    state.loading = true;
-    state.successMessage = '';
-    state.errorMessage = '';
-  },
-  RESET_PASSWORD_SUCCESS(state, message) {
-    state.loading = false;
-    state.successMessage = message;
-  },
-  RESET_PASSWORD_FAILURE(state, error) {
-    state.loading = false;
-    state.errorMessage = error;
-  },
-  SET_PASSWORD_REQUEST(state) {
-    state.loading = true;
-    state.successMessage = '';
-    state.errorMessage = '';
-  },
-  SET_PASSWORD_SUCCESS(state, message) {
-    state.loading = false;
-    state.successMessage = message;
-  },
-  SET_PASSWORD_FAILURE(state, error) {
-    state.loading = false;
-    state.errorMessage = error;
-  },
-  SET_ERROR_MESSAGE(state, message) {
-    state.errorMessage = message;
-  },
-  CLEAR_MESSAGES(state) {
-    state.successMessage = '';
-    state.errorMessage = '';
-  },
-};
+SET_TOKEN(state, token) {
+state.token = token;
+localStorage.setItem('token', token);
+},
+SET_USER(state, user) {
+state.user = user;
+localStorage.setItem('user', JSON.stringify(user));
+},
+LOGOUT(state) {
+state.token = null;
+state.user = { role: null, userId: null }; // Reset user state
 
+localStorage.removeItem('token');
+localStorage.removeItem('user');
+},
+RESET_PASSWORD_REQUEST(state) {
+state.loading = true;
+state.successMessage = '';
+
+state.errorMessage = '';
+},
+RESET_PASSWORD_SUCCESS(state, message) {
+state.loading = false;
+state.successMessage = message;
+},
+RESET_PASSWORD_FAILURE(state, error) {
+state.loading = false;
+state.errorMessage = error;
+},
+SET_PASSWORD_REQUEST(state) {
+state.loading = true;
+state.successMessage = '';
+state.errorMessage = '';
+},
+
+SET_PASSWORD_SUCCESS(state, message) {
+state.loading = false;
+state.successMessage = message;
+},
+SET_PASSWORD_FAILURE(state, error) {
+state.loading = false;
+state.errorMessage = error;
+},
+
+SET_ERROR_MESSAGE(state, message) {
+state.errorMessage = message;
+},
+CLEAR_MESSAGES(state) {
+state.successMessage = '';
+state.errorMessage = '';
+},
+};
 const actions = {
   async forgotPassword({ commit }, email) {
     commit('RESET_PASSWORD_REQUEST');
@@ -117,19 +118,27 @@ const actions = {
   }
 };
 
-const getters = {
-  isLoading: (state) => state.loading,
-  successMessage: (state) => state.successMessage,
-  errorMessage: (state) => state.errorMessage,
-  isAdmin: (state) => state.user.role === 'Admin',
-  isCustomer: (state) => state.user.role === 'Customer',
-  isRestaurantOwner: (state) => state.user.role === 'Restaurant Owner',
+ const getters = {
+
+isLoading: (state) => state.loading,
+successMessage: (state) => state.successMessage,
+errorMessage: (state) => state.errorMessage,
+isAdmin: (state) => state.user.role === 'Admin',
+isCustomer: (state) => state.user.role === 'Customer',
+isRestaurantOwner: (state) => state.user.role === 'Restaurant Owner',
+
 };
 
 export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions,
-  getters,
+
+    namespaced: true,
+
+state,
+
+mutations,
+
+actions,
+
+getters,
+
 };

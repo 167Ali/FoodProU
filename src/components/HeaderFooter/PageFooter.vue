@@ -8,7 +8,7 @@
           <li>&copy; foodpro</li>
         </ul>
       </div>
-      <!-- second Column -->
+      <!-- Second Column -->
       <div class="footer-column">
         <ul>
           <li><a href="#">Press</a></li>
@@ -20,7 +20,7 @@
           <li><a href="#">Become an Affiliate</a></li>
         </ul>
       </div>
-      <!-- third Column -->
+      <!-- Third Column -->
       <div class="footer-column">
         <ul>
           <li><a href="#">foodpro - Monthly Subscription Programme</a></li>
@@ -31,9 +31,7 @@
           <li><a href="#">Update on COVID-19 in Pakistan</a></li>
         </ul>
       </div>
-
-      <!-- forth Column -->
-
+      <!-- Fourth Column -->
       <div class="footer-column">
         <ul>
           <li><a href="#">Refunds with foodpay</a></li>
@@ -45,16 +43,14 @@
           <li><a href="#">foodpro Home Chef</a></li>
         </ul>
       </div>
-
     </div>
-    
   </footer>
 </template>
-<script>
-export default {
-  name: 'Footer',
-};
+
+<script setup>
+// No need for defineComponent here
 </script>
+
 <style scoped>
 .footer {
   background-color: #f9f9f9;
@@ -74,7 +70,7 @@ export default {
 
 .footer-column ul {
   list-style-type: none;
-  padding: 25;
+  padding: 0;
 }
 
 .footer-column ul li {

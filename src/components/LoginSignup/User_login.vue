@@ -1,4 +1,5 @@
 <template>
+
     <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,14 +11,19 @@
                     <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google Logo" class="me-2" />
                     Continue with Google
                 </button>
+
                 <div class="separator mb-3"></div>
+
                 <form @submit.prevent="login">
                     <div class="mb-3">
                         <input type="email" class="form-control" placeholder="Email" v-model="email" required />
                     </div>
                     <div class="mb-3">
+
                         <input type="password" class="form-control" placeholder="Password" v-model="password" required />
+
                     </div>
+
                     <button type="submit" class="btn btn-login w-100 mb-3" :disabled="isLoading">
                         <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
                         Log in
@@ -34,11 +40,15 @@
             </div>
         </div>
     </div>
+
 </template>
 
 <script>
+
 import { defineComponent, ref, toRefs } from 'vue';
+
 import { useStore } from 'vuex';
+
 import { useRouter } from 'vue-router';
 
 export default defineComponent({
@@ -49,8 +59,11 @@ export default defineComponent({
             required: true,
         },
     },
+
     setup(props, { emit }) {
+
         const { showModal } = toRefs(props);
+
         const email = ref('');
         const password = ref('');
         const error = ref(null);
@@ -63,34 +76,60 @@ export default defineComponent({
         };
 
         const login = async () => {
+
             error.value = null;
+
             isLoading.value = true;
             try {
+
                 const response = await store.dispatch('auth/login', {
+
                     email: email.value,
+
                     password: password.value,
+
                 });
+
                 const { role } = response;
+
                 switch (role) {
+
                     case 'Admin':
+
                         router.push({ name: 'AdminDashboard' });
+
                         break;
+
                     case 'Customer':
+
                         router.push({ name: 'DashboardResturantPage' });
+
                         break;
+
                     case 'Restaurant Owner':
+
                         router.push({ name: 'RestaurantOwner_Dashboard' });
+
                         break;
+
                     default:
+
                         router.push({ name: 'Home' });
+
                         break;
+
                 }
                 closeModal();
+
             } catch (err) {
                 error.value = err.message || 'Login failed. Please check your credentials.';
+
             } finally {
+
                 isLoading.value = false;
+
             }
+
         };
 
         return {
@@ -107,6 +146,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
+
 .modal-title {
     text-align: center;
     flex-grow: 1;
@@ -222,4 +262,5 @@ export default defineComponent({
         margin: 5px 0;
     }
 }
+
 </style>

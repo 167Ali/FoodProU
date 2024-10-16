@@ -1,9 +1,13 @@
 <template>
   <div class="restaurant-list">
-    <RestaurantItem v-for="item in restaurants" :key="item.id" :restaurant="item" />
+    <RestaurantItem
+      v-for="item in restaurants"
+      :key="item.id"
+      :restaurant="item"
+      class="restaurant-item"
+    />
   </div>
 </template>
-  
 <script setup>
 import RestaurantItem from './RestaurantItem.vue';
 
@@ -101,11 +105,45 @@ const restaurants = [
 ];
 
 </script>
-  
 <style scoped>
 .restaurant-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .restaurant-list {
+    grid-template-columns: 1fr; /* Show one card per row on mobile */
+  }
+}
+
+.restaurant-item {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+
+.restaurant-item:hover {
+  transform: scale(1.02); /* Slight scale on hover */
+}
+
+.restaurant-item img {
+  width: 100%;
+  height: 100%;
+}
+
+.restaurant-item .content {
+  padding: 16px;
+}
+
+@media (min-width: 992px) {
+  .restaurant-item {
+    flex-direction: row; /* Adjust layout for larger screens if needed */
+  }
 }
 </style>

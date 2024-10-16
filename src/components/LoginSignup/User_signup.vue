@@ -20,12 +20,17 @@
           <div class="mb-3">
             <input type="password" class="form-control" placeholder="Password" v-model="password" required />
           </div>
+<<<<<<< HEAD
           <div class="mb-3">
             <input type="password" class="form-control" placeholder="Confirm Password" v-model="confirmPassword" required />
           </div>
           <button type="submit" class="btn btn-signup w-100 mb-3">Sign Up</button>
         </form>
         <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+=======
+          <button type="submit" class="btn btn-signup w-100 mb-3">Sign Up</button>
+        </form>
+>>>>>>> 5105dc37629a9645b62909af9a422e94a1d9f1f8
       </div>
 
       <div class="modal-footer">
@@ -35,6 +40,7 @@
   </div>
 </template>
 
+<<<<<<< HEAD
 <script>
 import { defineComponent, ref } from 'vue';
 import { useStore } from 'vuex';
@@ -106,6 +112,36 @@ export default defineComponent({
     };
   },
 });
+=======
+<script setup>
+import { ref, defineProps, defineEmits } from 'vue';
+
+const props = defineProps({
+  showModal: {
+    type: Boolean,
+    required: true,
+  },
+});
+
+const emit = defineEmits();
+
+const firstName = ref('');
+const lastName = ref('');
+const email = ref('');
+const password = ref('');
+
+const closeModal = () => {
+  emit('close');
+};
+
+const signUp = () => {
+  // Logic for sign-up
+  console.log('First Name:', firstName.value);
+  console.log('Last Name:', lastName.value);
+  console.log('Email:', email.value);
+  console.log('Password:', password.value);
+};
+>>>>>>> 5105dc37629a9645b62909af9a422e94a1d9f1f8
 </script>
 
 <style scoped>
@@ -194,4 +230,8 @@ export default defineComponent({
     padding: 10px 0;
   }
 }
+<<<<<<< HEAD
 </style>
+=======
+</style>
+>>>>>>> 5105dc37629a9645b62909af9a422e94a1d9f1f8
