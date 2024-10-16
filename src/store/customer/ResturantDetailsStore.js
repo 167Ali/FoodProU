@@ -18,7 +18,7 @@ const actions = {
   async fetchRestaurants({ commit }) {
     try {
       const token = localStorage.getItem('token'); // Retrieve the token from localStorage
-      const response = await axios.get('http://192.168.15.90:8000/api/customers/restaurants', {
+      const response = await axios.get('http://192.168.15.90:8000/api/restaurants', {
         headers: {
           Authorization: `Bearer ${token}`, // Include the token in the Authorization header
         },
@@ -35,7 +35,7 @@ const actions = {
   async fetchDeals({ commit }) {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://192.168.15.90:8000/api/customers/deals', {
+      const response = await axios.get('http://192.168.15.90:8000/api/deals', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -53,7 +53,7 @@ const actions = {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.get(
-        `http://192.168.15.90:8000/api/customers/search-restaurant?search_term=${encodeURIComponent(
+        `http://192.168.15.90:8000/api/search-restaurant?search_term=${encodeURIComponent(
           searchTerm
         )}`,
         {
