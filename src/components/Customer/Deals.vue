@@ -1,8 +1,13 @@
+<!--  -->
+<!--  -->
 <template>
-    <div class="deals">
-      <div class="deal" v-for="deal in deals" :key="deal.id">
-        <p class="deal-text">{{ deal.text }}</p>
-        <p class="deal-details">{{ deal.details }}</p>
+    <div class="main-cont">
+      <h4>Available Deals</h4>
+      <div class="deals">
+        <div class="deal" v-for="deal in deals" :key="deal.id">
+          <p class="deal-text">{{ deal.text }}</p>
+          <p class="deal-details">{{ deal.details }}</p>
+        </div>
       </div>
     </div>
   </template>
@@ -19,17 +24,27 @@
   </script>
   
   <style scoped>
+  .main-cont{
+    font-family: 'Agrandir';
+    padding: 0px 40px;
+    padding-bottom: 10px;
+  }
+  .main-cont h4{
+    font-weight: bolder;
+    margin: 20px 0px;
+  }
   .deals {
     display: flex;
     gap: 20px;
-    justify-content: space-between;
+    /* height: 100px; */
+    justify-content: space-evenly;
     flex-wrap: wrap;
-    margin-top: 30px;
-    padding: 10px 0;
+    /* overflow-y: auto; */
+    /* padding: 10px 0; */
   }
   
   .deal {
-    background: #f0f4f8; /* Light background for a realistic feel */
+    background: #E3F5E3FF; /* Light background for a realistic feel */
     color: #00754A; /* Green text color */
     padding: 20px;
     border-radius: 15px;
@@ -48,14 +63,14 @@
   }
   
   .deal-text {
-    font-size: 1.5rem; /* Increase prominence */
-    font-weight: 700;
+    font-size: 1.2rem; /* Increase prominence */
+    font-weight: bolder;
     margin-bottom: 8px;
   }
   
   .deal-details {
-    font-size: 1.1rem; /* Slightly larger for readability */
-    color: #5a8d5a; /* Softer green for details */
+    font-size: 0.9rem; /* Slightly larger for readability */
+    color: black; /* Softer green for details */
   }
   
   @media (max-width: 768px) {

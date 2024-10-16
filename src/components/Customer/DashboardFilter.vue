@@ -1,40 +1,24 @@
 <template>
     <div>
         <div class="d-none d-lg-flex flex-column card filters">
-            <h5>Filters</h5>
-            <h6>Sort by</h6>
-            <div>
-                <label><input type="radio" name="sort" value="relevance" v-model="sortOption" checked />
-                    Relevance</label><br>
-                <label><input type="radio" name="sort" value="fastest" v-model="sortOption" /> Fastest
-                    delivery</label><br>
-                <label><input type="radio" name="sort" value="distance" v-model="sortOption" /> Distance</label>
-            </div>
-
-            <h6>Quick filters</h6>
+            <h3>Filters</h3>
+            <h6>Sort by</h6><br><hr>
             <div>
                 <label><input type="checkbox" v-model="quickFilters.ratings" /> Ratings 4+</label><br>
-                <label><input type="checkbox" v-model="quickFilters.topRestaurant" /> Top restaurant</label>
-            </div>
-
-            <h6>Offers</h6>
+            </div><hr>
             <div>
-                <label><input type="checkbox" v-model="offers.freeDelivery" /> Free delivery</label><br>
-                <label><input type="checkbox" v-model="offers.acceptsVouchers" /> Accepts vouchers</label><br>
-                <label><input type="checkbox" v-model="offers.deals" /> Deals</label>
-            </div>
-
-            <h6>Cuisines</h6>
-            <input type="text" class="form-control mb-2" placeholder="Search for cuisines" v-model="cuisineSearch" />
+                <label><input type="checkbox" v-model="quickFilters.deals" /> Deals</label><br>
+            </div><hr>
+            <h5>Cuisines</h5>
             <div>
                 <label v-for="(cuisine, index) in cuisines" :key="index" class="d-block mb-1">
                     <input type="checkbox" v-model="cuisine.selected" /> {{ cuisine.name }}
                 </label>
-            </div>
+            </div><br><hr>
 
-            <h6>Price</h6>
+            <h5>Price</h5><br>
             <div>
-                <button v-for="(price, index) in prices" :key="index" class="btn btn-outline-secondary me-1 "
+                <button v-for="(price, index) in prices" :key="index" class="btn btn-outline-secondary me-1"
                     :class="{ active: price.selected }" @click="togglePrice(price)">
                     {{ price.label }}
                 </button>
@@ -117,23 +101,21 @@ const offers = {
 const cuisineSearch = ref('');
 const cuisines = ref([
     { name: 'American', selected: false },
-    { name: 'BBQ', selected: false },
-    { name: 'Beverages', selected: false },
-    { name: 'Biryani', selected: false },
-    { name: 'Broast', selected: false },
-    { name: 'Burgers', selected: false },
-    { name: 'Cakes & Bakery', selected: false },
     { name: 'Chinese', selected: false },
     { name: 'Continental', selected: false },
-    { name: 'Cakes & Bakery', selected: false },
-    { name: 'Chinese', selected: false },
-    { name: 'Continental', selected: false },
+    { name: 'Fast Food', selected: false },
+    { name: 'Indain', selected: false },
+    { name: 'Italian', selected: false },
+    { name: 'Mexican', selected: false },
+    { name: 'Middle Eastern', selected: false },
+    { name: 'Thai', selected: false },
+    { name: 'Turkish', selected: false },
 ]);
 
 const prices = ref([
-    { label: '$', selected: false },
-    { label: '$$', selected: false },
-    { label: '$$$', selected: false },
+    { label: '99+', selected: false },
+    { label: '499+', selected: false },
+    { label: '999+', selected: false },
 ]);
 
 function togglePrice(price) {
@@ -158,9 +140,9 @@ function togglePrice(price) {
 .card {
     border: 1px solid #eaeaea;
     border-radius: 10px;
-    padding: 15px;
+    padding: 30px;
     max-width: 300px;
-    margin: 10px;
+    margin: 90px 0px 0px 25px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
