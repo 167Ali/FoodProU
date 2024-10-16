@@ -118,14 +118,13 @@ const savePassword = async () => {
 
 // Fetch profile data on component mount
 onMounted(async () => {
-  try {
-    await store.dispatch('profile/fetchProfile');
-    console.log('Fetched Profile:', store.state.profile); // Log profile data
-  } catch (error) {
-    alert('Failed to load profile data. Please try again.');
-  }
+    try {
+        await store.dispatch('profile/fetchProfile'); // Fetching profile data
+        console.log('Fetched Profile:', store.state.profile); // Log profile data
+    } catch (error) {
+        alert('Failed to load profile data. Please try again.');
+    }
 });
-
 
 const onFocus = (event) => {
     const input = event.target;
@@ -139,7 +138,6 @@ const onBlur = (event) => {
     }
 };
 </script>
-
 
 <style scoped>
 @import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';
