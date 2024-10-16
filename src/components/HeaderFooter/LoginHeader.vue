@@ -31,18 +31,19 @@
                                 <span>User Guide</span>
                             </router-link>
                         </li>
-
                         <li>
-                            <router-link to="/" class="nav-link">
-                                <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
-                                <span>Logout</span>
-                            </router-link>
+                            <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
+                            <button class="nav-link" @click="showLogoutModal">Log Out</button>
+
                         </li>
 
                     </ul>
                 </div>
             </div>
-
+            <ModalComponent v-if="isLogoutModalVisible" title="Logging out?"
+                message="Thanks for stopping by. See you again soon!" confirmText="Log out" cancelText="Cancel"
+                :isVisible="isLogoutModalVisible" @close="closeLogoutModal" @confirm="confirmLogout"
+                @cancel="closeLogoutModal" />
             <!-- Heart Button -->
             <router-link to="/favoritespage" class="favorites-button">
                 <button class="heart-icon-button">
@@ -62,7 +63,9 @@
 
 
 <script setup>
-
+import { useRouter } from 'vue-router';
+const router = useRouter();  
+import ModalComponent from '../OtherComponents/ConfirmationModal.vue';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -114,6 +117,23 @@ onMounted(() => {
 onBeforeUnmount(() => {
     document.removeEventListener('click', closeDropdown);
 });
+const isLogoutModalVisible = ref(false);
+
+
+const showLogoutModal = () => {
+    isLogoutModalVisible.value = true;
+};
+
+const closeLogoutModal = () => {
+    isLogoutModalVisible.value = false;
+};
+
+const confirmLogout = () => {
+    isLogoutModalVisible.value = false;
+    console.log('Logging out...');
+    window.location.href = '/';
+};
+
 </script>
 
 
