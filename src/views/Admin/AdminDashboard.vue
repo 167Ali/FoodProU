@@ -33,16 +33,21 @@
   import RestaurantList from '../../components/Admin/RestaurantList.vue'
   import OrderDetail from '../../components/Admin/OrderDetail.vue'
   </script>
-  
-  <style scoped>
-  .dashboard-layout {
-    display: flex;
-    height: 100vh;
-  }
-  
-  .main-content {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-  }
-  </style>
+ <style scoped>
+ .dashboard-layout {
+   display: flex;
+   height: 100vh;
+ }
+ 
+ .main-content {
+   flex: 1;
+   padding: 20px;
+   overflow-y: auto;
+   scrollbar-width: none; /* For Firefox */
+ }
+ 
+ .main-content::-webkit-scrollbar {
+   display: none; /* For Chrome, Safari, and Edge */
+ }
+ </style>
+ 
