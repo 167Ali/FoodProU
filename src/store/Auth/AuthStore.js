@@ -77,24 +77,31 @@ const actions = {
             commit('RESET_PASSWORD_FAILURE', error.message || 'An error occurred. Please try again.');
         }
 
+        commit('RESET_PASSWORD_REQUEST');
     },
 
     async setPassword({ commit }, payload) {
+
         commit('SET_PASSWORD_REQUEST');
+
         try {
+
             const response = await setPassword(payload);
+
             console.log(response);
+
             commit('SET_PASSWORD_SUCCESS', response.message || 'Your password has been successfully set.');
+
         } catch (error) {
+
             commit('SET_PASSWORD_FAILURE', error.message || 'An error occurred. Please try again.');
+
         }
+
     },
     async login({ commit }, credentials) {
         try {
-
-            const { access_token, role, permissions, id } = await login(credentials); // Call the login service
-
-            commit('SET_ID', id);
+            const { access_token, role, permissions } = await login(credentials); // Call the login service
             commit('SET_TOKEN', access_token);
             commit('SET_USER', { role, permissions }); // Store role and permissions in the user state
             return { role, permissions: permissions || [] };
@@ -125,9 +132,7 @@ const actions = {
     },
     logout({ commit }) {
         commit('LOGOUT');
-
     }
-
 };
 
 const getters = {
