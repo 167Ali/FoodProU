@@ -1,7 +1,5 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
-
-// Import route modules
 import adminRoute from './adminRoutes'
 import restaurantownerRoutes from './restaurantownerRoutes'
 import customerRoutes from './customerRoutes'
@@ -39,7 +37,7 @@ import UserGuide from '../components/Customer/UserGuide.vue'
 import RecipeBlog from '../views/Customer/RecipeBlog.vue'
 import Rewards from '../views/Customer/Rewards.vue'
 // import otherRoutes from './otherRoutes'; // Miscellaneous routes
-import hello from '@/views/hello.vue'
+import hello from '../views/Hello.vue'
 // import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
 // import Moreinfo from '../components/Customer/Moreinfo.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
@@ -48,28 +46,23 @@ const routes = [
   ...restaurantownerRoutes,
   ...customerRoutes,
   ...otherRoutes,
+
   {
-    path: '/Navbarheader',
-    name: 'Navbarheader',
-    component: NavbarHeader,
-    children: [
-      {
-        path: '/checkout',
-        name: 'checkout',
-        component: CheckOut
-      },
-      {
-        path: '/orderreq',
-        name: 'orderreq',
-        component: OrderReq
-      },
-      {
-        path: '/caart',
-        name: 'addtocard',
-        component: AddtoCart
-      },
-    ]
+    path: '/checkout',
+    name: 'checkout',
+    component: CheckOut
   },
+  {
+    path: '/orderreq',
+    name: 'orderreq',
+    component: OrderReq
+  },
+  {
+    path: '/caart',
+    name: 'addtocard',
+    component: AddtoCart
+  },
+  
   {
     path: '/catnvbr',
     name: 'categorynavbar',
