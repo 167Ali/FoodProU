@@ -5,7 +5,7 @@
             <div class="navbar-left">
                 <!-- Logo -->
                 <font-awesome-icon :icon="['fas', 'utensils']" class="logo" />
-                <span class="brand-name">foodpro</span>
+                <span class="brand-name">foodpro For Bussiness</span>
             </div>
 
             <div class="navbar-right">
@@ -38,7 +38,7 @@ const closeBanner = () => {
 
 // Navigation function
 const goToLogin = () => {
-    router.push('/login');
+    router.push('/');
 };
 </script>
 
