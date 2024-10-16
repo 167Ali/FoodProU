@@ -7,7 +7,7 @@
                 <button class="btn btn-primary" @click="openModal()" title="Add Choice">Add</button>
             </div>
 
-            <div v-for="(choice, index) in choices" :key="index" class="col-md-12 mb-4">
+            <div v-for="(choice, index) in processedChoices" :key="index" class="col-md-12 mb-4">
                 <div class="card p-2 shadow-lg">
                     <div class="row solo-card">
                         <div class=" col-10">
@@ -107,6 +107,25 @@ import { useStore } from 'vuex';
 
 const store = useStore();
 const choices = computed(() => store.getters['menuChoice/allChoices']);
+const processedChoices = computed(() => {
+    return choices.value.map(item => {
+        if (item.addons && item.addons.length > 0) {
+            return {
+                ...item,
+                choices: item.addons,
+                type: 'addon',
+            };
+        }
+        else if (item.choices && item.choices.length > 0) {
+            return {
+                ...item,
+                choices: item.choices,
+                type: 'choice',
+            };
+        }
+    });
+});
+
 
 onMounted(async () => {
     try {
@@ -175,7 +194,7 @@ const openModal = () => {
 // Function to open the form modal for editing a choice
 const viewChoice = (index) => {
     currentEditIndex.value = index;
-    currentChoice.value = { ...choices.value[index] };
+    currentChoice.value = { ...processedChoices.value[index] };
     isEditMode.value = true;
     isFormVisible.value = true;
 };
@@ -184,7 +203,7 @@ const viewChoice = (index) => {
 const saveChoice = async (choice) => {
     try {
         if (isEditMode.value && currentEditIndex.value !== null) {
-            
+
             const success = await store.dispatch('menuChoice/editChoice', choice);
             console.log("response edit choice ", success);
             //choices.value[currentEditIndex.value] = choice;
@@ -202,8 +221,6 @@ const saveChoice = async (choice) => {
 // Delete a choice
 const deleteChoice = async (index) => {
     //choices.value.splice(index, 1);
-
-
     try {
         console.log("index ", index)
         const success = await store.dispatch('menuChoice/deleteChoice', index);
@@ -211,33 +228,7 @@ const deleteChoice = async (index) => {
     } catch (error) {
         console.error('Error Deleting Choice: ', error);
     }
-
 };
-
-
-const items1 = ref([
-    {
-        name: 'Pasta Bolognese',
-        quantity: 2,
-        note: 'Dont Add Vegetables',
-        price: 50.50,
-        image: '/src/assets/img3.jpeg',
-    },
-    {
-        name: 'Spicy Fried Chicken',
-        quantity: 2,
-        note: 'Dont Add Vegetables',
-        price: 45.70,
-        image: '/src/assets/img3.jpeg',
-    },
-    {
-        name: 'Spaghetti Carbonara',
-        quantity: 2,
-        note: 'Dont Add Vegetables',
-        price: 35.00,
-        image: '/src/assets/img3.jpeg',
-    },
-]);
 
 </script>
 

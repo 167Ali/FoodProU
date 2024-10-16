@@ -53,10 +53,23 @@
                         <button class="btn btn-outline" type="button" @click="isFormVisible = false"><i
                                 class="fa-solid fa-xmark fa-lg" style="color: #030303;"></i></button>
                     </div>
-                    <select v-model="selectedOption" class="form-select mb-2" @change="handleSelection">
-                        <option value="0">Category</option>
-                        <option value="1">Discount</option>
-                    </select>
+                    <div>
+                        <select v-model="selectedOption" class="form-select mb-2" @change="handleSelection">
+                            <option value="0">Category</option>
+                            <option value="1">Discount</option>
+                        </select>
+
+                        <div class="mb-3" v-if="suggestedCategories.length">
+                            <h6>Suggested {{ selectedOption === '0' ? 'Categories' : 'Discounts' }}:</h6>
+                            <div class="d-flex flex-wrap gap-2">
+                                <button v-for="category in suggestedCategories" :key="category"
+                                    class="btn btn-outline-secondary rounded-pill"
+                                    @click="selectSuggestedCategory(category)">
+                                    {{ category }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     <input v-model="newCategory" type="text" placeholder="Enter category name"
                         class="form-control mb-2" />
                     <input v-if="selectedOption == 1" v-model="discountPercentage" type="number"
@@ -87,8 +100,25 @@ const messageType = ref('alert-success'); // Default message type
 const isChoiceGroupsVisible = ref(false);
 const isProductCategoryVisibile = ref(false);
 const isFormVisible = ref(false);
-const selectedOption = ref(0);
+const selectedOption = ref('0');
 const discountPercentage = ref(0)
+const suggestedCategories = ref([]);
+
+const categorySuggestions = ['Breakfast', 'Lunch', 'Dinner', 'Soup', 'Desserts', 'Beverages'];
+const discountSuggestions = ['Combo Deal', 'Super Deal', 'Holiday Special', 'Discount Offer'];
+
+const handleSelection = () => {
+    if (selectedOption.value === '0') {
+        suggestedCategories.value = categorySuggestions;
+    } else if (selectedOption.value === '1') {
+        suggestedCategories.value = discountSuggestions;
+    }
+};
+
+const selectSuggestedCategory = (category) => {
+    newCategory.value = category;
+};
+
 const openModal = () => {
     isFormVisible.value = true;
 };
@@ -97,6 +127,7 @@ const menuItems = computed(() => store.getters['menuCategory/allCategories']);
 
 
 onMounted(async () => {
+    handleSelection();
     try {
         await store.dispatch('menuCategory/displayCategory');
     } catch (error) {
