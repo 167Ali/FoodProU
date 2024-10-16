@@ -159,7 +159,6 @@ const routes = [
     name: 'ViewAllOrdersAdm', 
     component: ViewAllOrdersAdm 
   },
-  
   {
     path: '/',
     name: 'Main_landing', // Change name to avoid duplicates

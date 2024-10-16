@@ -79,7 +79,6 @@
                         {{ message }}
                     </div>
                     <button class="btn btn-primary me-3" @click="addCategory">Add Category</button>
-
                 </div>
             </div>
         </div>
