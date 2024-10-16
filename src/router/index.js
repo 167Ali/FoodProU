@@ -209,7 +209,7 @@ const routes = [
   {
     path: '/get-started',
     name: 'Get_Started',
-    component: () => import('../views/Login_Signup/Get_Started_page.vue')
+    component: Get_Started_page
   },
   // {
   //   path: '/test',
