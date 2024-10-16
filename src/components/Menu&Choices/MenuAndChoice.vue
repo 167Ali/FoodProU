@@ -10,7 +10,7 @@
         <div class="row">
 
             <!-- Main content -->
-            <main class="col-md-12 ms-sm-auto col-lg-8 px-md-4">
+            <main class="col-md-6 ms-sm-auto col-lg-8 px-md-4">
                 <div class="container mt-4">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h2>Menu Categories</h2>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </main>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-6">
                 <MenuViewChoice />
             </div>
         </div>

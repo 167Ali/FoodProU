@@ -41,7 +41,8 @@ export const choiceService = {
 
     // Delete a choice
     deleteChoice(id) {
-        return axios.delete(`${baseURL}/api/delete-choice-group`, { headers }, id);
+        console.log("SER ", id)
+        return axios.delete(`${baseURL}/api/delete-choice-group?id=${id}`, { headers });
     },
 
     // Get choices for a specific menu

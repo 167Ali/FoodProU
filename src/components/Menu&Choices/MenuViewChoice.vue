@@ -19,7 +19,7 @@
                                         {{ choice.is_required == 1 ? ' Required' : ' Optional' }}
                                     </p>
                                     <p class="card-text py-0 my-0 text-capital mb-0">
-                                        <strong>Choice Type:</strong> {{ choice.choice_type }}
+                                        <strong>Type:</strong> {{ choice.choice_type }}
                                     </p>
                                 </div>
                                 <!-- <ol class="scroller-card">
@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="col-2 d-flex flex-column justify-content-center">
-                            <button class="btn btn-outline mb-2" @click="viewChoice(index)">
+                            <button class="btn btn-outline mb-3" @click="viewChoice(index)">
                                 <i class="fa-regular fa-pen-to-square fa-xl" style="color: #343f50;"></i>
                             </button>
                             <button class="btn btn-outline" @click="deleteChoice(choice.id)">
@@ -184,7 +184,10 @@ const viewChoice = (index) => {
 const saveChoice = async (choice) => {
     try {
         if (isEditMode.value && currentEditIndex.value !== null) {
-            choices.value[currentEditIndex.value] = choice;
+            
+            const success = await store.dispatch('menuChoice/editChoice', choice);
+            console.log("response edit choice ", success);
+            //choices.value[currentEditIndex.value] = choice;
         } else {
             console.log("CC ", choice)
             const success = await store.dispatch('menuChoice/addChoice', choice);
@@ -192,13 +195,13 @@ const saveChoice = async (choice) => {
         }
         isFormVisible.value = false;
     } catch (error) {
-        console.error('Error Adding/updating Product:', error);
+        console.error('Error Adding/updating choice:', error);
     }
 };
 
 // Delete a choice
 const deleteChoice = async (index) => {
-    choices.value.splice(index, 1);
+    //choices.value.splice(index, 1);
 
 
     try {
@@ -210,8 +213,6 @@ const deleteChoice = async (index) => {
     }
 
 };
-
-
 
 
 const items1 = ref([
