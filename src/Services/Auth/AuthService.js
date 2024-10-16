@@ -70,50 +70,6 @@ throw new Error(error.response?.data?.message || 'Login failed');
 
 };
 
-
-
-export const register = async (formData) => {
-
-try {
-
-const response = await axios.post(`${API_BASE_URL}/api/register`, formData);
-
-console.log('Registration response', response);
-
-const { access_token, ...user } = response.data.data;
-
-return { access_token, user };
-
-} catch (error) {
-
-throw new Error(error.response?.data?.message || 'Registration failed');
-
-}
-
-};
-
-
-
-// New business registration function
-
-export const registerBusiness = async (formData) => {
-
-try {
-
-const response = await axios.post(`${API_BASE_URL}/api/register-business`, formData);
-
-console.log(response.data);
-
-return response.data;
-
-} catch (error) {
-
-throw new Error(error.response?.data?.message || 'Business registration failed');
-
-}
-
-};
-
 export const register = async (formData) => {
   try {
       const response = await axios.post(`${API_BASE_URL}/api/register`, formData);
