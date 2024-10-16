@@ -1,8 +1,5 @@
 <template>
-<<<<<<< HEAD
-=======
     <BussinessNav/>
->>>>>>> 5105dc37629a9645b62909af9a422e94a1d9f1f8
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <!-- Header Section -->
   <header class="header bg-light py-3">
@@ -42,11 +39,7 @@
           <div class="form-card row no-gutters">
               <!-- Left Side Image (50% width) -->
               <div class="col-lg-6 form-image bg-white">
-<<<<<<< HEAD
-                  <img src="../assets/form.gif" alt="Form Side Image" class="img-fluid" />
-=======
                   <img src="../../assets/form.gif" alt="Form Side Image" class="img-fluid" />
->>>>>>> 5105dc37629a9645b62909af9a422e94a1d9f1f8
               </div>
   
               <!-- Right Side Form (50% width) -->
@@ -225,106 +218,6 @@
   </template>
   
   <script>
-<<<<<<< HEAD
-  import { ref } from "vue";
-  import { useStore } from 'vuex';
-  
-  export default {
-    setup() {
-      const store = useStore();
-      const currentPage = ref(1);
-      const totalPages = 4;
-      const form = ref({
-        first_name: "",
-        last_name: "",
-        email: "",
-        password: "",
-        password_confirmation: "",
-        restaurant_name: "",
-        opening_time: "",
-        closing_time: "",
-        cuisine: "",
-        logo_path: null,
-        business_type: "",
-        address: "",
-        postal_code: "",
-        city: "",
-        cnic: "",
-        bank_name: "",
-        iban: "",
-        account_owner_title: "",
-      });
-  
-      const previewUrl = ref(null); // To hold the URL of the uploaded image
-  
-      const nextPage = () => {
-        if (validateForm(currentPage.value)) {
-          currentPage.value++;
-        }
-      };
-  
-      const prevPage = () => {
-        if (currentPage.value > 1) {
-          currentPage.value--;
-        }
-      };
-  
-      const validateForm = (page) => {
-        switch (page) {
-          case 1:
-            return form.value.first_name && form.value.last_name && form.value.email &&
-                   form.value.password && form.value.password_confirmation;
-          case 2:
-            return form.value.restaurant_name && form.value.opening_time &&
-                   form.value.closing_time && form.value.cuisine && form.value.logo_path &&
-                   form.value.business_type;
-          case 3:
-            return form.value.address && form.value.postal_code && form.value.city;
-          case 4:
-            return form.value.cnic && form.value.bank_name && form.value.iban &&
-                   form.value.account_owner_title;
-          default:
-            return false;
-        }
-      };
-  
-      const submitForm = async () => {
-        try {
-          const formData = new FormData(); // Create a new FormData object
-  
-          // Append all form values to the FormData object
-          for (const key in form.value) {
-            formData.append(key, form.value[key]);
-          }
-  
-          // Call the registerBusiness action from Vuex with the FormData
-          const response = await store.dispatch('auth/registerBusiness', formData);
-          console.log("Business Registration Successful", response);
-        } catch (error) {
-          console.error("Business Registration Error:", error.message);
-        }
-      };
-  
-      const handleFileUpload = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-          form.value.logo_path = file; // Store the file in the form object
-          previewUrl.value = URL.createObjectURL(file); // Create a preview URL for the image
-        }
-      };
-  
-      return {
-        currentPage,
-        totalPages,
-        form,
-        previewUrl,
-        nextPage,
-        prevPage,
-        submitForm,
-        handleFileUpload,
-      };
-    },
-=======
   import BussinessNav from "@/components/LoginSignup/BussinessNav.vue";
   import {
       ref
@@ -399,7 +292,6 @@
               handleFileUpload,
           };
       },
->>>>>>> 5105dc37629a9645b62909af9a422e94a1d9f1f8
   };
   </script>
   

@@ -20,17 +20,8 @@
           <div class="mb-3">
             <input type="password" class="form-control" placeholder="Password" v-model="password" required />
           </div>
-<<<<<<< HEAD
-          <div class="mb-3">
-            <input type="password" class="form-control" placeholder="Confirm Password" v-model="confirmPassword" required />
-          </div>
           <button type="submit" class="btn btn-signup w-100 mb-3">Sign Up</button>
         </form>
-        <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-=======
-          <button type="submit" class="btn btn-signup w-100 mb-3">Sign Up</button>
-        </form>
->>>>>>> 5105dc37629a9645b62909af9a422e94a1d9f1f8
       </div>
 
       <div class="modal-footer">
@@ -40,79 +31,6 @@
   </div>
 </template>
 
-<<<<<<< HEAD
-<script>
-import { defineComponent, ref } from 'vue';
-import { useStore } from 'vuex';
-
-export default defineComponent({
-  name: 'User_signup',
-  props: {
-    showModal: {
-      type: Boolean,
-      required: true,
-    },
-  },
-  setup(props, { emit }) {
-    const store = useStore();
-
-    const firstName = ref('');
-    const lastName = ref('');
-    const email = ref('');
-    const password = ref('');
-    const confirmPassword = ref(''); // New confirm password field
-    const errorMessage = ref('');
-
-    const closeModal = () => {
-      emit('close');
-      resetForm();
-    };
-
-    const resetForm = () => {
-      firstName.value = '';
-      lastName.value = '';
-      email.value = '';
-      password.value = '';
-      confirmPassword.value = ''; // Reset confirm password
-      errorMessage.value = '';
-    };
-
-    const signUp = async () => {
-      if (password.value !== confirmPassword.value) {
-        errorMessage.value = 'Passwords do not match.';
-        return;
-      }
-
-      try {
-        const formData = {
-          first_name: firstName.value,
-          last_name: lastName.value,
-          email: email.value,
-          password: password.value,
-          password_confirmation:confirmPassword.value
-        };
-        const user = await store.dispatch('auth/register', formData);
-        console.log('Registration successful:', user);
-        closeModal();
-      } catch (error) {
-        errorMessage.value = error.message;
-        console.error('Registration error:', error.message);
-      }
-    };
-
-    return {
-      firstName,
-      lastName,
-      email,
-      password,
-      confirmPassword, // Add confirm password to return
-      errorMessage,
-      closeModal,
-      signUp,
-    };
-  },
-});
-=======
 <script setup>
 import { ref, defineProps, defineEmits } from 'vue';
 
@@ -141,7 +59,6 @@ const signUp = () => {
   console.log('Email:', email.value);
   console.log('Password:', password.value);
 };
->>>>>>> 5105dc37629a9645b62909af9a422e94a1d9f1f8
 </script>
 
 <style scoped>
@@ -230,8 +147,4 @@ const signUp = () => {
     padding: 10px 0;
   }
 }
-<<<<<<< HEAD
 </style>
-=======
-</style>
->>>>>>> 5105dc37629a9645b62909af9a422e94a1d9f1f8
