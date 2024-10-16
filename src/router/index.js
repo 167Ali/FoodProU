@@ -27,6 +27,7 @@ import ResturantReviews from '@/components/RestaurantOwner/ResturantReviews.vue'
 import OrderRating from '@/components/Customer/OrderRating.vue'
 import otherRoutes from './otherRoutes'; // Miscellaneous routes
 import hello from '@/views/hello.vue'
+import ForgotPassword from '../components/LoginSignup/ForgotPassword.vue'
 // import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
 // import Moreinfo from '../components/Customer/Moreinfo.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
@@ -66,6 +67,12 @@ const routes = [
     path: '/voucher',
     name: 'Voucher',
     component: Voucher
+  },
+  {
+
+    path: '/forgot-password',
+    name: 'ForgotPassword',
+    component: ForgotPassword
   },
   {
     path: '/deals',

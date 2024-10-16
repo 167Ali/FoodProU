@@ -1,6 +1,6 @@
 <template>
     <div class="order-detail">
-      <h2 class="order-title">Order Details</h2>
+      <h2 class="order-title">Restaurant Details</h2>
       <div class="order-status">
         <button class="status-btn active">Pending</button>
         <button class="status-btn">Rejected</button>

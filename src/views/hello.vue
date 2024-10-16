@@ -9,6 +9,7 @@
   <script setup>
 
   import addtocart from '../components/LoginSignup/SetNewPassword.vue';
+
   </script>
   
   <style scoped>
