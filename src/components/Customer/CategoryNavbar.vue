@@ -2,37 +2,43 @@
     <div class="restaurant-menu">
       <!-- Search and Category Sticky Navbar -->
       <div id="categoryNavbar" class="category-navbar">
-        <input 
-          type="text" 
-          id="search" 
-          placeholder="Search in menu" 
-          v-show="!isMobile" 
-          class="menu-search" 
-          v-model="searchQuery"
-        />
+
+        <input type="text" id="search" placeholder="Search in menu" v-show="!isMobile" class="menu-search" v-model="searchQuery"/>
         <button v-if="isMobile" @click="toggleSearchBar" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
   
+        <button v-if="isLeftButtonVisible" id="scrollLeft" class="scroll-btn left" @click="scrollLeft">‹</button>
+        <!-- <button id="scrollLeft" class="scroll-btn left" @click="scrollLeft">‹</button> -->
+
         <div id="categoriesContainer" ref="categories" class="categories">
-          <a v-for="category in categoryLinks" :key="category.id" :href="`#${category.id}`" 
-          class="category-link" :class="{ active: activeCategory === category.id }" @click="scrollToSection(category.id)">
+          <a v-for="category in categoryLinks" :key="category.id" 
+          class="category-link" :class="{ active: activeCategory === category.id }
+          " @click="scrollToSection(category.id)">
             {{ category.name }}
           </a>
         </div>
-  
-        <button id="scrollRight" class="scroll-btn right" @click="scrollRight">›</button>
+        
+        <!-- <button id="scrollRight" class="scroll-btn right" @click="scrollRight">›</button> -->
+        <button v-if="isRightButtonVisible" id="scrollRight" class="scroll-btn right" @click="scrollRight">›</button>
       </div>
   
       <!-- Menu Sections -->
-      <div v-for="category in categoryLinks" :key="category.id" class="menu-section" :id="category.id">
-        <h2>{{ category.name }}</h2>
-        <!-- Items of each category -->
+      <div class="main-section">
+
+        <div v-for="category in categoryLinks" :key="category.id" class="menu-section" :id="category.id">
+          <h2 class="popular-title">{{ category.name }}</h2>
+          <p class="popular-subtitle">Single serving</p>
+          <div class="popular-items">
+            <CategoryItem v-for="item in items" :key="item.id" :item="item" />
+          </div>
+        </div>
       </div>
     </div>
   </template>
   
-  <script setup>
-  import { ref, onMounted, watch } from 'vue';
-  // import { ref, reactive, computed, watch, onMounted } from 'vue';
+<script setup>
+  import { ref, onMounted, watch, nextTick } from 'vue';
+  import CategoryItem from './CategoryItem.vue'
+  // import AddtoCart from '../../components/Customer/AddtoCart.vue'
 
   
   // Category links (Dynamic example)
@@ -48,13 +54,56 @@
     { id: 'fast-food', name: 'Fast Food' },
     { id: 'quesadilla', name: 'Quesadilla' },
     { id: 'cutlery', name: 'Cutlery' },
+    { id: 'qsuhajsla', name: 'qsuhajsla' },
+    { id: 'omiwuexuf', name: 'omiwuexuf' },
+    { id: 'sscgiwueA', name: 'sscgiwueA' },
+    { id: 'slxifmeaa', name: 'slxifmeaa' }, 
+    { id: 'AWUECYEQI', name: 'AWUECYEQI' },
+    { id: 'sudfkxfhi', name: 'sudfkxfhi' },
+    { id: 'quesadias', name: 'quesadias' },
+    { id: 'jjjasiiii', name: 'jjjasiiii' },
+  ]);
+
+  const items = ref([
+    {
+      id: 1,
+      name: 'Animal Fries',
+      price: 649,
+      description: 'Breaded fries with cheese, chunky chicken topped with fiery hot sauce...',
+      image: 'https://images.unsplash.com/photo-1518013431117-eb1465fa5752?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZnJpZXN8ZW58MHx8MHx8fDA%3D',
+    },
+    {
+      id: 2,
+      name: 'Chicago Fries',
+      price: 699,
+      description: 'Soft on the outside, crunchy on the inside...',
+      image: 'https://images.unsplash.com/photo-1485962398705-ef6a13c41e8f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZnJpZXN8ZW58MHx8MHx8fDA%3D',
+    },
+    {
+      id: 3,
+      name: 'All American',
+      price: 799,
+      description: 'Smashed beef with caramelized onions and a secret sauce...',
+      image: 'https://images.unsplash.com/photo-1598679253544-2c97992403ea?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8ZnJpZXN8ZW58MHx8MHx8fDA%3D',
+    },
+    {
+      id: 4,
+      name: 'Nuker Chicken Burger',
+      price: 999,
+      description: 'Crispy chicken with fried cheese patty, fries, and animal sauce...',
+      image: 'https://plus.unsplash.com/premium_photo-1683657860399-60f51361c65a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGZyaWVzfGVufDB8fDB8fHww',
+    }
   ]);
   
+  
+  const isRightButtonVisible = ref(false);
+  const isLeftButtonVisible = ref(false);
   const activeCategory = ref('');
   const searchQuery = ref('');
   const isMobile = ref(false);
   const categoriesDiv = ref(null);
-  
+
+  // Watch search query changes
   watch(searchQuery, (newQuery) => {
     console.log('Search query updated:', newQuery);
     // Add any code you want to trigger when searchQuery changes
@@ -80,10 +129,20 @@
       section.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 300); // Adjust the timeout if necessary
   };
-  
 
+  // Helper function: Scroll active navbar item into center view
+  const scrollNavbarItemIntoView = () => {
+    const activeNavItem = categoriesDiv.value.querySelector(`a.active`);
+    if (activeNavItem) {
+      activeNavItem.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest', // Doesn't scroll the whole navbar, keeps it within bounds
+        inline: 'center',
+      });
+    }
+  };
 
-  // Highlight active section on scroll
+  // Highlight active section on scroll and scroll navbar item into view
   const onScroll = () => {
     const navbarHeight = document.getElementById('categoryNavbar').offsetHeight;
     const offset = window.scrollY + navbarHeight;
@@ -95,42 +154,80 @@
 
       if (offset >= sectionTop && offset < sectionBottom) {
         activeCategory.value = category.id;
+
+        // Scroll the active navbar item into center view
+        nextTick(() => {
+          scrollNavbarItemIntoView();
+        });
       }
     });
   };
+
+  // Check if categories overflow the container
+  const checkOverflow = () => {
+    const container = categoriesDiv.value;
+    if (container.scrollWidth > container.clientWidth) {
+      isRightButtonVisible.value = true;
+    } else {
+      isRightButtonVisible.value = false;
+    }
+    // Also check if there's room to scroll left
+    isLeftButtonVisible.value = container.scrollLeft > 0;
+  };
+
   
   // Scroll categories horizontally when overflow
   const scrollRight = () => {
     categoriesDiv.value.scrollBy({
-      left: 100,
+      left: 300,
       behavior: 'smooth',
     });
+    nextTick(() => checkOverflow());
   };
-  
+  const scrollLeft = () => {
+    categoriesDiv.value.scrollBy({
+      left: -300,
+      behavior: 'smooth',
+    });
+    nextTick(() => checkOverflow());
+  };
+
   // Toggle search bar in mobile view
   const toggleSearchBar = () => {
     const searchInput = document.getElementById('search');
     searchInput.classList.toggle('show');
   };
-  
+
   // Lifecycle hooks
   onMounted(() => {
+    categoriesDiv.value = document.getElementById('categoriesContainer'); // Ensure ref is set properly
     window.addEventListener('resize', checkMobileView);
-    window.addEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll, checkOverflow);
     checkMobileView();
+    checkOverflow();
   });
+
+  watch([items, categoryLinks], () => {
+    nextTick(() => {
+      checkOverflow();
+    });
+  });
+
+  // 
+</script>
   
-  </script>
-  
-  <style scoped>
-  /* Basic Styles */
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
+<style scoped>
+  .main-section{
+    grid-template-columns: 1fr 1fr;
   }
-  
+  .menu-section{
+    /* width: 600px; */
+    display: inline-block;
+
+  }
+
   .restaurant-menu {
-    margin-top: 80px;
+    font-family: 'Agrandir';
   }
   
   .category-navbar {
@@ -139,18 +236,22 @@
     position: sticky;
     top: 0;
     background-color: white;
-    padding: 10px;
-    box-shadow: 0 4px 2px -2px gray;
+    padding: 0px 50px 0px 60px;
+    box-shadow: 0 6px 20px -10px rgba(0, 0, 0, 0.15);
     z-index: 1000;
     white-space: nowrap;
     overflow-x: auto;
   }
   
   .menu-search {
-    border: 1px solid #ccc;
-    padding: 8px;
+    background-color: rgb(245, 245, 245);
+    border: none;
+    padding: 5px 20px;
     border-radius: 20px;
     margin-right: 20px;
+    font-size: 14px;
+    font-weight: 900;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   }
   
   .search-btn {
@@ -161,7 +262,7 @@
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
-    /* overflow-x: scroll; */
+    
     scrollbar-width: none; /* For Firefox */
     -ms-overflow-style: none;  /* For Internet Explorer and Edge */
   }
@@ -170,20 +271,46 @@
   }
 
   .category-link {
-    padding: 10px 15px;
-    text-decoration: none;
+    font-size: 15px;
+    margin: 0px 15px;
+    padding: 15px 15px;
     color: black;
-    white-space: nowrap;
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .category-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background-color: #00754A;
+    transition: width 0.3s ease, left 0.3s ease;
   }
   
-  .category-link.active {
-    border-bottom: 2px solid red;
+  .category-link:hover {
+    background-color: rgb(244, 244, 244);
   }
-  
+  .category-link:hover::before {
+    width: 50%;
+    left: 25%;
+  }
+  .category-link.active::before {
+    width: 100%;
+    left: 0;
+  }
+
   .scroll-btn {
-    background-color: transparent;
-    border: none;
+    background-color: white;
+    padding: 0px 14px 0px 14px;
+    color: rgb(62, 62, 62);
+    border-radius: 100px;
     font-size: 24px;
+    border: 1px solid rgb(145, 143, 143);
+    font-weight: bolder;
     cursor: pointer;
   }
   
@@ -199,18 +326,49 @@
     
     .search-btn {
       display: inline-block;
+      margin-left: -25px;
+      border-radius: 50px;
+      color: rgb(62, 62, 62);
+      padding: 6px 10px 5px 10px;
+      margin-left: -50px;
       margin-right: 10px;
+      border: 1px solid rgb(145, 143, 143);
+      background-color: white;
+    }
+    .scroll-btn.right {
+      margin-right: -20px;
     }
   }
   
   /* Menu section */
   .menu-section {
-    padding: 40px 20px;
+    margin: 40px 60px;
+    /* padding: 30px 20px; */
   }
   
-  .menu-section h2 {
+  /* .menu-section h2 {
     margin-bottom: 20px;
     border-bottom: 1px solid #ccc;
+  } */
+  /* 
+
+  .popular-title {
+    font-size: 1.8rem;
+    font-weight: 700;
   }
+
+  .popular-subtitle {
+    color: #757575;
+    margin-bottom: 20px;
+  }
+  
+  */
+
+  .popular-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
 </style>
   

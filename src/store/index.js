@@ -1,9 +1,9 @@
 // store/index.js
 import { createStore } from 'vuex';
+import profileModule from './modules/profile';
 import { menuCategory } from '../store/menu/menuCategory';
 import { menuProduct } from '../store/menu/menuProduct';
 import { menuChoice } from '../store/menu/menuChoice';
-import profileModule from './modules/profile';
 import { rewards } from './modules/rewards';
 import AuthStore from './Auth/AuthStore';
 import order from './modules/order'; // import the order module
