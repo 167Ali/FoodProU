@@ -6,10 +6,11 @@
       <div class="col-lg-7 mb-4">
         <div class="card p-4">
           <h3>Delivery address</h3>
-          <router-link to="/orderreq">
-            <a class="nxt-btn">Order Request</a>
-          </router-link>
-          <div class="map-container mb-3 mt-2"></div>
+          <router-link to="/orderreq"><a class="nxt-btn">Order Request</a></router-link>
+          <div class="map-container mb-3 mt-2">
+
+            <img src="../../assets/images/Screenshot 2024-10-07 151047.png" alt="Map" class="img-fluid rounded">
+          </div>
           <div>
             <i class="fa-solid fa-location-crosshairs"></i>
             <p class="address">
@@ -25,7 +26,8 @@
               placeholder="Note to rider - e.g., building, landmark"
             ></textarea>
           </div>
-          <hr />
+          <!--  -->
+          <hr>
           <p class="contactless-toggle">
             Contactless delivery
             <label class="switch">
@@ -42,7 +44,6 @@
           <h3>Your order from</h3>
           <div class="order-placed-content">
             <p class="restaurant-name">Sam's Kitchen</p>
-
             <div class="order-item d-flex justify-content-between my-1">
               <p>1 × Classic Chicken Momos</p>
               <span>Rs. 400</span>
@@ -55,15 +56,14 @@
               <p>1 × Roghni Naan</p>
               <span>Rs. 60</span>
             </div>
-
             <hr />
-
             <div class="price-breakdown">
               <p class="d-flex justify-content-between">Subtotal <span>Rs. 600</span></p>
               <p class="d-flex justify-content-between">Standard delivery <span>Free</span></p>
               <p class="d-flex justify-content-between">Service fee <span>Rs. 9.99</span></p>
               <p class="d-flex justify-content-between">VAT <span>Rs. 0</span></p>
             </div>
+
 
             <div>
               <div class="d-flex justify-content-between fw-bold">
@@ -72,6 +72,7 @@
               </div>
               <span class="total-inc">(Incl. VAT)</span>
             </div>
+
           </div>
         </div>
       </div>
@@ -122,18 +123,14 @@
           <p>I agree that placing the order places me under an obligation to make a payment in accordance with the General Terms and Conditions.</p>
         </div>
       </div>
-
     </div>
   </div>
 </template>
 
-
-<script setup>
-import { defineComponent } from 'vue';
-
-defineComponent({
-  name: 'CheckOut',
-});
+<script>
+export default {
+  name: "CheckOut",
+};
 </script>
 
 <style scoped>
@@ -145,9 +142,8 @@ h4 {
   font-family: 'Agrandir', 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-/* Map container styles */
 .my-5 {
-  padding: 60px 80px 60px 80px;
+  padding: 60px 80px;
 }
 .map-container img {
   width: 100%;
@@ -171,7 +167,6 @@ h4 {
   font-size: 14px;
 }
 
-/* The switch - the container */
 .switch {
   position: relative;
   top: 4.5px;
@@ -180,14 +175,12 @@ h4 {
   height: 20px;
 }
 
-/* Hide the default checkbox */
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* The slider */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -212,17 +205,14 @@ h4 {
   border-radius: 50%;
 }
 
-/* When the checkbox is checked */
 input:checked+.slider {
   background-color: #00754ad9;
 }
 
-/* Move the slider to the right */
 input:checked+.slider:before {
   transform: translateX(16px);
 }
 
-/* Rounded slider (optional) */
 .slider.round {
   border-radius: 34px;
 }
@@ -258,5 +248,5 @@ input:checked+.slider:before {
   font-size: 12px;
 }
 
+/**/
 </style>
-
