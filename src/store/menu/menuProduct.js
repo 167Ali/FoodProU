@@ -45,7 +45,7 @@ export const menuProduct = {
         },
         async deleteProduct({ commit }, productId) {
             try {
-                await deleteProductService(productId);
+                const response = await deleteProductService(productId);
                 commit('DELETE_PRODUCT', productId);
                 return response.data;
             } catch (error) {

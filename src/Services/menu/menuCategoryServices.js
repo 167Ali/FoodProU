@@ -19,8 +19,8 @@
 //     });
 // };
 import axios from 'axios';
-
-const token = `Bearer ${'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTkyLjE2OC4xNS4yMDU6ODAwMC9hcGkvbG9naW4iLCJpYXQiOjE3Mjg5OTE0NTYsImV4cCI6MTcyODk5NTA1NiwibmJmIjoxNzI4OTkxNDU2LCJqdGkiOiJrdDhwQjB1VWhqMjNsTkVVIiwic3ViIjoiMjciLCJwcnYiOiJiOTEyNzk5NzhmMTFhYTdiYzU2NzA0ODdmZmYwMWUyMjgyNTNmZTQ4Iiwicm9sZSI6bnVsbH0.T8RVwI9X71P2Nd8OpNLLDebUR_znEB_TRL6qqTXMRFE'}`;
+const tokenLocalStorage = localStorage.getItem('token');
+const token = `Bearer ${tokenLocalStorage}`;
 const headers = { Authorization: token };
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
