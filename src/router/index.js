@@ -5,6 +5,7 @@ import adminRoute from './adminRoutes'
 import restaurantownerRoutes from './restaurantownerRoutes'
 import customerRoutes from './customerRoutes'
 import otherRoutes from './otherRoutes'
+import Get_Started_page from '@/views/Login_Signup/Get_Started_page.vue'
 
 const routes = [
   ...adminRoute,
@@ -25,7 +26,12 @@ const routes = [
     path: '/rewards',
     name: 'Rewards',
     component: () => import('../views/Customer/Rewards.vue')
-  }
+  },
+  {
+    path: '/get-started',
+    name: 'Get_Started',
+    component: () => import('../views/Login_Signup/Get_Started_page.vue')
+  },
 ]
 
 const router = createRouter({
@@ -34,3 +40,5 @@ const router = createRouter({
 })
 
 export default router
+
+
