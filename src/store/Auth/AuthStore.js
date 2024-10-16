@@ -62,25 +62,45 @@ state.errorMessage = '';
 },
 };
 const actions = {
+
   async forgotPassword({ commit }, email) {
+
     commit('RESET_PASSWORD_REQUEST');
+
     try {
+
       const response = await resetPassword(email);
+
       console.log(response);
+
       commit('RESET_PASSWORD_SUCCESS', response.message || 'Password reset link has been sent to your email.');
+
     } catch (error) {
+
       commit('RESET_PASSWORD_FAILURE', error.message || 'An error occurred. Please try again.');
+
     }
+
   },
+
   async setPassword({ commit }, payload) {
+
     commit('SET_PASSWORD_REQUEST');
+
     try {
+
       const response = await setPassword(payload);
+
       console.log(response);
+
       commit('SET_PASSWORD_SUCCESS', response.message || 'Your password has been successfully set.');
+
     } catch (error) {
+
       commit('SET_PASSWORD_FAILURE', error.message || 'An error occurred. Please try again.');
+
     }
+
   },
   async login({ commit }, credentials) {
     try {

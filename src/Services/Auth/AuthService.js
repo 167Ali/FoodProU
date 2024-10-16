@@ -5,7 +5,8 @@ import axios from 'axios';
 
 // Use Vite's way of accessing environment variables
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Backend API URL
+
+const API_BASE_URL_H = import.meta.env.VITE_API_BASE_URL_H; // Backend API URL
 
 
 
@@ -83,15 +84,23 @@ export const register = async (formData) => {
   } catch (error) {
       throw new Error(error.response?.data?.message || 'Registration failed');
   }
+
 };
 
-// New business registration function
 export const registerBusiness = async (formData) => {
+
   try {
-      const response = await axios.post(`${API_BASE_URL}/api/register-business`, formData);
-      console.log(response.data);
-      return response.data;
+  
+  const response = await axios.post(`${API_BASE_URL}/api/register-business`, formData);
+  
+  console.log(response.data);
+  
+  return response.data;
+  
   } catch (error) {
-      throw new Error(error.response?.data?.message || 'Business registration failed');
+  
+  throw new Error(error.response?.data?.message || 'Business registration failed');
+  
   }
-};
+  
+  };
