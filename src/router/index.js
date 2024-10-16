@@ -33,6 +33,10 @@ import RestaurantCard from '@/components/Customer/RestaurantCard.vue'
 import ReviewsAdmin from '@/components/Admin/ReviewsAdmin.vue'
 import ResturantReviews from '@/components/RestaurantOwner/ResturantReviews.vue'
 import OrderRating from '@/components/Customer/OrderRating.vue'
+import OwnerMenu from '../views/Menu/OwnerMenu.vue'
+import UserGuide from '../components/Customer/UserGuide.vue'
+import RecipeBlog from '../views/Customer/RecipeBlog.vue'
+import Rewards from '../views/Customer/Rewards.vue'
 // import otherRoutes from './otherRoutes'; // Miscellaneous routes
 import hello from '@/views/hello.vue'
 // import ProductAddToCart from '../components/Customer/ProductAddToCart.vue'
@@ -173,7 +177,7 @@ const routes = [
   {
     path: '/ownermenu',
     name: 'OwnerMenu', 
-    component: () => import('../views/Menu/OwnerMenu.vue') 
+    component: OwnerMenu
   },
   {
     path: '/restOwnerProfile',
@@ -194,17 +198,17 @@ const routes = [
   {
     path: '/user-guide',
     name: 'UserGuide',
-    component: () => import('../components/Customer/UserGuide.vue')
+    component: UserGuide
   },
   {
     path: '/recipe-blog',
     name: 'RecipeBlog',
-    component: () => import('../views/Customer/RecipeBlog.vue')
+    component: RecipeBlog
   },
   {
     path: '/rewards',
     name: 'Rewards',
-    component: () => import('../views/Customer/Rewards.vue')
+    component: Rewards
   },
   {
     path: '/get-started',
