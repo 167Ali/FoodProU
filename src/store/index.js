@@ -1,17 +1,12 @@
 import { createStore } from 'vuex';
-
-
-const store = createStore({
-
-import profileModule from './modules/profile'; 
+// 
+import profileModule from './modules/profile';
 import AuthStore from './Auth/AuthStore';
 import order from './modules/order'; // import the order module
 import Prevorder from './modules/PrevorderDetail';
 import Resturantownerreviews from './modules/Resturantownerreviews';
 import Reviews from './modules/customerReviews';
-import axios from 'axios';
-
-
+// import axios from 'axios';
 
 
 const store = createStore({

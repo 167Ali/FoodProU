@@ -1,4 +1,6 @@
 
+<template>
+    <header>
       <!-- User Profile Section -->
       <div class="user-profile">
         <img src="../../assets/Ali.jpeg" alt="User" class="avatar" />
@@ -7,9 +9,9 @@
     </header>
   </template>
   
-  <script setup>
+  <!-- <script setup>
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'; // Import Font Awesome icon
-  </script>
+  </script> -->
   
   <style scoped>
   /* Main header container */

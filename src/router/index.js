@@ -17,7 +17,7 @@ import Main_landing from '../views/Login_Signup/Main_Landing.vue'
 import Business_Landing from '../views/Login_Signup/Bussiness_Landing.vue'
 import AdminFinanceDashboard from '../components/Admin/AdminFinanceDashboard.vue'
 import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_Dashboard.vue'
-import AddtoCart from '../components/AddtoCart.vue'
+import AddtoCart from '../components/Customer/AddtoCart.vue'
 import CategoryNavbar from '../components/Customer/CategoryNavbar.vue'
 // import ResturantOwner from '@/components/RestaurantOwner/ResturantOwner.vue'
 import RestaurantCard from '@/components/Customer/RestaurantCard.vue'
@@ -191,6 +191,12 @@ const routes = [
     name: 'RecipeBlog', 
     component: () => import('../views/Customer/RecipeBlog.vue') 
   },
+  // {
+  //   path: '/test',
+  //   name: 'test', 
+  //   component: () => import('../components/Customer/TesterPage.vue') 
+  // },
+  
 ]
 
 const router = createRouter({

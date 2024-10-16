@@ -52,6 +52,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
 import { getActiveOrders, getPastOrders } from '../../Services/customer/OrderService';
 
@@ -59,6 +61,7 @@ import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
 
 
+const store = useStore();
 const router = useRouter();
 
 
@@ -98,8 +101,7 @@ onMounted(() => {
   fetchActiveOrders();
   fetchPastOrders();
 });
-</script>
-
+// 
 
 // Getting the orders from Vuex state
 activeOrders.value = store.getters['order/activeOrders'];
@@ -108,14 +110,14 @@ loadingActive.value = store.getters['order/loadingActive'];
 loadingPast.value = store.getters['order/loadingPast'];
 
 // Navigate to previous order details page
-const goToPrevOrderDetails = (customerId) => {
-  router.push({ name: 'PrevorderDetails', params: { id: customerId } });
-};
+// const goToPrevOrderDetails = (customerId) => {
+//   router.push({ name: 'PrevorderDetails', params: { id: customerId } });
+// };
 
 // Fetch orders when the component is mounted
-onMounted(() => {
-  fetchOrders();
-});
+// onMounted(() => {
+//   fetchOrders();
+// });
 </script>
 
 <style scoped>
