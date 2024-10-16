@@ -10,6 +10,11 @@ const apiClient = axios.create({
 });
 
 export const api = {
+  async getProfile() {
+    const response = await apiClient.get('/api/customers/profile');  // Update with the correct endpoint
+    return response.data;
+  },
+
   async updateProfile(profileData) {
     const response = await apiClient.patch('/api/customers/edit-profile', profileData);
     return response.data;

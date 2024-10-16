@@ -18,6 +18,18 @@ const mutations = {
 };
 
 const actions = {
+    async fetchProfile({ commit }) {
+        try {
+          const response = await api.getProfile();
+          // Extract the 'user' object from the response and commit it
+          const userProfile = response.data.user; 
+          commit('SET_PROFILE', userProfile); // Commit user data to the store
+        } catch (error) {
+          console.error('Error fetching profile:', error);
+          throw error;
+        }
+      },
+
   async saveProfile({ commit }, profileData) {
     try {
       const response = await api.updateProfile(profileData);

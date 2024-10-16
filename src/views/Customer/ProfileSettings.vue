@@ -64,7 +64,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
@@ -94,42 +94,12 @@ const saveProfile = async () => {
             first_name: profile.value.first_name,
             last_name: profile.value.last_name,
             phone_number: profile.value.phone_number,
-            email: profile.value.email // Ensure email is included
+            email: profile.value.email
         });
         alert('Profile updated successfully!');
     } catch (error) {
-        // Log the full error object to get detailed information
-        console.error('Full error object:', error);
-
-        if (error.response) {
-            // Log the specific data from the error response for debugging
-            console.error('Error response from backend:', error.response);
-            console.error('Error data:', error.response.data);
-            
-            // Check if 'errors' exists and is an object
-            if (error.response.data.errors && typeof error.response.data.errors === 'object') {
-                // Loop through the errors object to extract messages
-                const errorMessages = Object.values(error.response.data.errors)
-                    .flat() // Flatten the array if there are multiple messages per field
-                    .join(', '); // Join messages if needed
-
-                console.log('Extracted error messages:', errorMessages);
-                
-                // Here, we can check for specific messages
-                if (errorMessages.includes('Email already registered') || errorMessages.includes('Email is already taken')) {
-                    alert('Please enter a different email, this email is already registered.');
-                } else {
-                    alert(' Please try again. Because: ' + errorMessages);
-                }
-            } else {
-                // Fallback for other errors
-                alert('Failed to save profile. Please try again.');
-            }
-        } else {
-            // Handle network or other errors
-            console.error('Error without response:', error);
-            alert('Failed to save profile. Please try again.');
-        }
+        console.error('Error updating profile:', error);
+        alert('Failed to save profile. Please try again.');
     }
 };
 
@@ -141,10 +111,20 @@ const savePassword = async () => {
         });
         alert('Password updated successfully!');
     } catch (error) {
+        console.error('Error updating password:', error);
         alert('Failed to save password. Please try again.');
-        console.error('Failed to save password:', error);
     }
 };
+
+// Fetch profile data on component mount
+onMounted(async () => {
+  try {
+    await store.dispatch('profile/fetchProfile');
+    console.log('Fetched Profile:', store.state.profile); // Log profile data
+  } catch (error) {
+    alert('Failed to load profile data. Please try again.');
+  }
+});
 
 
 const onFocus = (event) => {
@@ -159,6 +139,7 @@ const onBlur = (event) => {
     }
 };
 </script>
+
 
 <style scoped>
 @import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';
