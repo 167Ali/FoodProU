@@ -7,19 +7,19 @@
                 <button class="btn btn-primary" @click="openModal()" title="Add Choice">Add</button>
             </div>
 
-            <div v-for="(choice, index) in choices" :key="index" class="col-md-12 mb-4">
+            <div v-for="(choice, index) in processedChoices" :key="index" class="col-md-12 mb-4">
                 <div class="card p-2 shadow-lg">
                     <div class="row solo-card">
                         <div class=" col-10">
                             <div class="card-body">
-                                <h5 class="card-title">{{ choice.choicename }}</h5>
+                                <h5 class="card-title">{{ choice.name }}</h5>
                                 <div class="d-flex justify-content-between align-items-center mb-1">
                                     <p class="card-text py-1 my-1 mb-0 mr-2">
                                         <strong>Selection:</strong>
-                                        {{ choice.ischoice == 1 ? ' Required' : ' Optional' }}
+                                        {{ choice.is_required == 1 ? ' Required' : ' Optional' }}
                                     </p>
                                     <p class="card-text py-0 my-0 text-capital mb-0">
-                                        <strong>Choice Type:</strong> {{ choice.choicetype }}
+                                        <strong>Type:</strong> {{ choice.choice_type }}
                                     </p>
                                 </div>
                                 <!-- <ol class="scroller-card">
@@ -37,7 +37,7 @@
                                             </tr>
                                         </thead> -->
                                         <tbody>
-                                            <tr v-for="(item, idx) in choice.choiceitems" :key="idx">
+                                            <tr v-for="(item, idx) in choice.choices" :key="idx">
                                                 <td class="small">{{ item.name }}</td>
                                                 <!-- Smaller text for data -->
                                                 <td class="small">{{ item.price }} pkr</td>
@@ -49,10 +49,10 @@
                             </div>
                         </div>
                         <div class="col-2 d-flex flex-column justify-content-center">
-                            <button class="btn btn-outline mb-2" @click="viewChoice(index)">
+                            <button class="btn btn-outline mb-3" @click="viewChoice(index)">
                                 <i class="fa-regular fa-pen-to-square fa-xl" style="color: #343f50;"></i>
                             </button>
-                            <button class="btn btn-outline" @click="deleteChoice(index)">
+                            <button class="btn btn-outline" @click="deleteChoice(choice.id)">
                                 <i class="fa-regular fa-trash-can fa-xl" style="color: #444e5f;"></i>
                             </button>
                         </div>
@@ -101,42 +101,83 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import MenuCreateChoice from '../Menu&Choices/MenuCreateChoice.vue'; // Import the form component
+import { useStore } from 'vuex';
 
+const store = useStore();
+const choices = computed(() => store.getters['menuChoice/allChoices']);
+const processedChoices = computed(() => {
+    return choices.value.map(item => {
+        if (item.addons && item.addons.length > 0) {
+            return {
+                ...item,
+                choices: item.addons,
+                type: 'addon',
+            };
+        }
+        else if (item.choices && item.choices.length > 0) {
+            return {
+                ...item,
+                choices: item.choices,
+                type: 'choice',
+            };
+        }
+    });
+});
+
+
+onMounted(async () => {
+    try {
+        await store.dispatch('menuChoice/fetchChoices');
+    } catch (error) {
+        console.error('Error fetching Choices:', error);
+    }
+});
+
+
+// formData.append('choice_group_name', choiceData.choicename);
+// formData.append('is_required', choiceData.ischoice);
+// formData.append('choice_type', choiceData.choicetype);
+// formData.append('choice_items', JSON.stringify(
+//     choiceData.choice_items.map(item => ({
+//         name: item.name,
+//         additional_price: item.additional_price
+//     }))
+// ));
 // Mock data for choices
-const choices = ref([
-    {
-        choicename: 'Pizza Toppings',
-        ischoice: '1',
-        choicetype: 'size',
-        choiceitems: [{ name: 'Cheese', price: 2 }, { name: 'Pepperoni', price: 3 }],
-    },
-    {
-        choicename: 'Drink Sizes',
-        ischoice: '0',
-        choicetype: 'additional',
-        choiceitems: [{ name: 'Small', price: 1 }, { name: 'Medium', price: 1.5 }, { name: 'Large', price: 2 }, { name: 'Medium', price: 1.5 }, { name: 'Medium', price: 1.5 }, { name: 'Medium', price: 1.5 }],
-    },
-    {
-        choicename: 'Burger Add-ons',
-        ischoice: '1',
-        choicetype: 'additional',
-        choiceitems: [{ name: 'Bacon', price: 1.5 }, { name: 'Extra Cheese', price: 1 }],
-    },
-    {
-        choicename: 'Drink Sizes',
-        ischoice: '0',
-        choicetype: 'additional',
-        choiceitems: [{ name: 'Small', price: 1 }, { name: 'Medium', price: 1.5 }, { name: 'Large', price: 2 }, { name: 'Medium', price: 1.5 }, { name: 'Medium', price: 1.5 }, { name: 'Medium', price: 1.5 }],
-    },
-    {
-        choicename: 'Burger Add-ons',
-        ischoice: '1',
-        choicetype: 'additional',
-        choiceitems: [{ name: 'Bacon', price: 1.5 }, { name: 'Extra Cheese', price: 1 }],
-    },
-]);
+// const choices = ref([
+//     {
+//         choicename: 'Pizza Toppings',
+//         ischoice: '1',
+//         choicetype: 'size',
+//         choice_items: [{ name: 'Cheese', additional_price: 2 }, { name: 'Pepperoni', additional_price: 3 }],
+//     },
+//     {
+//         choicename: 'Drink Sizes',
+//         ischoice: '0',
+//         choicetype: 'additional',
+//         choice_items: [{ name: 'Small', additional_price: 1 }, { name: 'Medium', additional_price: 15 }, { name: 'Large', additional_price: 2 }, { name: 'Medium', additional_price: 15 }, { name: 'Medium', additional_price: 15 }, { name: 'Medium', additional_price: 15 }],
+//     },
+//     {
+//         choicename: 'Burger Add-ons',
+//         ischoice: '1',
+//         choicetype: 'additional',
+//         choice_items: [{ name: 'Bacon', additional_price: 5 }, { name: 'Extra Cheese', additional_price: 1 }],
+//     },
+//     {
+//         choicename: 'Drink Sizes',
+//         ischoice: '0',
+//         choicetype: 'additional',
+//         choice_items: [{ name: 'Small', additional_price: 1 }, { name: 'Medium', additional_price: 5 }, { name: 'Large', additional_price: 2 }, { name: 'Medium', additional_price: 5 }, { name: 'Medium', additional_price: 5 }, { name: 'Medium', additional_price: 5 }],
+//     },
+//     {
+//         choicename: 'Burger Add-ons',
+//         ischoice: '1',
+//         choicetype: 'additional',
+//         choice_items: [{ name: 'Bacon', additional_price: 1 }, { name: 'Extra Cheese', additional_price: 1 }],
+//     },
+// ]);
 
 const isFormVisible = ref(false);
 const isEditMode = ref(false);
@@ -153,52 +194,41 @@ const openModal = () => {
 // Function to open the form modal for editing a choice
 const viewChoice = (index) => {
     currentEditIndex.value = index;
-    currentChoice.value = { ...choices.value[index] };
+    currentChoice.value = { ...processedChoices.value[index] };
     isEditMode.value = true;
     isFormVisible.value = true;
 };
 
 // Save function for the form component
-const saveChoice = (choice) => {
-    if (isEditMode.value && currentEditIndex.value !== null) {
-        choices.value[currentEditIndex.value] = choice;
-    } else {
-        choices.value.push(choice);
+const saveChoice = async (choice) => {
+    try {
+        if (isEditMode.value && currentEditIndex.value !== null) {
+
+            const success = await store.dispatch('menuChoice/editChoice', choice);
+            console.log("response edit choice ", success);
+            //choices.value[currentEditIndex.value] = choice;
+        } else {
+            console.log("CC ", choice)
+            const success = await store.dispatch('menuChoice/addChoice', choice);
+            console.log("response choice ", success);
+        }
+        isFormVisible.value = false;
+    } catch (error) {
+        console.error('Error Adding/updating choice:', error);
     }
-    isFormVisible.value = false;
 };
 
 // Delete a choice
-const deleteChoice = (index) => {
-    choices.value.splice(index, 1);
+const deleteChoice = async (index) => {
+    //choices.value.splice(index, 1);
+    try {
+        console.log("index ", index)
+        const success = await store.dispatch('menuChoice/deleteChoice', index);
+        console.log("response choice ", success);
+    } catch (error) {
+        console.error('Error Deleting Choice: ', error);
+    }
 };
-
-
-
-
-const items1 = ref([
-    {
-        name: 'Pasta Bolognese',
-        quantity: 2,
-        note: 'Dont Add Vegetables',
-        price: 50.50,
-        image: '/src/assets/img3.jpeg',
-    },
-    {
-        name: 'Spicy Fried Chicken',
-        quantity: 2,
-        note: 'Dont Add Vegetables',
-        price: 45.70,
-        image: '/src/assets/img3.jpeg',
-    },
-    {
-        name: 'Spaghetti Carbonara',
-        quantity: 2,
-        note: 'Dont Add Vegetables',
-        price: 35.00,
-        image: '/src/assets/img3.jpeg',
-    },
-]);
 
 </script>
 

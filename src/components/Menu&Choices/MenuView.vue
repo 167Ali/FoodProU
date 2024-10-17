@@ -12,7 +12,7 @@
                 <div class="card h-100 px-3 pt-3 shadow-sm">
                     <div class="row g-0">
                         <div class="col-3">
-                            <img v-if="product.image_path" :src="product.image_path" alt="Product Image"
+                            <img v-if="product.image_file" :src="product.image_file" alt="Product Image"
                                 class="img-fluid rounded mx-auto d-block border border-2 product-image" />
 
                         </div>
@@ -35,9 +35,9 @@
                                 </div> -->
                                 <div class="card-text">
                                     <strong>Assigned Choices:</strong>
-                                    <p class="scroller-card">
+                                    <!-- <p class="scroller-card">
                                         {{ product.variation_id.join(', ') }}
-                                    </p>
+                                    </p> -->
                                 </div>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import MenuUpdate_AddProduct from './MenuUpdate_AddProduct.vue'; // Import the form component
 import { useStore } from 'vuex';
 
@@ -80,40 +80,52 @@ const { categoryTitle, categoryId } = defineProps({
     categoryTitle: String,
     categoryId: Number
 });
-const products = ref([
-    {
-        category: 'Pizza',
-        name: 'Margherita Pizza',
-        description: 'Classic cheese and tomato pizza.',
-        price: 350,
-        image_path: '/src/assets/img3.jpeg',
-        variation_id: ['Choice 1', 'Choice 2'], // Assigned choices displayed here
-    },
-    {
-        category: 'Pizza',
-        name: 'Coke',
-        description: 'Refreshing soft drink.',
-        price: 200,
-        image_path: '/src/assets/img2.jpg',
-        variation_id: ['Choice 4'], // Assigned choices displayed here
-    },
-    {
-        category: 'Pizza',
-        name: 'Cheeseburger',
-        description: 'Juicy burger with cheese.',
-        price: 240,
-        image_path: '/src/assets/img1.jpg',
-        variation_id: ['Choice 1', 'Choice 3', 'Choice 5'], // Assigned choices displayed here
-    },
-    {
-        category: 'Pizza',
-        name: 'Coke',
-        description: 'Refreshing soft drink.',
-        price: 200,
-        image_path: '/src/assets/img2.jpg',
-        variation_id: ['Choice 4'], // Assigned choices displayed here
-    },
-]);
+
+
+const products = computed(() => store.getters['menuProduct/allProducts']);
+
+onMounted(async () => {
+    try {
+        await store.dispatch('menuProduct/displayProducts', categoryId);
+    } catch (error) {
+        console.error('Error fetching Choices:', error);
+    }
+});
+
+// const products = ref([
+//     {
+//         category: 'Pizza',
+//         name: 'Margherita Pizza',
+//         description: 'Classic cheese and tomato pizza.',
+//         price: 350,
+//         image_path: '/src/assets/img3.jpeg',
+//         variation_id: ['Choice 1', 'Choice 2'], // Assigned choices displayed here
+//     },
+//     {
+//         category: 'Pizza',
+//         name: 'Coke',
+//         description: 'Refreshing soft drink.',
+//         price: 200,
+//         image_path: '/src/assets/img2.jpg',
+//         variation_id: ['Choice 4'], // Assigned choices displayed here
+//     },
+//     {
+//         category: 'Pizza',
+//         name: 'Cheeseburger',
+//         description: 'Juicy burger with cheese.',
+//         price: 240,
+//         image_path: '/src/assets/img1.jpg',
+//         variation_id: ['Choice 1', 'Choice 3', 'Choice 5'], // Assigned choices displayed here
+//     },
+//     {
+//         category: 'Pizza',
+//         name: 'Coke',
+//         description: 'Refreshing soft drink.',
+//         price: 200,
+//         image_path: '/src/assets/img2.jpg',
+//         variation_id: ['Choice 4'], // Assigned choices displayed here
+//     },
+// ]);
 
 const isFormVisible = ref(false);
 const isEditMode = ref(false);
@@ -128,7 +140,7 @@ const openModal = () => {
         name: '',
         description: '',
         price: null,
-        image_path: null,
+        image_file: null,
         variation_id: {
             choices: [], addons: []
         }, // Initialize as an empty array for new product
@@ -150,10 +162,10 @@ const saveProduct = async (product) => {
         if (isEditMode.value && currentEditIndex.value !== null) {
             products.value[currentEditIndex.value] = product;
         } else {
-            console.log("Category ID: ", categoryId);
-            console.log("Product ", product);
+            // console.log("Category ID: ", categoryId);
+            // console.log("Product ", product);
             const success = await store.dispatch('menuProduct/addProduct', { product, categoryId });
-            console.log(success);
+            console.log("success ", success);
             // Uncomment if you want to add the product after the category
             // products.value.push(product);
         }

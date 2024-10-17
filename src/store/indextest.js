@@ -3,8 +3,8 @@ import axios from 'axios';
 
 const store = createStore({
     state: {
-        token: localStorage.getItem('token') || null,
-        user: { role: null, userId: null }, // Initialize user state
+        // token: localStorage.getItem('token') || null,
+        // user: { role: null, userId: null }, // Initialize user state
     },
     getters: {
         isAuthenticated: (state) => !!state.token,
@@ -32,12 +32,13 @@ const store = createStore({
         async login({ commit }, credentials) {
             try {
                 const response = await axios.post('http://192.168.15.67:8000/api/login', credentials);
-                const { access_token, ...user } = response.data.data;
+                const { access_token, role, permissions } = response.data.data; // Destructure role and permissions directly from data
+                console.log(response);
                 commit('SET_TOKEN', access_token);
-                commit('SET_USER', user);
+                commit('SET_USER', { role, permissions }); // Store role and permissions in the user state
                 return {
-                    role: user.role,
-                    permissions: user.permissions || []
+                    role,
+                    permissions: permissions || []
                 };
             } catch (error) {
                 console.error('Login error:', error.response?.data || error.message);

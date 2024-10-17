@@ -1,51 +1,56 @@
 <!-- BeforeLoginHeader.vue -->
 <template>
     <div>
-      <!-- Business Banner -->
-      <div class="business-banner" v-if="showBanner">
-        <div class="business-banner-content">
-          <font-awesome-icon :icon="['fas', 'briefcase']" class="business-icon" />
-          <span class="business-text">Do you need a business account?</span>
-          <button class="signup-button" @click="goToBusinessSignup">SIGN UP NOW</button>
+        <!-- Business Banner -->
+        <div class="business-banner" v-if="showBanner">
+            <div class="business-banner-content">
+                <font-awesome-icon :icon="['fas', 'briefcase']" class="business-icon" />
+                <span class="business-text">Do you need a business account?</span>
+                <button class="signup-button" @click="goToBusinessSignup">SIGN UP NOW</button>
+            </div>
         </div>
-      </div>
-  
-      <!-- Main Navbar -->
-      <nav class="navbar">
-        <div class="navbar-left">
-          <font-awesome-icon :icon="['fas', 'utensils']" class="logo" />
-          <span class="brand-name">foodpro</span>
-        </div>
-  
-        <div class="navbar-right">
-          <button class="auth-button login" @click="$emit('open-login')">Log in</button>
-          <button class="auth-button signup" @click="$emit('open-signup')">Sign up</button>
-          
-        </div>
-      </nav>
-    </div>
 
+        <!-- Main Navbar -->
+        <nav class="navbar">
+            <div class="navbar-left">
+                <font-awesome-icon :icon="['fas', 'utensils']" class="logo" />
+                <span class="brand-name">foodpro</span>
+            </div>
+
+            <div class="navbar-right">
+                <button class="auth-button login" @click="showLoginModal = true">Log in</button>
+                <button class="auth-button signup" @click="showSignUpModal = true">Sign up</button>
+
+            </div>
+        </nav>
+    </div>
+    <LoginModal :showModal="showLoginModal" @close="closeLoginModal" />
+    <SignUpModal :showModal="showSignUpModal" @close="closeSignUpModal" />
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import LoginModal from '../../components/LoginSignup/User_login.vue';
+
+import SignUpModal from '../../components/LoginSignup/User_signup.vue';
 
 const router = useRouter();
 const showBanner = ref(true);
 
 // Navigation functions
-const goToLogin = () => {
-    router.push('/login');
+const showLoginModal = ref(false);
+const showSignUpModal = ref(false);
+const closeLoginModal = () => {
+    showLoginModal.value = false;
 };
-
-const goToSignup = () => {
-    router.push('/signup');
+const closeSignUpModal = () => {
+    showSignUpModal.value = false;
 };
 
 const goToBusinessSignup = () => {
-    router.push('/business-signup');
+    router.push('/businesslanding');
 };
 </script>
 

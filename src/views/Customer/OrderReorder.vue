@@ -9,14 +9,22 @@
         <div v-if="loadingActive" class="loading-message">Loading active orders...</div>
         <div v-if="!loadingActive && activeOrders.length === 0" class="no-orders">You have no active orders.</div>
         <div v-else>
-          <div v-for="order in activeOrders" :key="order.customerId" class="order-card">
-            <img :src="order.image" alt="Order Image" class="order-image" />
+          <div v-for="order in activeOrders" :key="order.id" class="order-card">
+            <!-- Only display the image if order_items exists and has at least one item -->
+            <img v-if="order.order_items && order.order_items.length > 0" :src="order.order_items[0].menu_item_image" alt="Order Image" class="order-image" />
             <div class="order-details">
-              <h3>{{ order.restaurant }} – {{ order.location }}</h3>
-              <p class="delivery-info">Delivered on {{ order.deliveryDate }}</p>
-              <p class="order-id">Order #{{ order.customerId }}</p>
-              <p>{{ order.items }}</p>
-              <p class="price">Rs. {{ order.price }}</p>
+              <h3>{{ order.restaurant_name }} – {{ order.branch_address }}</h3>
+              <p class="delivery-info">Estimated Delivery: {{ order.estimated_delivery_time }}</p>
+              <p class="order-id">Order #{{ order.id }}</p>
+              <div v-if="order.order_items && order.order_items.length > 0">
+                <h4>Items:</h4>
+                <ul>
+                  <li v-for="item in order.order_items" :key="item.id">
+                    {{ item.menu_item_name }} - Rs. {{ item.item_price }} (Addon: {{ item.addon_name }})
+                  </li>
+                </ul>
+              </div>
+              <p class="price">Total: Rs. {{ order.total_amount }}</p>
             </div>
           </div>
         </div>
@@ -28,17 +36,25 @@
         <div v-if="loadingPast" class="loading-message">Loading past orders...</div>
         <div v-if="!loadingPast && pastOrders.length === 0" class="no-orders">You have no past orders.</div>
         <div v-else>
-          <div v-for="order in pastOrders" :key="order.customerId" class="order-card">
-            <img :src="order.image" alt="Order Image" class="order-image" />
+          <div v-for="order in pastOrders" :key="order.id" class="order-card">
+            <!-- Only display the image if order_items exists and has at least one item -->
+            <img v-if="order.order_items && order.order_items.length > 0" :src="order.order_items[0].menu_item_image" alt="Order Image" class="order-image" />
             <div class="order-details">
-              <h3>{{ order.restaurant }} – {{ order.location }}</h3>
-              <p class="delivery-info">Delivered on {{ order.deliveryDate }}</p>
-              <p class="order-id">Order #{{ order.customerId }}</p>
-              <p>{{ order.items }}</p>
-              <p class="price">Rs. {{ order.price }}</p>
-              <p class="rating">You rated this ⭐ {{ order.rating }}</p>
+              <h3>{{ order.restaurant_name }} – {{ order.branch_address }}</h3>
+              <p class="delivery-info">Delivered on {{ order.estimated_delivery_time }}</p>
+              <p class="order-id">Order #{{ order.id }}</p>
+              <div v-if="order.order_items && order.order_items.length > 0">
+                <h4>Items:</h4>
+                <ul>
+                  <li v-for="item in order.order_items" :key="item.id">
+                    {{ item.menu_item_name }} - Rs. {{ item.item_price }} (Addon: {{ item.addon_name }})
+                  </li>
+                </ul>
+              </div>
+              <p class="price">Total: Rs. {{ order.total_amount }}</p>
+              <p class="rating">You rated this ⭐ {{ order.rating || 0 }}</p>
             </div>
-            <button class="reorder-button" @click="goToPrevOrderDetails(order.customerId)">
+            <button class="reorder-button" @click="goToPrevOrderDetails(order.id)">
               Select items to reorder
             </button>
           </div>
@@ -48,21 +64,21 @@
 
     <PageFooter />
   </div>
-
-
 </template>
+
+
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useStore } from 'vuex';
 import { useRouter } from 'vue-router'; // Import useRouter from vue-router
 
 import { getActiveOrders, getPastOrders } from '../../Services/customer/OrderService';
 
 import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
-
-const router = useRouter(); // Initialize useRouter
-
+const store = useStore();
+const router = useRouter();
 const activeOrders = ref([]);
 const pastOrders = ref([]);
 const loadingActive = ref(false);
@@ -98,8 +114,24 @@ onMounted(() => {
   fetchActiveOrders();
   fetchPastOrders();
 });
-</script>
+// 
 
+// Getting the orders from Vuex state
+activeOrders.value = store.getters['order/activeOrders'];
+pastOrders.value = store.getters['order/pastOrders'];
+loadingActive.value = store.getters['order/loadingActive'];
+loadingPast.value = store.getters['order/loadingPast'];
+
+// Navigate to previous order details page
+// const goToPrevOrderDetails = (customerId) => {
+//   router.push({ name: 'PrevorderDetails', params: { id: customerId } });
+// };
+
+// Fetch orders when the component is mounted
+// onMounted(() => {
+//   fetchOrders();
+// });
+</script>
 
 <style scoped>
 .orders-container {

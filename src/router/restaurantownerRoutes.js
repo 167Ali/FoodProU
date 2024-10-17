@@ -4,7 +4,7 @@ import RestOwnerProfile from '@/components/RestaurantOwner/restOwnerProfile.vue'
 import ResturantReviews from '@/components/RestaurantOwner/ResturantReviews.vue'
 import OrderReq from '../components/RestaurantOwner/OrderRequest.vue'
 import ModalView from '../components/RestaurantOwner/restOwnReciept.vue'
-
+import OwnerMenu from '../views/Menu/OwnerMenu.vue'
 export default [
   {
     path: '/RestaurantOwnerDashboard',
@@ -37,5 +37,10 @@ export default [
     path: '/modalView',
     name: 'ModalView',
     component: ModalView
+  },
+  {
+    path: '/ownermenu',
+    name: 'OwnerMenu',
+    component: OwnerMenu
   }
 ]

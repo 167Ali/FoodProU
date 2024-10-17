@@ -1,13 +1,22 @@
-// services/profileService.js
+// services/customer/customerProfile.js
 import axios from 'axios';
 
-const API_URL = 'http://192.168.15.90:8000/api/customers/';
+const apiClient = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL_H,
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('token')}`,
+  },
+});
 
-export const updateProfile = async (profileData) => {
-    try {
-        const response = await axios.patch(`${API_URL}edit-profile`, profileData);
-        return response.data;
-    } catch (error) {
-        throw error.response.data; // Handle the error appropriately
-    }
+export const api = {
+  async getProfile() {
+    const response = await apiClient.get('/api/customers/profile');  // Update with the correct endpoint
+    return response.data;
+  },
+
+  async updateProfile(profileData) {
+    const response = await apiClient.patch('/api/customers/edit-profile', profileData);
+    return response.data;
+  },
 };
