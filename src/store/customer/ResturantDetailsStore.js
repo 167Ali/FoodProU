@@ -55,6 +55,7 @@ const actions = {
 
       if (data.status === 200) {
         commit('setRestaurants', data.data);
+
       } else {
         console.error('Failed to fetch restaurants', data);
       }
@@ -78,10 +79,12 @@ const actions = {
 
   async searchRestaurants({ commit }, searchTerm) {
     try {
+
       const data = await searchRestaurantsService(searchTerm);
       if (data.status === 200) {
         commit('setSearchResults', data.data);
         console.log(data.data);
+
       } else {
         console.error('Failed to search restaurants', data);
       }

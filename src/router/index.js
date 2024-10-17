@@ -12,9 +12,10 @@ import restaurantownerRoutes from './restaurantownerRoutes'
 
 import customerRoutes from './customerRoutes'
 
-import otherRoutes from './otherRoutes'
-
-
+import otherRoutes from './otherRoutes';
+import Get_Started_page from '@/views/Login_Signup/Get_Started_page.vue'
+import RecipeBlog from '../views/Customer/RecipeBlog.vue'
+import Rewards from '../views/Customer/Rewards.vue'
 
 const routes = [
 

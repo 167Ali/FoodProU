@@ -1,4 +1,5 @@
 <template>
+    <LoginHeader />
     <div class="container mt-5 d-flex justify-content-center">
         <div class="form-container">
             <!-- Profile -->
@@ -61,10 +62,13 @@
             </div>
         </div>
     </div>
+    <page-footer/>
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue';
+import LoginHeader from '@/components/HeaderFooter/LoginHeader.vue';
+import PageFooter from '@/components/HeaderFooter/PageFooter.vue';
+import { computed } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();

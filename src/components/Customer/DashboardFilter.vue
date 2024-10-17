@@ -38,7 +38,48 @@
                 <h5>Filters</h5>
                 <!-- Add the same filter structure here -->
                 <!-- Sort by -->
-                <!-- Include mobile filters here (similar to desktop) -->
+                <h6>Sort by</h6>
+                <div>
+                    <label><input type="radio" name="sort" value="relevance" v-model="sortOption" checked />
+                        Relevance</label>
+                    <label><input type="radio" name="sort" value="fastest" v-model="sortOption" /> Fastest
+                        delivery</label>
+                    <label><input type="radio" name="sort" value="distance" v-model="sortOption" /> Distance</label>
+                </div>
+
+                <!-- Quick filters -->
+                <h6>Quick filters</h6>
+                <div>
+                    <label><input type="checkbox" v-model="quickFilters.ratings" /> Ratings 4+</label>
+                    <label><input type="checkbox" v-model="quickFilters.topRestaurant" /> Top restaurant</label>
+                </div>
+
+                <!-- Offers -->
+                <h6>Offers</h6>
+                <div>
+                    <label><input type="checkbox" v-model="offers.freeDelivery" /> Free delivery</label>
+                    <label><input type="checkbox" v-model="offers.acceptsVouchers" /> Accepts vouchers</label>
+                    <label><input type="checkbox" v-model="offers.deals" /> Deals</label>
+                </div>
+
+                <!-- Cuisines -->
+                <h6>Cuisines</h6>
+                <input type="text" class="form-control mb-2" placeholder="Search for cuisines"
+                    v-model="cuisineSearch" />
+                <div>
+                    <br><label v-for="(cuisine, index) in cuisines" :key="index">
+                        <input type="checkbox" v-model="cuisine.selected" /> {{ cuisine.name }}
+                    </label>
+                </div>
+
+                <!-- Price -->
+                <h6>Price</h6>
+                <div>
+                    <button v-for="(price, index) in prices" :key="index" class="btn btn-outline-secondary me-1"
+                        :class="{ active: price.selected }" @click="togglePrice(price)">
+                        {{ price.label }}
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -116,13 +157,14 @@ watch(selectedFilters, (newFilters) => {
     background-color: white;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+
 }
 
 .card {
-    border: 1px solid #eaeaea;
+    border: 2px solid #eaeaea;
     border-radius: 10px;
     padding: 30px;
-    max-width: 300px;
+    max-width: 260px;
     margin: 90px 0px 0px 25px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
