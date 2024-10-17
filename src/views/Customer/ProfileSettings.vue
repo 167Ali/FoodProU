@@ -72,6 +72,15 @@ const store = useStore();
 // Get the profile from Vuex store
 const profile = computed(() => store.state.profile.profile);  // Ensure this refers to the correct profile in Vuex store
 
+// Fetch profile data on component mount
+onMounted(async () => {
+    try {
+        await store.dispatch('profile/fetchProfile');  // Dispatch action to fetch profile data
+    } catch (error) {
+        console.error('Error fetching profile:', error);
+    }
+});
+
 // Computed property for email verification status
 const isEmailVerified = computed(() => profile.value.email_verified_at !== null);  // Check if email is verified
 
@@ -122,16 +131,7 @@ const savePassword = async () => {
     }
 };
 
-// Fetch profile data on component mount
-onMounted(async () => {
-    try {
-        await store.dispatch('profile/fetchProfile');  // Fetch the profile on component load
-        console.log('Fetched Profile:', profile.value);  // Log fetched profile data for debugging
-    } catch (error) {
-        alert('Failed to load profile data. Please try again.');
-    }
-});
-
+// Input focus/blur functions
 const onFocus = (event) => {
     const input = event.target;
     input.classList.add('active');
@@ -143,8 +143,8 @@ const onBlur = (event) => {
         input.classList.remove('active');
     }
 };
-
 </script>
+
 
 <style scoped>
 @import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';
