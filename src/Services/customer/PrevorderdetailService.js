@@ -12,7 +12,7 @@ export const getOrderDetails = async (customerId) => {
         const token = getToken(); // Get the token from localStorage
       
 
-        const response = await axios.get(`${API_BASE_URL}/api/orders/history`, {
+        const response = await axios.get(`${API_BASE_URL}/orders/{order_id}/details`, {
             headers: {
                 Authorization: `Bearer ${token}` // Pass the token in the headers
             }
