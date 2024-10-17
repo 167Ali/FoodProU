@@ -1,42 +1,46 @@
 <template>
-  <div class="container main-body mt-5">
-    <!-- Dropdown filters for Time Period and Restaurant -->
-    <div class="row mb-4 justify-content-center mt-5">
-      <div class="col-md-4">
-        <label for="restaurantFilter">Select Restaurant:</label>
-        <select v-model="selectedRestaurant" @change="applyFilters" class="form-select">
-          <option value="restaurant1">Restaurant 1</option>
-          <option value="restaurant2">Restaurant 2</option>
-          <option value="restaurant3">Restaurant 3</option>
-        </select>
+  <div class="page-container">
+    <SideBar />
+    
+    <div class="main-content container main-body mt-5">
+      <!-- Dropdown filters for Time Period and Restaurant -->
+      <div class="row mb-4 justify-content-center mt-5">
+        <div class="col-md-4">
+          <label for="restaurantFilter">Select Restaurant:</label>
+          <select v-model="selectedRestaurant" @change="applyFilters" class="form-select">
+            <option value="restaurant1">Restaurant 1</option>
+            <option value="restaurant2">Restaurant 2</option>
+            <option value="restaurant3">Restaurant 3</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="timeFilter">Filter by Time:</label>
+          <select v-model="selectedFilter" @change="applyFilters" class="form-select">
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+          </select>
+        </div>
       </div>
-      <div class="col-md-4">  
-        <label for="timeFilter">Filter by Time:</label>
-        <select v-model="selectedFilter" @change="applyFilters" class="form-select">
-          <option value="daily">Daily</option>
-          <option value="weekly">Weekly</option>
-          <option value="monthly">Monthly</option>
-        </select>
-      </div>
-    </div>
 
-    <!-- First Row: Total Revenue and Order Volume (shown after filters are applied) -->
-    <div v-if="!showInitialChart" class="row">
-      <div class="col-md-6">
-        <h3>Total Revenue</h3>
-        <canvas ref="revenueChartCanvas" class="small-bar-chart"></canvas>
+      <!-- First Row: Total Revenue and Order Volume (shown after filters are applied) -->
+      <div v-if="!showInitialChart" class="row">
+        <div class="col-md-6">
+          <h3>Total Revenue</h3>
+          <canvas ref="revenueChartCanvas" class="small-bar-chart"></canvas>
+        </div>
+        <div class="col-md-6">
+          <h3>Order Volume</h3>
+          <canvas ref="orderVolumeChartCanvas" class="small-bar-chart"></canvas>
+        </div>
       </div>
-      <div class="col-md-6">
-        <h3>Order Volume</h3>
-        <canvas ref="orderVolumeChartCanvas" class="small-bar-chart"></canvas>
-      </div>
-    </div>
 
-    <!-- Second Row: Top Performing Restaurants (shown initially) -->
-    <div v-if="showInitialChart" class="row mt-5 justify-content-center">
-      <div class="col-md-8">
-        <h3>Top Performing Restaurants</h3>
-        <canvas ref="topRestaurantsChartCanvas" class="small-bar-chart"></canvas>
+      <!-- Second Row: Top Performing Restaurants (shown initially) -->
+      <div v-if="showInitialChart" class="row mt-5 justify-content-center">
+        <div class="col-md-8">
+          <h3>Top Performing Restaurants</h3>
+          <canvas ref="topRestaurantsChartCanvas" class="small-bar-chart"></canvas>
+        </div>
       </div>
     </div>
   </div>
@@ -45,7 +49,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { Chart } from 'chart.js/auto';
-
+import SideBar from '../../components/Admin/SideBar.vue'
 // References for each chart
 const revenueChartCanvas = ref(null);
 const orderVolumeChartCanvas = ref(null);
@@ -207,9 +211,28 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.page-container {
+  display: flex; /* Flexbox layout for sidebar and main content */
+  height: 100vh; /* Full page height */
+}
+
+.SideBar {
+  flex-shrink: 0;
+  width: 250px; /* Fixed width for sidebar */
+  background-color: #f8f9fa; /* Background color for sidebar */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional shadow for sidebar */
+}
+
+.main-content {
+  flex-grow: 1; /* Main content takes up the remaining space */
+  padding: 20px; /* Padding around the content */
+  overflow-y: auto; /* Scroll if content overflows vertically */
+}
+
 .container {
   max-width: 1000px;
 }
+
 h3 {
   text-align: center;
 }

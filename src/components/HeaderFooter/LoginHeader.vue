@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar">
         <div class="navbar-left">
-            <font-awesome-icon :icon="['fas', 'utensils']" class="logo" />
+            <i class="fa-solid fa-utensils logo"></i>
             <span class="brand-name">foodpro</span>
         </div>
         <div class="navbar-right">
@@ -26,7 +26,7 @@
                         </li>
 
                         <li>
-                            <router-link to="/help-center" class="nav-link">
+                            <router-link to="/userguide" class="nav-link">
                                 <font-awesome-icon :icon="['fas', 'question-circle']" />
                                 <span>User Guide</span>
                             </router-link>

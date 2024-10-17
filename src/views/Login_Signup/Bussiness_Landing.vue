@@ -1,21 +1,14 @@
 <template>
-    <BussinessNav/>
+    
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <!-- Header Section -->
-  <header class="header bg-light py-3">
-      <div class="container d-flex justify-content-between align-items-center">
-          <div class="d-flex align-items-center">
-              <i class="fas fa-utensils fa-2x text-success me-3"></i>
-              <h2 class="business-title mb-0">foodpanda for business</h2>
-          </div>
-      </div>
-  </header>
+  <BussinessNav/>
   
   <!-- Signup Info Section -->
   <section class="signup-info py-5">
       <div class="container d-flex flex-column flex-lg-row justify-content-between align-items-center">
           <div class="signup-info-text mb-4 mb-lg-0">
-              <h1>Sign up for foodpanda for business</h1>
+              <h1>foodpro Signup</h1>
               <p>
                   Want access to corporate food delivery, dine-in, allowances and gift cards? You're in the right place!
               </p>
@@ -217,83 +210,98 @@
   </footer>
   </template>
   
-  <script>
-  import BussinessNav from "@/components/LoginSignup/BussinessNav.vue";
-  import {
-      ref
-  } from "vue";
-  
-  export default {
-      setup() {
-          const currentPage = ref(1);
-          const totalPages = 4;
-          const form = ref({
-              first_name: "",
-              last_name: "",
-              email: "",
-              password: "",
-              password_confirmation: "",
-              restaurant_name: "",
-              opening_time: "",
-              closing_time: "",
-              cuisine: "",
-              logo_path: "",
-              business_type: "",
-              address: "",
-              postal_code: "",
-              city: "",
-              cnic: "",
-              bank_name: "",
-              iban: "",
-              account_owner_title: "",
-          });
-  
-          const nextPage = () => {
-              if (validateForm(currentPage.value)) {
-                  currentPage.value++;
-              }
-          };
-  
-          const prevPage = () => {
-              currentPage.value--;
-          };
-  
-          const validateForm = (page) => {
-              switch (page) {
-                  case 1:
-                      return form.value.first_name && form.value.last_name && form.value.email && form.value.password && form.value.password_confirmation;
-                  case 2:
-                      return form.value.restaurant_name && form.value.opening_time && form.value.closing_time && form.value.cuisine && form.value.logo_path && form.value.business_type;
-                  case 3:
-                      return form.value.address && form.value.postal_code && form.value.city;
-                  case 4:
-                      return form.value.cnic && form.value.bank_name && form.value.iban && form.value.account_owner_title;
-                  default:
-                      return false;
-              }
-          };
-  
-          const submitForm = () => {
-              console.log("Form Submitted", form.value);
-          };
-  
-          const handleFileUpload = (event) => {
-              const file = event.target.files[0];
-              form.value.logo_path = file;
-          };
-  
-          return {
-              currentPage,
-              totalPages,
-              form,
-              nextPage,
-              prevPage,
-              submitForm,
-              handleFileUpload,
-          };
-      },
-  };
-  </script>
+  <script setup>
+import BussinessNav from "@/components/LoginSignup/BussinessNav.vue";
+import { ref } from "vue";
+
+// Current page and total pages
+const currentPage = ref(1);
+const totalPages = 4;
+
+// Form data
+const form = ref({
+  first_name: "",
+  last_name: "",
+  email: "",
+  password: "",
+  password_confirmation: "",
+  restaurant_name: "",
+  opening_time: "",
+  closing_time: "",
+  cuisine: "",
+  logo_path: "",
+  business_type: "",
+  address: "",
+  postal_code: "",
+  city: "",
+  cnic: "",
+  bank_name: "",
+  iban: "",
+  account_owner_title: "",
+});
+
+// Move to next page after validation
+const nextPage = () => {
+  if (validateForm(currentPage.value)) {
+    currentPage.value++;
+  }
+};
+
+// Move to previous page
+const prevPage = () => {
+  currentPage.value--;
+};
+
+// Validate form fields based on the current page
+const validateForm = (page) => {
+  switch (page) {
+    case 1:
+      return (
+        form.value.first_name &&
+        form.value.last_name &&
+        form.value.email &&
+        form.value.password &&
+        form.value.password_confirmation
+      );
+    case 2:
+      return (
+        form.value.restaurant_name &&
+        form.value.opening_time &&
+        form.value.closing_time &&
+        form.value.cuisine &&
+        form.value.logo_path &&
+        form.value.business_type
+      );
+    case 3:
+      return (
+        form.value.address &&
+        form.value.postal_code &&
+        form.value.city
+      );
+    case 4:
+      return (
+        form.value.cnic &&
+        form.value.bank_name &&
+        form.value.iban &&
+        form.value.account_owner_title
+      );
+    default:
+      return false;
+  }
+};
+
+// Submit the form data
+const submitForm = () => {
+  console.log("Form Submitted", form.value);
+};
+
+// Handle file upload for logo_path
+const handleFileUpload = (event) => {
+  const file = event.target.files[0];
+  form.value.logo_path = file;
+};
+
+</script>
   
   <style scoped>
   /* Header */

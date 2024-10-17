@@ -1,12 +1,7 @@
 // src/Services/Auth/AuthServices.js
 import axios from 'axios';
 
-
-
-// Use Vite's way of accessing environment variables
-
-
-const API_BASE_URL_H = import.meta.env.VITE_API_BASE_URL_H; // Backend API URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL_H; // Backend API URL
 
 
 

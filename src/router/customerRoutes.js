@@ -9,23 +9,22 @@ import OrderScreen from '../views/Customer/OrderScreen.vue'
 import OrderReorder from '../views/Customer/OrderReorder.vue'
 import PrevorderDetails from '../views/Customer/PrevorderDetails.vue'
 import OrderRating from '@/components/Customer/OrderRating.vue'
+import UserGuide from '@/components/Customer/UserGuide.vue'
 
 export default [
   {
     path: '/RestaurantPage',
     name: 'RestaurantPage',
-    component: Restaurantpage
+    component: Restaurantpage,
+    
   },
+  
   {
     path: '/checkout',
     name: 'checkout',
     component: CheckOut
   },
-  {
-    path: '/caart',
-    name: 'addtocart',
-    component: AddtoCart
-  },
+  
   {
     path: '/catnvbr',
     name: 'categorynavbar',
@@ -34,8 +33,22 @@ export default [
   {
     path: '/dashboardresturantpage',
     name: 'DashboardResturantPage',
-    component: DashboardResturantPage
+    component: DashboardResturantPage,
+     children: [
+      {
+        path: '/caart',
+        name: 'addtocart',
+        component: AddtoCart
+      },
+      {
+        path: '/userguide',
+        name: 'UserGuide',
+        component: UserGuide
+      },
+      
+     ]
   },
+  
   {
     path: '/profilesettings',
     name: 'ProfileSettings',

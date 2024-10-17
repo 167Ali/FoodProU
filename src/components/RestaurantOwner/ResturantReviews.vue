@@ -1,4 +1,5 @@
 <template>
+    <SideBar/>
     <div class="reviews-container">
         <h1>My Restaurant Reviews</h1>
         <div v-if="loading">Loading reviews...</div>
@@ -14,37 +15,35 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import { computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
+import SideBar from './RestaurantDashboard/SideBar.vue';
 
-export default {
-    name: 'OwnerReviews',
-    props: {
-        restaurantId: {
-            type: String,
-            required: true,
-        },
-    },
-    setup(props) {
-        const store = useStore();
+// Props (define directly in the setup function)
+const props = defineProps({
+  restaurantId: {
+    type: String,
+    required: true,
+  },
+});
 
-        const reviews = computed(() => store.getters['reviews/reviews']);
-        const loading = computed(() => store.getters['reviews/loading']);
-        const error = computed(() => store.getters['reviews/error']);
+// Use Vuex store
+const store = useStore();
 
-        onMounted(() => {
-            store.dispatch('reviews/fetchOwnerReviews', props.restaurantId);
-        });
+// Getters for reviews, loading state, and error from Vuex
+const reviews = computed(() => store.getters['reviews/reviews']);
+const loading = computed(() => store.getters['reviews/loading']);
+const error = computed(() => store.getters['reviews/error']);
 
-        return {
-            reviews,
-            loading,
-            error,
-        };
-    },
-};
+// Fetch reviews on component mount
+onMounted(() => {
+  store.dispatch('reviews/fetchOwnerReviews', props.restaurantId);
+});
+
 </script>
+
 
 <style scoped>
 .reviews-container {
