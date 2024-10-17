@@ -1,6 +1,6 @@
 
 <template>
-    <hello/>
+    <RouterView></RouterView>
 </template>
 
 <style scoped>
