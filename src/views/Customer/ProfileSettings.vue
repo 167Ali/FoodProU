@@ -5,35 +5,25 @@
             <!-- Profile -->
             <div class="mb-4">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h5 class="fw-bold">My profile</h5>
+                    <h5 class="fw-bold">My Profile</h5>
                     <i class="fa-regular fa-user"></i>
                 </div>
                 <form @submit.prevent="saveProfile" class="animate__animated animate__fadeIn">
                     <div class="mb-3 input-wrapper">
                         <input type="text" v-model="profile.first_name" class="form-control" id="firstName" required
                             @focus="onFocus($event)" @blur="onBlur($event)" placeholder="" />
-                        <label for="firstName" class="floating-label">First name</label>
+                        <label for="firstName" class="floating-label">First Name</label>
                     </div>
                     <div class="mb-3 input-wrapper">
                         <input type="text" v-model="profile.last_name" class="form-control" id="lastName" required
                             @focus="onFocus($event)" @blur="onBlur($event)" placeholder=" " />
-                        <label for="lastName" class="floating-label">Last name</label>
+                        <label for="lastName" class="floating-label">Last Name</label>
                     </div>
                     <div class="mb-3 input-wrapper">
                         <input type="text" v-model="profile.phone_number" class="form-control" id="mobile" required
                             @focus="onFocus($event)" @blur="onBlur($event)" placeholder="" />
-                        <label for="mobile" class="floating-label">Mobile number</label>
+                        <label for="mobile" class="floating-label">Mobile Number</label>
                     </div>
-                    <button type="submit" class="btn btn-primary scale-on-hover"
-                        :disabled="isProfileFormInvalid">Save</button>
-                </form>
-            </div>
-            <hr />
-            <!-- Email -->
-            <div class="mb-4">
-                <h5 class="fw-bold">Email</h5>
-                <br>
-                <form @submit.prevent="saveEmail" class="animate__animated animate__fadeIn">
                     <div class="mb-3 input-wrapper">
                         <input type="email" v-model="profile.email" class="form-control" id="email" required
                             @focus="onFocus($event)" @blur="onBlur($event)" placeholder="" />
@@ -42,33 +32,31 @@
                         <span v-else class="badge bg-danger mt-2">Not Verified</span>
                     </div>
                     <button type="submit" class="btn btn-primary scale-on-hover"
-                        :disabled="!profile.email">Save</button>
+                        :disabled="isProfileFormInvalid">Save</button>
                 </form>
             </div>
             <hr />
-            <br />
             <!-- Password -->
             <div>
                 <h5 class="fw-bold">Password</h5>
-                <br />
                 <form @submit.prevent="savePassword" class="animate__animated animate__fadeIn">
                     <div class="mb-3 input-wrapper">
                         <input type="password" v-model="profile.currentPassword" class="form-control"
                             id="currentPassword" required @focus="onFocus($event)" @blur="onBlur($event)"
                             placeholder="" />
-                        <label for="currentPassword" class="floating-label">Current password</label>
+                        <label for="currentPassword" class="floating-label">Current Password</label>
                     </div>
                     <div class="mb-3 input-wrapper">
                         <input type="password" v-model="profile.newPassword" class="form-control" id="newPassword"
                             required @focus="onFocus($event)" @blur="onBlur($event)" placeholder=" " />
-                        <label for="newPassword" class="floating-label">New password</label>
+                        <label for="newPassword" class="floating-label">New Password</label>
                     </div>
                     <button type="submit" class="btn btn-primary scale-on-hover"
                         :disabled="isPasswordFormInvalid">Save</button>
                     <hr>
                     <router-link to="/fav">View Favorites</router-link> <br>
                     <router-link to="/orderScreen">View Order Screen</router-link> <br>
-                    <router-link to="/modalView">View modal</router-link> <br>
+                    <router-link to="/modalView">View Modal</router-link> <br>
                     <router-link to="/restOwnerProfile">View Rest Owner Profile</router-link> <br>
                 </form>
             </div>
@@ -92,7 +80,8 @@ const isProfileFormInvalid = computed(() => {
     return (
         !profile.value.first_name ||
         !profile.value.last_name ||
-        !profile.value.phone_number
+        !profile.value.phone_number ||
+        !profile.value.email
     );
 });
 
@@ -105,22 +94,42 @@ const isPasswordFormInvalid = computed(() => {
 
 const saveProfile = async () => {
     try {
-        await store.dispatch('profile/saveProfile', profile.value);
+        await store.dispatch('profile/saveProfile', {
+            first_name: profile.value.first_name,
+            last_name: profile.value.last_name,
+            phone_number: profile.value.phone_number,
+            email: profile.value.email
+        });
+        alert('Profile updated successfully!');
     } catch (error) {
-        console.error('Failed to save profile:', error);
+        console.error('Error updating profile:', error);
+        alert('Failed to save profile. Please try again.');
     }
 };
 
-const saveEmail = async () => {
-    await store.dispatch('profile/saveEmail', { email: profile.value.email });
+const savePassword = async () => {
+    try {
+        await store.dispatch('profile/savePassword', {
+            currentPassword: profile.value.currentPassword,
+            newPassword: profile.value.newPassword
+        });
+        alert('Password updated successfully!');
+    } catch (error) {
+        console.error('Error updating password:', error);
+        alert('Failed to save password. Please try again.');
+    }
 };
 
-const savePassword = async () => {
-    await store.dispatch('profile/savePassword', { 
-        currentPassword: profile.value.currentPassword, 
-        newPassword: profile.value.newPassword 
-    });
-};
+// Fetch profile data on component mount
+onMounted(async () => {
+  try {
+    await store.dispatch('profile/fetchProfile');
+    console.log('Fetched Profile:', store.state.profile); // Log profile data
+  } catch (error) {
+    alert('Failed to load profile data. Please try again.');
+  }
+});
+
 
 const onFocus = (event) => {
     const input = event.target;
@@ -134,6 +143,7 @@ const onBlur = (event) => {
     }
 };
 </script>
+
 
 <style scoped>
 @import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';
@@ -149,7 +159,6 @@ const onBlur = (event) => {
     margin-bottom: 1.5rem;
     opacity: 0;
     animation: fadeIn 0.5s forwards;
-    animation-delay: 0.2s;
 }
 
 .input-wrapper:nth-child(1) {
