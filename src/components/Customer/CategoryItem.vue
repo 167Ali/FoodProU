@@ -11,10 +11,18 @@
 </template>
 
 <script setup>
+import { defineProps } from 'vue';
+
+// Define the props for the component
 defineProps({
-  item: Object
-})
+  item: {
+    type: Object,
+    required: true,
+  },
+});
 </script>
+
+
 
 <style scoped>
 .popular-item {

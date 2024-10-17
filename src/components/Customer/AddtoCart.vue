@@ -191,9 +191,9 @@
 
 .cart-container {
   background-color: white;
-  position: fixed;
+  /* position: fixed;
   right: 0px;
-  top: 64px;
+  top: 64px; */
   margin-top: 80px;
   margin-right: 80px;
   width: 350px;
@@ -382,9 +382,9 @@ h5{
 
 /* Hide the cart by default on mobile */
 @media (max-width: 959px) {
-  .cart-container {
+  /* .cart-container { */
     /* display: none; */
-  }
+  /* } */
   .cart-visible {
     display: none;
   }

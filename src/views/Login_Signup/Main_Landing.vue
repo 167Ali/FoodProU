@@ -1,5 +1,5 @@
 <template>
-  
+  <BeforeLoginHeader />
   <div id="landing-page" class="container-fluid p-0">
       <section id="hero-section" class="py-5">
           <div class="container">
@@ -189,8 +189,10 @@
   </template>
   
       
-  <script>
-      </script>
+  <script setup>
+  import BeforeLoginHeader from '@/components/HeaderFooter/BeforeLoginHeader.vue';
+
+  </script>
   
       
   <style scoped>
