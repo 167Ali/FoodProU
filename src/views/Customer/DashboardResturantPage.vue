@@ -6,7 +6,7 @@
         </div>
         <div class="col-lg-9">
             <Searchbar />
-            <discounts :restaurants="restaurants" />
+            <discounts/>
             <Cuisines/>
 
             <div class="d-lg-none">
@@ -36,6 +36,7 @@ import DashboardFilter from '../../components/Customer/DashboardFilter.vue'
 import Searchbar from '../../components/OtherComponents/Searchbar.vue'
 import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
+import discounts from '@/components/Customer/discounts.vue';
 
 import Cuisines from '@/components/Customer/Cuisines.vue';
 
