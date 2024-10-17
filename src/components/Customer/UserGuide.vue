@@ -141,7 +141,7 @@ const toggleHelpCenter = () => {
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
   font-family: Arial, sans-serif;
-  
+  z-index: 1000; /* Ensure it is on top of other elements */
 }
 
 .help-center-header {
@@ -156,7 +156,7 @@ const toggleHelpCenter = () => {
 
 .help-center-body {
   padding: 15px; /* Reduced padding */
-  height: 400px; /* Set a fixed height */
+  max-height: calc(100vh - 100px); /* Adjust height to avoid overflow */
   overflow-y: auto; /* Allow scrolling if content exceeds height */
 }
 
@@ -207,12 +207,12 @@ const toggleHelpCenter = () => {
 }
 
 .back-btn {
-  display: block;
-  margin-bottom: 15px;
-  background: none;
+  margin-bottom: 10px;
   border: none;
-  font-size: 16px; /* Larger font size for back button */
+  background-color: #f44336; /* Red color for back button */
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
   cursor: pointer;
-  color: #00754A; /* Match the header color */
 }
 </style>
