@@ -26,7 +26,7 @@
                         </li>
 
                         <li>
-                            <router-link to="/help-center" class="nav-link">
+                            <router-link to="/userguide" class="nav-link">
                                 <font-awesome-icon :icon="['fas', 'question-circle']" />
                                 <span>User Guide</span>
                             </router-link>
