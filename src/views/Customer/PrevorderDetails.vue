@@ -66,6 +66,7 @@
             <p>Need an invoice?</p>
             <button class="invoice-button" @click="downloadInvoice">Download invoice</button>
           </div>
+          <OrderRating />
         </div>
       </div>
   
@@ -84,6 +85,7 @@
   import { getOrderDetails, downloadOrderInvoice } from '../../Services/customer/PrevorderdetailService';
   import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
   import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
+  import OrderRating from '@/components/Customer/OrderRating.vue';
   
   // Props
   const props = defineProps({

@@ -78,7 +78,7 @@
   .title {
     text-align: left;
     font-size: 24px;
-    margin-bottom: 10px;
+    margin: 0px 0px 10px 10px;
   }
   
   .slider-container {
