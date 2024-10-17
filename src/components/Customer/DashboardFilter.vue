@@ -30,7 +30,7 @@
             <button class="btn btn-outline-secondary" @click="showFilters = !showFilters">
                 <i class="fa-solid fa-filter fa-lg" style="color: #303640;"></i>
             </button>
-            <div v-if="showFilters" class="position-absolute bg-light border p-3" style="z-index: 1000;">
+            <div v-if="showFilters" class="filter position-absolute bg-light border p-3" style="z-index: 1000;">
                 <h5>Filters</h5>
                 <!-- Add the same filter structure here -->
                 <!-- Sort by -->
@@ -133,10 +133,18 @@ function togglePrice(price) {
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* @media only screen and (max-width: 1350px) {
+@media only screen and (max-width: 1350px) {
 
     .filters {
         max-width: 250px;
     }
-} */
+   /* .filter
+   {
+    margin-top:-250px;
+   }
+   .btn
+   {
+    margin: -525px 0px 0px 0px;
+   } */
+} 
 </style>

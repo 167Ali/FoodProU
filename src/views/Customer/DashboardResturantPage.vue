@@ -2,31 +2,44 @@
     <LoginHeader />
     <div class="row me-xl-5 me-lg-2">
         <div class="d-none d-lg-block col-lg-3">
+            <!-- Sidebar filter for larger screens -->
             <DashboardFilter />
         </div>
         <div class="col-lg-9">
             <Searchbar />
             <discounts :restaurants="restaurants" />
-            <Cuisines/>
+            <Cuisines />
 
-            <div class="d-lg-none">
-                <!-- Different placement of filter for non-lg screens -->
+            <!-- Filter placement for smaller screens -->
+            <div class="d-lg-none mb-3">
                 <DashboardFilter />
             </div>
+
             <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-4" v-for="(restaurant, index) in restaurants"
+                <div 
+                    class="col-lg-4 col-md-6 col-sm-6 col-12 mb-4" 
+                    v-for="(restaurant, index) in restaurants" 
                     :key="index">
-                    <router-link :to="{ name: 'RestaurantPage', params: { id: restaurant.id } }" class="card-link">
-                        <RestaurantCard :image="restaurant.image" :name="restaurant.name" :cuisine="restaurant.cuisine"
-                            :rating="restaurant.rating" :reviews="restaurant.reviews" :price="restaurant.price"
-                            :deliveryTime="restaurant.deliveryTime" :deliveryFee="restaurant.deliveryFee"
-                            :discounts="restaurant.discounts" />
+                    <router-link 
+                        :to="{ name: 'RestaurantPage', params: { id: restaurant.id } }" 
+                        class="card-link">
+                        <RestaurantCard 
+                            :image="restaurant.image" 
+                            :name="restaurant.name" 
+                            :cuisine="restaurant.cuisine" 
+                            :rating="restaurant.rating" 
+                            :reviews="restaurant.reviews" 
+                            :price="restaurant.price" 
+                            :deliveryTime="restaurant.deliveryTime" 
+                            :deliveryFee="restaurant.deliveryFee" 
+                            :discounts="restaurant.discounts" 
+                        />
                     </router-link>
                 </div>
             </div>
         </div>
+        <PageFooter />
     </div>
-    <PageFooter />
 </template>
 
 
@@ -341,4 +354,4 @@ const restaurants = [
 ]
 </script>
 
-<style scoped></style>>
+<style scoped></style>
