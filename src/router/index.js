@@ -12,11 +12,7 @@ const routes = [
   ...restaurantownerRoutes,
   ...customerRoutes,
   ...otherRoutes,
-  {
-    path: '/user-guide',
-    name: 'UserGuide',
-    component: () => import('../components/Customer/UserGuide.vue')
-  },
+  
   {
     path: '/recipe-blog',
     name: 'RecipeBlog',

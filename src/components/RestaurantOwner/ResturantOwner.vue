@@ -1,4 +1,5 @@
 <template>
+  <SideBar/>
   <div class="container main-body mt-5">
     <!-- Loading Indicator -->
     <div v-if="loading" class="text-center my-5">
@@ -48,6 +49,7 @@
 </template>
 
 <script setup>
+import SideBar from './RestaurantDashboard/SideBar.vue';
 import { ref, onMounted, watch, computed } from 'vue';
 import { Chart } from 'chart.js/auto';
 import { useStore } from 'vuex';

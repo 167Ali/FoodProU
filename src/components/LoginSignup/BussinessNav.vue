@@ -11,6 +11,7 @@
             <div class="navbar-right">
 
                 <!-- Log In buttons -->
+                 <p>Already have Account ?</p>
                 <button class="auth-button login" @click="goToLogin">Log in</button>
 
             </div>
@@ -43,6 +44,9 @@ const goToLogin = () => {
 </script>
 
 <style scoped>
+p{
+margin-top: 10px;
+}
 .close-icon {
     cursor: pointer;
     font-size: 20px;

@@ -42,7 +42,6 @@
 
 <script setup>
 import { ref } from 'vue';
-
 const isOpen = ref(true);
 
 // Main questions with icon colors
