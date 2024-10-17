@@ -141,9 +141,8 @@ const openModal = () => {
         description: '',
         price: null,
         image_file: null,
-        variation_id: {
-            choices: [], addons: []
-        }, // Initialize as an empty array for new product
+        assigned_Choices: []
+         // Initialize as an empty array for new product
     };
     isEditMode.value = false;
 };
@@ -164,7 +163,7 @@ const saveProduct = async (product) => {
         } else {
             console.log("prodyct ", product)
             // console.log("Category ID: ", categoryId);
-            // console.log("Product ", product);
+            console.log("Product ", product);
             const success = await store.dispatch('menuProduct/addProduct', { product, categoryId });
             console.log("success ", success);
             // Uncomment if you want to add the product after the category

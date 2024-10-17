@@ -13,22 +13,20 @@ const id = localStorage.getItem('id');
  */
 const createProductFormData = (productData) => {
     const formData = new FormData();
-    console.log(productData, 'pp data')
     formData.append('name', productData.name);
-    formData.append('price', productData.price);
     formData.append('description', productData.description);
-    formData.append('variation_id', JSON.stringify({
-        choices: productData.variation_id.choices,
-        addons: productData.variation_id.addons
-    }));
+    formData.append('price', productData.price);
 
-    // Append the image file for submission
+    // If you have the image file
     if (productData.image_file) {
-        formData.append('image_file', productData.image_file); // Send file, not data URL
+        formData.append('image_file', productData.image_file);
     }
-    // for (const [key, value] of formData.entries()) {
-    //     console.log(`${key}:`, value);
-    // }
+
+    // Check if choices exist and append them
+    if (productData.assignedChoices && productData.assignedChoices.length > 0) {
+        formData.append('assigned_Choices', JSON.stringify(productData.assignedChoices)); // Send the choices array
+    }
+
     return formData;
 };
 

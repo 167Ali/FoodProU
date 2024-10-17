@@ -35,13 +35,31 @@
                 <div class="scroller-card p-1">
                     <!--  -->
                     <div v-for="(item, idx) in choiceForm.choices" :key="idx" class="d-flex align-items-center mb-2">
+                        <!-- If isDeleted does not exist, show the inputs and delete button -->
+
                         <input type="text" class="form-control me-2" v-model="item.name" placeholder="Name" required />
                         <input type="number" class="form-control me-2" v-model="item.price" placeholder="Price"
                             required />
                         <button class="btn" @click.prevent="removeItem(idx, item.id)">
                             <i class="fa-regular fa-trash-can fa-lg" style="color: #5c6066;"></i>
                         </button>
-                        <!-- </div> -->
+
+
+                        <!-- If isDeleted exists, show a message or any alternate content -->
+                    </div>
+
+                    <div v-if="isEditMode">
+                        <div v-for="(item, idx) in choiceForm.new_choices" :key="idx"
+                            class="d-flex align-items-center mb-2">
+                            <input type="text" class="form-control me-2" v-model="item.name" placeholder="Name"
+                                required />
+                            <input type="number" class="form-control me-2" v-model="item.price" placeholder="Price"
+                                required />
+                            <button class="btn" @click.prevent="removeItem(idx, item.id)">
+                                <i class="fa-regular fa-trash-can fa-lg" style="color: #5c6066;"></i>
+                            </button>
+                            <!-- </div> -->
+                        </div>
                     </div>
                 </div>
                 <div class="mt-3">
@@ -74,27 +92,35 @@ const choiceForm = reactive({
     choice_type: '',
     is_required: '0',
     choices: [{ name: '', price: 0 }],
-    // newChoices: [{ name: '', price: 0 }],
+    new_choices: [{ name: '', price: 0 }],
 });
 
 const addItem = () => {
-    // if (props.isEditMode) {
-    //     choiceForm.newChoices.push({ name: '', price: 0 });
-    // } else {
-    choiceForm.choices.push({ name: '', price: 0 });
-    // }
+    if (props.isEditMode) {
+        choiceForm.new_choices.push({ name: '', price: 0 });
+    } else {
+        choiceForm.choices.push({ name: '', price: 0 });
+    }
 };
 
 const removeItem = (index, id) => {
-    if (choiceForm.choices.length > 1) {
-        // choiceForm.choices.isDeleted = true;
-        // if (props.isEditMode) {
-        //     choiceForm.choices.isDeleted = true;
-        // } else {
-        choiceForm.choices.splice(index, 1);
-        console.log(choiceForm.choices);
-        // }
-
+    if (choiceForm.choices.length > 1 || choiceForm.new_choices.length > 1) {
+        console.log("remove chl")
+        if (props.isEditMode) {
+            // For existing choices, mark as deleted
+            if (choiceForm.choices.length > 0 && id) {
+                choiceForm.choices.splice(index, 1);
+            }
+            // For new choices, just remove it from the array
+            else if (choiceForm.new_choices.length > 0) {
+                choiceForm.new_choices.splice(index, 1);
+            }
+        }
+        // When not in edit mode, just remove the choice
+        else {
+            choiceForm.choices.splice(index, 1);
+            console.log(choiceForm.choices);
+        }
     }
 };
 
@@ -103,6 +129,7 @@ const resetForm = () => {
     choiceForm.is_required = '0';
     choiceForm.choice_type = '';
     choiceForm.choices = [{ name: '', price: 0 }];
+    choiceForm.new_choices = [{ name: '', price: 0 }];
 };
 
 watch(

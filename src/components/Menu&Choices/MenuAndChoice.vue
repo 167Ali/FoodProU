@@ -34,7 +34,7 @@
                 <div class="category-section mb-4">
                     <div class="menu-items">
                         <div class="menu-item d-flex justify-content-between align-items-center border-bottom py-2">
-                            <MenuView :categoryTitle="selectedTitle" :categoryId="categoryId"
+                            <MenuView :categoryTitle="selectedTitle" :categoryId="categoryId" :key="selectedItem"
                                 v-if="isProductCategoryVisibile" />
                             <!-- <MenuViewChoice v-if="isMenuVisible" /> -->
                         </div>
@@ -187,14 +187,14 @@ const selectItem = (index, id, title) => {
 
 
 // Method to toggle the visibility
-const showChoices = () => {
-    isChoiceGroupsVisible.value = true; // Toggle visibility
-    isProductCategoryVisibile.value = false;
-};
-const OpenProductCategory = () => {
-    isProductCategoryVisibile.value = true;
-    isChoiceGroupsVisible.value = false;
-};
+// const showChoices = () => {
+//     isChoiceGroupsVisible.value = true; // Toggle visibility
+//     isProductCategoryVisibile.value = false;
+// };
+// const OpenProductCategory = () => {
+//     isProductCategoryVisibile.value = true;
+//     isChoiceGroupsVisible.value = false;
+// };
 </script>
 
 <style scoped>
