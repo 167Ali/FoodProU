@@ -69,9 +69,13 @@ import { useStore } from 'vuex';
 
 const store = useStore();
 
-const profile = computed(() => store.state.profile);
-const isEmailVerified = computed(() => profile.value.isEmailVerified);
+// Get the profile from Vuex store
+const profile = computed(() => store.state.profile.profile);  // Ensure this refers to the correct profile in Vuex store
 
+// Computed property for email verification status
+const isEmailVerified = computed(() => profile.value.email_verified_at !== null);  // Check if email is verified
+
+// Form validation logic
 const isProfileFormInvalid = computed(() => {
     return (
         !profile.value.first_name ||
@@ -88,6 +92,7 @@ const isPasswordFormInvalid = computed(() => {
     );
 });
 
+// Save profile function (already implemented)
 const saveProfile = async () => {
     try {
         await store.dispatch('profile/saveProfile', {
@@ -103,6 +108,7 @@ const saveProfile = async () => {
     }
 };
 
+// Save password function (already implemented)
 const savePassword = async () => {
     try {
         await store.dispatch('profile/savePassword', {
@@ -119,8 +125,8 @@ const savePassword = async () => {
 // Fetch profile data on component mount
 onMounted(async () => {
     try {
-        await store.dispatch('profile/fetchProfile'); // Fetching profile data
-        console.log('Fetched Profile:', store.state.profile); // Log profile data
+        await store.dispatch('profile/fetchProfile');  // Fetch the profile on component load
+        console.log('Fetched Profile:', profile.value);  // Log fetched profile data for debugging
     } catch (error) {
         alert('Failed to load profile data. Please try again.');
     }
@@ -137,6 +143,7 @@ const onBlur = (event) => {
         input.classList.remove('active');
     }
 };
+
 </script>
 
 <style scoped>
