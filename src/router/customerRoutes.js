@@ -15,10 +15,12 @@ import UserGuide from '@/components/Customer/UserGuide.vue';
 
 export default [
   {
+
     path: '/RestaurantPage/:id', // Updated to include :id
     name: 'RestaurantPage',
     component: RestaurantPage,
     props: true, // Enable passing route params as props
+
   },
   
   {
