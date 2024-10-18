@@ -16,19 +16,45 @@
                         <h2>Menu Categories</h2>
                         <button class="btn btn-primary" @click="openModal">Add Category</button>
                     </div>
-                    <div class="row g-3">
+
+                    <div class="scroll-container-wrapper">
+                        <!-- Left Scroll Button -->
+                        <button class="scroll-button left" @click="scrollLeft">
+                            <i class="fa-solid fa-angle-left fa-xl" style="color: #080a0c;"></i>
+                        </button>
+
+                        <div class="scroll-container">
+                            <div class="scroll-row">
+                                <div v-for="(item, index) in menuItems" :key="index" class="col-6 col-md-4 col-lg-3">
+                                    <div class="menu-card p-3 text-center" :class="{ selected: selectedItem === index }"
+                                        @click="selectItem(index, item.id, item.name)">
+                                        <div class="menu-icon mb-2"></div>
+                                        <h5 class="menu-title">{{ item.name }}</h5>
+                                        <p class="menu-stock">{{ item.menu_items_count }} Menu In Stock</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Scroll Button -->
+                        <button class="scroll-button right" @click="scrollRight">
+                            <i class="fa-solid fa-angle-right fa-xl" style="color: #181d25;"></i>
+                        </button>
+                    </div>
+
+                    <!-- <div class="row g-3">
                         <div v-for="(item, index) in menuItems" :key="index" class="col-6 col-md-3">
                             <div class="menu-card p-3 text-center" :class="{ selected: selectedItem === index }"
                                 @click="selectItem(index, item.id, item.name)">
                                 <div class="menu-icon mb-2">
-                                    <!--<i :class="item.icon" class="fs-1"></i>-->
                                 </div>
                                 <h5 class="menu-title">{{ item.name }}</h5>
                                 <p class="menu-stock">{{ item.menu_items_count
                                     }} Menu In Stock</p>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+
                 </div>
                 <!-- Example Category Section -->
                 <div class="category-section mb-4">
@@ -126,6 +152,7 @@ const menuItems = computed(() => store.getters['menuCategory/allCategories']);
 
 
 onMounted(async () => {
+    scrollContainer.value = document.querySelector('.scroll-container');
     handleSelection();
     try {
         await store.dispatch('menuCategory/displayCategory');
@@ -133,6 +160,29 @@ onMounted(async () => {
         console.error('Error fetching data:', error);
     }
 });
+
+
+// Scroll functions
+const scrollContainer = ref(null);
+
+const scrollLeft = () => {
+    if (scrollContainer.value) {
+        scrollContainer.value.scrollBy({
+            left: -scrollContainer.value.offsetWidth, // Scroll by container width (approx. 4 cards)
+            behavior: 'smooth',
+        });
+    }
+};
+
+const scrollRight = () => {
+    if (scrollContainer.value) {
+        scrollContainer.value.scrollBy({
+            left: scrollContainer.value.offsetWidth, // Scroll by container width (approx. 4 cards)
+            behavior: 'smooth',
+        });
+    }
+};
+
 
 
 const addCategory = async () => {
@@ -223,12 +273,98 @@ const selectItem = (index, id, title) => {
     background-color: rgb(242, 241, 242);
 }
 
+.container-fluid {
+    background-color: rgb(242, 241, 242);
+}
+
+.scroll-container-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.scroll-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-grow: 1;
+    scrollbar-width: none;
+}
+
+.scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll-row {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.scroll-button {
+    /* background-color: #198754; */
+    color: #fff;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 1;
+}
+
+.scroll-button.left {
+    left: -30px;
+}
+
+.scroll-button.right {
+    right: -30px;
+}
+
+.menu-card {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    flex: 0 0 25%;
+    margin-right: 15px;
+}
+
+.menu-card:hover {
+    background-color: #e9ecef;
+}
+
+.menu-card.selected {
+    background-color: #198754;
+    color: #fff;
+}
+
+.menu-card.selected .menu-icon {
+    color: #fff;
+}
+
+.menu-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.25rem;
+}
+
+.menu-stock {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.menu-card.selected .menu-stock {
+    color: #fff;
+}
+
+
 /* categories */
 .menu-card {
     background-color: #f8f9fa;
     border-radius: 8px;
     transition: background-color 0.3s, color 0.3s;
     cursor: pointer;
+    flex: 0 0 25%;
+    /* Show 4 items per row */
+    box-sizing: border-box;
+    margin-right: 15px;
 }
 
 .menu-card:hover {
@@ -243,15 +379,6 @@ const selectItem = (index, id, title) => {
 .menu-icon {
     font-size: 2rem;
     color: #6c757d;
-}
-
-.menu-card.selected .menu-icon {
-    color: #fff;
-}
-
-.menu-title {
-    font-size: 1.2rem;
-    margin-bottom: 0.25rem;
 }
 
 .menu-stock {
