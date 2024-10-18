@@ -32,7 +32,7 @@
                             <div class="scroller-card">
                                 <div v-for="(choice, index) in availableChoices" :key="index" class="form-check">
                                     <input type="checkbox" class="form-check-input" :id="'choice' + index"
-                                        v-model="productForm.assigned_Choices" :value="choice.id" />
+                                        v-model="choice.id" :value="choice.id" />
                                     <label class="form-check-label" :for="'choice' + index">
                                         <!-- Displaying choice name, required/optional status, and choice type in a line -->
                                         {{ choice.name }} -
@@ -108,7 +108,9 @@ const productForm = reactive({
     description: '', //price
     price: 0,               //category // description//variation_id
     image_path: null, // Now directly storing the image data URL // image_path
-    assigned_Choices: [], // Array to store selected choices 
+    variation_id: {
+        choices: [], addons: []
+    }, // Array to store selected choices 
 });
 const fileInput = ref(null);
 
@@ -142,7 +144,6 @@ const submitForm = () => {
     if (productForm.image_file && productFormRef.value.checkValidity()) {
         emits('save', { ...productForm });
         isFormValidated.value = false; // Reset validation
-
     } else {
         productFormRef.value.reportValidity();
         if (!productForm.image_file) {
