@@ -269,6 +269,7 @@ const deleteChoice = async (index) => {
     border-radius: 8px;
     width: 500px;
     max-width: 100%;
+
 }
 
 /* .card {

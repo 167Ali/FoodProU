@@ -1,5 +1,5 @@
 // src/store/Auth/AuthStore.js
-import { resetPassword, setPassword, login, register, registerBusiness } from '../../Services/Auth/AuthService';
+import { resetPassword, setPassword, login, register, registerBusiness } from '../../Services/auth/AuthService';
 const state = () => ({
     loading: false,
     successMessage: '',
@@ -149,7 +149,7 @@ const getters = {
 
 export default {
 
-  namespaced: true,
+    namespaced: true,
 
     state,
 

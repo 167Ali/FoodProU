@@ -102,7 +102,7 @@ const availableChoices = computed(() => store.getters['menuChoice/allChoices']);
 
 // Available choices for the product (can be fetched from an API later)
 //const availableChoices = ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4', 'Choice 5'];
-
+    
 // Refs and reactive data
 const productFormRef = ref(null);
 const isFormValidated = ref(false);

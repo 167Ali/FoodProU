@@ -4,6 +4,7 @@ import profileModule from './modules/profile';
 import { menuCategory } from '../store/menu/menuCategory';
 import { menuProduct } from '../store/menu/menuProduct';
 import { menuChoice } from '../store/menu/menuChoice';
+import { orderDetails } from './RestaurantOwner/OrderDetails'
 import { rewards } from './modules/rewards';
 import AuthStore from './Auth/AuthStore';
 import order from './modules/order'; // import the order module
@@ -32,6 +33,8 @@ const store = createStore({
     resturantDetails: ResturantDetailsStore,
     resturantRevinue: ResturantRevinue,
     favoriteStore,
+    orderDetails, // Ensure this is properly registered
+
   },
 
   state: {
@@ -63,7 +66,7 @@ const store = createStore({
     async login({ commit, dispatch }, credentials) {
       try {
         const response = await axios.post('http://192.168.15.67:8000/api/login', credentials);
-        
+
         console.log('API Response:', response);
 
         const accessToken = response.data.data.access_token;
