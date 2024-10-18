@@ -1,5 +1,5 @@
 // src/store/Auth/AuthStore.js
-import { resetPassword, setPassword, login, register, registerBusiness } from '../../Services/auth/AuthService';
+import { resetPassword, setPassword, login, register, registerBusiness } from '../../Services/Auth/AuthService';
 const state = () => ({
     loading: false,
     successMessage: '',
