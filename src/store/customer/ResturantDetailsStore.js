@@ -4,18 +4,21 @@ import {
   fetchRestaurants as fetchRestaurantsService,
   fetchDeals as fetchDealsService,
   searchRestaurants as searchRestaurantsService,
+  fetchRestaurantMenus as fetchRestaurantMenusService, // Added
 } from '../../Services/customer/ResturantDetailsService';
 
 const state = () => ({
   restaurants: [],
   deals: [],
   searchResults: [],
+  restaurantMenus: {}, // Added
 });
 
 const getters = {
   allRestaurants: (state) => state.restaurants,
   allDeals: (state) => state.deals,
   searchResults: (state) => state.searchResults,
+  getRestaurantMenus: (state) => state.restaurantMenus, // Added
 };
 
 const actions = {
@@ -55,7 +58,6 @@ const actions = {
 
       if (data.status === 200) {
         commit('setRestaurants', data.data);
-
       } else {
         console.error('Failed to fetch restaurants', data);
       }
@@ -79,17 +81,28 @@ const actions = {
 
   async searchRestaurants({ commit }, searchTerm) {
     try {
-
       const data = await searchRestaurantsService(searchTerm);
       if (data.status === 200) {
         commit('setSearchResults', data.data);
         console.log(data.data);
-
       } else {
         console.error('Failed to search restaurants', data);
       }
     } catch (error) {
       console.error('Error searching restaurants:', error);
+    }
+  },
+
+  async fetchRestaurantMenus({ commit }, restaurantId) { // Added
+    try {
+      const data = await fetchRestaurantMenusService(restaurantId);
+      if (data.status === 200) {
+        commit('setRestaurantMenus', data.data);
+      } else {
+        console.error('Failed to fetch restaurant menus', data);
+      }
+    } catch (error) {
+      console.error('Error fetching restaurant menus:', error);
     }
   },
 };
@@ -103,6 +116,9 @@ const mutations = {
   },
   setSearchResults(state, results) {
     state.searchResults = results;
+  },
+  setRestaurantMenus(state, menus) { // Added
+    state.restaurantMenus = menus;
   },
 };
 
