@@ -21,6 +21,35 @@
                     </div>
                     <div class="modal-body">
                         <div class="filter-section">
+                            <!-- Order ID filter -->
+                            <div class="mb-3">
+                                <label class="form-label">Order ID</label>
+                                <input type="text" class="form-control" v-model="orderIdFilter"
+                                    placeholder="Filter by Order ID..." />
+                            </div>
+
+                              <!-- Status filter -->
+                              <div class="mb-3">
+                                <label class="form-label">Order Status</label>
+                                <select class="form-select" v-model="statusFilter">
+                                    <option value="">All</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </div>
+
+                         <!-- Restaurant filter (Dropdown using prop) -->
+                         <div class="mb-3">
+                                <label class="form-label">Restaurant</label>
+                                <select class="form-select" v-model="restaurantFilter">
+                                    <option value="">Select a restaurant...</option>
+                                    <option v-for="restaurant in restaurants" :key="restaurant" :value="restaurant">
+                                        {{ restaurant }}
+                                    </option>
+                                </select>
+                            </div>
+
                             <!-- Name filter -->
                             <div class="mb-3">
                                 <label class="form-label">Name</label>
@@ -40,6 +69,17 @@
                                 <label class="form-label">Address</label>
                                 <input type="text" class="form-control" v-model="addressFilter"
                                     placeholder="Filter by address..." />
+                            </div>
+
+                           
+
+                           <!-- Date filter -->
+                           <div class="mb-3">
+                                <label class="form-label">Order Date Range</label>
+                                <div class="d-flex">
+                                    <input type="date" class="form-control me-2" v-model="startDateFilter" />
+                                    <input type="date" class="form-control" v-model="endDateFilter" />
+                                </div>
                             </div>
 
                             <!-- Total Price Range filter -->
@@ -77,12 +117,25 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from 'vue';
+import { ref, defineEmits, defineProps } from 'vue';
+
+// Accept restaurants as a prop
+const props = defineProps({
+    restaurants: {
+        type: Array,
+        required: true
+    }
+});
 
 const searchQuery = ref('');
+const orderIdFilter = ref('');
 const nameFilter = ref('');
 const phoneFilter = ref('');
 const addressFilter = ref('');
+const restaurantFilter = ref('');
+const statusFilter = ref('');
+const startDateFilter = ref('');
+const endDateFilter = ref('');
 const priceRange = ref([0, 1000000]);
 const commissionRange = ref([0, 100]);
 const emit = defineEmits(['filterApplied']);
@@ -94,31 +147,40 @@ const handleSearch = () => {
 const applyFilter = () => {
     const filterData = {
         searchQuery: searchQuery.value,
+        orderIdFilter: orderIdFilter.value,
         nameFilter: nameFilter.value,
         phoneFilter: phoneFilter.value,
         addressFilter: addressFilter.value,
+        restaurantFilter: restaurantFilter.value,
+        statusFilter: statusFilter.value,
+        startDateFilter: startDateFilter.value,
+        endDateFilter: endDateFilter.value,
         priceRange: priceRange.value,
         commissionRange: commissionRange.value,
     };
-
     emit('filterApplied', filterData);
 };
 
 const clearFilter = () => {
-    searchQuery.value = '';
+    // Clear all filters
+    orderIdFilter.value = '';
     nameFilter.value = '';
     phoneFilter.value = '';
     addressFilter.value = '';
+    restaurantFilter.value = '';
+    statusFilter.value = '';
+    dateFilter.value = '';
     priceRange.value = [0, 1000000];
     commissionRange.value = [0, 100];
-    applyFilter();
 };
 
+// Method to open the filter modal
 const openFilterModal = () => {
     const filterModal = new bootstrap.Modal(document.getElementById('filterModal'));
     filterModal.show();
 };
 </script>
+
 
 <style scoped>
 .input-group {
@@ -173,6 +235,8 @@ const openFilterModal = () => {
 
 .filter-section {
     padding: 15px;
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 .price-input {

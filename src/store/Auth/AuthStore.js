@@ -149,7 +149,7 @@ const getters = {
 
 export default {
 
-    namespaced: true,
+  namespaced: true,
 
     state,
 
