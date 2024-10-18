@@ -66,27 +66,27 @@
 </template>
 
 <script setup>
+import { computed, onMounted } from 'vue';  // Import onMounted here
+import { useStore } from 'vuex';
 import LoginHeader from '@/components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '@/components/HeaderFooter/PageFooter.vue';
-import { computed } from 'vue';
-import { useStore } from 'vuex';
 
 const store = useStore();
 
 // Get the profile from Vuex store
-const profile = computed(() => store.state.profile.profile);  // Ensure this refers to the correct profile in Vuex store
+const profile = computed(() => store.state.profile.profile);
 
 // Fetch profile data on component mount
 onMounted(async () => {
     try {
-        await store.dispatch('profile/fetchProfile');  // Dispatch action to fetch profile data
+        await store.dispatch('profile/fetchProfile');
     } catch (error) {
         console.error('Error fetching profile:', error);
     }
 });
 
 // Computed property for email verification status
-const isEmailVerified = computed(() => profile.value.email_verified_at !== null);  // Check if email is verified
+const isEmailVerified = computed(() => profile.value.email_verified_at !== null);
 
 // Form validation logic
 const isProfileFormInvalid = computed(() => {
@@ -105,7 +105,7 @@ const isPasswordFormInvalid = computed(() => {
     );
 });
 
-// Save profile function (already implemented)
+// Save profile function
 const saveProfile = async () => {
     try {
         await store.dispatch('profile/saveProfile', {
@@ -121,7 +121,7 @@ const saveProfile = async () => {
     }
 };
 
-// Save password function (already implemented)
+// Save password function
 const savePassword = async () => {
     try {
         await store.dispatch('profile/savePassword', {
@@ -148,6 +148,7 @@ const onBlur = (event) => {
     }
 };
 </script>
+
 
 
 <style scoped>
