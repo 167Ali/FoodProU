@@ -1,44 +1,44 @@
-// store/modules/reviews.js
-
+import { submitReview } from '@/Services/customer/ReviewService'
 
 const state = {
-  reviews: [],
   loading: false,
   error: null,
+  successMessage: null,
 };
 
 const getters = {
-  reviews: (state) => state.reviews,
   loading: (state) => state.loading,
   error: (state) => state.error,
-};
-
-const mutations = {
-  SET_LOADING(state, loading) {
-    state.loading = loading;
-  },
-  SET_ERROR(state, error) {
-    state.error = error;
-  },
-  ADD_REVIEW(state, review) {
-    state.reviews.push(review);
-  },
+  successMessage: (state) => state.successMessage,
 };
 
 const actions = {
   async submitCustomerReview({ commit }, reviewData) {
-    commit('SET_LOADING', true);
-    commit('SET_ERROR', null);
-    
+    commit('setLoading', true);
+    commit('setError', null);
+    commit('setSuccessMessage', null);
+
     try {
-      const response = await submitReview(reviewData);
-      commit('ADD_REVIEW', response);
-      alert('Review submitted successfully!');
+      const data = await submitReview(reviewData);
+      commit('setSuccessMessage', 'Review submitted successfully!');
+      console.log('Review submission response:', data);
     } catch (error) {
-      commit('SET_ERROR', 'Failed to submit the review');
+      commit('setError', 'Failed to submit the review. Please try again.');
     } finally {
-      commit('SET_LOADING', false);
+      commit('setLoading', false);
     }
+  },
+};
+
+const mutations = {
+  setLoading(state, status) {
+    state.loading = status;
+  },
+  setError(state, message) {
+    state.error = message;
+  },
+  setSuccessMessage(state, message) {
+    state.successMessage = message;
   },
 };
 
@@ -46,6 +46,6 @@ export default {
   namespaced: true,
   state,
   getters,
-  mutations,
   actions,
+  mutations,
 };

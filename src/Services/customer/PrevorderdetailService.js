@@ -7,23 +7,24 @@ const getToken = () => {
     return token;
 };
 // Fetch order details
-export const getOrderDetails = async (customerId) => {
+export const getOrderDetails = async (order_id) => {
     try {
         const token = getToken(); // Get the token from localStorage
       
-
-        const response = await axios.get(`${API_BASE_URL}/orders/{order_id}/details`, {
+        const response = await axios.get(`${API_BASE_URL}/api/orders/${order_id}/details`, {  // Corrected string interpolation
             headers: {
-                Authorization: `Bearer ${token}` // Pass the token in the headers
+                Authorization: `Bearer ${token}`, // Pass the token in the headers
             }
-        });
+            
+     });
         
         return response.data;
     } catch (error) {
-        console.error('Error fetching past orders:', error);
+        console.error('Error fetching order details:', error); // Updated error message to be more specific
         throw error;
     }
 };
+
 
 // Download order invoice
 export const downloadOrderInvoice = async (customerId) => {

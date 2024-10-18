@@ -43,13 +43,13 @@
           </div>
           <hr />
           <div class="order-pricing">
-            <p><span>Subtotal:</span> <span>Rs. {{ order.subtotal }}</span></p>
-            <p><span>Delivery fee:</span> <span>Rs. {{ order.deliveryFee }}</span></p>
-            <p><strong>Total (incl. VAT):</strong> <strong>Rs. {{ order.total }}</strong></p>
+            <p><span>Subtotal:</span> <span>Rs. {{ subtotal }}</span></p>
+            <p><span>Delivery fee:</span> <span>Rs. {{ deliveryFee }}</span></p>
+            <p><strong>Total (incl. VAT):</strong> <strong>Rs. {{ total }}</strong></p>
           </div>
           <hr />
           <div class="payment-details">
-            <p><span>Paid with</span> <span>{{ order.paymentMethod }} - Rs. {{ order.paymentAmount }}</span></p>
+            <p><span>Paid with</span> <span>{{ paymentMethod }} - Rs. {{ paymentAmount }}</span></p>
           </div>
         </div>
       </div>
@@ -65,7 +65,7 @@
           <p>Need an invoice?</p>
           <button class="invoice-button" @click="downloadInvoice">Download invoice</button>
         </div>
-        <OrderRating />
+        <OrderRating :orderId="order.order_id" />
       </div>
     </div>
 
@@ -97,11 +97,23 @@ const props = defineProps({
 const order = ref(null);
 const error = ref(null);
 
+// Extracted data for pricing
+const subtotal = ref(0);
+const deliveryFee = ref(79); // Assuming delivery fee is fixed or fetched separately
+const total = ref(0);
+const paymentMethod = ref("Cash On Delivery"); // Placeholder, adapt as per response
+const paymentAmount = ref(0);
+
 // Fetch order details when component is mounted
 const fetchOrderDetails = async () => {
   try {
     const response = await getOrderDetails(props.id);
-    order.value = response.data; // Adapt to match your API structure
+    order.value = response.data;
+
+    // Calculate the subtotal and total based on order items
+    subtotal.value = order.value.order_items.reduce((acc, item) => acc + item.total_price, 0);
+    total.value = subtotal.value + deliveryFee.value; // Assuming total includes delivery fee and other charges
+    paymentAmount.value = total.value; // Assuming the payment amount matches the total
   } catch (err) {
     error.value = err.message;
   }
