@@ -14,9 +14,7 @@ import axios from 'axios';
 import ResturantDetailsStore from './customer/ResturantDetailsStore';
 import ResturantRevinue from './customer/ResturantRevinue'; // Import the new module
 import orders from './customer/orders';
-
-
-
+import favoriteStore from './customer/FavScreenCus';
 
 const store = createStore({
   modules: {
@@ -33,6 +31,7 @@ const store = createStore({
     auth: AuthStore,
     resturantDetails: ResturantDetailsStore,
     resturantRevinue: ResturantRevinue,
+    favoriteStore,
   },
 
   state: {
