@@ -1,4 +1,5 @@
 <template>
+  <SideBar/>
   <div class="profile-update-container my-5">
     <div class="row justify-content-center">
       <div class="col-lg-10">
@@ -186,6 +187,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import SideBar from './RestaurantDashboard/SideBar.vue';
 
 const ownerDetails = ref({
   firstName: '',

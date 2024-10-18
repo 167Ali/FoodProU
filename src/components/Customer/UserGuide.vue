@@ -1,12 +1,12 @@
 <template>
     <div class="help-center-container" :class="{ 'open': isOpen }">
         <div class="help-center-header" @click="toggleHelpCenter">
-            <span>Help Center</span>
+            <span>User Guide</span>
             <i class="fas" :class="isOpen ? 'fa-chevron-down' : 'fa-chevron-up'"></i>
         </div>
 
         <div v-if="isOpen" class="help-center-body">
-            <h2 v-if="currentQuestion === null">How can we assist you?</h2>
+            <h4 v-if="currentQuestion === null">How can we assist you?</h4>
             <ul v-if="currentQuestion === null" class="help-list">
                 <li v-for="(item, index) in mainQuestions" :key="index" @click="openQuestion(item)"
                     :class="['help-list-item', { active: currentQuestion === item }]">

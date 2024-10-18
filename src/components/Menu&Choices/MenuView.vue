@@ -44,13 +44,13 @@
                     </div>
                     <div class="row align-items-center mb-1"> <!-- align-items-center ensures vertical alignment -->
                         <div class="col text-start">
-                            <h3 class="card-title mt-2 ms-3">{{ product.price }} PKR</h3>
+                            <h3 class="card-title mt-2 ms-0">{{ product.price }} PKR</h3>
                         </div>
                         <div class="col-auto">
                             <div class="d-flex justify-content-end">
                                 <button class="btn btn-outline me-2" @click="viewProduct(index)"><i
                                         class="fa-regular fa-pen-to-square fa-xl" style="color: #343f50;"></i></button>
-                                <button class="btn btn-outline" @click="deleteProduct(index)"><i
+                                <button class="btn btn-outline" @click="deleteProduct(product.id)"><i
                                         class="fa-regular fa-trash-can fa-xl" style="color: #444e5f;"></i></button>
                             </div>
                         </div>
@@ -141,9 +141,8 @@ const openModal = () => {
         description: '',
         price: null,
         image_file: null,
-        variation_id: {
-            choices: [], addons: []
-        }, // Initialize as an empty array for new product
+        assigned_Choices: []
+         // Initialize as an empty array for new product
     };
     isEditMode.value = false;
 };
@@ -162,24 +161,36 @@ const saveProduct = async (product) => {
         if (isEditMode.value && currentEditIndex.value !== null) {
             products.value[currentEditIndex.value] = product;
         } else {
+            console.log("prodyct ", product)
             // console.log("Category ID: ", categoryId);
-            // console.log("Product ", product);
+            console.log("Product ", product);
             const success = await store.dispatch('menuProduct/addProduct', { product, categoryId });
             console.log("success ", success);
             // Uncomment if you want to add the product after the category
-            // products.value.push(product);
+            products.value.push(product);
+            isFormVisible.value = false;
         }
 
-        isFormVisible.value = false;
+
     } catch (error) {
         console.error('Error Adding Product:', error);
     }
 };
 
 // Delete a product
-const deleteProduct = (index) => {
-    products.value.splice(index, 1);
+
+const deleteProduct = async (index) => {
+
+    try {
+        console.log("index ", index)
+        const success = await store.dispatch('menuProduct/deleteProduct', index);
+        console.log("response choice ", success);
+        products.value.splice(index, 1);
+    } catch (error) {
+        console.error('Error Deleting Choice: ', error);
+    }
 };
+
 </script>
 
 <style scoped>

@@ -4,13 +4,14 @@
         <nav class="navbar">
             <div class="navbar-left">
                 <!-- Logo -->
-                <font-awesome-icon :icon="['fas', 'utensils']" class="logo" />
-                <span class="brand-name">foodpro</span>
+                <i class="fa-solid fa-utensils logo"></i>
+                <span class="brand-name">foodpro For Bussiness</span>
             </div>
 
             <div class="navbar-right">
 
                 <!-- Log In buttons -->
+                 <p>Already have Account ?</p>
                 <button class="auth-button login" @click="goToLogin">Log in</button>
 
             </div>
@@ -38,11 +39,14 @@ const closeBanner = () => {
 
 // Navigation function
 const goToLogin = () => {
-    router.push('/login');
+    router.push('/');
 };
 </script>
 
 <style scoped>
+p{
+margin-top: 10px;
+}
 .close-icon {
     cursor: pointer;
     font-size: 20px;

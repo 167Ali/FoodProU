@@ -13,7 +13,7 @@
         <!-- Main Navbar -->
         <nav class="navbar">
             <div class="navbar-left">
-                <font-awesome-icon :icon="['fas', 'utensils']" class="logo" />
+                <i class="fa-solid fa-utensils logo"></i>
                 <span class="brand-name">foodpro</span>
             </div>
 
