@@ -1,22 +1,24 @@
-import Restaurantpage from '../views/Customer/RestaurantPage.vue'
-import CheckOut from '../components/Customer/CheckOut.vue'
-import AddtoCart from '../components/Customer/AddtoCart.vue'
-import CategoryNavbar from '../components/Customer/CategoryNavbar.vue'
-import DashboardResturantPage from '../views/Customer/DashboardResturantPage.vue'
-import ProfileSettings from '../views/Customer/ProfileSettings.vue'
-import FavoritesPage from '../views/Customer/favs.vue'
-import OrderScreen from '../views/Customer/OrderScreen.vue'
-import OrderReorder from '../views/Customer/OrderReorder.vue'
-import PrevorderDetails from '../views/Customer/PrevorderDetails.vue'
-import OrderRating from '@/components/Customer/OrderRating.vue'
-import UserGuide from '@/components/Customer/UserGuide.vue'
+// src/router/customerRoutes.js
+
+import RestaurantPage from '../views/Customer/RestaurantPage.vue';
+import CheckOut from '../components/Customer/CheckOut.vue';
+import AddtoCart from '../components/Customer/AddtoCart.vue';
+import CategoryNavbar from '../components/Customer/CategoryNavbar.vue';
+import DashboardResturantPage from '../views/Customer/DashboardResturantPage.vue';
+import ProfileSettings from '../views/Customer/ProfileSettings.vue';
+import FavoritesPage from '../views/Customer/favs.vue';
+import OrderScreen from '../views/Customer/OrderScreen.vue';
+import OrderReorder from '../views/Customer/OrderReorder.vue';
+import PrevorderDetails from '../views/Customer/PrevorderDetails.vue';
+import OrderRating from '@/components/Customer/OrderRating.vue';
+import UserGuide from '@/components/Customer/UserGuide.vue';
 
 export default [
   {
-    path: '/RestaurantPage',
+    path: '/RestaurantPage/:id', // Updated to include :id
     name: 'RestaurantPage',
-    component: Restaurantpage,
-    
+    component: RestaurantPage,
+    props: true, // Enable passing route params as props
   },
   
   {
@@ -34,7 +36,7 @@ export default [
     path: '/dashboardresturantpage',
     name: 'DashboardResturantPage',
     component: DashboardResturantPage,
-     children: [
+    children: [
       {
         path: '/caart',
         name: 'addtocart',
@@ -45,8 +47,7 @@ export default [
         name: 'UserGuide',
         component: UserGuide
       },
-      
-     ]
+    ]
   },
   
   {
@@ -80,4 +81,4 @@ export default [
     name: 'OrderRating',
     component: OrderRating
   }
-]
+];

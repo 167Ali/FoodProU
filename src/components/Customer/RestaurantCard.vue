@@ -1,3 +1,4 @@
+<!-- src/components/Customer/RestaurantCard.vue -->
 <template>
   <div class="card m-2">
     <div class="position-relative">

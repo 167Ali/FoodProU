@@ -1,7 +1,7 @@
 // src/Services/Auth/AuthServices.js
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL_H; // Backend API URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Backend API URL
 
 
 
