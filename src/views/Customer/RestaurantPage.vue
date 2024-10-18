@@ -8,6 +8,7 @@
       <hr />
       <Deals />
     </div>
+    
     <div>
       <CategoryNavbar />
     </div>

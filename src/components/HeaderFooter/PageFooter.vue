@@ -56,6 +56,7 @@
   background-color: #f7f7f7;
   padding: 40px 0;
   border-top: 1px solid #eaeaea;
+  margin-top: 50px;
 }
 
 .footer-links {
