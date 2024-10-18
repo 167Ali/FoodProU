@@ -8,7 +8,7 @@
         <div class="order-card">
           <img :src="order.order_image" alt="Order Image" class="order-image" />
           <div class="order-summary">
-            <h2>{{ order.restaurant }} – {{ order.restaurant_branch_address }}</h2>
+            <h2>{{ order.restaurant_name }} – {{ order.restaurant_branch_address }}</h2>
             <p class="delivery-info">
               Delivered on {{ order.delivery_date || 'Date not available' }}<br />
               Order #{{ order.order_id }}
@@ -61,10 +61,6 @@
           <button class="reorder-button">Select items to reorder</button>
         </div>
 
-        <div class="action-card invoice-section">
-          <p>Need an invoice?</p>
-          <button class="invoice-button" @click="downloadInvoice">Download invoice</button>
-        </div>
         <OrderRating :orderId="order.order_id" />
       </div>
     </div>
@@ -136,9 +132,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Same styles as before */
+/* Container for order details */
 .order-details-container {
   display: flex;
+  flex-wrap: wrap; /* Allows items to wrap on small screens */
   max-width: 100%;
   margin: 0 auto;
   padding: 40px 20px;
@@ -146,6 +143,7 @@ onMounted(() => {
   border-radius: 8px;
 }
 
+/* Order Information Section (Left) */
 .order-info {
   width: 38%;
   margin-left: 15%;
@@ -153,29 +151,27 @@ onMounted(() => {
 
 .order-card {
   display: flex;
+  flex-direction: column;
   background-color: white;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
-  align-items: center;
-  height: 300px;
 }
 
 .order-image {
   width: 80px;
   height: 80px;
-  margin-top: -150px;
   border-radius: 10%;
   object-fit: cover;
 }
 
 .order-summary {
   margin-left: 50px;
+   /* Center-align on smaller screens */
 }
 
 .order-summary h2 {
-  margin: 0;
   font-size: 1.3rem;
   font-weight: bold;
   color: #333;
@@ -187,12 +183,12 @@ onMounted(() => {
   margin: 10px 0;
 }
 
+/* Order from and delivered to sections */
 .order-from,
 .delivered-to {
   display: flex;
   align-items: flex-start;
   margin: 10px 0;
-  margin-left: -110px;
 }
 
 .order-icon {
@@ -212,6 +208,7 @@ onMounted(() => {
   color: #333;
 }
 
+/* Order Summary Details Section */
 .order-summary-details {
   background-color: white;
   padding: 25px;
@@ -251,6 +248,7 @@ onMounted(() => {
   text-align: right;
 }
 
+/* Order Actions Section (Right) */
 .order-actions {
   width: 25%;
   display: flex;
@@ -267,8 +265,7 @@ onMounted(() => {
   text-align: center;
 }
 
-.reorder-section p,
-.invoice-section p {
+.reorder-section p {
   font-size: 1rem;
   font-weight: bold;
   margin-bottom: 10px;
@@ -289,23 +286,85 @@ onMounted(() => {
   background-color: #00593c;
 }
 
-.invoice-button {
-  background-color: #1fd46b;
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.invoice-button:hover {
-  background-color: #16a959;
-}
-
+/* Loading Message */
 .loading-message {
   text-align: center;
   font-size: 1.2rem;
   padding: 50px 0;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+  .order-info {
+    width: 45%;
+    margin-left: 5%;
+  }
+
+  .order-actions {
+    width: 45%;
+    margin-left: 5%;
+    padding: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .order-info {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 20px;
+  }
+
+  .order-actions {
+    width: 100%;
+    padding: 0;
+  }
+
+  .order-card {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+  }
+
+  .order-summary {
+    margin-left: 20px;
+  }
+
+  .order-image {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 576px) {
+  .order-details-container {
+    flex-direction: column;
+    padding: 20px 10px;
+  }
+
+  .order-info,
+  .order-actions {
+    width: 100%;
+    margin-left: 0;
+    padding: 0;
+  }
+
+  .order-summary h2 {
+    font-size: 1rem;
+  }
+
+  .order-pricing p,
+  .payment-details p {
+    font-size: 0.9rem;
+  }
+
+  .reorder-button {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .order-image {
+    width: 50px;
+    height: 50px;
+  }
 }
 </style>

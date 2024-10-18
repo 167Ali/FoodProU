@@ -2,14 +2,14 @@
   <div class="rating-container">
     <h2>Rate Your Order</h2>
 
-    <div class="rating-section">
-      <label for="rating">Rating:</label>
+    <div class="stars-section">
+      <label for="stars">Rating:</label>
       <div class="stars">
         <span
           v-for="star in 5"
           :key="star"
-          @click="setRating(star)"
-          :class="{ selected: star <= rating }"
+          @click="setStars(star)"
+          :class="{ selected: star <= stars }"
           class="star"
         >
           ★
@@ -17,16 +17,18 @@
       </div>
     </div>
 
-    <div class="remarks-section">
-      <label for="remarks">Remarks:</label>
+    <div class="feedback-section">
+      <label for="feedback">Feedback:</label>
       <textarea
-        v-model="remarks"
-        id="remarks"
-        placeholder="Write your remarks here..."
+        v-model="feedback"
+        id="feedback"
+        placeholder="Write your feedback here..."
       ></textarea>
     </div>
 
-    <button @click="submitReview" class="submit-button" :disabled="loading">Add Review</button>
+    <button @click="submitReview" class="submit-button" :disabled="loading">
+      Add Review
+    </button>
     <div v-if="loading">Submitting review...</div>
     <div v-if="error">{{ error }}</div>
     <div v-if="successMessage" class="success">{{ successMessage }}</div>
@@ -36,7 +38,6 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
-import { useRoute } from 'vue-router'; // Optional if using route props
 
 // Props
 const props = defineProps({
@@ -48,38 +49,38 @@ const props = defineProps({
 
 // State and Store
 const store = useStore();
-const rating = ref(0);
-const remarks = ref('');
+const stars = ref(0);
+const feedback = ref('');
 
 // Computed properties from the Vuex store
-const loading = computed(() => store.getters['reviews/loading']);
-const error = computed(() => store.getters['reviews/error']);
-const successMessage = computed(() => store.getters['reviews/successMessage']);
+const loading = computed(() => store.getters['AddReviews/loading']);
+const error = computed(() => store.getters['AddReviews/error']);
+const successMessage = computed(() => store.getters['AddReviews/successMessage']);
 
 // Methods
-const setRating = (value) => {
-  rating.value = value;
+const setStars = (value) => {
+  stars.value = value;
 };
 
 const submitReview = () => {
-  if (rating.value === 0 || remarks.value.trim() === '') {
-    alert('Please provide both a rating and remarks.');
+  if (stars.value === 0 || feedback.value.trim() === '') {
+    alert('Please provide both a rating and feedback.');
     return;
   }
 
   const reviewData = {
-    orderId: props.orderId, // Pass the correct order ID
-    rating: rating.value,
-    remarks: remarks.value,
+    order_id: props.orderId,  // Ensure it's `order_id` as per API documentation
+    stars: stars.value,
+    feedback: feedback.value,
   };
 
   // Dispatch the action to submit the review via Vuex
-  store.dispatch('reviews/submitCustomerReview', reviewData);
+  store.dispatch('AddReviews/submitCustomerReview', reviewData);
 
-  // Optionally, reset fields after submission if no error occurred
+  // Optionally reset fields after submission if no error occurred
   if (!loading.value && !error.value) {
-    rating.value = 0;
-    remarks.value = '';
+    stars.value = 0;
+    feedback.value = '';
   }
 };
 </script>
@@ -100,8 +101,8 @@ h2 {
   margin-bottom: 20px;
 }
 
-.rating-section,
-.remarks-section {
+.stars-section,
+.feedback-section {
   margin-bottom: 20px;
 }
 
