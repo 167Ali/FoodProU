@@ -25,7 +25,6 @@ export const menuChoice = {
     actions: {
         async addChoice({ commit }, choiceData) {
             try {
-                console.log("CHOICE ", choiceData)
                 const response = await choiceService.createChoice(choiceData);
                 commit('ADD_CHOICE', response.data);
                 return response.data;
@@ -34,9 +33,10 @@ export const menuChoice = {
                 throw error;
             }
         },
-        async editChoice({ commit }, { choiceId, choiceData }) {
+        async editChoice({ commit }, choiceData) {
             try {
-                const response = await choiceService.updateChoice(choiceId, choiceData);
+                console.log("edit choice data", choiceData)
+                const response = await choiceService.updateChoice(choiceData);
                 commit('UPDATE_CHOICE', response.data);
                 return response.data;
             } catch (error) {

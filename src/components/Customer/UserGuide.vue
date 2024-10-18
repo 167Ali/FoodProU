@@ -209,7 +209,7 @@ const toggleHelpCenter = () => {
 .back-btn {
   margin-bottom: 10px;
   border: none;
-  background-color: #f44336; /* Red color for back button */
+  background-color: #e11809; /* Red color for back button */
   color: white;
   padding: 8px 12px;
   border-radius: 5px;
