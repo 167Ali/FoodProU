@@ -17,19 +17,38 @@
 
               <img src="../../assets/images/Screenshot 2024-10-07 151047.png" alt="Map" class="img-fluid rounded">
             </div>
+
             <!-- Display customer details and address -->
-            <div>
+             
+            <!-- <div>
               <i class="fa-solid fa-location-crosshairs"></i>
               <p class="address">
                 <strong>{{ orderDetails?.customer_details?.delivery_address || 'No address provided' }}</strong>
                 <br />
-                <!-- <button v-if="!editAddress" @click="editAddress = true" class="address-change-btn">Change</button>
+                <button v-if="!editAddress" @click="editAddress = true" class="address-change-btn">Change</button>
                 <div v-else>
                   <input type="text" v-model="newAddress" placeholder="Enter new address" class="updating-address">
                   <button @click="updateAddress" class="updating-address-btn">Update</button>
-                </div> -->
+                </div>
+              </p>
+            </div> -->
+
+            <div>
+              <i class="fa-solid fa-location-crosshairs"></i>
+              <p class="address">
+                <strong>{{ currentAddress || 'No address provided' }}</strong>
+                <br />
+                <button v-if="!editAddress" @click="editAddress = true" class="address-change-btn">Change</button>
+                <div v-else>
+                  <input type="text" v-model="newAddress" placeholder="Enter new address" class="updating-address">
+                  <button @click="updateAddress" class="updating-address-btn">Update</button>
+                </div>
               </p>
             </div>
+
+
+
+
 
             <!-- Rider note section -->
             <div class="mt-3">
@@ -71,10 +90,11 @@
                 </div>
                 <span class="total-inc">(Incl. VAT)</span>
               </div>
-              
-            </div>
+            </div><!---->
           </div>
         </div>
+
+
       </div>
 
       <!-- Delivery options, personal details, payment, and place order button -->
@@ -103,24 +123,19 @@
           <div class="card mb-4">
             <div class="card-body">
               <h4 class="card-title">Payment</h4>
-
-              <!-- <p>Available payment methods</p>
-              <div class="form-check delivery-check">
-                <input class="form-check-input" type="radio" name="paymentMethod" id="cod" checked />
-                <label class="form-check-label" for="cod">Cash On Delivery (COD)</label>
-              </div> -->
-
+              <!--  -->
               <p>Available payment methods</p>
               <div class="form-check delivery-check">
                 <input class="form-check-input" type="radio" name="paymentMethod" id="cod" checked />
-                <label class="form-check-label" for="cod">{{ orderDetails?.payment_method }}</label>
+                <label class="form-check-label" for="cod">{{ orderDetails?.payment_method }} (COD)</label>
+                <!-- <label class="form-check-label" for="cod">Cash On Delivery (COD)</label> -->
               </div>
 
             </div>
           </div>
           <!--  -->
           <div class="mt-4">
-            <button class="btn btn-green w-100">Place Order</button>
+            <button class="btn btn-green w-100" @click="placeOrder">Place Order</button>
           </div>
           
         </div>
@@ -130,37 +145,72 @@
   <PageFooter/>
 </template>
 
-<script setup>
-  import { computed,  onMounted } from 'vue';
+<!-- <script setup>
+  import { computed,  onMounted, ref } from 'vue';
   import { useStore } from 'vuex';
   import LoginHeader from '../HeaderFooter/LoginHeader.vue';
   import PageFooter from '../HeaderFooter/PageFooter.vue';
 
   const store = useStore();
   const orderDetails = computed(() => store.getters['orders/orderDetails']);
-  // const newAddress = ref('');
-  // const editAddress = ref(false);
+  const newAddress = ref('');
+  const editAddress = ref(false);
 
   onMounted(async() => {
     await store.dispatch('orders/getOrderDetails'); // Ensure correct action name
   });
 
-  // const updateAddress = () => {
-  //   store.dispatch('orders/updateAddress', newAddress.value);
-  //   editAddress.value = false;
-  // };
+  const updateAddress = () => {
+    store.dispatch('orders/updateAddress', newAddress.value);
+    editAddress.value = false;
+  };
+</script> -->
+
+<script setup>
+  import { computed, onMounted, ref } from 'vue';
+  import { useStore } from 'vuex';
+  import LoginHeader from '../HeaderFooter/LoginHeader.vue';
+  import PageFooter from '../HeaderFooter/PageFooter.vue';
+
+  const store = useStore();
+  const orderDetails = computed(() => store.getters['orders/orderDetails']);
+  const newAddress = ref('');
+  const editAddress = ref(false);
+  const currentAddress = ref(localStorage.getItem('deliveryAddress') || '');
+
+  // Fetch order details and set delivery address from local storage or API
+  onMounted(async() => {
+    await store.dispatch('orders/getOrderDetails');
+    const savedAddress = localStorage.getItem('deliveryAddress');
+    if (!savedAddress && orderDetails.value?.customer_details?.delivery_address) {
+      currentAddress.value = orderDetails.value.customer_details.delivery_address;
+      localStorage.setItem('deliveryAddress', currentAddress.value);
+    } else if (savedAddress) {
+      currentAddress.value = savedAddress;
+    }
+  });
+
+  // Update the delivery address and save it to local storage
+  const updateAddress = () => {
+    if (newAddress.value) {
+      currentAddress.value = newAddress.value;
+      localStorage.setItem('deliveryAddress', newAddress.value);
+      editAddress.value = false;
+    }
+  };
+
+  // Handle place order and pass updated address to the API
+  const placeOrder = () => {
+    const checkoutData = {
+      address: currentAddress.value,
+      // Other necessary checkout data (like items, payment method, etc.)
+    };
+    store.dispatch('orders/placeOrder', checkoutData);
+  };
 </script>
 
-<!-- <script setup>
-import { useStore } from 'vuex';
-import { onMounted } from 'vue';
 
-const store = useStore();
 
-onMounted(() => {
-  store.dispatch('orders/getOrderDetails');
-});
-</script> -->
 
 <style scoped>
   .card {
@@ -318,5 +368,27 @@ onMounted(() => {
     color: rgb(97, 97, 97);
     font-size: 12px;
   }
-  /*  */
+  /* Full width layout on large screens */
+  @media (max-width: 992px) {
+    .container {
+      max-width: 100% !important;  /* Overrides Bootstrap's max-width */
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+    }
+    
+    /* .row {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+    
+    .col-lg-7, .col-lg-5 {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    .card {
+      border: none;
+    } */
+  }
+
 </style>

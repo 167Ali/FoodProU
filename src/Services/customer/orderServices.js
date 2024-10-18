@@ -26,6 +26,9 @@ export const getOrderDetails = async () => {
   }
 };
 
+export const placeOrderAPI = (checkoutData) => {
+  return axios.post('/api/checkout', checkoutData);
+};
 // export const updateDeliveryAddress = async (newAddress) => {
 //   try {
 //     const response = await axios.post(`${baseURL}/api/customers/update-address`, 
@@ -38,3 +41,4 @@ export const getOrderDetails = async () => {
 //     throw error;
 //   }
 // };
+
