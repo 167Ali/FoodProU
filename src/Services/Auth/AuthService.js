@@ -6,7 +6,7 @@ import axios from 'axios';
 // Use Vite's way of accessing environment variables
 
 
-const API_BASE_URL_H = import.meta.env.VITE_API_BASE_URL_H; // Backend API URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Backend API URL
 
 
 
@@ -55,7 +55,7 @@ export const login = async (credentials) => {
 
     try {
 
-        const response = await axios.post(`${API_BASE_URL_H}/api/login`, credentials);
+        const response = await axios.post(`${API_BASE_URL}/api/login`, credentials);
 
         console.log('Login response', response);
 

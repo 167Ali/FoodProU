@@ -249,6 +249,7 @@ const deleteChoice = async (index) => {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 20;
 }
 
 .scroller-card {
@@ -268,6 +269,7 @@ const deleteChoice = async (index) => {
     border-radius: 8px;
     width: 500px;
     max-width: 100%;
+
 }
 
 /* .card {
