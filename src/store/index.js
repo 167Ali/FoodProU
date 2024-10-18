@@ -14,8 +14,8 @@ import Reviews from './modules/customerReviews';
 import axios from 'axios';
 import ResturantDetailsStore from './customer/ResturantDetailsStore';
 import ResturantRevinue from './customer/ResturantRevinue'; // Import the new module
+import orders from './customer/orders';
 import favoriteStore from './customer/FavScreenCus';
-
 
 const store = createStore({
   modules: {
@@ -24,6 +24,7 @@ const store = createStore({
     menuChoice,
     order, // register the order module
     Prevorder,
+    orders, // Register the 'orders' module
     Resturantownerreviews,
     Reviews,
     rewards,

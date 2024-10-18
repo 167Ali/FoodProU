@@ -1,9 +1,12 @@
 <template>
 
     <div class="p-2">
-        <div class="mb-3">
-            <h4 class="card-title">{{ isEditMode ? 'Edit Product' : 'Add Product' }}</h4>
-        </div>
+        <div class="mb-3 d-flex justify-content-between align-items-center">
+    <h4 class="card-title">{{ isEditMode ? 'Edit Product' : 'Add Product' }}</h4>
+    <button class="btn btn-outline" type="button" @click="cancelForm">
+        <i class="fa-solid fa-xmark fa-lg" style="color: #030303;"></i>
+    </button>
+</div>
         <form ref="productFormRef" @submit.prevent="submitForm" :class="{ 'was-validated': isFormValidated }">
             <!-- Product Name -->
             <div class="card">

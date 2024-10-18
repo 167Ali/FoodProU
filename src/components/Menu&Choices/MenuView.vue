@@ -230,6 +230,7 @@ const deleteProduct = async (index) => {
 
 .card-title {
     font-weight: bold;
+    color:#00754A;
 }
 
 .card-text {
