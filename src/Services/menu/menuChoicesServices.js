@@ -10,12 +10,28 @@ const baseURL = import.meta.env.VITE_API_BASE_URL;
 // Service for managing choices
 const createProductFormData = (choiceData) => {
     const formData = new FormData();
-    console.log(choiceData, 'pp data')
+    // console.log(choiceData, 'pp data')
     formData.append('name', choiceData.name);
     formData.append('is_required', choiceData.is_required);
     formData.append('choice_type', choiceData.choice_type);
     formData.append('choices', JSON.stringify(
         choiceData.choices.map(item => ({
+            name: item.name,
+            price: item.price
+        }))
+    ));
+    return formData;
+};
+const updateProductFormData = (choiceData) => {
+    const formData = new FormData();
+    // console.log(choiceData, 'pp data')
+    formData.append('id', choiceData.id);
+    formData.append('name', choiceData.name);
+    formData.append('is_required', choiceData.is_required);
+    formData.append('choice_type', choiceData.choice_type);
+    formData.append('choices', JSON.stringify(choiceData.choices));
+    formData.append('new_choices', JSON.stringify(
+        choiceData.new_choices.map(item => ({
             name: item.name,
             price: item.price
         }))
@@ -35,10 +51,15 @@ export const choiceService = {
     },
 
     // Update an existing choice
-    updateChoice(menuId, choiceId, choiceData) {
-        return axios.put(`${baseURL}/api/menu/${menuId}/choices/${choiceId}`, choiceData);
+    updateChoice(choiceData) {
+        const formData = updateProductFormData(choiceData);
+        return axios.post(`${baseURL}/api/update-choice-group`, formData, {
+            headers: {
+                ...headers,
+                'Content-Type': 'multipart/form-data', // Set the appropriate content type
+            }
+        });
     },
-
     // Delete a choice
     deleteChoice(id) {
         console.log("SER ", id)
