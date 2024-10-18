@@ -2,8 +2,9 @@
     <LoginHeader />
     <div class="container mt-5 d-flex justify-content-center">
         <div class="form-container">
+            <Loader v-if="loading" /> <!-- Use the Loader component -->
             <!-- Profile -->
-            <div class="mb-4">
+            <div class="mb-4" v-else>
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <h5 class="fw-bold">My Profile</h5>
                     <i class="fa-regular fa-user"></i>
@@ -54,24 +55,22 @@
                     <button type="submit" class="btn btn-primary scale-on-hover"
                         :disabled="isPasswordFormInvalid">Save</button>
                     <hr>
-                    <router-link to="/fav">View Favorites</router-link> <br>
-                    <router-link to="/orderScreen">View Order Screen</router-link> <br>
-                    <router-link to="/modalView">View Modal</router-link> <br>
-                    <router-link to="/restOwnerProfile">View Rest Owner Profile</router-link> <br>
                 </form>
             </div>
         </div>
     </div>
-    <page-footer/>
+    <PageFooter />
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue';  // Import onMounted here
+import { computed, onMounted, ref } from 'vue';  // Import onMounted here
 import { useStore } from 'vuex';
 import LoginHeader from '@/components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '@/components/HeaderFooter/PageFooter.vue';
+import Loader from '@/components/OtherComponents/Loader.vue'; // Import the Loader component
 
 const store = useStore();
+const loading = ref(true); // Loading state
 
 // Get the profile from Vuex store
 const profile = computed(() => store.state.profile.profile);
@@ -82,6 +81,8 @@ onMounted(async () => {
         await store.dispatch('profile/fetchProfile');
     } catch (error) {
         console.error('Error fetching profile:', error);
+    } finally {
+        loading.value = false; // Set loading to false after fetching data
     }
 });
 
@@ -148,8 +149,6 @@ const onBlur = (event) => {
     }
 };
 </script>
-
-
 
 <style scoped>
 @import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';

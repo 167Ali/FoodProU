@@ -7,7 +7,7 @@ const state = {
     last_name: '',
     phone_number: '',
     email: '',
-    isEmailVerified: false,
+    isEmailVerified: true,
   },
 };
 
