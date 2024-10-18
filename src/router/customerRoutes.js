@@ -16,7 +16,15 @@ export default [
     path: '/RestaurantPage',
     name: 'RestaurantPage',
     component: Restaurantpage,
-    
+    children: [
+      
+      {
+        path: '/caart',
+        name: 'addtocart',
+        component: AddtoCart
+      },
+      
+     ]
   },
   
   {
@@ -35,11 +43,7 @@ export default [
     name: 'DashboardResturantPage',
     component: DashboardResturantPage,
      children: [
-      {
-        path: '/caart',
-        name: 'addtocart',
-        component: AddtoCart
-      },
+      
       {
         path: '/userguide',
         name: 'UserGuide',

@@ -1,19 +1,19 @@
 <template>
+     <nav class="navbar">
+            <div class="navbar-left">
+                <!-- Logo -->
+                <i class="fa-solid fa-utensils logo"></i>
+                <span class="brand-name">foodpro For Bussiness</span>
+            </div>
+        </nav>
     <div class="container-fluid">
-
-        <div
-            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Delivery Menu</h1>
-        </div>
-
-
         <div class="row">
 
             <!-- Main content -->
             <main class="col-md-6 ms-sm-auto col-lg-8 px-md-4">
                 <div class="container mt-4">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h2>Menu Categories</h2>
+                        <h3>Menu Categories</h3>
                         <button class="btn btn-primary" @click="openModal">Add Category</button>
                     </div>
 
@@ -29,7 +29,7 @@
                                     <div class="menu-card p-3 text-center" :class="{ selected: selectedItem === index }"
                                         @click="selectItem(index, item.id, item.name)">
                                         <div class="menu-icon mb-2"></div>
-                                        <h5 class="menu-title">{{ item.name }}</h5>
+                                        <h5 class="menu-title">{{ item.name }} <i class="fa-solid fa-bowl-food"></i></h5>
                                         <p class="menu-stock">{{ item.menu_items_count }} Menu In Stock</p>
                                     </div>
                                 </div>
@@ -248,6 +248,35 @@ const selectItem = (index, id, title) => {
 </script>
 
 <style scoped>
+
+/* Navbar */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 50px;
+    background-color: white;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 25px;
+}
+
+/* Left Section (Logo) */
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #00754a;
+}
+
+.brand-name {
+    font-size: 22px;
+    font-weight: bold;
+    color: #00754a;
+}
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -319,7 +348,7 @@ const selectItem = (index, id, title) => {
 }
 
 .menu-card {
-    background-color: #f8f9fa;
+    background-color: #ffffff;
     border-radius: 8px;
     transition: background-color 0.3s, color 0.3s;
     cursor: pointer;
@@ -328,7 +357,7 @@ const selectItem = (index, id, title) => {
 }
 
 .menu-card:hover {
-    background-color: #e9ecef;
+    background-color: #ffffff;
 }
 
 .menu-card.selected {
@@ -344,7 +373,10 @@ const selectItem = (index, id, title) => {
     font-size: 1.2rem;
     margin-bottom: 0.25rem;
 }
-
+.fa-bowl-food
+{
+    margin-left: 12px;
+}
 .menu-stock {
     font-size: 0.9rem;
     color: #6c757d;
@@ -357,7 +389,7 @@ const selectItem = (index, id, title) => {
 
 /* categories */
 .menu-card {
-    background-color: #f8f9fa;
+    background-color: #ffffff;
     border-radius: 8px;
     transition: background-color 0.3s, color 0.3s;
     cursor: pointer;
@@ -368,7 +400,7 @@ const selectItem = (index, id, title) => {
 }
 
 .menu-card:hover {
-    background-color: #e9ecef;
+    background-color: #ffffff;
 }
 
 .menu-card.selected {

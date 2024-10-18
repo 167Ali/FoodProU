@@ -1,26 +1,27 @@
-<!-- src/views/Home.vue -->
 <template>
-    <LoginHeader />
+    <LoginHeader />    
     <div class="restaurant-header">
         <RestaurantHeader />
         <hr>
         <Deals />
     </div>
+    
     <div>
-        <CategoryNavbar/>
+        <CategoryNavbar />
     </div>
 
-    <PageFooter />
     
+
+    <PageFooter />
 </template>
 
 <script setup>
 import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
-import RestaurantHeader from '../../components/HeaderFooter/RestaurantHeader.vue'
-import Deals from '../../components/Customer/Deals.vue'
-import CategoryNavbar from '../../components/Customer/CategoryNavbar.vue'
+import RestaurantHeader from '../../components/HeaderFooter/RestaurantHeader.vue';
+import Deals from '../../components/Customer/Deals.vue';
+import CategoryNavbar from '../../components/Customer/CategoryNavbar.vue';
 import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
- 
+
 </script>
 
 <style scoped>
@@ -30,12 +31,11 @@ import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
     flex-direction: column;
 }
 
-.restaurant-header hr{
+.restaurant-header hr {
     margin: 0;
     color: rgb(128, 127, 127);
     opacity: 0.1;
     font-weight: lighter;
-    /* font-size: 1px; */
 }
 
 </style>
