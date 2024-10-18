@@ -1,5 +1,6 @@
 <template>
   <div class="favorite-restaurants">
+    <Loader v-if="isLoading" />
     <FavoriteRestaurantCard
       v-for="restaurant in favoriteRestaurants"
       :key="restaurant.id"
@@ -13,19 +14,24 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import FavoriteRestaurantCard from '../../components/Customer/FavRestCard.vue'; // Ensure the correct path to the card component
+import Loader from '../../components/OtherComponents/Loader.vue'; // Ensure the correct path to the loader component
 
 const store = useStore();
 const favoriteRestaurants = computed(() => store.state.favoriteStore.favoriteRestaurants);
+const isLoading = ref(true); // State to track loading status
 
-onMounted(() => {
-  store.dispatch('favoriteStore/getFavoriteRestaurants').then(() => {
-    console.log('Favorite Restaurants:', favoriteRestaurants.value);
-  });
+onMounted(async () => {
+  try {
+    await store.dispatch('favoriteStore/getFavoriteRestaurants');
+  } catch (error) {
+    console.error('Error fetching favorite restaurants:', error);
+  } finally {
+    isLoading.value = false; // Set loading to false after data is fetched
+  }
 });
-
 </script>
 
 <style scoped>
