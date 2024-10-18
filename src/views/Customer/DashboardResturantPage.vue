@@ -24,36 +24,36 @@
         </div>
       </div>
     </div>
-  </div>
-  <PageFooter />
-</template>
-
-<script setup>
-import { computed, onMounted } from 'vue';
-import { useStore } from 'vuex';
-import RestaurantCard from '../../components/Customer/RestaurantCard.vue';
-import DashboardFilter from '../../components/Customer/DashboardFilter.vue';
-import Searchbar from '../../components/OtherComponents/Searchbar.vue';
-import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
-import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
-import discounts from '@/components/Customer/discounts.vue';
-import Cuisines from '@/components/Customer/Cuisines.vue';
-
-const store = useStore();
-
-// Get restaurants from the store
-const restaurants = computed(() => store.getters['resturantDetails/allRestaurants']);
-
-// Function to apply filters
-const applyFilters = (filters) => {
-  console.log('Filters applied:', filters);
-  store.dispatch('resturantDetails/fetchRestaurants', filters);
-};
-
-// Fetch all restaurants on mount
-onMounted(() => {
-  store.dispatch('resturantDetails/fetchRestaurants');
-});
-</script>
-
-<style scoped></style>
+    <PageFooter />
+  </template>
+  
+  <script setup>
+  import { computed, onMounted } from 'vue';
+  import { useStore } from 'vuex';
+  import RestaurantCard from '../../components/Customer/RestaurantCard.vue';
+  import DashboardFilter from '../../components/Customer/DashboardFilter.vue';
+  import Searchbar from '../../components/OtherComponents/Searchbar.vue';
+  import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
+  import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
+  import discounts from '@/components/Customer/discounts.vue';
+  import Cuisines from '@/components/Customer/Cuisines.vue';
+  
+  const store = useStore();
+  
+  // Get restaurants from the store
+  const restaurants = computed(() => store.getters['resturantDetails/allRestaurants']);
+  
+  // Function to apply filters
+  const applyFilters = (filters) => {
+    console.log('Filters applied:', filters);
+    store.dispatch('resturantDetails/fetchRestaurants', filters);
+  };
+  
+  // Fetch all restaurants on mount
+  onMounted(() => {
+    store.dispatch('resturantDetails/fetchRestaurants');
+  });
+  </script>
+  
+  <style scoped></style>
+  
