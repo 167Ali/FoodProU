@@ -38,9 +38,10 @@
                                         </thead> -->
                                         <tbody>
                                             <tr v-for="(item, idx) in choice.choices" :key="idx">
-                                                <td class="small">{{ item?.name || 'Unnamed' }}</td>
-                                                <!-- Add fallback -->
-                                                <td class="small">{{ item?.price || '0' }} pkr</td>
+                                                <td class="small">{{ item.name }}</td>
+                                                <!-- Smaller text for data -->
+                                                <td class="small">{{ item.price }} pkr</td>
+                                                <!-- Smaller text for data -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -48,7 +49,7 @@
                             </div>
                         </div>
                         <div class="col-2 d-flex flex-column justify-content-center">
-                            <button class="btn btn-outline mb-3" @click="viewChoice(index, choice.id)">
+                            <button class="btn btn-outline mb-3" @click="viewChoice(index)">
                                 <i class="fa-regular fa-pen-to-square fa-xl" style="color: #343f50;"></i>
                             </button>
                             <button class="btn btn-outline" @click="deleteChoice(choice.id)">
@@ -121,12 +122,6 @@ const processedChoices = computed(() => {
                 choices: item.choices,
                 type: 'choice',
             };
-        } else {
-            return {
-                ...item,
-                choices: [], // Ensure choices is always an array
-                type: 'unknown', // Fallback type
-            };
         }
     });
 });
@@ -188,6 +183,7 @@ const isFormVisible = ref(false);
 const isEditMode = ref(false);
 const currentChoice = ref(null);
 const currentEditIndex = ref(null);
+
 // Function to open the form modal for creating a new choice
 const openModal = () => {
     isFormVisible.value = true;
@@ -205,8 +201,6 @@ const viewChoice = (index) => {
 
 // Save function for the form component
 const saveChoice = async (choice) => {
-    console.log("choice  and id ", choice)
-
     try {
         if (isEditMode.value && currentEditIndex.value !== null) {
 
@@ -214,6 +208,7 @@ const saveChoice = async (choice) => {
             console.log("response edit choice ", success);
             //choices.value[currentEditIndex.value] = choice;
         } else {
+            console.log("CC ", choice)
             const success = await store.dispatch('menuChoice/addChoice', choice);
             console.log("response choice ", success);
         }
