@@ -3,7 +3,8 @@
   <div>
     <LoginHeader />
     <div class="restaurant-header">
-      <RestaurantHeader />
+      <!-- Pass restaurantData as a prop to RestaurantHeader -->
+      <RestaurantHeader :restaurant="restaurantData" />
       <hr />
       <Deals />
     </div>
@@ -15,7 +16,7 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { defineProps } from 'vue';
 import { useStore } from 'vuex'; // Import useStore to access the store
 import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
@@ -34,6 +35,8 @@ const props = defineProps({
 
 const store = useStore();
 
+const restaurantData = ref(null); // Added: to store restaurant data
+
 onMounted(() => {
   console.log('Restaurant ID:', props.id);
   // Dispatch an action to fetch restaurant menus
@@ -43,6 +46,12 @@ onMounted(() => {
       // Access the fetched data from the store
       const menus = store.getters['resturantDetails/getRestaurantMenus'];
       console.log('Menus data:', menus);
+
+      // Extract the restaurant data
+      restaurantData.value = menus.restaurant;
+
+      // Log the restaurant data to verify
+      console.log('Restaurant data:', restaurantData.value);
     })
     .catch((error) => {
       console.error('Error fetching menus:', error);

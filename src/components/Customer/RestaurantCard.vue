@@ -2,7 +2,7 @@
 <template>
   <div class="card m-2">
     <div class="position-relative">
-      <img :src="getImageUrl(restaurant.image)" class="card-img-top" alt="Restaurant Image">
+      <img :src="(restaurant.image)" class="card-img-top" alt="Restaurant Image">
       <!-- If there are any discounts, display them -->
       <div
         class="position-absolute top-0 start-0 m-2 d-flex flex-column"
