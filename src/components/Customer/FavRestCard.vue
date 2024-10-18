@@ -11,20 +11,30 @@
         <p class="fw-bold"><i class="fas fa-door-closed"></i> Closing:- <span class="time fw-light">{{ closingTime }}</span></p>
       </div>
     </div>
-    <button class="view-more-btn">Explore</button>
+    <button class="view-more-btn" @click="goToMenu">Explore</button>
   </div>
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
+
 const props = defineProps({
   name: String,
   logoPath: String,
   cuisine: String,
   openingTime: String,
-  closingTime: String
+  closingTime: String,
+  restaurantId: Number  // Added restaurantId prop
 });
 
 const logoUrl = props.logoPath ? `http://192.168.15.90:8000/${props.logoPath}` : '/path/to/default-logo.png';
+
+// Using Vue Router to navigate to the restaurant menu page
+const router = useRouter();
+
+const goToMenu = () => {
+  router.push({ name: 'RestaurantMenu', params: { restaurantId: props.restaurantId } });
+};
 </script>
 
 <style scoped>
@@ -34,12 +44,12 @@ const logoUrl = props.logoPath ? `http://192.168.15.90:8000/${props.logoPath}` :
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   padding: 20px;
   width: 100%;  
-  max-width: 320px; /* Reduced card size */
-  height: 380px;   /* Adjusted height */
+  max-width: 320px;
+  height: 380px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;  
-  align-items: flex-start;  /* Align content to the left */
+  justify-content: space-between;
+  align-items: flex-start;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   margin: 16px;
 }
@@ -51,7 +61,7 @@ const logoUrl = props.logoPath ? `http://192.168.15.90:8000/${props.logoPath}` :
 
 .logo-container {
   width: 100%;
-  height: 120px; /* Adjusted to rectangular size */
+  height: 120px;
   overflow: hidden;
   background-color: #f9f9f9;
   display: flex;
@@ -67,12 +77,12 @@ img {
 }
 
 .restaurant-details {
-  text-align: left; /* Left align text inside the details */
-  width: 100%;  /* Ensure it takes full width */
+  text-align: left;
+  width: 100%;
 }
 
 h3 {
-  font-size: 1.4rem; /* Reduced font size */
+  font-size: 1.4rem;
   margin: 8px 0;
   color: #00754A;
   font-weight: bold;
@@ -94,7 +104,7 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-size: 0.85rem; /* Slightly reduced font size */
+  font-size: 0.85rem;
   color: #555;
 }
 
@@ -112,11 +122,11 @@ h3 {
   color: white;
   border: none;
   border-radius: 20px;
-  padding: 8px 16px;  /* Reduced padding */
+  padding: 8px 16px;
   font-size: 0.9rem;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
-  align-self: flex-start;  /* Align the button to the left */
+  align-self: flex-start;
 }
 
 .view-more-btn:hover {

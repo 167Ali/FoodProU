@@ -13,10 +13,10 @@ import UserGuide from '@/components/Customer/UserGuide.vue'
 
 export default [
   {
-    path: '/RestaurantPage',
-    name: 'RestaurantPage',
+    path: '/restaurant/:restaurantId/menu',
+    name: 'RestaurantMenu',
     component: Restaurantpage,
-    
+    props: true // To pass the restaurantId as a prop
   },
   
   {
