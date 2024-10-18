@@ -6,9 +6,12 @@
                     <th>Order Id</th>
                     <th>Customer Name</th>
                     <th>Phone</th>
+                    <th>Address</th>
                     <th>Restaurant</th>
                     <th>Total Price</th>
-                    <th>Food Commission</th>
+                    <th>Food ProCom</th>
+                    <th>Status</th>
+                    <th>Date</th>
                     <th>View Details</th>
                 </tr>
             </thead>
@@ -18,9 +21,12 @@
                         <td>{{ order.id }}</td>
                         <td>{{ order.name }}</td>
                         <td>{{ order.phone }}</td>
-                        <td>{{ order.resturant }}</td>
+                        <td>{{ order.address }}</td>
+                        <td>{{ order.restaurant }}</td>
                         <td>{{ formatCurrency(order.totalPrice) }}</td>
                         <td>{{ formatCurrency(order.foodCommission) }}</td>
+                        <td>{{ order.status }}</td>
+                        <td>{{ order.date }}</td>
                         <td>
                             <button class="btn btn-details" @click="openModal(order)">
                                 <i class="fas fa-eye"></i> View Details
@@ -44,15 +50,15 @@
                             <h5 class="text-center">Receipt</h5>
                             <hr />
                             <div class="row">
-                                <div class="col-6">
-                                    <p><strong>Order Number:</strong> {{ orderDetails.id }}</p>
-                                    <p><strong>Date:</strong> {{ orderDetails.date }}</p>
-                                    <p><strong>Time:</strong> {{ orderDetails.time }}</p>
-                                </div>
-                                <div class="col-6 text-end">
+                                <div class="col-6 ">
                                     <p><strong>Customer Name:</strong> {{ orderDetails.name }}</p>
                                     <p><strong>Phone Number:</strong> {{ orderDetails.phone }}</p>
                                     <p><strong>Address:</strong> {{ orderDetails.address }}</p>
+                                </div>
+                                <div class="col-6 d-flex flex-column align-items-end ">
+                                    <p><strong>Order Number:</strong> {{ orderDetails.id }}</p>
+                                    <p><strong>Date:</strong> {{ orderDetails.date }}</p>
+                                    <p><strong>Time:</strong> {{ orderDetails.time }}</p>
                                 </div>
                             </div>
                             <hr />
@@ -119,6 +125,8 @@ const props = defineProps({
 const formatCurrency = (amount) => {
     return `Rs ${amount.toFixed(2)}`;
 };
+
+
 
 // Order details ref
 const orderDetails = ref({});

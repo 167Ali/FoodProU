@@ -12,7 +12,7 @@
   
   
   <script setup>
-  import ViewAllOrdersAdm from '../Admin/ViewAllOrders.vue';
+  import ViewAllOrdersAdm from '../../components/OtherComponents/AllOrders/OrdersMainScreen.vue';
   import SideBar from '@/components/RestaurantOwner/RestaurantDashboard/SideBar.vue';
   </script>
   
