@@ -20,20 +20,28 @@ const routes = [
     component: RecipeBlog
   },
   {
+
+    path: '/Get_Started_page',
+
+    name: 'Get_Started_page',
+
+    component: Get_Started_page
+
+  },
+
+  {
     path: '/rewards',
     name: 'Rewards',
-    component: Rewards
+
+    component: () => import('../views/Customer/Rewards.vue')
+
   },
   {
-    path: '/get-started',
-    name: 'Get_Started',
+    path:'/get-started-page',
+    name:'Get_Started_page',
     component: Get_Started_page
   },
-  // {
-  //   path: '/test',
-  //   name: 'test', 
-  //   component: () => import('../components/Customer/TesterPage.vue') 
-  // },
+
 ]
 
 const router = createRouter({
