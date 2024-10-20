@@ -1,12 +1,10 @@
 <!-- src/views/Home.vue -->
 <template>
-    <LoginHeader />
     <div class="restaurant-header">
-        <RestaurantHeader />
+        <AdminResturantHeader />
         <hr>
         <Deals />
     </div>
-    
     <div>
         <CategoryNavbar/>
     </div>
@@ -16,13 +14,14 @@
 </template>
 
 <script setup>
-import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
-import RestaurantHeader from '../../components/HeaderFooter/RestaurantHeader.vue'
-import Deals from '../../components/Customer/Deals.vue'
-import CategoryNavbar from '../../components/Customer/CategoryNavbar.vue'
+import AdminResturantHeader from './AdminResturantHeader.vue';
+import Deals from '../../components/Customer/Deals.vue';
+import CategoryNavbar from '../../components/Customer/CategoryNavbar.vue';
 import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
- 
+
+
 </script>
+
 
 <style scoped>
 .restaurant-header {
