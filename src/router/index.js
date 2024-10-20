@@ -1,74 +1,45 @@
 // src/router/index.js
 
 import { createRouter, createWebHistory } from 'vue-router'
-
-
-
-// Import route modules
-
-import adminRoute from './adminRoutes'
-
 import restaurantownerRoutes from './restaurantownerRoutes'
-
-import customerRoutes from './customerRoutes'
-
+// Import route modules
 import otherRoutes from './otherRoutes';
-import Get_Started_page from '@/views/Login_Signup/Get_Started_page.vue'
-import RecipeBlog from '../views/Customer/RecipeBlog.vue'
-import Rewards from '../views/Customer/Rewards.vue'
-
+import adminRoute from './adminRoutes'
+import UserGuide from '../components/Customer/UserGuide.vue';
+import customerRoutes from './customerRoutes'
+import RecipeBlog from '@/views/Customer/RecipeBlog.vue';
+import Rewards from '../views/Customer/Rewards.vue';
+// import Get_Started_page from '@/views/Login_Signup/Get_Started_page.vue'
+// import RecipeBlog from '../views/Customer/RecipeBlog.vue'
+// import Rewards from '../views/Customer/Rewards.vue'
 const routes = [
-
-  ...adminRoute,
-
-  ...restaurantownerRoutes,
-
-  ...customerRoutes,
-
   ...otherRoutes,
-
+  ...customerRoutes,
+  ...restaurantownerRoutes,
+  ...adminRoute,
   {
-
-    path: '/user-guide',
-
     name: 'UserGuide',
-
-    component: () => import('../components/Customer/UserGuide.vue')
-
+    path: '/user-guide',
+    component: UserGuide
   },
 
   {
-
-    path: '/recipe-blog',
-
     name: 'RecipeBlog',
-
-    component: () => import('../views/Customer/RecipeBlog.vue')
-
+    path: '/recipe-blog',
+    component: RecipeBlog
   },
 
   {
-
-    path: '/rewards',
-
     name: 'Rewards',
-
-    component: () => import('../views/Customer/Rewards.vue')
-
+    path: '/rewards',
+    component: Rewards
   }
 
 ]
-
-
-
+// 
 const router = createRouter({
-
+  // 
   history: createWebHistory(),
-
-  routes
-
+  routes,
 })
-
-
-
-export default router
+export default router;
