@@ -194,16 +194,16 @@
   /* position: fixed;
   right: 0px;
   top: 64px; */
-  margin-top: 80px;
+  margin-top: 60px;
   margin-right: 80px;
   width: 350px;
-  height: calc(85vh - 64px);
+  height: calc(75vh - 65px);
   padding: 20px;
   display: flex;
   flex-direction: column;
   border-radius: 8px;
   border: 1px solid rgb(223, 222, 222);
-  z-index: 999;
+  
 }
 
 .cart-modal {
@@ -213,6 +213,7 @@
   height: calc(100vh - 64px);
   overflow-y: auto;
   z-index: 800;
+  scrollbar-width: none; 
 }
 
 h5{
@@ -386,6 +387,10 @@ h5{
     /* display: none; */
   /* } */
   .cart-visible {
+    display: none;
+  }
+  .cart-container
+  {
     display: none;
   }
 }
