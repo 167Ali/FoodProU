@@ -17,7 +17,6 @@ import ResturantDetailsStore from './customer/ResturantDetailsStore';
 import ResturantRevinue from './customer/ResturantRevinue'; // Import the new module
 import orders from './customer/orders';
 import favoriteStore from './customer/FavScreenCus';
-
 import RevenueStore from './Admin/RevenueStore';
 const store = createStore({
   modules: {
@@ -37,7 +36,6 @@ const store = createStore({
     resturantRevinue: ResturantRevinue,
     favoriteStore,
     orderDetails, // Ensure this is properly registered
-
   },
 
   state: {

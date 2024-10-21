@@ -61,5 +61,5 @@ export const deleteProductService = (productId, restaurantid = 8) => {
 
 // Service to display all products
 export const displayProductsService = (categoryId) => {
-    return axios.get(`${baseURL}/api/menu-with-item/${categoryId}`, { headers });
+    return axios.get(`${baseURL}/api/menu/with-item/${categoryId}`, { headers });
 };
