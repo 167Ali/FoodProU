@@ -19,7 +19,7 @@ import ResturantDetailsStore from './customer/ResturantDetailsStore';
 import ResturantRevinue from './customer/ResturantRevinue'; 
 import orders from './customer/orders';
 import favoriteStore from './customer/FavScreenCus';
-import RevenueStore from '@/Admin/RevenueStore';
+import RevenueStore from '@/store/admin/RevenueStore';
 const store = createStore({
   modules: {
     menuCategory,
