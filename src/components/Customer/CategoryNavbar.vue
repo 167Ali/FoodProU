@@ -22,25 +22,23 @@
       </div>
   
       <!-- Menu Sections -->
-      <div class="main-container">
-    <div class="main-section ">
-      <div v-for="category in categoryLinks" :key="category.id" class="menu-section" :id="category.id">
-        <h2 class="popular-title">{{ category.name }}</h2>
-        <p class="popular-subtitle">Single serving</p>
-        <div class="popular-items">
-          <CategoryItem v-for="item in items" :key="item.id" :item="item" />
+      <div class="main-section">
+
+        <div v-for="category in categoryLinks" :key="category.id" class="menu-section" :id="category.id">
+          <h2 class="popular-title">{{ category.name }}</h2>
+          <p class="popular-subtitle">Single serving</p>
+          <div class="popular-items">
+            <CategoryItem v-for="item in items" :key="item.id" :item="item" />
+          </div>
         </div>
       </div>
-    </div>
-    <AddtoCart />
-  </div>
     </div>
   </template>
   
 <script setup>
   import { ref, onMounted, watch, nextTick } from 'vue';
   import CategoryItem from './CategoryItem.vue'
-  import AddtoCart from '../../components/Customer/AddtoCart.vue'
+  // import AddtoCart from '../../components/Customer/AddtoCart.vue'
 
   
   // Category links (Dynamic example)
@@ -219,193 +217,158 @@
 </script>
   
 <style scoped>
-.main-container {
-  display: flex; /* Use Flexbox for layout */
-  width: 100%; /* Full width */
-}
+  .main-section{
+    grid-template-columns: 1fr 1fr;
+  }
+  .menu-section{
+    /* width: 600px; */
+    display: inline-block;
 
-.main-section {
-  flex: 0 0 70%; /* Default: Takes 70% of the width on larger screens */
-  padding: 20px; /* Optional padding */
-  overflow-y: auto; /* Allow vertical scrolling if needed */
-  height: calc(90vh - 40px); /* Fixed height */
-  scrollbar-width: none; /* Hide scrollbar for Firefox */
-}
-
-/* Hide scrollbar for Webkit browsers (Chrome, Safari) */
-.main-section::-webkit-scrollbar {
-  display: none; /* Hide the scrollbar */
-}
-
-.menu-section {
-  margin: 40px 0; /* Vertical spacing */
-}
-
-.add-to-cart {
-  flex: 0 0 30%; /* Default: Takes 30% of the width on larger screens */
-  padding: 20px; /* Optional padding */
-  position: sticky; /* Make it sticky */
-  top: 20px; /* Distance from the top when scrolling */
-  height: calc(100vh - 40px); /* Full height minus margins */
-  overflow-y: auto; /* Allow vertical scrolling if needed */
-}
-
-.restaurant-menu {
-  font-family: 'Agrandir';
-}
-
-/* Adjust layout for mobile screens */
-@media (max-width: 600px) {
-  .main-section {
-    flex: 1 0 100%; /* Full width on mobile */
-    height: auto; /* Allow height to adjust */
   }
 
-  .add-to-cart {
-    display: none; /* Hide the cart on mobile */
-  }
-}
-
-.menu-section {
-  margin: 40px 60px; /* Spacing for menu sections */
-}
-
-.popular-items {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Default: 2 columns */
-  gap: 20px; /* Space between items */
-}
-
-/* Responsive adjustments */
-@media (max-width: 800px) {
-  .popular-items {
-    grid-template-columns: repeat(1, 1fr); /* 1 column for smaller screens */
+  .restaurant-menu {
+    font-family: 'Agrandir';
   }
   
-}
-
-@media (min-width: 801px) and (max-width: 1200px) {
-  .popular-items {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns for medium screens */
+  .category-navbar {
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    padding: 0px 50px 0px 60px;
+    box-shadow: 0 6px 20px -10px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    white-space: nowrap;
+    overflow-x: auto;
   }
-}
-
-@media (min-width: 1201px) {
-  .popular-items {
-    grid-template-columns: repeat(2, 1fr); /* 3 columns for larger screens */
-  }
-}
-
-/* Other styles for category navbar and search */
-.category-navbar {
-  display: flex;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  background-color: white;
-  padding: 0px 50px 0px 60px;
-  box-shadow: 0 6px 20px -10px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-  white-space: nowrap;
-  overflow-x: auto;
-}
-
-.menu-search {
-  background-color: rgb(245, 245, 245);
-  border: none;
-  padding: 5px 20px;
-  border-radius: 20px;
-  margin-right: 20px;
-  font-size: 14px;
-  font-weight: 900;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-
-.scroll-btn {
-  background-color: white;
-  padding: 0px 14px;
-  color: rgb(62, 62, 62);
-  border-radius: 100px;
-  font-size: 24px;
-  border: 1px solid rgb(145, 143, 143);
-  font-weight: bolder;
-  cursor: pointer;
-}
-
-.scroll-btn.right {
-  margin-left: auto;
-}
-
-/* Categories styles */
-.categories {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scrollbar-width: none; /* For Firefox */
-  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
-}
-
-.categories::-webkit-scrollbar {
-  display: none; /* For Chrome, Safari, and Opera */
-}
-
-.category-link {
-  font-size: 15px;
-  margin: 0px 15px;
-  padding: 15px 15px;
-  color: black;
-  position: relative;
-  cursor: pointer;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.category-link::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 3px;
-  background-color: #00754A;
-  transition: width 0.3s ease, left 0.3s ease;
-}
-
-.category-link:hover {
-  background-color: rgb(244, 244, 244);
-}
-
-.category-link:hover::before {
-  width: 50%;
-  left: 25%;
-}
-
-.category-link.active::before {
-  width: 100%;
-  left: 0;
-}
-
-/* Responsive Search Button for Mobile */
-@media screen and (max-width: 600px) {
+  
   .menu-search {
+    background-color: rgb(245, 245, 245);
+    border: none;
+    padding: 5px 20px;
+    border-radius: 20px;
+    margin-right: 20px;
+    font-size: 14px;
+    font-weight: 900;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }
+  
+  .search-btn {
     display: none;
   }
+  
+  .categories {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+  }
+  .categories::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+  }
 
-  .search-btn {
-    display: inline-block;
-    margin-left: -50px;
-    border-radius: 50px;
-    color: rgb(62, 62, 62);
-    padding: 6px 10px;
-    margin-right: 10px;
-    border: 1px solid rgb(145, 143, 143);
+  .category-link {
+    font-size: 15px;
+    margin: 0px 15px;
+    padding: 15px 15px;
+    color: black;
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .category-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background-color: #00754A;
+    transition: width 0.3s ease, left 0.3s ease;
+  }
+  
+  .category-link:hover {
+    background-color: rgb(244, 244, 244);
+  }
+  .category-link:hover::before {
+    width: 50%;
+    left: 25%;
+  }
+  .category-link.active::before {
+    width: 100%;
+    left: 0;
+  }
+
+  .scroll-btn {
     background-color: white;
+    padding: 0px 14px 0px 14px;
+    color: rgb(62, 62, 62);
+    border-radius: 100px;
+    font-size: 24px;
+    border: 1px solid rgb(145, 143, 143);
+    font-weight: bolder;
+    cursor: pointer;
+  }
+  
+  .scroll-btn.right {
+    margin-left: auto;
+  }
+  
+  /* Responsive Search Button for Mobile */
+  @media screen and (max-width: 600px) {
+    .menu-search {
+      display: none;
+    }
+    
+    .search-btn {
+      display: inline-block;
+      margin-left: -25px;
+      border-radius: 50px;
+      color: rgb(62, 62, 62);
+      padding: 6px 10px 5px 10px;
+      margin-left: -50px;
+      margin-right: 10px;
+      border: 1px solid rgb(145, 143, 143);
+      background-color: white;
+    }
+    .scroll-btn.right {
+      margin-right: -20px;
+    }
+  }
+  
+  /* Menu section */
+  .menu-section {
+    margin: 40px 60px;
+    /* padding: 30px 20px; */
+  }
+  
+  /* .menu-section h2 {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+  } */
+  /* 
+
+  .popular-title {
+    font-size: 1.8rem;
+    font-weight: 700;
   }
 
-  .scroll-btn.right {
-    margin-right: -20px;
+  .popular-subtitle {
+    color: #757575;
+    margin-bottom: 20px;
   }
-}
+  
+  */
+
+  .popular-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
 
 </style>
   

@@ -50,7 +50,6 @@ import { ref } from 'vue';
 const navItems = ref([
   { icon: 'fas fa-home', label: 'Home', route: '/RestaurantOwnerDashboard' },
   { icon: 'fas fa-chart-line', label: 'Analytics', route: '/Resturantowner' },
-  { icon: 'fas fa-book-open', label: 'Menu', route: '/ownermenu' },
   { icon: 'fas fa-utensils', label: 'Orders', route: '/ViewAllOrdersRes' },
   { icon: 'fas fa-star', label: 'Reviews', route: '/ResturantReviews' },
   { icon: 'fas fa-cogs', label: 'Settings', route: '/restOwnerProfile' },

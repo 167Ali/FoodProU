@@ -107,7 +107,7 @@ defineProps({
 
   .item-image {
     width: 100%;
-    height: 150px;
+    height: auto;
     margin-bottom: 15px;
   }
 

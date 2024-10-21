@@ -11,7 +11,7 @@
         <p class="fw-bold"><i class="fas fa-door-closed"></i> Closing:- <span class="time fw-light">{{ closingTime }}</span></p>
       </div>
     </div>
-    <button class="view-more-btn" @click="goToMenu">Explore</button>
+    <button class="view-more-btn" @click="goToMenu">Explore</button> <!-- Updated the click handler -->
   </div>
 </template>
 
@@ -19,23 +19,25 @@
 import { useRouter } from 'vue-router';
 
 const props = defineProps({
+  restaurantId: Number, // Added restaurantId prop to pass it down from the parent component
   name: String,
   logoPath: String,
   cuisine: String,
   openingTime: String,
-  closingTime: String,
-  restaurantId: Number  // Added restaurantId prop
+  closingTime: String
 });
 
 const logoUrl = props.logoPath ? `http://192.168.15.90:8000/${props.logoPath}` : '/path/to/default-logo.png';
 
-// Using Vue Router to navigate to the restaurant menu page
-const router = useRouter();
+const router = useRouter(); // Import router instance
 
+// Function to navigate to the restaurant menu
 const goToMenu = () => {
-  router.push({ name: 'RestaurantMenu', params: { restaurantId: props.restaurantId } });
+  router.push({ name: 'RestaurantMenu', params: { restaurantId: props.restaurantId } }); // Pushing the correct route
 };
 </script>
+
+
 
 <style scoped>
 .restaurant-card {

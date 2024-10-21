@@ -7,7 +7,7 @@
         <div v-else>
             <div v-for="review in reviews" :key="review.id" class="review-card">
                 <h2>{{ review.customerName }}</h2>
-                <p>Total Spend: {{ review.totalSpend }} Pkr</p>
+                <p>Total Spend: {{ review.totalSpend }}</p>
                 <p>Rating: {{ review.rating }}</p>
                 <p>{{ review.comment }}</p>
             </div>
@@ -48,7 +48,6 @@ onMounted(() => {
 <style scoped>
 .reviews-container {
     padding: 20px;
-    
 }
 .review-card {
     background-color: #f9f9f9;
