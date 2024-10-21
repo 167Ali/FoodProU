@@ -1,9 +1,12 @@
 <template>
 
     <div class="p-2">
-        <div class="mb-3">
-            <h4 class="card-title">{{ isEditMode ? 'Edit Product' : 'Add Product' }}</h4>
-        </div>
+        <div class="mb-3 d-flex justify-content-between align-items-center">
+    <h4 class="card-title">{{ isEditMode ? 'Edit Product' : 'Add Product' }}</h4>
+    <button class="btn btn-outline" type="button" @click="cancelForm">
+        <i class="fa-solid fa-xmark fa-lg" style="color: #030303;"></i>
+    </button>
+</div>
         <form ref="productFormRef" @submit.prevent="submitForm" :class="{ 'was-validated': isFormValidated }">
             <!-- Product Name -->
             <div class="card">
@@ -99,7 +102,7 @@ const availableChoices = computed(() => store.getters['menuChoice/allChoices']);
 
 // Available choices for the product (can be fetched from an API later)
 //const availableChoices = ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4', 'Choice 5'];
-
+    
 // Refs and reactive data
 const productFormRef = ref(null);
 const isFormValidated = ref(false);

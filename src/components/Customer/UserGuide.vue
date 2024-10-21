@@ -1,12 +1,12 @@
 <template>
     <div class="help-center-container" :class="{ 'open': isOpen }">
         <div class="help-center-header" @click="toggleHelpCenter">
-            <span>Help Center</span>
+            <span>User Guide</span>
             <i class="fas" :class="isOpen ? 'fa-chevron-down' : 'fa-chevron-up'"></i>
         </div>
 
         <div v-if="isOpen" class="help-center-body">
-            <h2 v-if="currentQuestion === null">How can we assist you?</h2>
+            <h4 v-if="currentQuestion === null">How can we assist you?</h4>
             <ul v-if="currentQuestion === null" class="help-list">
                 <li v-for="(item, index) in mainQuestions" :key="index" @click="openQuestion(item)"
                     :class="['help-list-item', { active: currentQuestion === item }]">
@@ -141,7 +141,7 @@ const toggleHelpCenter = () => {
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
   font-family: Arial, sans-serif;
-  
+  z-index: 1000; /* Ensure it is on top of other elements */
 }
 
 .help-center-header {
@@ -156,7 +156,7 @@ const toggleHelpCenter = () => {
 
 .help-center-body {
   padding: 15px; /* Reduced padding */
-  height: 400px; /* Set a fixed height */
+  max-height: calc(100vh - 100px); /* Adjust height to avoid overflow */
   overflow-y: auto; /* Allow scrolling if content exceeds height */
 }
 
@@ -207,12 +207,12 @@ const toggleHelpCenter = () => {
 }
 
 .back-btn {
-  display: block;
-  margin-bottom: 15px;
-  background: none;
+  margin-bottom: 10px;
   border: none;
-  font-size: 16px; /* Larger font size for back button */
+  background-color: #f44336; /* Red color for back button */
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
   cursor: pointer;
-  color: #00754A; /* Match the header color */
 }
 </style>

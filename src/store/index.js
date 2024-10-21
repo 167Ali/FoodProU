@@ -4,15 +4,20 @@ import profileModule from './modules/profile';
 import { menuCategory } from '../store/menu/menuCategory';
 import { menuProduct } from '../store/menu/menuProduct';
 import { menuChoice } from '../store/menu/menuChoice';
+import { orderDetails } from '@/store/RestaurantOwner/orderDetails'
 import { rewards } from './modules/rewards';
 import AuthStore from './Auth/AuthStore';
 import order from './modules/order'; // import the order module
 import Prevorder from './modules/PrevorderDetail';
+import AddReviews from './modules/AddReviews';
 import Resturantownerreviews from './modules/Resturantownerreviews';
-import Reviews from './modules/customerReviews';
+//import Reviews from './modules/customerReviews';
 import axios from 'axios';
 import ResturantDetailsStore from './customer/ResturantDetailsStore';
 import ResturantRevinue from './customer/ResturantRevinue'; // Import the new module
+import orders from './customer/orders';
+import favoriteStore from './customer/FavScreenCus';
+import RevenueStore from './Admin/RevenueStore';
 const store = createStore({
   modules: {
     menuCategory,
@@ -20,13 +25,17 @@ const store = createStore({
     menuChoice,
     order, // register the order module
     Prevorder,
+    orders, // Register the 'orders' module
     Resturantownerreviews,
-    Reviews,
+    RevenueStore,
+   // Reviews,
     rewards,
     profile: profileModule,
     auth: AuthStore,
     resturantDetails: ResturantDetailsStore,
-    resturantRevinue: ResturantRevinue
+    resturantRevinue: ResturantRevinue,
+    favoriteStore,
+    orderDetails, // Ensure this is properly registered
   },
 
   state: {

@@ -14,13 +14,17 @@
             <img v-if="order.order_items && order.order_items.length > 0" :src="order.order_items[0].menu_item_image" alt="Order Image" class="order-image" />
             <div class="order-details">
               <h3>{{ order.restaurant_name }} – {{ order.branch_address }}</h3>
-              <p class="delivery-info">Estimated Delivery: {{ order.estimated_delivery_time }}</p>
+              <p class="delivery-info">Estimated Delivery: {{ formatDate(order.estimated_delivery_time) }}</p>
               <p class="order-id">Order #{{ order.id }}</p>
+              
               <div v-if="order.order_items && order.order_items.length > 0">
                 <h4>Items:</h4>
                 <ul>
                   <li v-for="item in order.order_items" :key="item.id">
-                    {{ item.menu_item_name }} - Rs. {{ item.item_price }} (Addon: {{ item.addon_name }})
+                    {{ item.menu_item_name }} - Rs. {{ item.item_price }}<br />(Addon: {{ item.addon_name }})<br />
+                    Quantity: {{ item.quantity }}<br />
+                    Add-on Price: Rs. {{ item.addon_price }}<br />
+                    Total Price: Rs. {{ calculateTotalItemPrice(item) }}
                   </li>
                 </ul>
               </div>
@@ -41,13 +45,16 @@
             <img v-if="order.order_items && order.order_items.length > 0" :src="order.order_items[0].menu_item_image" alt="Order Image" class="order-image" />
             <div class="order-details">
               <h3>{{ order.restaurant_name }} – {{ order.branch_address }}</h3>
-              <p class="delivery-info">Delivered on {{ order.estimated_delivery_time }}</p>
+              <p class="delivery-info">Delivered on {{ formatDate(order.estimated_delivery_time) }}</p>
               <p class="order-id">Order #{{ order.id }}</p>
               <div v-if="order.order_items && order.order_items.length > 0">
                 <h4>Items:</h4>
                 <ul>
                   <li v-for="item in order.order_items" :key="item.id">
-                    {{ item.menu_item_name }} - Rs. {{ item.item_price }} (Addon: {{ item.addon_name }})
+                    {{ item.menu_item_name }} - Rs. {{ item.item_price }}<br />
+                    Quantity: {{ item.quantity }}<br />
+                    Add-on Price: Rs. {{ item.addon_price }}<br />
+                    Total Price: Rs. {{ calculateTotalItemPrice(item) }}
                   </li>
                 </ul>
               </div>
@@ -66,8 +73,6 @@
   </div>
 </template>
 
-
-
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useStore } from 'vuex';
@@ -77,13 +82,27 @@ import { getActiveOrders, getPastOrders } from '../../Services/customer/OrderSer
 
 import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
+
 const store = useStore();
 const router = useRouter();
+
 const activeOrders = ref([]);
 const pastOrders = ref([]);
 const loadingActive = ref(false);
 const loadingPast = ref(false);
 
+// Helper method to calculate total item price (including add-ons)
+const calculateTotalItemPrice = (item) => {
+  return item.item_price + (item.addon_price || 0);
+};
+
+// Helper method to format the date
+const formatDate = (dateStr) => {
+  const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+  return new Date(dateStr).toLocaleDateString(undefined, options);
+};
+
+// Fetch Active Orders
 const fetchActiveOrders = async () => {
   loadingActive.value = true;
   try {
@@ -95,10 +114,16 @@ const fetchActiveOrders = async () => {
   }
 };
 
+// Fetch Past Orders
 const fetchPastOrders = async () => {
   loadingPast.value = true;
   try {
-    pastOrders.value = await getPastOrders();
+    const response = await getPastOrders();
+    if (response.status === 200) {
+      pastOrders.value = response.data; // Extract the data field containing the orders
+    } else {
+      console.error('Error fetching past orders:', response.message);
+    }
   } catch (error) {
     console.error('Error fetching past orders:', error);
   } finally {
@@ -106,31 +131,18 @@ const fetchPastOrders = async () => {
   }
 };
 
-const goToPrevOrderDetails = (customerId) => {
-  router.push({ name: 'PrevorderDetails', params: { id: customerId } });
+
+
+// Navigate to Previous Order Details
+const goToPrevOrderDetails = (orderId) => {
+  router.push({ name: 'PrevorderDetails', params: { id: orderId } });
 };
 
+// Fetch orders on component mount
 onMounted(() => {
   fetchActiveOrders();
   fetchPastOrders();
 });
-// 
-
-// Getting the orders from Vuex state
-activeOrders.value = store.getters['order/activeOrders'];
-pastOrders.value = store.getters['order/pastOrders'];
-loadingActive.value = store.getters['order/loadingActive'];
-loadingPast.value = store.getters['order/loadingPast'];
-
-// Navigate to previous order details page
-// const goToPrevOrderDetails = (customerId) => {
-//   router.push({ name: 'PrevorderDetails', params: { id: customerId } });
-// };
-
-// Fetch orders when the component is mounted
-// onMounted(() => {
-//   fetchOrders();
-// });
 </script>
 
 <style scoped>
@@ -156,12 +168,7 @@ h2 {
   padding-bottom: 10px;
 }
 
-.loading-message {
-  color: #888;
-  font-size: 1.2rem;
-}
-
-.no-orders {
+.loading-message, .no-orders {
   color: #888;
   font-size: 1.2rem;
 }

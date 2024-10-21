@@ -23,7 +23,8 @@
 
 <script setup>
 import { reactive } from 'vue';
-
+import LoginHeader from '@/components/HeaderFooter/LoginHeader.vue';
+import PageFooter from '@/components/HeaderFooter/PageFooter.vue';
 // Defining the foods list as a reactive object
 const foods = reactive([
   {

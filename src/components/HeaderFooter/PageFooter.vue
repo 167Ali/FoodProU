@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <hr>
+    <!-- <hr> -->
     <div class="footer-links">
       <!-- First Column -->
       <div class="footer-column">
@@ -53,9 +53,10 @@
 
 <style scoped>
 .footer {
-  background-color: #f9f9f9;
+  background-color: #f7f7f7;
   padding: 40px 0;
   border-top: 1px solid #eaeaea;
+  margin-top: 50px;
 }
 
 .footer-links {
