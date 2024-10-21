@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 // Base API URL
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Backend API URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL_H; // Backend API URL
 
 // Function to fetch restaurants
 export const fetchRestaurants = async (params = {}) => {

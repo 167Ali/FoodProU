@@ -1,12 +1,14 @@
 <template>
-  <div class="restaurant-header">
+  <!-- Render content only if restaurant data is available -->
+  <div class="restaurant-header" v-if="restaurant">
     <div class="logo-container">
-      <img class="restaurant-logo" :src="logo" alt="Restaurant Logo" />
+      <img class="restaurant-logo" :src="(logo)" alt="Restaurant Logo" />
     </div>
     <div class="restaurant-info">
       <h1>{{ name }}</h1>
       <p class="categories">{{ categories.join(' • ') }}</p>
-      <p class="details">Rs. {{ deliveryFee }} delivery • Min. order Rs. {{ minOrder }}</p>
+      <!-- Adjusted details -->
+      <p class="details">Opening Hours: {{ openingTime }} - {{ closingTime }}</p>
 
       <!-- New container for rating, SeeReviews, and Moreinfo -->
       <div class="rating-row">
@@ -14,40 +16,61 @@
         <SeeReviews />
         <Moreinfo />
       </div>
-
     </div>
     <button class="favourite-btn" @click="toggleLike">
-      <span v-if="isLiked" style="color: red">❤️ Added to Favourites</span> <!-- Show heart only when liked -->
-      <span v-else>Add to Favourites</span> <!-- Text when heart is not shown -->
+      <span v-if="isLiked" style="color: red">❤️ Added to Favourites</span>
+      <span v-else>Add to Favourites</span>
     </button>
   </div>
 </template>
 
 
 <script setup>
-import { ref } from 'vue'
-import SeeReviews from '../Customer/SeeReviews.vue'
-import Moreinfo from '../Customer/Moreinfo.vue'
-const logo = ref('src/assets/logo.jpeg')
-const name = ref('Burger Lab — Johar Town South')
-const categories = ref(['Burgers', 'Fast Food', 'Western', 'Shakes'])
-const deliveryFee = ref(79)
-const minOrder = ref(249)
-const rating = ref(4.6)
-const isLiked = ref(false)
+import { ref, computed, defineProps, onMounted } from 'vue';
+import SeeReviews from '../Customer/SeeReviews.vue';
+import Moreinfo from '../Customer/Moreinfo.vue';
+
+const props = defineProps({
+  restaurant: {
+    type: Object,
+    required: true,
+  },
+});
+
+// Compute properties based on the passed restaurant data
+const logo = computed(() => props.restaurant?.logo_url || '');
+const name = computed(() => props.restaurant?.name || '');
+const categories = computed(() => props.restaurant ? [props.restaurant.cuisine] : []);
+const rating = computed(() => props.restaurant?.average_rating || 0);
+const openingTime = computed(() => props.restaurant?.opening_time || '');
+const closingTime = computed(() => props.restaurant?.closing_time || '');
+
+// Placeholder values for deliveryFee and minOrder if not available
+const deliveryFee = ref(0); // Update as needed
+const minOrder = ref(0); // Update as needed
+
+const isLiked = ref(false);
 
 // Function to toggle the liked state
 const toggleLike = () => {
-  isLiked.value = !isLiked.value
+  isLiked.value = !isLiked.value;
 };
-// 
+
+// Function to get the full image URL
+const getImageUrl = (imagePath) => {
+  if (!imagePath) {
+    return '/path/to/default/image.jpg'; // Replace with your default image path
+  }
+  return imagePath.startsWith('http')
+    ? imagePath
+    : `${import.meta.env.VITE_API_BASE_URL}${imagePath}`; // Use your API base URL
+};
 </script>
 
 <style scoped>
 .restaurant-header {
   padding: 20px;
   justify-content: space-between;
-  /* */
 }
 
 .logo-container {
@@ -69,25 +92,23 @@ const toggleLike = () => {
   flex-direction: column;
   justify-content: center;
 }
+
 .restaurant-info h1 {
   font-family: 'Agrandir';
   font-weight: bolder;
 }
-
 
 /* Add flexbox to rating-row */
 .rating-row {
   display: flex;
   align-items: center;
   gap: 10px;
-  /* Add space between elements */
 }
 
 .rating {
   font-size: 1.2rem;
   font-weight: bold;
   color: #ff8c00;
-
 }
 
 .favourite-btn {

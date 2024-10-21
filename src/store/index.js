@@ -19,7 +19,7 @@ import ResturantDetailsStore from './customer/ResturantDetailsStore';
 import ResturantRevinue from './customer/ResturantRevinue'; 
 import orders from './customer/orders';
 import favoriteStore from './customer/FavScreenCus';
-
+import RevenueStore from '@/Admin/RevenueStore';
 const store = createStore({
   modules: {
     menuCategory,
@@ -29,9 +29,10 @@ const store = createStore({
     Prevorder,
     orders, // Register the 'orders' module
     Resturantownerreviews,
-    AddReviews,
-    adminreviews,
+    RevenueStore,
    // Reviews,
+   AddReviews,
+   adminreviews,
     rewards,
     profile: profileModule,
     auth: AuthStore,
