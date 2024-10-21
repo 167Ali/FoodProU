@@ -17,9 +17,9 @@
         </div>
     </div>
 </template>
-  
+
 <script>
-import OrderCard from './OrderCard.vue';
+import OrderCard from '@/components/RestaurantOwner/RestaurantDashboard/OrderCard.vue';
 
 export default {
     name: "OrdersSection",
@@ -38,7 +38,7 @@ export default {
     },
 };
 </script>
-  
+
 <style scoped>
 /* General Orders Section Styles */
 

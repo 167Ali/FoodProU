@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
     <SideBar />
-    
+
     <div class="main-content container main-body mt-5">
       <!-- Dropdown filters for Time Period and Restaurant -->
       <div class="row mb-4 justify-content-center mt-5">
@@ -49,7 +49,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { Chart } from 'chart.js/auto';
-import SideBar from '../../components/Admin/SideBar.vue'
+import SideBar from '@/components/Admin/SideBar.vue'
 // References for each chart
 const revenueChartCanvas = ref(null);
 const orderVolumeChartCanvas = ref(null);
@@ -212,21 +212,29 @@ onMounted(() => {
 
 <style scoped>
 .page-container {
-  display: flex; /* Flexbox layout for sidebar and main content */
-  height: 100vh; /* Full page height */
+  display: flex;
+  /* Flexbox layout for sidebar and main content */
+  height: 100vh;
+  /* Full page height */
 }
 
 .SideBar {
   flex-shrink: 0;
-  width: 250px; /* Fixed width for sidebar */
-  background-color: #f8f9fa; /* Background color for sidebar */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional shadow for sidebar */
+  width: 250px;
+  /* Fixed width for sidebar */
+  background-color: #f8f9fa;
+  /* Background color for sidebar */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  /* Optional shadow for sidebar */
 }
 
 .main-content {
-  flex-grow: 1; /* Main content takes up the remaining space */
-  padding: 20px; /* Padding around the content */
-  overflow-y: auto; /* Scroll if content overflows vertically */
+  flex-grow: 1;
+  /* Main content takes up the remaining space */
+  padding: 20px;
+  /* Padding around the content */
+  overflow-y: auto;
+  /* Scroll if content overflows vertically */
 }
 
 .container {

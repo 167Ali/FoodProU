@@ -22,20 +22,9 @@
                                         <strong>Type:</strong> {{ choice.choice_type }}
                                     </p>
                                 </div>
-                                <!-- <ol class="scroller-card">
-                            <li v-for="(item, idx) in choice.choiceitems" :key="idx">{{ item.name
-                                }} - ${{ item.price }}
-                            </li>
-                        </ol> -->
 
                                 <div class="table-responsive scroller-card">
                                     <table class="table table-striped">
-                                        <!-- <thead>
-                                            <tr>
-                                                <th class="fs-6">Name</th> 
-                                                <th class="fs-6">Price</th> 
-                                            </tr>
-                                        </thead> -->
                                         <tbody>
                                             <tr v-for="(item, idx) in choice.choices" :key="idx">
                                                 <td class="small">{{ item?.name || 'Unnamed' }}</td>
@@ -59,27 +48,6 @@
                 </div>
 
             </div>
-
-            <!-- Invoice Items -->
-            <!-- <div v-for="(item, index) in items1" :key="index"
-                class="d-flex justify-content-between align-items-center mt-3">
-                <div class="d-flex align-items-center">
-                    <img :src="item.image" alt="item.name" class="rounded img-fluid me-3"
-                        style="width: 60px; height: 60px;" />
-                    <div>
-                        <h5 class="mb-0">{{ item.name }}</h5>
-                        <small>{{ item.quantity }}x</small>
-                        <p class="mb-0"><small>{{ item.note }}</small></p>
-                    </div>
-                </div>
-                <h6 class="fw-bold">$55</h6>
-            </div> -->
-
-
-
-            <!-- Payment Options -->
-
-            <!-- Place Order Button -->
         </div>
     </div>
 
@@ -101,7 +69,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import MenuCreateChoice from '../Menu&Choices/MenuCreateChoice.vue'; // Import the form component
+import MenuCreateChoice from '@/components/Menu&Choices/MenuCreateChoice.vue'; // Import the form component
 import { useStore } from 'vuex';
 
 const store = useStore();
@@ -140,49 +108,6 @@ onMounted(async () => {
     }
 });
 
-
-// formData.append('choice_group_name', choiceData.choicename);
-// formData.append('is_required', choiceData.ischoice);
-// formData.append('choice_type', choiceData.choicetype);
-// formData.append('choice_items', JSON.stringify(
-//     choiceData.choice_items.map(item => ({
-//         name: item.name,
-//         additional_price: item.additional_price
-//     }))
-// ));
-// Mock data for choices
-// const choices = ref([
-//     {
-//         choicename: 'Pizza Toppings',
-//         ischoice: '1',
-//         choicetype: 'size',
-//         choice_items: [{ name: 'Cheese', additional_price: 2 }, { name: 'Pepperoni', additional_price: 3 }],
-//     },
-//     {
-//         choicename: 'Drink Sizes',
-//         ischoice: '0',
-//         choicetype: 'additional',
-//         choice_items: [{ name: 'Small', additional_price: 1 }, { name: 'Medium', additional_price: 15 }, { name: 'Large', additional_price: 2 }, { name: 'Medium', additional_price: 15 }, { name: 'Medium', additional_price: 15 }, { name: 'Medium', additional_price: 15 }],
-//     },
-//     {
-//         choicename: 'Burger Add-ons',
-//         ischoice: '1',
-//         choicetype: 'additional',
-//         choice_items: [{ name: 'Bacon', additional_price: 5 }, { name: 'Extra Cheese', additional_price: 1 }],
-//     },
-//     {
-//         choicename: 'Drink Sizes',
-//         ischoice: '0',
-//         choicetype: 'additional',
-//         choice_items: [{ name: 'Small', additional_price: 1 }, { name: 'Medium', additional_price: 5 }, { name: 'Large', additional_price: 2 }, { name: 'Medium', additional_price: 5 }, { name: 'Medium', additional_price: 5 }, { name: 'Medium', additional_price: 5 }],
-//     },
-//     {
-//         choicename: 'Burger Add-ons',
-//         ischoice: '1',
-//         choicetype: 'additional',
-//         choice_items: [{ name: 'Bacon', additional_price: 1 }, { name: 'Extra Cheese', additional_price: 1 }],
-//     },
-// ]);
 
 const isFormVisible = ref(false);
 const isEditMode = ref(false);
@@ -272,12 +197,6 @@ const deleteChoice = async (index) => {
 
 }
 
-/* .card {
-    max-width: 700px;
-    border-radius: 8px;
-    border: none;
-} */
-
 .card-title {
     font-size: 1.25rem;
     font-weight: bold;
@@ -301,7 +220,6 @@ const deleteChoice = async (index) => {
 .btn-danger {
     border-radius: 20px;
 }
-
 
 .active {
     border-color: #007bff;

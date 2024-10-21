@@ -59,7 +59,7 @@
 </template>
 
 <script setup>
-import OrderItem from './OrderItem.vue'
+import OrderItem from '@/components/Admin/OrderItem.vue'
 
 const orderItems = [
   {

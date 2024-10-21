@@ -1,15 +1,10 @@
 <template>
   <div class="restaurant-list">
-    <RestaurantItem
-      v-for="item in restaurants"
-      :key="item.id"
-      :restaurant="item"
-      class="restaurant-item"
-    />
+    <RestaurantItem v-for="item in restaurants" :key="item.id" :restaurant="item" class="restaurant-item" />
   </div>
 </template>
 <script setup>
-import RestaurantItem from './RestaurantItem.vue';
+import RestaurantItem from '@/components/Admin/RestaurantItem.vue';
 
 const restaurants = [
   {
@@ -115,7 +110,8 @@ const restaurants = [
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .restaurant-list {
-    grid-template-columns: 1fr; /* Show one card per row on mobile */
+    grid-template-columns: 1fr;
+    /* Show one card per row on mobile */
   }
 }
 
@@ -129,7 +125,8 @@ const restaurants = [
 }
 
 .restaurant-item:hover {
-  transform: scale(1.02); /* Slight scale on hover */
+  transform: scale(1.02);
+  /* Slight scale on hover */
 }
 
 .restaurant-item img {
@@ -143,7 +140,8 @@ const restaurants = [
 
 @media (min-width: 992px) {
   .restaurant-item {
-    flex-direction: row; /* Adjust layout for larger screens if needed */
+    flex-direction: row;
+    /* Adjust layout for larger screens if needed */
   }
 }
 </style>

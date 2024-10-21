@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import CategoryIcon from './CategoryIcon.vue'; // Adjust the path if needed
+import CategoryIcon from '@/components/Admin/CategoryIcon.vue'; // Adjust the path if needed
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faSpoon,
@@ -34,7 +34,8 @@ library.add(faSpoon, faPepperHot, faPizzaSlice, faHamburger, faHotdog, faGlobe);
   padding: 10px 20px;
   border-radius: 10px;
   gap: 15px;
-  overflow: hidden; /* Hide horizontal scroll on larger screens */
+  overflow: hidden;
+  /* Hide horizontal scroll on larger screens */
 }
 
 /* Adjust to make the section horizontally scrollable on smaller screens */
@@ -42,18 +43,23 @@ library.add(faSpoon, faPepperHot, faPizzaSlice, faHamburger, faHotdog, faGlobe);
   .category-section {
     overflow-x: auto;
     white-space: nowrap;
-    justify-content: flex-start; /* Align items to the left */
+    justify-content: flex-start;
+    /* Align items to the left */
     gap: 10px;
     padding: 10px;
-    scrollbar-width: none; /* Hide scrollbar in Firefox */
+    scrollbar-width: none;
+    /* Hide scrollbar in Firefox */
   }
+
   .category-section::-webkit-scrollbar {
-    display: none; /* Hide scrollbar in WebKit browsers */
+    display: none;
+    /* Hide scrollbar in WebKit browsers */
   }
 }
 
 /* Ensure that each category item maintains its size across all screen sizes */
-.category-section > * {
-  flex: 0 0 auto; /* Prevent items from shrinking or growing */
+.category-section>* {
+  flex: 0 0 auto;
+  /* Prevent items from shrinking or growing */
 }
 </style>

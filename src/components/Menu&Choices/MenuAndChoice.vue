@@ -1,11 +1,11 @@
 <template>
-     <nav class="navbar">
-            <div class="navbar-left">
-                <!-- Logo -->
-                <i class="fa-solid fa-utensils logo"></i>
-                <span class="brand-name">foodpro For Bussiness</span>
-            </div>
-        </nav>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <!-- Logo -->
+            <i class="fa-solid fa-utensils logo"></i>
+            <span class="brand-name">foodpro For Bussiness</span>
+        </div>
+    </nav>
     <div class="container-fluid">
         <div class="row">
 
@@ -29,7 +29,8 @@
                                     <div class="menu-card p-3 text-center" :class="{ selected: selectedItem === index }"
                                         @click="selectItem(index, item.id, item.name)">
                                         <div class="menu-icon mb-2"></div>
-                                        <h5 class="menu-title">{{ item.name }} <i class="fa-solid fa-bowl-food"></i></h5>
+                                        <h5 class="menu-title">{{ item.name }} <i class="fa-solid fa-bowl-food"></i>
+                                        </h5>
                                         <p class="menu-stock">{{ item.menu_items_count }} Menu In Stock</p>
                                     </div>
                                 </div>
@@ -41,19 +42,6 @@
                             <i class="fa-solid fa-angle-right fa-xl" style="color: #181d25;"></i>
                         </button>
                     </div>
-
-                    <!-- <div class="row g-3">
-                        <div v-for="(item, index) in menuItems" :key="index" class="col-6 col-md-3">
-                            <div class="menu-card p-3 text-center" :class="{ selected: selectedItem === index }"
-                                @click="selectItem(index, item.id, item.name)">
-                                <div class="menu-icon mb-2">
-                                </div>
-                                <h5 class="menu-title">{{ item.name }}</h5>
-                                <p class="menu-stock">{{ item.menu_items_count
-                                    }} Menu In Stock</p>
-                            </div>
-                        </div>
-                    </div> -->
 
                 </div>
                 <!-- Example Category Section -->
@@ -113,8 +101,8 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import MenuViewChoice from './MenuViewChoice.vue';
-import MenuView from './MenuView.vue';
+import MenuViewChoice from '@/components/Menu&Choices/MenuViewChoice.vue';
+import MenuView from '@/components/Menu&Choices/MenuView.vue';
 import { useStore } from 'vuex';  // Import the Vuex store
 const store = useStore();  // Initialize the store
 
@@ -248,7 +236,6 @@ const selectItem = (index, id, title) => {
 </script>
 
 <style scoped>
-
 /* Navbar */
 .navbar {
     display: flex;
@@ -277,6 +264,7 @@ const selectItem = (index, id, title) => {
     font-weight: bold;
     color: #00754a;
 }
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -373,10 +361,11 @@ const selectItem = (index, id, title) => {
     font-size: 1.2rem;
     margin-bottom: 0.25rem;
 }
-.fa-bowl-food
-{
+
+.fa-bowl-food {
     margin-left: 12px;
 }
+
 .menu-stock {
     font-size: 0.9rem;
     color: #6c757d;

@@ -35,9 +35,20 @@
                                 </div> -->
                                 <div class="card-text">
                                     <strong>Assigned Choices:</strong>
-                                    <!-- <p class="scroller-card">
-                                        {{ product.variation_id.join(', ') }}
-                                    </p> -->
+                                    <p class="scroller-card">
+                                        <!-- Check if assigned_choices has any data -->
+                                        <span v-if="product.assigned_choices && product.assigned_choices.length > 0">
+                                            {{ product.assigned_choices
+                                                .filter(group => group.choice_group && group.choice_group.name)
+                                                .map(group => group.choice_group.name)
+                                                .join(', ')
+                                            }}
+                                        </span>
+                                        <!-- Fallback message if no choices are assigned -->
+                                        <span v-else>
+                                            No assigned choices available.
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +73,7 @@
         <!-- Modal for Create/Edit Product -->
         <div v-if="isFormVisible" class="modal-overlay">
             <div class="modal-content">
-                <MenuUpdate_AddProduct :product="currentProduct" :categoryTitle="categoryTitle"
+                <MenuUpdateAddProduct :product="currentProduct" :categoryTitle="categoryTitle"
                     :is-edit-mode="isEditMode" @save="saveProduct" @cancel="isFormVisible = false" />
             </div>
         </div>
@@ -71,7 +82,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import MenuUpdate_AddProduct from './MenuUpdate_AddProduct.vue'; // Import the form component
+import MenuUpdateAddProduct from '@/components/Menu&Choices/MenuUpdateAddProduct.vue'; // Import the form component
 import { useStore } from 'vuex';
 
 const store = useStore();
@@ -141,14 +152,15 @@ const openModal = () => {
         description: '',
         price: null,
         image_file: null,
-        assigned_Choices: []
-         // Initialize as an empty array for new product
+        assigned_choices: []
+        // Initialize as an empty array for new product
     };
     isEditMode.value = false;
 };
 
 // Function to open the form modal for editing a product
 const viewProduct = (index) => {
+    console.log(" p ", products)
     currentEditIndex.value = index;
     currentProduct.value = { ...products.value[index] };
     isEditMode.value = true;
@@ -161,19 +173,20 @@ const saveProduct = async (product) => {
         if (isEditMode.value && currentEditIndex.value !== null) {
             products.value[currentEditIndex.value] = product;
         } else {
-            console.log("prodyct ", product)
             // console.log("Category ID: ", categoryId);
             console.log("Product ", product);
             const success = await store.dispatch('menuProduct/addProduct', { product, categoryId });
             console.log("success ", success);
+            await store.dispatch('menuProduct/displayProducts', categoryId);
             // Uncomment if you want to add the product after the category
-            products.value.push(product);
             isFormVisible.value = false;
         }
 
-
     } catch (error) {
         console.error('Error Adding Product:', error);
+    }
+    finally {
+
     }
 };
 
@@ -230,7 +243,7 @@ const deleteProduct = async (index) => {
 
 .card-title {
     font-weight: bold;
-    color:#00754A;
+    color: #00754A;
 }
 
 .card-text {
@@ -238,7 +251,7 @@ const deleteProduct = async (index) => {
 }
 
 .scroller-card {
-    max-height: 40px;
+    max-height: 60px;
     overflow-y: auto;
 }
 </style>
