@@ -8,34 +8,20 @@ const getToken = () => {
   return localStorage.getItem('token');
 };
 
-// Function to fetch reviews with token authorization
-export const fetchReviews = async () => {
+// Function to fetch both reviews and restaurants from a single API
+export const fetchReviewsAndRestaurants = async () => {
   try {
     const token = getToken(); // Get the token
-    const response = await axios.get(`${API_BASE_URL}/api/reviews`, {
+    const response = await axios.get(`${API_BASE_URL}/api/restaurant-reviews`, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
     });
-    return response.data; 
-  } catch (error) {
-    console.error('Error fetching reviews:', error.response ? error.response.data : error.message);
-    throw error; // Re-throw for handling in Vuex
-  }
-};
 
-// Function to fetch restaurants with token authorization
-export const fetchRestaurants = async () => {
-  try {
-    const token = getToken(); // Get the token
-    const response = await axios.get(`${API_BASE_URL}/api/restaurants`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-    });
-    return response.data; // Adjust according to your API response
+    // Returning the data directly
+    return response.data; // Assuming the response contains both reviews and restaurant details
   } catch (error) {
-    console.error('Error fetching restaurants:', error.response ? error.response.data : error.message);
+    console.error('Error fetching reviews and restaurants:', error.response ? error.response.data : error.message);
     throw error; // Re-throw for handling in Vuex
   }
 };
