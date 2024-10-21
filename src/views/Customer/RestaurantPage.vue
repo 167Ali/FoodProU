@@ -1,41 +1,77 @@
-<!-- src/views/Home.vue -->
+<!-- src/views/Customer/RestaurantPage.vue -->
 <template>
-    <LoginHeader />
-    <div class="restaurant-header">
-        <RestaurantHeader />
-        <hr>
-        <Deals />
-    </div>
     <div>
-        <CategoryNavbar/>
+      <LoginHeader />
+      <div class="restaurant-header">
+        <!-- Pass restaurantData as a prop to RestaurantHeader -->
+        <RestaurantHeader :restaurant="restaurantData" />
+        <hr />
+        <Deals />
+      </div>
+      <div>
+        <CategoryNavbar />
+      </div>
+      <PageFooter />
     </div>
-
-    <PageFooter />
-    
-</template>
-
-<script setup>
-import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
-import RestaurantHeader from '../../components/HeaderFooter/RestaurantHeader.vue'
-import Deals from '../../components/Customer/Deals.vue'
-import CategoryNavbar from '../../components/Customer/CategoryNavbar.vue'
-import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
- 
-</script>
-
-<style scoped>
-.restaurant-header {
+  </template>
+  
+  <script setup>
+  import { onMounted, ref } from 'vue';
+  import { defineProps } from 'vue';
+  import { useStore } from 'vuex'; // Import useStore to access the store
+  import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
+  import RestaurantHeader from '../../components/HeaderFooter/RestaurantHeader.vue';
+  import Deals from '../../components/Customer/Deals.vue';
+  import CategoryNavbar from '../../components/Customer/CategoryNavbar.vue';
+  import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
+  
+  // Define props to receive the id
+  const props = defineProps({
+    id: {
+      type: String, // or Number, depending on your id type
+      required: true,
+    },
+  });
+  
+  const store = useStore();
+  
+  const restaurantData = ref(null); // Added: to store restaurant data
+  
+  onMounted(() => {
+    console.log('Restaurant ID:', props.id);
+    // Dispatch an action to fetch restaurant menus
+    store
+      .dispatch('resturantDetails/fetchRestaurantMenus', props.id)
+      .then(() => {
+        // Access the fetched data from the store
+        const menus = store.getters['resturantDetails/getRestaurantMenus'];
+        console.log('Menus data:', menus);
+  
+        // Extract the restaurant data
+        restaurantData.value = menus.restaurant;
+  
+        // Log the restaurant data to verify
+        console.log('Restaurant data:', restaurantData.value);
+      })
+      .catch((error) => {
+        console.error('Error fetching menus:', error);
+      });
+  });
+  </script>
+  
+  <style scoped>
+  .restaurant-header {
     padding: 20px;
     display: flex;
     flex-direction: column;
-}
-
-.restaurant-header hr{
+  }
+  
+  .restaurant-header hr {
     margin: 0;
     color: rgb(128, 127, 127);
     opacity: 0.1;
     font-weight: lighter;
     /* font-size: 1px; */
-}
-
-</style>
+  }
+  </style>
+  

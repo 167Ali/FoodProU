@@ -1,3 +1,4 @@
+<!-- src/views/Customer/DashboardResturantPage.vue -->
 <template>
     <router-view></router-view>
     <LoginHeader />
@@ -37,7 +38,6 @@
   import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
   import discounts from '@/components/Customer/discounts.vue';
   import Cuisines from '@/components/Customer/Cuisines.vue';
-  
   const store = useStore();
   
   // Get restaurants from the store

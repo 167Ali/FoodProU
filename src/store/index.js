@@ -4,6 +4,10 @@ import profileModule from './modules/profile';
 import { menuCategory } from '../store/menu/menuCategory';
 import { menuProduct } from '../store/menu/menuProduct';
 import { menuChoice } from '../store/menu/menuChoice';
+
+
+import { orderDetails } from '@/store/RestaurantOwner/orderDetails'
+
 import { rewards } from './modules/rewards';
 import AuthStore from './Auth/AuthStore';
 import order from './modules/order'; // import the order module
@@ -16,6 +20,8 @@ import ResturantRevinue from './customer/ResturantRevinue'; // Import the new mo
 import favoriteStore from './customer/FavScreenCus';
 
 
+import RevenueStore from './Admin/RevenueStore';
+
 const store = createStore({
   modules: {
     menuCategory,
@@ -24,7 +30,12 @@ const store = createStore({
     order, // register the order module
     Prevorder,
     Resturantownerreviews,
+
     Reviews,
+
+    RevenueStore,
+   // Reviews,
+
     rewards,
     profile: profileModule,
     auth: AuthStore,
