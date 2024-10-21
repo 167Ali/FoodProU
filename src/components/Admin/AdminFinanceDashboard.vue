@@ -1,245 +1,440 @@
 <template>
   <div class="page-container">
     <SideBar />
-    
+
     <div class="main-content container main-body mt-5">
       <!-- Dropdown filters for Time Period and Restaurant -->
       <div class="row mb-4 justify-content-center mt-5">
         <div class="col-md-4">
-          <label for="restaurantFilter">Select Restaurant:</label>
+          <label class="label" for="restaurantFilter">Select Restaurant:</label>
           <select v-model="selectedRestaurant" @change="applyFilters" class="form-select">
-            <option value="restaurant1">Restaurant 1</option>
-            <option value="restaurant2">Restaurant 2</option>
-            <option value="restaurant3">Restaurant 3</option>
+            <option value="">All Restaurants</option>
+            <option v-for="name in restaurantNames" :key="name" :value="name">{{ name }}</option>
           </select>
         </div>
         <div class="col-md-4">
-          <label for="timeFilter">Filter by Time:</label>
+          <label class="label" for="timeFilter">Filter by Time:</label>
           <select v-model="selectedFilter" @change="applyFilters" class="form-select">
-            <option value="daily">Daily</option>
-            <option value="weekly">Weekly</option>
-            <option value="monthly">Monthly</option>
+            <option value="daily">Today</option>
+            <option value="weekly">This Week</option>
+            <option value="monthly">This Month</option>
+            <option value="all">All Time</option>
           </select>
         </div>
       </div>
 
-      <!-- First Row: Total Revenue and Order Volume (shown after filters are applied) -->
-      <div v-if="!showInitialChart" class="row">
-        <div class="col-md-6">
-          <h3>Total Revenue</h3>
-          <canvas ref="revenueChartCanvas" class="small-bar-chart"></canvas>
-        </div>
-        <div class="col-md-6">
-          <h3>Order Volume</h3>
-          <canvas ref="orderVolumeChartCanvas" class="small-bar-chart"></canvas>
+      <!-- Loading Spinner -->
+      <div v-if="isLoading" class="text-center mt-5">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
         </div>
       </div>
 
-      <!-- Second Row: Top Performing Restaurants (shown initially) -->
-      <div v-if="showInitialChart" class="row mt-5 justify-content-center">
-        <div class="col-md-8">
-          <h3>Top Performing Restaurants</h3>
-          <canvas ref="topRestaurantsChartCanvas" class="small-bar-chart"></canvas>
+      <!-- Charts -->
+      <div v-else>
+        <!-- Display Top Performing Restaurants when no restaurant filter is applied -->
+        <div v-if="!selectedRestaurant">
+          <!-- Top Performing Restaurants Chart -->
+          <div class="row mt-5">
+            <div class="col-md-8 offset-md-2">
+              <h3>Top Performing Restaurants</h3>
+              <canvas ref="topRestaurantsChartCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Display other charts when a restaurant filter is applied -->
+        <div v-else>
+          <!-- Revenue Over Time and Order Volume Over Time -->
+          <div class="row mt-5">
+            <div class="col-md-6">
+              <h3>Revenue Over Time</h3>
+              <canvas ref="revenueOverTimeCanvas"></canvas>
+            </div>
+            <div class="col-md-6">
+              <h3>Order Volume Over Time</h3>
+              <canvas ref="orderVolumeOverTimeCanvas"></canvas>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
 <script setup>
-import { ref, onMounted } from 'vue';
-import { Chart } from 'chart.js/auto';
-import SideBar from '../../components/Admin/SideBar.vue'
+import { ref, onMounted, computed, watch } from 'vue';
+import { Chart, registerables } from 'chart.js';
+import { useStore } from 'vuex';
+import SideBar from '../../components/Admin/SideBar.vue';
+
+// Register all chart types
+Chart.register(...registerables);
+
+const store = useStore();
+
 // References for each chart
-const revenueChartCanvas = ref(null);
-const orderVolumeChartCanvas = ref(null);
+const revenueOverTimeCanvas = ref(null);
+const orderVolumeOverTimeCanvas = ref(null);
 const topRestaurantsChartCanvas = ref(null);
 
-// Store the selected filter, selected restaurant values, and state for showing the initial chart
-const selectedFilter = ref('daily');
-const selectedRestaurant = ref('restaurant1');
-const showInitialChart = ref(true);
+// Store the selected filter, selected restaurant values, and loading state
+const selectedFilter = ref('all');
+const selectedRestaurant = ref('');
+const isLoading = ref(true);
 
-// Dummy data based on filter type and restaurant
-const chartData = {
-  restaurant1: {
-    daily: {
-      revenue: [200, 150, 250, 300],
-      orderVolume: [50, 40, 60, 70],
-      topRestaurants: [400, 350, 300, 200]
-    },
-    weekly: {
-      revenue: [1500, 2000, 1750, 2200],
-      orderVolume: [300, 350, 320, 380],
-      topRestaurants: [4500, 4000, 3500, 3200]
-    },
-    monthly: {
-      revenue: [6000, 7500, 8000, 9500],
-      orderVolume: [1000, 1200, 1100, 1300],
-      topRestaurants: [15000, 14000, 13500, 12000]
-    }
-  },
-  restaurant2: {
-    daily: {
-      revenue: [180, 140, 210, 250],
-      orderVolume: [45, 38, 55, 65],
-      topRestaurants: [370, 320, 280, 180]
-    },
-    weekly: {
-      revenue: [1400, 1800, 1600, 2100],
-      orderVolume: [270, 300, 290, 360],
-      topRestaurants: [4200, 3800, 3300, 3100]
-    },
-    monthly: {
-      revenue: [5800, 7000, 7600, 9000],
-      orderVolume: [950, 1100, 1050, 1200],
-      topRestaurants: [14500, 13000, 12500, 11500]
-    }
-  },
-  restaurant3: {
-    daily: {
-      revenue: [220, 170, 280, 330],
-      orderVolume: [60, 50, 75, 85],
-      topRestaurants: [420, 380, 330, 210]
-    },
-    weekly: {
-      revenue: [1600, 2100, 1900, 2300],
-      orderVolume: [320, 370, 340, 400],
-      topRestaurants: [4600, 4200, 3600, 3300]
-    },
-    monthly: {
-      revenue: [6500, 8000, 8500, 10000],
-      orderVolume: [1100, 1300, 1200, 1400],
-      topRestaurants: [15500, 14500, 14000, 12500]
-    }
+// Fetch data from the store
+const revenueDetails = computed(() => store.getters['RevenueStore/getRevenueDetails']);
+const orderVolumeDetails = computed(() => store.getters['RevenueStore/getOrderVolumeDetails']);
+
+// Reactive variables
+const restaurantNames = ref([]);
+
+// Watch for changes in the filters and re-create charts when they change
+watch([selectedFilter, selectedRestaurant], () => {
+  if (!isLoading.value) {
+    createCharts();
   }
-};
+});
 
-// Functions to create the charts
-let revenueChart, orderVolumeChart, topRestaurantsChart;
-
-const createRevenueChart = (data) => {
-  if (revenueChart) revenueChart.destroy();
-  const ctx = revenueChartCanvas.value.getContext('2d');
-  revenueChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Period 1', 'Period 2', 'Period 3', 'Period 4'],
-      datasets: [{
-        label: 'Total Revenue',
-        data: data,
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 1
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: { beginAtZero: true }
-      }
-    }
-  });
-};
-
-const createOrderVolumeChart = (data) => {
-  if (orderVolumeChart) orderVolumeChart.destroy();
-  const ctx = orderVolumeChartCanvas.value.getContext('2d');
-  orderVolumeChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['Period 1', 'Period 2', 'Period 3', 'Period 4'],
-      datasets: [{
-        label: 'Order Volume',
-        data: data,
-        borderColor: 'rgba(255, 99, 132, 1)',
-        fill: false,
-        tension: 0.1
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: { beginAtZero: true }
-      }
-    }
-  });
-};
-
-const createTopRestaurantsChart = (data) => {
-  if (topRestaurantsChart) topRestaurantsChart.destroy();
-  const ctx = topRestaurantsChartCanvas.value.getContext('2d');
-  topRestaurantsChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Restaurant A', 'Restaurant B', 'Restaurant C', 'Restaurant D'],
-      datasets: [{
-        label: 'Sales (in $)',
-        data: data,
-        backgroundColor: 'rgba(153, 102, 255, 0.2)',
-        borderColor: 'rgba(153, 102, 255, 1)',
-        borderWidth: 1
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: { beginAtZero: true }
-      }
-    }
-  });
+// Function to initialize data
+const initializeData = () => {
+  // Populate restaurantNames
+  const allRestaurants = [
+    ...new Set([
+      ...revenueDetails.value.restaurant_name,
+      ...orderVolumeDetails.value.restaurant_name,
+    ]),
+  ];
+  restaurantNames.value = allRestaurants;
 };
 
 // Function to apply filters and update charts
 const applyFilters = () => {
-  showInitialChart.value = false;
-  updateCharts();
+  createCharts();
 };
 
-// Function to update charts based on the selected filter and restaurant
-const updateCharts = () => {
-  const filter = selectedFilter.value;
-  const restaurant = selectedRestaurant.value;
-  createRevenueChart(chartData[restaurant][filter].revenue);
-  createOrderVolumeChart(chartData[restaurant][filter].orderVolume);
+// Function to create all charts
+const createCharts = () => {
+  // Destroy existing charts to prevent duplicates
+  destroyCharts();
+
+  if (!selectedRestaurant.value) {
+    // No restaurant filter applied, show only Top Performing Restaurants chart
+    createTopRestaurantsChart();
+  } else {
+    // Restaurant filter applied, show Revenue Over Time and Order Volume Over Time charts
+    createRevenueOverTimeChart();
+    createOrderVolumeOverTimeChart();
+  }
 };
 
-// Initialize charts when component is mounted
-onMounted(() => {
-  createTopRestaurantsChart(chartData.restaurant1.daily.topRestaurants);
+// Function to destroy existing charts
+const destroyCharts = () => {
+  if (revenueOverTimeChart) {
+    revenueOverTimeChart.destroy();
+    revenueOverTimeChart = null;
+  }
+  if (orderVolumeOverTimeChart) {
+    orderVolumeOverTimeChart.destroy();
+    orderVolumeOverTimeChart = null;
+  }
+  if (topRestaurantsChart) {
+    topRestaurantsChart.destroy();
+    topRestaurantsChart = null;
+  }
+};
+
+// Helper function to generate consistent colors for restaurants
+const restaurantColors = {};
+const getRestaurantColor = (restaurant) => {
+  if (restaurantColors[restaurant]) {
+    return restaurantColors[restaurant];
+  }
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  restaurantColors[restaurant] = color;
+  return color;
+};
+
+// Chart instances
+let revenueOverTimeChart, orderVolumeOverTimeChart, topRestaurantsChart;
+
+/////////////////////////////
+// Top Performing Restaurants //
+/////////////////////////////
+const createTopRestaurantsChart = () => {
+  const { labels, data } = prepareTotalRevenueData();
+  const combinedData = labels.map((label, index) => ({ label, value: data[index] }));
+  const sortedData = combinedData.sort((a, b) => b.value - a.value).slice(0, 5); // Top 5 restaurants
+
+  const ctx = topRestaurantsChartCanvas.value.getContext('2d');
+  topRestaurantsChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: sortedData.map((item) => item.label),
+      datasets: [
+        {
+          label: 'Total Revenue',
+          data: sortedData.map((item) => item.value),
+          backgroundColor: sortedData.map((item) => getRestaurantColor(item.label)),
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      scales: { x: { beginAtZero: true } },
+      plugins: {
+        legend: { display: false },
+      },
+    },
+  });
+};
+
+/////////////////////////////////////
+// Revenue Over Time Chart //
+/////////////////////////////////////
+const prepareRevenueOverTimeData = () => {
+  const revenueData = {};
+  const labelsSet = new Set();
+
+  revenueDetails.value.revenue.forEach((rev, index) => {
+    const date = new Date(revenueDetails.value.created_at[index]);
+    const formattedDate = formatDateForChart(date, selectedFilter.value);
+    const restaurant = revenueDetails.value.restaurant_name[index];
+
+    // Apply filters
+    if (selectedRestaurant.value && selectedRestaurant.value !== restaurant) return;
+    if (!matchesFilter(date, selectedFilter.value)) return;
+
+    if (!revenueData[restaurant]) {
+      revenueData[restaurant] = {};
+    }
+
+    if (!revenueData[restaurant][formattedDate]) {
+      revenueData[restaurant][formattedDate] = 0;
+    }
+
+    revenueData[restaurant][formattedDate] += rev;
+    labelsSet.add(formattedDate);
+  });
+
+  const labels = Array.from(labelsSet).sort((a, b) => new Date(a) - new Date(b));
+  const datasets = Object.keys(revenueData).map((restaurant) => {
+    return {
+      label: restaurant,
+      data: labels.map((date) => revenueData[restaurant][date] || 0),
+      fill: false,
+      borderColor: getRestaurantColor(restaurant),
+      tension: 0.1,
+    };
+  });
+
+  return { labels, datasets };
+};
+
+const createRevenueOverTimeChart = () => {
+  const { labels, datasets } = prepareRevenueOverTimeData();
+  const ctx = revenueOverTimeCanvas.value.getContext('2d');
+  revenueOverTimeChart = new Chart(ctx, {
+    type: 'line',
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      scales: { y: { beginAtZero: true } },
+      plugins: {
+        tooltip: { mode: 'index', intersect: false },
+        legend: { display: true },
+      },
+    },
+  });
+};
+
+///////////////////////////////
+// Order Volume Over Time Chart //
+///////////////////////////////
+const prepareOrderVolumeOverTimeData = () => {
+  const orderData = {};
+  const labelsSet = new Set();
+
+  orderVolumeDetails.value.order_volume.forEach((orders, index) => {
+    const date = new Date(orderVolumeDetails.value.order_date[index]);
+    const formattedDate = formatDateForChart(date, selectedFilter.value);
+    const restaurant = orderVolumeDetails.value.restaurant_name[index];
+
+    // Apply filters
+    if (selectedRestaurant.value && selectedRestaurant.value !== restaurant) return;
+    if (!matchesFilter(date, selectedFilter.value)) return;
+
+    if (!orderData[restaurant]) {
+      orderData[restaurant] = {};
+    }
+
+    if (!orderData[restaurant][formattedDate]) {
+      orderData[restaurant][formattedDate] = 0;
+    }
+
+    orderData[restaurant][formattedDate] += orders;
+    labelsSet.add(formattedDate);
+  });
+
+  const labels = Array.from(labelsSet).sort((a, b) => new Date(a) - new Date(b));
+  const datasets = Object.keys(orderData).map((restaurant) => {
+    return {
+      label: restaurant,
+      data: labels.map((date) => orderData[restaurant][date] || 0),
+      fill: false,
+      borderColor: getRestaurantColor(restaurant),
+      tension: 0.1,
+    };
+  });
+
+  return { labels, datasets };
+};
+
+const createOrderVolumeOverTimeChart = () => {
+  const { labels, datasets } = prepareOrderVolumeOverTimeData();
+  const ctx = orderVolumeOverTimeCanvas.value.getContext('2d');
+  orderVolumeOverTimeChart = new Chart(ctx, {
+    type: 'line',
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      scales: { y: { beginAtZero: true } },
+      plugins: {
+        tooltip: { mode: 'index', intersect: false },
+        legend: { display: true },
+      },
+    },
+  });
+};
+
+/////////////////////////////////////
+// Helper Functions //
+/////////////////////////////////////
+const prepareTotalRevenueData = () => {
+  const revenueByRestaurant = {};
+
+  revenueDetails.value.revenue.forEach((rev, index) => {
+    const date = new Date(revenueDetails.value.created_at[index]);
+    const restaurant = revenueDetails.value.restaurant_name[index];
+
+    // Apply filters
+    if (!matchesFilter(date, selectedFilter.value)) return;
+
+    if (!revenueByRestaurant[restaurant]) {
+      revenueByRestaurant[restaurant] = 0;
+    }
+    revenueByRestaurant[restaurant] += rev;
+  });
+
+  const labels = Object.keys(revenueByRestaurant);
+  const data = Object.values(revenueByRestaurant);
+
+  return { labels, data };
+};
+
+const formatDateForChart = (date, filter) => {
+  if (filter === 'daily' || filter === 'all') {
+    return date.toLocaleDateString();
+  } else if (filter === 'weekly') {
+    const weekNumber = getWeekNumber(date);
+    return `Week ${weekNumber}, ${date.getFullYear()}`;
+  } else if (filter === 'monthly') {
+    return date.toLocaleString('default', { month: 'long', year: 'numeric' });
+  }
+};
+
+const getWeekNumber = (date) => {
+  const firstDay = new Date(date.getFullYear(), 0, 1);
+  const dayOfYear = ((date - firstDay + 86400000) / 86400000);
+  return Math.ceil(dayOfYear / 7);
+};
+
+const matchesFilter = (date, filter) => {
+  const now = new Date();
+  if (filter === 'daily') {
+    return date.toDateString() === now.toDateString();
+  } else if (filter === 'weekly') {
+    const currentWeek = getWeekNumber(now);
+    const dateWeek = getWeekNumber(date);
+    return dateWeek === currentWeek && date.getFullYear() === now.getFullYear();
+  } else if (filter === 'monthly') {
+    return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+  } else {
+    return true;
+  }
+};
+
+/////////////////////////
+// Fetch Data on Mount //
+/////////////////////////
+onMounted(async () => {
+  try {
+    await store.dispatch('RevenueStore/fetchRevenueReports');
+    if (revenueDetails.value && orderVolumeDetails.value) {
+      initializeData();
+      createCharts();
+    } else {
+      console.error('Data not available after fetch');
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  } finally {
+    isLoading.value = false;
+  }
 });
 </script>
-
 <style scoped>
 .page-container {
-  display: flex; /* Flexbox layout for sidebar and main content */
-  height: 100vh; /* Full page height */
-}
-
-.SideBar {
-  flex-shrink: 0;
-  width: 250px; /* Fixed width for sidebar */
-  background-color: #f8f9fa; /* Background color for sidebar */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional shadow for sidebar */
+  display: flex;
+  height: 100vh;
 }
 
 .main-content {
-  flex-grow: 1; /* Main content takes up the remaining space */
-  padding: 20px; /* Padding around the content */
-  overflow-y: auto; /* Scroll if content overflows vertically */
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
 }
 
 .container {
-  max-width: 1000px;
+  max-width: 1200px;
 }
 
 h3 {
   text-align: center;
+  margin-bottom: 20px;
+  color: #333;
 }
 
-/* Adjust the size of the bar charts */
-.small-bar-chart {
-  height: 300px;
-  width: 100%;
+canvas {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.row {
+  margin-bottom: 40px;
+}
+
+.form-select {
+  margin-top: 10px;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.table {
+  margin-top: 20px;
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
 }
 </style>

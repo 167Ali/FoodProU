@@ -4,7 +4,7 @@ import profileModule from './modules/profile';
 import { menuCategory } from '../store/menu/menuCategory';
 import { menuProduct } from '../store/menu/menuProduct';
 import { menuChoice } from '../store/menu/menuChoice';
-import { orderDetails } from '../RestaurantOwner/OrderDetails'
+import { orderDetails } from '@/store/RestaurantOwner/orderDetails'
 import { rewards } from './modules/rewards';
 import AuthStore from './Auth/AuthStore';
 import order from './modules/order'; // import the order module
@@ -18,6 +18,7 @@ import ResturantRevinue from './customer/ResturantRevinue'; // Import the new mo
 import orders from './customer/orders';
 import favoriteStore from './customer/FavScreenCus';
 
+import RevenueStore from './Admin/RevenueStore';
 const store = createStore({
   modules: {
     menuCategory,
@@ -27,6 +28,7 @@ const store = createStore({
     Prevorder,
     orders, // Register the 'orders' module
     Resturantownerreviews,
+    RevenueStore,
    // Reviews,
     rewards,
     profile: profileModule,
