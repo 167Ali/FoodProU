@@ -11,7 +11,7 @@
         <p class="fw-bold"><i class="fas fa-door-closed"></i> Closing:- <span class="time fw-light">{{ closingTime }}</span></p>
       </div>
     </div>
-    <button class="view-more-btn" @click="goToMenu">Explore</button> <!-- Updated the click handler -->
+    <button class="view-more-btn" @click="goToMenu">Explore</button>
   </div>
 </template>
 
@@ -31,13 +31,11 @@ const logoUrl = props.logoPath ? `http://192.168.15.90:8000/${props.logoPath}` :
 
 const router = useRouter(); // Import router instance
 
-// Function to navigate to the restaurant menu
+// Function to navigate to the restaurant page
 const goToMenu = () => {
-  router.push({ name: 'RestaurantMenu', params: { restaurantId: props.restaurantId } }); // Pushing the correct route
+  router.push({ name: 'RestaurantPage', params: { id: props.restaurantId } }); // Updated to use 'RestaurantPage' route
 };
 </script>
-
-
 
 <style scoped>
 .restaurant-card {

@@ -5,7 +5,7 @@ import {
   fetchDeals as fetchDealsService,
   searchRestaurants as searchRestaurantsService,
   fetchRestaurantMenus as fetchRestaurantMenusService, // Added
-} from '../../Services/customer/ResturantDetailsService';
+} from '@/Services/customer/ResturantDetailsService';
 
 const state = () => ({
   restaurants: [],

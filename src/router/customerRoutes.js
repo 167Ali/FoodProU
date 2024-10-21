@@ -21,10 +21,10 @@ export default [
     // component: Restaurantpage,
     // props: true 
 
-    path: '/RestaurantPage/:id', // Updated to include :id
+    path: '/RestaurantPage/:id', 
     name: 'RestaurantPage',
     component: RestaurantPage,
-    props: true, // Enable passing route params as props
+    props: true, 
 
   },
   
