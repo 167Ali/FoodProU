@@ -22,6 +22,15 @@ class OrderService {
       throw error;
     }
   }
+  async rejectApplication(requestId) {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/reject-application/${requestId}`);
+      return response.data; // Return the response data as needed
+    } catch (error) {
+      console.error('Error rejecting application:', error);
+      throw error;
+    }
+  }
 }
 
 export default new OrderService();

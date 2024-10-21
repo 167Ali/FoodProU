@@ -29,13 +29,22 @@ const actions = {
       state.loading = false;
     }
   },
-  async acceptApplication({ dispatch }, requestId) {
+  async acceptApplication(requestId) {
     console.log('Received requestId in acceptApplication:', requestId); // This should log the correct ID
     try {
       await OrderService.acceptApplication(requestId); // Call the service with requestId
-      dispatch('fetchOrderItems'); // Refetch the order items
+      await actions.fetchOrderItems();
     } catch (error) {
-      console.error('Error accepting order:', error);
+      console.error('Error accepting application:', error);
+    }
+  },
+  async rejectApplication(requestId) {
+    console.log('Received requestId in rejectApplication:', requestId); // This should log the correct ID
+    try {
+      await OrderService.rejectApplication(requestId); // Call the service with requestId
+      await actions.fetchOrderItems();
+    } catch (error) {
+      console.error('Error rejecting application:', error);
     }
   }
 };
@@ -44,6 +53,7 @@ export function useOrderStore() {
   return {
     ...toRefs(state),
     fetchOrderItems: actions.fetchOrderItems,
-    acceptApplication:actions.acceptApplication
+    acceptApplication:actions.acceptApplication,
+    rejectApplication:actions.rejectApplication
   };
 }

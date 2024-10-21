@@ -5,13 +5,12 @@
       <h4 class="item-name">{{ item.restaurant_name || 'Unknown Restaurant' }}</h4>
       <p class="item-status">{{ item.status || 'No Status' }}</p>
       <p class="item-cuisine">{{ item.cuisine || 'Unknown Cuisine' }}</p>
+      <p class="item-owner mb-2">
+        {{ (item.first_name || 'Unknown') + ' ' + (item.last_name || 'Name') }}
+      </p>
       <div class="button-container">
         <button class="accept-button" @click="acceptOrder">Accept</button>
-        <button 
-          class="reject-button" 
-          v-if="item.status !== 'declined'" 
-          @click="rejectOrder"
-        >
+        <button class="reject-button" v-if="item.status !== 'declined'" @click="rejectOrder">
           Reject
         </button>
       </div>
@@ -22,7 +21,7 @@
 <script setup>
 import { defineProps } from 'vue';
 import { useOrderStore } from '../../store/Admin/OrderStore';
-const { acceptApplication } = useOrderStore();
+
 const props = defineProps({
   item: {
     type: Object,
@@ -30,25 +29,42 @@ const props = defineProps({
   }
 });
 
+const { acceptApplication, rejectApplication, fetchOrderItems } = useOrderStore();
+
 const acceptOrder = async () => {
-  const orderId = props.item.id; // Extract the order ID
-  console.log('Order ID:', orderId); // Log the ID
+  const orderId = props.item.id;
+  console.log('Order ID:', orderId);
 
   if (!orderId) {
     console.error('Order ID is undefined or null');
-    return; // Prevent further execution
+    return;
   }
 
   try {
     console.log(`Order accepted: ${orderId}`);
-    await acceptApplication(orderId); // Call the action with the ID
+    await acceptApplication(orderId);
+    await fetchOrderItems(); // Refetch items to update the UI
   } catch (error) {
     console.error(`Error accepting order: ${error}`);
   }
 };
 
-const rejectOrder = () => {
-  console.log(`Order rejected: ${props.item.id}`);
+const rejectOrder = async () => {
+  const orderId = props.item.id;
+  console.log('Order ID:', orderId);
+
+  if (!orderId) {
+    console.error('Order ID is undefined or null');
+    return;
+  }
+
+  try {
+    console.log(`Order rejected: ${orderId}`);
+    await rejectApplication(orderId);
+    await fetchOrderItems(); // Refetch items to update the UI
+  } catch (error) {
+    console.error(`Error rejecting order: ${error}`);
+  }
 };
 </script>
 
