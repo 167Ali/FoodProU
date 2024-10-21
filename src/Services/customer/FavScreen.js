@@ -13,10 +13,21 @@ const favService = {
     const token = getToken();
     console.log('Token being sent:', token); // Log the token to ensure it's being retrieved
     
-
     return axios.get(`${baseURL}/api/customers/favorites`, {
       headers: {
         Authorization: `Bearer ${token}` // Attach the token in the Authorization header
+      }
+    });
+  },
+
+  // New function to get the menu of a specific restaurant by ID
+  getRestaurantMenu: (restaurantId) => {
+    const token = getToken();
+    console.log('Fetching menu for restaurant ID:', restaurantId); // Log restaurant ID
+
+    return axios.get(`${baseURL}/api/restaurants/${restaurantId}/menus`, {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
     });
   }
