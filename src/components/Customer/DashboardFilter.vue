@@ -2,25 +2,21 @@
     <div>
         <div class="d-none d-lg-flex flex-column card filters">
             <h3>Filters</h3>
-            <h6>Sort by</h6><br />
-            <hr />
+            <h6>Sort by</h6><br><hr>
             <div>
-                <label><input type="checkbox" v-model="quickFilters.ratings" /> Ratings 4+</label><br />
-            </div>
-            <hr />
+                <label><input type="checkbox" v-model="quickFilters.ratings" /> Ratings 4+</label><br>
+            </div><hr>
             <div>
-                <label><input type="checkbox" v-model="quickFilters.deals" /> Deals</label><br />
-            </div>
-            <hr />
+                <label><input type="checkbox" v-model="quickFilters.deals" /> Deals</label><br>
+            </div><hr>
             <h5>Cuisines</h5>
             <div>
                 <label v-for="(cuisine, index) in cuisines" :key="index" class="d-block mb-1">
                     <input type="checkbox" v-model="cuisine.selected" /> {{ cuisine.name }}
                 </label>
-            </div><br />
-            <hr />
+            </div><br><hr>
 
-            <h5>Price</h5><br />
+            <h5>Price</h5><br>
             <div>
                 <button v-for="(price, index) in prices" :key="index" class="btn btn-outline-secondary me-1"
                     :class="{ active: price.selected }" @click="togglePrice(price)">
@@ -34,43 +30,29 @@
             <button class="btn btn-outline-secondary" @click="showFilters = !showFilters">
                 <i class="fa-solid fa-filter fa-lg" style="color: #303640;"></i>
             </button>
-            <div v-if="showFilters" class="filter position-absolute bg-light border p-3" style="z-index: 1000;">
+            <div v-if="showFilters" class="position-absolute bg-light border p-3" style="z-index: 1000;">
                 <h5>Filters</h5>
                 <!-- Add the same filter structure here -->
                 <!-- Sort by -->
-                <h6>Sort by</h6>
-                <div>
-                    <label><input type="radio" name="sort" value="relevance" v-model="sortOption" checked />
-                        Relevance</label>
-                    <label><input type="radio" name="sort" value="fastest" v-model="sortOption" /> Fastest
-                        delivery</label>
-                    <label><input type="radio" name="sort" value="distance" v-model="sortOption" /> Distance</label>
-                </div>
+                
 
                 <!-- Quick filters -->
                 <h6>Quick filters</h6>
                 <div>
                     <label><input type="checkbox" v-model="quickFilters.ratings" /> Ratings 4+</label>
-                    <label><input type="checkbox" v-model="quickFilters.topRestaurant" /> Top restaurant</label>
                 </div>
 
-                <!-- Offers -->
-                <h6>Offers</h6>
                 <div>
-                    <label><input type="checkbox" v-model="offers.freeDelivery" /> Free delivery</label>
-                    <label><input type="checkbox" v-model="offers.acceptsVouchers" /> Accepts vouchers</label>
                     <label><input type="checkbox" v-model="offers.deals" /> Deals</label>
                 </div>
-
+                <hr>
                 <!-- Cuisines -->
                 <h6>Cuisines</h6>
-                <input type="text" class="form-control mb-2" placeholder="Search for cuisines"
-                    v-model="cuisineSearch" />
                 <div>
                     <br><label v-for="(cuisine, index) in cuisines" :key="index">
                         <input type="checkbox" v-model="cuisine.selected" /> {{ cuisine.name }}
                     </label>
-                </div>
+                </div><br><hr>
 
                 <!-- Price -->
                 <h6>Price</h6>
@@ -85,24 +67,22 @@
     </div>
 </template>
 
-
 <script setup>
-import { ref, computed, watch, defineEmits } from 'vue';
-
-const emit = defineEmits(['filterChanged']);
+import { ref } from 'vue';
 
 const sortOption = ref('relevance');
 const showFilters = ref(false);
 
-const quickFilters = ref({
+const quickFilters = {
     ratings: false,
-    deals: false,
-});
+    topRestaurant: false,
+};
 
-const offers = ref({
+const offers = {
     freeDelivery: false,
     acceptsVouchers: false,
-});
+    deals: false,
+};
 
 const cuisineSearch = ref('');
 const cuisines = ref([
@@ -127,24 +107,7 @@ const prices = ref([
 function togglePrice(price) {
     price.selected = !price.selected;
 }
-
-// Computed property to get selected filters
-const selectedFilters = computed(() => {
-    return {
-        sortOption: sortOption.value,
-        quickFilters: quickFilters.value,
-        offers: offers.value,
-        selectedCuisines: cuisines.value.filter(cuisine => cuisine.selected).map(cuisine => cuisine.name),
-        selectedPrices: prices.value.filter(price => price.selected).map(price => price.label),
-    };
-});
-
-// Watch for changes and emit event
-watch(selectedFilters, (newFilters) => {
-    emit('filterChanged', newFilters);
-}, { deep: true });
 </script>
-
 
 <style scoped>
 .filters {
@@ -157,6 +120,7 @@ watch(selectedFilters, (newFilters) => {
     background-color: white;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    width: 100%;
 
 }
 
@@ -169,18 +133,10 @@ watch(selectedFilters, (newFilters) => {
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-@media only screen and (max-width: 1350px) {
+/* @media only screen and (max-width: 1350px) {
 
     .filters {
         max-width: 250px;
     }
-   /* .filter
-   {
-    margin-top:-250px;
-   }
-   .btn
-   {
-    margin: -525px 0px 0px 0px;
-   } */
-} 
+} */
 </style>
