@@ -94,6 +94,7 @@ const navItems = ref([
   { icon: 'fas fa-sign-out-alt', label: 'Log Out', route: '/' }, // This will be the button for logging out
 ]);
 
+// eslint-disable-next-line no-unused-vars
 const router = useRouter(); // Initialize the router
 
 // Function to toggle the sidebar (for mobile)
