@@ -18,7 +18,7 @@
                         </div>
                         <div class="col-7">
                             <div class="ms-3 ard-body">
-                               <h5 class="card-title text-capital">{{ product.name }}</h5>
+                                <h5 class="card-title text-capital">{{ product.name }}</h5>
                                 <!-- <p class="card-text">Description: {{ product.description }}</p> -->
                                 <div class="card-text mt-3">
                                     <strong>Description:</strong>
@@ -61,7 +61,7 @@
                             <div class="d-flex justify-content-end">
                                 <button class="btn btn-outline me-2" @click="viewProduct(index)"><i
                                         class="fa-regular fa-pen-to-square fa-xl" style="color: #343f50;"></i></button>
-                                <button class="btn btn-outline" @click="deleteProduct(index)"><i
+                                <button class="btn btn-outline" @click="deleteProduct(product.id)"><i
                                         class="fa-regular fa-trash-can fa-xl" style="color: #444e5f;"></i></button>
                             </div>
                         </div>
@@ -173,7 +173,7 @@ const saveProduct = async (product) => {
             products.value[currentEditIndex.value] = product;
         } else {
             // console.log("Category ID: ", categoryId);
-            // console.log("Product ", product);
+            console.log("Product ", product);
             const success = await store.dispatch('menuProduct/addProduct', { product, categoryId });
             console.log("success ", success);
             await store.dispatch('menuProduct/displayProducts', categoryId);
@@ -190,9 +190,19 @@ const saveProduct = async (product) => {
 };
 
 // Delete a product
-const deleteProduct = (index) => {
-    products.value.splice(index, 1);
+
+const deleteProduct = async (index) => {
+
+    try {
+        console.log("index ", index)
+        const success = await store.dispatch('menuProduct/deleteProduct', index);
+        console.log("response choice ", success);
+        products.value.splice(index, 1);
+    } catch (error) {
+        console.error('Error Deleting Choice: ', error);
+    }
 };
+
 </script>
 
 <style scoped>

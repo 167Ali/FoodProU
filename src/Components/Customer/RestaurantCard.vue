@@ -77,7 +77,7 @@ const formatDeliveryFee = (fee) => {
 
 .card-title {
   font-size: 1.125rem;
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .card-cuisine {

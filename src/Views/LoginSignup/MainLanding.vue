@@ -121,7 +121,7 @@
                 <p class="mb-3 text-black">
                     Here at foodPro, we deliver delicacies from local restaurants right to your home. The delivery
                     service
-                    brings to you a perfect combination of the coziness of yo ur home and amazing food from nearby
+                    brings to you a perfect combination of the coziness of yo   ur home and amazing food from nearby
                     restaurants.
                 </p>
                 <h5 class="mb-2 text-black">What is the difference between delivery and Pick-Up?</h5>

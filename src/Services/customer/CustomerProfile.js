@@ -11,8 +11,8 @@ const apiClient = axios.create({
 
 export const api = {
   async getProfile() {
-    const response = await apiClient.get('/api/customers/profile');  // Update with the correct endpoint
-    return response.data;
+    const response = await apiClient.get('/api/customers/profile');
+    return response;  // Return the full response to access `response.data`
   },
 
   async updateProfile(profileData) {

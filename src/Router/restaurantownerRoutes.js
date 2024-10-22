@@ -1,11 +1,11 @@
-import RestaurantOwner_Dashboard from '@/views/RestauranOnwer/RestaurantOwner_Dashboard.vue'
-import ResturantOwner from '@/components/RestaurantOwner/ResturantOwner.vue'
-import RestOwnerProfile from '@/components/RestaurantOwner/restOwnerProfile.vue'
-import ResturantReviews from '@/components/RestaurantOwner/ResturantReviews.vue'
-import OrderReq from '@/components/RestaurantOwner/OrderRequest.vue'
-import ModalView from '@/components/RestaurantOwner/restOwnReciept.vue'
-import OwnerMenu from '@/views/Menu/OwnerMenu.vue'
-import ViewAllOrdersRes from '@/views/RestauranOnwer/ViewAllOrdersRes.vue'
+import RestaurantOwner_Dashboard from '@/Views/RestauranOnwer/RestaurantOwnerDashboard.vue'
+import ResturantOwner from '@/Components/RestaurantOwner/ResturantOwner.vue'
+import RestOwnerProfile from '@/Components/RestaurantOwner/RestOwnerProfile.vue'
+import ResturantReviews from '@/Components/RestaurantOwner/ResturantReviews.vue'
+import OrderReq from '@/Components/RestaurantOwner/OrderRequest.vue'
+import ModalView from '@/Components/RestaurantOwner/RestOwnReciept.vue'
+import OwnerMenu from '@/Views/Menu/OwnerMenu.vue'
+import ViewAllOrdersRes from '@/Views/RestauranOnwer/OrdersRestaurant.vue'
 export default [
   {
     path: '/RestaurantOwnerDashboard',

@@ -7,7 +7,7 @@
       <!-- Left Section: Order Details -->
       <div class="order-info">
         <div class="order-card">
-          <img :src="order.order_image" alt="Order Image" class="order-image" />
+          <img :src="order.image" alt="Order Image" class="order-image" />
           <div class="order-summary">
             <h2>{{ order.restaurant }} – {{ order.location }}</h2>
             <p class="delivery-info">
@@ -49,7 +49,8 @@
           </div>
           <hr />
           <div class="payment-details">
-            <p><span>Paid with</span> <span>{{ paymentMethod }} - Rs. {{ paymentAmount }}</span></p>
+            <p><span>Paid with</span> <span>{{ order.paymentMethod }} - Rs. {{ order.paymentAmount }}</span></p>
+
           </div>
         </div>
       </div>

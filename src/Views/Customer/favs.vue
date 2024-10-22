@@ -1,80 +1,47 @@
 <template>
-  <LoginHeader />
-  <div class="container mt-4">
-    <h2 class="text-center">Favorite Foods</h2>
-    <div class="row">
-      <transition-group name="fade" tag="div" class="row">
-        <div class="col-md-4" v-for="food in foods" :key="food.id">
-          <div class="card mb-4 animated-card">
-            <img :src="food.image" class="card-img-top" :alt="food.name" />
-            <div class="card-body">
-              <h5 class="card-title">{{ food.name }}</h5>
-              <p class="card-text">Price: {{ food.price }} pkr</p>
-              <button class="btn btn-primary">View Details</button>
-            </div>
-          </div>
-        </div>
-      </transition-group>
-    </div>
+  <div class="favorite-restaurants">
+    <Loader v-if="isLoading" />
+    <FavoriteRestaurantCard v-for="restaurant in favoriteRestaurants" :key="restaurant.id" :restaurantId="restaurant.id"
+      :name="restaurant.name" :logoPath="restaurant.logo_path" :cuisine="restaurant.cuisine"
+      :openingTime="restaurant.opening_time" :closingTime="restaurant.closing_time" />
   </div>
-  <PageFooter />
 </template>
 
-
 <script setup>
-import { reactive } from 'vue';
-import LoginHeader from '@/components/HeaderFooter/LoginHeader.vue';
-import PageFooter from '@/components/HeaderFooter/PageFooter.vue';
-// Defining the foods list as a reactive object
-const foods = reactive([
-  {
-    id: 1,
-    name: "Biriyani",
-    price: 350,
-    image: "#",
-  },
-  {
-    id: 2,
-    name: "Seekh Kebabs",
-    price: 350,
-    image: "#",
-  },
-  {
-    id: 3,
-    name: "Haleem",
-    price: 350,
-    image: "#",
-  },
-  {
-    id: 4,
-    name: "Seekh Kebabs",
-    price: 350,
-    image: "#",
+import { computed, onMounted, ref } from 'vue';
+import { useStore } from 'vuex';
+import FavoriteRestaurantCard from '@/Components/Customer/FavRestCard.vue'; // Ensure the correct path to the card component
+import Loader from '@/Components/OtherComponents/Loader.vue'; // Ensure the correct path to the loader component
 
-  },
-]);
+const store = useStore();
+const favoriteRestaurants = computed(() => store.state.favoriteStore.favoriteRestaurants);
+const isLoading = ref(true); // State to track loading status
+
+onMounted(async () => {
+  try {
+    await store.dispatch('favoriteStore/getFavoriteRestaurants');
+  } catch (error) {
+    console.error('Error fetching favorite restaurants:', error);
+  } finally {
+    isLoading.value = false; // Set loading to false after data is fetched
+  }
+});
 </script>
 
 <style scoped>
-.card-img-top {
-  height: 180px; 
-  object-fit: cover; 
+.favorite-restaurants {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
+</style>
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
-
-.animated-card {
-  transform: translateY(10px);
-  transition: transform 0.3s;
-}
-
-.animated-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+<style scoped>
+.favorite-restaurants {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 </style>

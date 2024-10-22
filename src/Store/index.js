@@ -1,25 +1,23 @@
 // store/index.js
 import { createStore } from 'vuex';
-//import profileModule from './modules/profile';
-import { menuCategory } from '../Store/Menu/menuCategory';
-import { menuProduct } from '../Store/Menu/menuProduct';
-import { menuChoice } from '../Store/Menu/menuChoice';
-import { orderDetails } from '@/Store/RestaurantOwner/orderDetails'
-import { rewards } from '@/Store/Modules/rewards';
-import AuthStore from '@/Store/Auth/AuthStore';
-import order from '@/Store/Modules/order'; 
-import Prevorder from '@/Store/Modules/PrevorderDetail';
-import AddReviews from '@/Store/Modules/AddReviews';
-import Resturantownerreviews from '@/Store/Modules/Resturantownerreviews';
-import adminreviews from '@/Store/Admin/Reviewadminstore'; 
-
-//import Reviews from './modules/customerReviews';
+import profileModule from './Modules/profile';
+import { menuCategory } from './Menu/menuCategory';
+import { menuProduct } from './Menu/menuProduct';
+import { menuChoice } from './Menu/menuChoice';
+import { orderDetails } from './RestaurantOwner/orderDetails'
+import { AllOrdersAdm } from './Admin/allOrders'
+import { rewards } from './Modules/rewards';
+import AuthStore from './Auth/authStore';
+import order from './Modules/order'; // import the order module
+import Prevorder from './Modules/PrevorderDetail';
+import Resturantownerreviews from './Modules/Resturantownerreviews';
+import Reviews from './Modules/customerReviews';
 import axios from 'axios';
-import ResturantDetailsStore from '@/Store/Customer/ResturantDetailsStore';
-import ResturantRevinue from '@/Store/Customer/resturantRevenue'; 
-//import orders from '@/Store/customer/orders';
-import favoriteStore from '@/Store/Customer/favScreenCus';
-import RevenueStore from '../Store/Admin/RevenueStore';
+import ResturantDetailsStore from './Customer/resturantDetailsStore';
+import ResturantRevinue from './Customer/resturantRevenue'; // Import the new module
+import orders from './Customer/checkout';
+import favoriteStore from './Customer/favScreenCus';
+
 const store = createStore({
   modules: {
     menuCategory,
@@ -27,20 +25,17 @@ const store = createStore({
     menuChoice,
     order, // register the order module
     Prevorder,
-   // orders, // Register the 'orders' module
+    orders, // Register the 'orders' module
     Resturantownerreviews,
-    RevenueStore,
-   // Reviews,
-   AddReviews,
-   adminreviews,
+    Reviews,
     rewards,
-   // profile: profileModule,
+    profile: profileModule,
     auth: AuthStore,
     resturantDetails: ResturantDetailsStore,
     resturantRevinue: ResturantRevinue,
     favoriteStore,
-    orderDetails, 
-
+    orderDetails, // Ensure this is properly registered
+    AllOrdersAdm,
   },
 
   state: {

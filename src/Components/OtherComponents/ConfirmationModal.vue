@@ -1,3 +1,4 @@
+<!-- ModalComponent.vue -->
 <template>
     <div v-if="isVisible" class="modal fade show d-block" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -11,7 +12,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" @click="cancelAction">{{ cancelText }}</button>
-                    <button type="button" class="btn btn-danger" @click="logoutAction">{{ confirmText }}</button>
+                    <button type="button" class="btn btn-primary" @click="confirmAction">{{ confirmText }}</button>
                 </div>
             </div>
         </div>
@@ -20,7 +21,6 @@
 
 <script setup>
 import { defineProps, defineEmits } from 'vue';
-import { useRouter } from 'vue-router'; // Import useRouter to navigate
 
 const props = defineProps({
     title: {
@@ -29,11 +29,11 @@ const props = defineProps({
     },
     message: {
         type: String,
-        default: 'Are you sure you want to logout?',
+        default: 'Are you sure?',
     },
     confirmText: {
         type: String,
-        default: 'Logout',
+        default: 'Confirm',
     },
     cancelText: {
         type: String,
@@ -46,29 +46,14 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['close', 'confirm', 'cancel']);
-const router = useRouter(); // Initialize the router
 
 const closeModal = () => emit('close');
-
-const logoutAction = () => {
-    // Remove the token and user info from local storage
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-
-    // Navigate to the specified page (e.g., login page)
-    router.push('/'); // Adjust this path based on your routing setup
-
-    // Emit the confirm event
-    emit('confirm'); // This should be used to signal that logout was confirmed
-};
-
-const cancelAction = () => {
-    closeModal(); // Close the modal when "Cancel" is clicked
-    emit('cancel'); // Emit the cancel event
-};
+const confirmAction = () => emit('confirm');
+const cancelAction = () => emit('cancel');
 </script>
 
 <style scoped>
+/* Bootstrap 5 takes care of most styling */
 .modal-backdrop {
     background-color: rgba(0, 0, 0, 0.5);
 }

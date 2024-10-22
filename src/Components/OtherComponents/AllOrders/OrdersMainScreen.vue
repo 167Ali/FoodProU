@@ -13,16 +13,16 @@ import Table from '@/Components/OtherComponents/AllOrders/OrdersTable.vue';
 import { useStore } from 'vuex';  // Import the Vuex store
 const store = useStore();
 
-const orders = computed(() => store.getters['orderDetails/allOrders'] || []);
-//const orders = computed(() => store.getters['AllOrdersAdm/allOrders'] || []);
+//const orders = computed(() => store.getters['orderDetails/allOrders'] || []);
+const orders = computed(() => store.getters['AllOrdersAdm/allOrders'] || []);
 const filteredOrders = ref();
 const restaurants = ref();
 
 
 onMounted(async () => {
   try {
-    await store.dispatch('orderDetails/fetchOrders');
-    //await store.dispatch('AllOrdersAdm/fetchOrders');
+    //await store.dispatch('orderDetails/fetchOrders');
+    await store.dispatch('AllOrdersAdm/fetchOrders');
     // Initialize filteredOrders and restaurants after fetching
     filteredOrders.value = [...orders.value];
     //restaurants.value = [...new Set(orders.value.map(order => order.restaurant))];

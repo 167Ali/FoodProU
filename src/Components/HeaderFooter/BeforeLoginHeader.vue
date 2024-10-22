@@ -13,33 +13,33 @@
         <!-- Main Navbar -->
         <nav class="navbar">
             <div class="navbar-left">
-                <font-awesome-icon :icon="['fas', 'utensils']" class="logo" />
+                <i class="fa-solid fa-utensils logo"></i>
                 <span class="brand-name">foodpro</span>
             </div>
 
             <div class="navbar-right">
                 <button class="auth-button login" @click="showLoginModal = true">Log in</button>
                 <button class="auth-button signup" @click="showSignUpModal = true">Sign up</button>
+
             </div>
         </nav>
-
-        <!-- Login and Signup Modals -->
-        <LoginModal :showModal="showLoginModal" @close="closeLoginModal" />
-        <SignUpModal :showModal="showSignUpModal" @close="closeSignUpModal" />
     </div>
+    <LoginModal :showModal="showLoginModal" @close="closeLoginModal" />
+    <SignUpModal :showModal="showSignUpModal" @close="closeSignUpModal" />
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import LoginModal from '@/Components/LoginSignup/UserLogin.vue';
+
 import SignUpModal from '@/Components/LoginSignup/UserSignUp.vue';
 
-// Setup router and refs
 const router = useRouter();
 const showBanner = ref(true);
 
-// Login and Signup modals
+// Navigation functions
 const showLoginModal = ref(false);
 const showSignUpModal = ref(false);
 const closeLoginModal = () => {
@@ -49,11 +49,11 @@ const closeSignUpModal = () => {
     showSignUpModal.value = false;
 };
 
-// Business signup navigation
 const goToBusinessSignup = () => {
     router.push('/businesslanding');
 };
 </script>
+
 
 <style scoped>
 /* Business Banner */
@@ -159,5 +159,24 @@ const goToBusinessSignup = () => {
 .auth-button.signup:hover {
     background-color: #2e8d6a;
     color: white;
+}
+
+/* Language Selector */
+.lang-selector {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.lang-selector span {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Cart Icon */
+.cart-icon {
+    font-size: 30px;
+    cursor: pointer;
 }
 </style>
