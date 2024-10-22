@@ -5,9 +5,9 @@ const headers = { Authorization: token };
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 const id = localStorage.getItem('id');
 
-export const OrderDetails = {
+export const AllOrders = {
     ViewOrder() {
-        return axios.get(`${baseURL}/api/restaurant/orders`, { headers });
+        return axios.get(`${baseURL}/api/get-all-orders`, { headers });
     },
 }
 

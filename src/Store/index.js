@@ -4,7 +4,8 @@ import profileModule from './Modules/profile';
 import { menuCategory } from './Menu/menuCategory';
 import { menuProduct } from './Menu/menuProduct';
 import { menuChoice } from './Menu/menuChoice';
-import { orderDetails } from './RestaurantOwner/OrderDetails'
+import { orderDetails } from './RestaurantOwner/orderDetails'
+import { AllOrdersAdm } from './Admin/allOrders'
 import { rewards } from './Modules/rewards';
 import AuthStore from './Auth/authStore';
 import order from './Modules/order'; // import the order module
@@ -34,7 +35,7 @@ const store = createStore({
     resturantRevinue: ResturantRevinue,
     favoriteStore,
     orderDetails, // Ensure this is properly registered
-
+    AllOrdersAdm,
   },
 
   state: {

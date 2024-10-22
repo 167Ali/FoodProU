@@ -1,6 +1,6 @@
-import { OrderDetails } from '@/Services/RestaurantOwner/orderDetailsServices';
+import { AllOrders } from '@/Services/Admin/allOrdersServices';
 
-export const orderDetails = {
+export const AllOrdersAdm = {
     namespaced: true,
     state: {
         orders: [],
@@ -13,9 +13,9 @@ export const orderDetails = {
     actions: {
         async fetchOrders({ commit }) {
             try {
-                const response = await OrderDetails.ViewOrder();
-                console.log(response.data.data.data);
-                commit('SET_ORDERS', response.data.data.data);
+                const response = await AllOrders.ViewOrder();
+                console.log(response.data);
+                commit('SET_ORDERS', response.data);
             } catch (error) {
                 console.error('Error fetching Order:', error);
                 throw error;
