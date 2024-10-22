@@ -3,19 +3,19 @@
 import axios from 'axios';
 
 // Base API URL
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Backend API URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL_H; // Replace with your actual base URL
 
 // Function to fetch restaurants
 export const fetchRestaurants = async (params = {}) => {
-  const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+  const token = localStorage.getItem('token');
   try {
     const response = await axios.get(`${API_BASE_URL}/api/restaurants`, {
       headers: {
-        Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+        Authorization: `Bearer ${token}`,
       },
       params: params,
     });
-    return response.data; // Return the response data
+    return response.data;
   } catch (error) {
     throw error;
   }
@@ -30,7 +30,7 @@ export const fetchDeals = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response.data; // Return the response data
+    return response.data;
   } catch (error) {
     throw error;
   }
@@ -48,7 +48,7 @@ export const searchRestaurants = async (searchTerm) => {
         search_term: searchTerm,
       },
     });
-    return response.data; // Return the response data
+    return response.data;
   } catch (error) {
     throw error;
   }
@@ -56,16 +56,54 @@ export const searchRestaurants = async (searchTerm) => {
 
 // Function to fetch restaurant menus
 export const fetchRestaurantMenus = async (restaurantId) => {
-  const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+  const token = localStorage.getItem('token');
   try {
     const response = await axios.get(`${API_BASE_URL}/api/restaurants/${restaurantId}/menus`, {
       headers: {
-        Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+        Authorization: `Bearer ${token}`,
       },
     });
-    console.log("ghdbscfkjnc", response.data.data);
-    return response.data; // Return the response data
+    console.log("Fetched restaurant menus:", response.data.data);
+    return response.data;
   } catch (error) {
     throw error;
   }
 };
+
+// Function to add a restaurant to favorites
+export const addFavoriteRestaurant = async (restaurantId) => {
+  const token = localStorage.getItem('token');
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/api/customers/add-favorite-restaurant`,
+      { restaurant_id: restaurantId },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+// Function to remove a restaurant from favorites
+export const removeFavoriteRestaurant = async (restaurantId) => {
+  const token = localStorage.getItem('token');
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/api/customers/del-favorite-restaurant`,
+      { restaurant_id: restaurantId },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+

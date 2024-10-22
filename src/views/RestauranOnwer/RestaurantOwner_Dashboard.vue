@@ -27,8 +27,7 @@
         </div>
     </div>
 </template>
-    
-      
+
 <script setup>
     import { ref, computed } from 'vue';
     
@@ -94,81 +93,80 @@
     // Filter accepted and rejected orders using computed properties
     const acceptedOrders = computed(() => currentOrders.value.filter(order => order.accepted));
     const rejectedOrders = computed(() => currentOrders.value.filter(order => !order.accepted));
-</script>  
+</script> 
 
-    
 <style scoped>
-    .dashboard-container {
-        display: flex;
-        min-height: 100vh;
-        background-color: var(--secondary-color);
-    }
-    
-    .main-content {
-        flex-grow: 1;
-        padding: 20px;
-        margin-left: 100px;
-    }
-    
-    .right-sidebar {
-        width: 300px;
-    }
-    
-    .order-list {
-        max-height: 600px;
-        overflow-y: auto;
-    }
-    
-    .current-order-card {
-        border-radius: 12px;
-        background-color: #ffffff;
-        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .current-order-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-    }
-    
-    .order-image {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        object-fit: cover;
-    }
-    
-    .order-user {
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #333;
-    }
-    
-    .order-location {
-        font-size: 0.9rem;
-        color: #666;
-    }
-    
-    .text-price {
-        color: #28a745;
-        font-weight: bold;
-        font-size: 1.2rem;
-    }
-    
-    .btn-order {
-        background-color: #00754a;
-        color: white;
-        padding: 5px 15px;
-        border: none;
-        border-radius: 20px;
-        font-weight: 600;
-        cursor: pointer;
-    }
-    
-    .btn-order:hover {
-        background-color: #3fcf9a;
-    }
-    
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--secondary-color);
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 100px;
+}
+
+.right-sidebar {
+    width: 300px;
+}
+
+.order-list {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.current-order-card {
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.current-order-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.order-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.order-user {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.order-location {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.text-price {
+    color: #28a745;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.btn-order {
+    background-color: #00754a;
+    color: white;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-order:hover {
+    background-color: #3fcf9a;
+}
+
     /* Responsive */
     @media (max-width: 768px) {
         .dashboard-container {

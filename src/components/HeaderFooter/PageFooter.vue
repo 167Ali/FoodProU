@@ -1,46 +1,14 @@
 <template>
   <footer class="footer">
-    <!-- <hr> -->
     <div class="footer-links">
-      <!-- First Column -->
-      <div class="footer-column">
+      <!-- Loop through the footer columns -->
+      <div v-for="(column, index) in footerColumns" :key="index" class="footer-column">
         <ul>
-          <li>&copy; foodpro</li>
-        </ul>
-      </div>
-      <!-- Second Column -->
-      <div class="footer-column">
-        <ul>
-          <li><a href="#">Press</a></li>
-          <li><a href="#">foodpro Terms and Conditions</a></li>
-          <li><a href="#">Security</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">Cashback Terms and Conditions</a></li>
-          <li><a href="#">Partner with Us</a></li>
-          <li><a href="#">Become an Affiliate</a></li>
-        </ul>
-      </div>
-      <!-- Third Column -->
-      <div class="footer-column">
-        <ul>
-          <li><a href="#">foodpro - Monthly Subscription Programme</a></li>
-          <li><a href="#">Help Center</a></li>
-          <li><a href="#">Terms and Conditions</a></li>
-          <li><a href="#">Suggest a Restaurant</a></li>
-          <li><a href="#">All cuisines</a></li>
-          <li><a href="#">Update on COVID-19 in Pakistan</a></li>
-        </ul>
-      </div>
-      <!-- Fourth Column -->
-      <div class="footer-column">
-        <ul>
-          <li><a href="#">Refunds with foodpay</a></li>
-          <li><a href="#">Privacy policy</a></li>
-          <li><a href="#">Human rights policy</a></li>
-          <li><a href="#">Corporate Customer</a></li>
-          <li><a href="#">foodpro Magazine</a></li>
-          <li><a href="#">foodpro Vouchers & Coupons</a></li>
-          <li><a href="#">foodpro Home Chef</a></li>
+          <!-- Loop through the links in each column -->
+          <li v-for="(link, linkIndex) in column.links" :key="linkIndex">
+            <a v-if="link.url" :href="link.url">{{ link.text }}</a>
+            <span v-else>{{ link.text }}</span>
+          </li>
         </ul>
       </div>
     </div>
@@ -48,7 +16,48 @@
 </template>
 
 <script setup>
-// No need for defineComponent here
+import { ref } from 'vue';
+
+// Footer columns data with links and URLs
+const footerColumns = ref([
+  {
+    links: [
+      { text: '© foodpro' },
+    ],
+  },
+  {
+    links: [
+      { text: 'Press', url: '#' },
+      { text: 'foodpro Terms and Conditions', url: '#' },
+      { text: 'Security', url: '#' },
+      { text: 'Careers', url: '#' },
+      { text: 'Cashback Terms and Conditions', url: '#' },
+      { text: 'Partner with Us', url: '#' },
+      { text: 'Become an Affiliate', url: '#' },
+    ],
+  },
+  {
+    links: [
+      { text: 'foodpro - Monthly Subscription Programme', url: '#' },
+      { text: 'Help Center', url: '#' },
+      { text: 'Terms and Conditions', url: '#' },
+      { text: 'Suggest a Restaurant', url: '#' },
+      { text: 'All cuisines', url: '#' },
+      { text: 'Update on COVID-19 in Pakistan', url: '#' },
+    ],
+  },
+  {
+    links: [
+      { text: 'Refunds with foodpay', url: '#' },
+      { text: 'Privacy policy', url: '#' },
+      { text: 'Human rights policy', url: '#' },
+      { text: 'Corporate Customer', url: '#' },
+      { text: 'foodpro Magazine', url: '#' },
+      { text: 'foodpro Vouchers & Coupons', url: '#' },
+      { text: 'foodpro Home Chef', url: '#' },
+    ],
+  },
+]);
 </script>
 
 <style scoped>
@@ -75,7 +84,10 @@
 }
 
 .footer-column ul li {
+  margin-left: 150px;
   margin-bottom: 10px;
+  font-size: 14px;
+  color: #555;
 }
 
 .footer-column ul li a {
@@ -85,10 +97,5 @@
 
 .footer-column ul li a:hover {
   text-decoration: underline;
-}
-
-.footer-column ul li {
-  font-size: 14px;
-  color: #555;
 }
 </style>

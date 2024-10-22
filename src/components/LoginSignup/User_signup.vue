@@ -20,8 +20,20 @@
           <div class="mb-3">
             <input type="password" class="form-control" placeholder="Password" v-model="password" required />
           </div>
-          <button type="submit" class="btn btn-signup w-100 mb-3">Sign Up</button>
+          <div class="mb-3">
+            <input type="password" class="form-control" placeholder="Confirm Password" v-model="passwordConfirmation" required />
+          </div>
+          <button type="submit" class="btn btn-signup w-100 mb-3" :disabled="isLoading">
+            <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span v-else>Sign Up</span>
+          </button>
         </form>
+        <div v-if="successMessage" class="alert alert-success mt-3">
+          {{ successMessage }}
+        </div>
+        <div v-if="errorMessage" class="alert alert-danger mt-3">
+          {{ errorMessage }}
+        </div>
       </div>
 
       <div class="modal-footer">
@@ -32,7 +44,8 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue';
+import { ref } from 'vue';
+import { useStore } from 'vuex';
 
 const props = defineProps({
   showModal: {
@@ -42,24 +55,50 @@ const props = defineProps({
 });
 
 const emit = defineEmits();
+const store = useStore();
 
 const firstName = ref('');
 const lastName = ref('');
 const email = ref('');
 const password = ref('');
+const passwordConfirmation = ref('');
+const isLoading = ref(false);
+const successMessage = ref('');
+const errorMessage = ref('');
 
 const closeModal = () => {
   emit('close');
 };
 
-const signUp = () => {
-  // Logic for sign-up
-  console.log('First Name:', firstName.value);
-  console.log('Last Name:', lastName.value);
-  console.log('Email:', email.value);
-  console.log('Password:', password.value);
+const signUp = async () => {
+  const formData = {
+    first_name: firstName.value,
+    last_name: lastName.value,
+    email: email.value,
+    password: password.value,
+    password_confirmation: passwordConfirmation.value,
+  };
+
+  isLoading.value = true;
+  successMessage.value = '';
+  errorMessage.value = '';
+
+  try {
+    const response = await store.dispatch('auth/register', formData);
+    successMessage.value = 'Registration successful! Redirecting...';
+    console.log('Registration successful', response);
+    setTimeout(() => {
+      closeModal();
+    }, 2000); // Delay closing the modal for a brief period to show the success message
+  } catch (error) {
+    errorMessage.value = error.message || 'Registration failed. Please try again.';
+    console.error('Error during registration:', error.message);
+  } finally {
+    isLoading.value = false;
+  }
 };
 </script>
+
 
 <style scoped>
 .modal-title {
