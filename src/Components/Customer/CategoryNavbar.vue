@@ -39,8 +39,8 @@
   
 <script setup>
   import { ref, onMounted, watch, nextTick } from 'vue';
-  import CategoryItem from '@/components/Customer/CategoryItem.vue'
-  import AddtoCart from '@/components/Customer/AddtoCart.vue'
+  import CategoryItem from '@/Components/Customer/CategoryItem.vue'
+  import AddtoCart from '@/Components/Customer/AddtoCart.vue'
 
   
   // Category links (Dynamic example)

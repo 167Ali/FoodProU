@@ -185,7 +185,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import SideBar from './RestaurantDashboard/SideBar.vue';
+import SideBar from '@/Components/RestaurantOwner/RestaurantDashboard/SideBar.vue';
 
 const ownerDetails = ref({
   firstName: '',

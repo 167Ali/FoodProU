@@ -81,7 +81,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import MenuUpdateAddProduct from '@/components/Menu&Choices/MenuUpdateAddProduct.vue'; // Import the form component
+import MenuUpdateAddProduct from '@/Components/Menu&Choices/MenuUpdateAddProduct.vue'; // Import the form component
 import { useStore } from 'vuex';
 
 const store = useStore();

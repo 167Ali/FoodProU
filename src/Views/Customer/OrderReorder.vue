@@ -80,10 +80,10 @@ import { ref, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router'; // Import useRouter from vue-router
 
-import { getActiveOrders, getPastOrders } from '../../Services/Customer/orderService';
+import { getActiveOrders, getPastOrders } from '@/Services/Customer/orderService';
 
-import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
-import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
+import LoginHeader from '@/Components/HeaderFooter/LoginHeader.vue';
+import PageFooter from '@/Components/HeaderFooter/PageFooter.vue'
 
 const store = useStore();
 const router = useRouter();

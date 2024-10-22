@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import CategoryIcon from '@/components/Admin/CategoryIcon.vue'; // Adjust the path if needed
+import CategoryIcon from '@/Components/Admin/CategoryIcon.vue'; // Adjust the path if needed
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faSpoon,

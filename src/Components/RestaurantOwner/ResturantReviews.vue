@@ -1,25 +1,25 @@
 <template>
-    <SideBar/>
-    <div class="reviews-container">
-        <h1>My Restaurant Reviews</h1>
-        <div v-if="loading">Loading reviews...</div>
-        <div v-if="error">{{ error }}</div>
-        <div v-else>
-            <div v-for="review in reviews" :key="review.id" class="review-card">
-                <h2>{{ review.customerName }}</h2>
-                <p>Total Spend: {{ review.totalSpend }}</p>
-                <p>Rating: {{ review.rating }}</p>
-                <p>{{ review.comment }}</p>
-            </div>
-        </div>
+  <SideBar />
+  <div class="reviews-container">
+    <h1>My Restaurant Reviews</h1>
+    <div v-if="loading">Loading reviews...</div>
+    <div v-if="error">{{ error }}</div>
+    <div v-else>
+      <div v-for="review in reviews" :key="review.id" class="review-card">
+        <h2>{{ review.customerName }}</h2>
+        <p>Total Spend: {{ review.totalSpend }}</p>
+        <p>Rating: {{ review.rating }}</p>
+        <p>{{ review.comment }}</p>
+      </div>
     </div>
+  </div>
 </template>
 
 <script setup>
 import { computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
-import SideBar from './RestaurantDashboard/SideBar.vue';
+import SideBar from '@/Components/RestaurantOwner/RestaurantDashboard/SideBar.vue';
 
 // Props (define directly in the setup function)
 const props = defineProps({
@@ -47,12 +47,13 @@ onMounted(() => {
 
 <style scoped>
 .reviews-container {
-    padding: 20px;
+  padding: 20px;
 }
+
 .review-card {
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-radius: 8px;
-    margin: 10px 0;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 10px 0;
 }
 </style>

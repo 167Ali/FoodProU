@@ -56,7 +56,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { fetchReviews, fetchRestaurants } from '@/Services/Admin/reviewAdminServices';
-import SideBar from '@/components/Admin/SideBar.vue';
+import SideBar from '@/Components/Admin/SideBar.vue';
 
 // Define state using the Composition API
 const reviews = ref([]);

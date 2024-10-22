@@ -83,9 +83,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { getOrderDetails, downloadOrderInvoice } from '@/Services/Customer/prevOrderDetailService';
-import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
-import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
-import OrderRating from '@/components/Customer/OrderRating.vue';
+import LoginHeader from '@/Components/HeaderFooter/LoginHeader.vue';
+import PageFooter from '@/Components/HeaderFooter/PageFooter.vue';
+import OrderRating from '@/Components/Customer/OrderRating.vue';
 
 // Props
 const props = defineProps({

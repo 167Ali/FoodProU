@@ -101,8 +101,8 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import MenuViewChoice from '@/components/Menu&Choices/MenuViewChoice.vue';
-import MenuView from '@/components/Menu&Choices/MenuView.vue';
+import MenuViewChoice from '@/Components/Menu&Choices/MenuViewChoice.vue';
+import MenuView from '@/Components/Menu&Choices/MenuView.vue';
 import { useStore } from 'vuex';  // Import the Vuex store
 const store = useStore();  // Initialize the store
 

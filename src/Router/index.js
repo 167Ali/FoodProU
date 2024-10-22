@@ -30,7 +30,7 @@ const routes = [
 
     name: 'UserGuide',
 
-    component: () => import('../components/Customer/UserGuide.vue')
+    component: () => import('../Components/Customer/UserGuide.vue')
 
   },
 

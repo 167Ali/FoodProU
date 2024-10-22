@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import OrderCard from '@/components/RestaurantOwner/RestaurantDashboard/OrderCard.vue';
+import OrderCard from '@/Components/RestaurantOwner/RestaurantDashboard/OrderCard.vue';
 import { defineProps } from 'vue';
 
 // Define props

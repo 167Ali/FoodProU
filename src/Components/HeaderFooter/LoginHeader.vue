@@ -65,7 +65,7 @@
 <script setup>
 import { useRouter } from 'vue-router';
 const router = useRouter();
-import ModalComponent from '@/components/OtherComponents/ConfirmationModal.vue';
+import ModalComponent from '@/Components/OtherComponents/ConfirmationModal.vue';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';

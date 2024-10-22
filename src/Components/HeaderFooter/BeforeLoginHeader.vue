@@ -32,9 +32,9 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import LoginModal from '../LoginSignup/UserLogin.vue';
+import LoginModal from '@/Components/LoginSignup/UserLogin.vue';
 
-import SignUpModal from '../LoginSignup/UserSignUp.vue';
+import SignUpModal from '@/Components/LoginSignup/UserSignUp.vue';
 
 const router = useRouter();
 const showBanner = ref(true);

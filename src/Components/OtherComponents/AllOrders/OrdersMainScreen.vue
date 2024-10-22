@@ -7,8 +7,8 @@
 
 <script setup>
 import { ref, watch, computed, onMounted } from 'vue';
-import FilterAndSearch from '@/components/OtherComponents/AllOrders/OrdersFilterSearch.vue';
-import Table from '@/components/OtherComponents/AllOrders/OrdersTable.vue';
+import FilterAndSearch from '@/Components/OtherComponents/AllOrders/OrdersFilterSearch.vue';
+import Table from '@/Components/OtherComponents/AllOrders/OrdersTable.vue';
 // Orders data with added date and status
 import { useStore } from 'vuex';  // Import the Vuex store
 const store = useStore();

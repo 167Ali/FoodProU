@@ -69,7 +69,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import MenuCreateChoice from '@/components/Menu&Choices/MenuCreateChoice.vue'; // Import the form component
+import MenuCreateChoice from '@/Components/Menu&Choices/MenuCreateChoice.vue'; // Import the form component
 import { useStore } from 'vuex';
 
 const store = useStore();

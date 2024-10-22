@@ -1,17 +1,17 @@
 // src/router/customerRoutes.js
 
 import RestaurantPage from '@/Views/Customer/RestaurantPage.vue';
-import CheckOut from '@/components/Customer/CheckOut.vue';
-import AddtoCart from '@/components/Customer/AddtoCart.vue';
-import CategoryNavbar from '@/components/Customer/CategoryNavbar.vue';
+import CheckOut from '@/Components/Customer/CheckOut.vue';
+import AddtoCart from '@/Components/Customer/AddtoCart.vue';
+import CategoryNavbar from '@/Components/Customer/CategoryNavbar.vue';
 import DashboardResturantPage from '@/Views/Customer/DashboardResturantPage.vue';
 import ProfileSettings from '@/Views/Customer/ProfileSettings.vue';
 import FavoritesPage from '@/Views/Customer/Favs.vue';
 import OrderScreen from '@/Views/Customer/OrderScreen.vue';
 import OrderReorder from '@/Views/Customer/OrderReorder.vue';
 import PrevorderDetails from '@/Views/Customer/PrevorderDetails.vue';
-import OrderRating from '@/components/Customer/OrderRating.vue';
-import UserGuide from '@/components/Customer/UserGuide.vue';
+import OrderRating from '@/Components/Customer/OrderRating.vue';
+import UserGuide from '@/Components/Customer/UserGuide.vue';
 
 export default [
   {

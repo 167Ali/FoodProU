@@ -225,7 +225,7 @@
 </template>
 
 <script setup>
-import BussinessNav from "@/components/LoginSignup/BussinessNav.vue";
+import BussinessNav from "@/Components/LoginSignup/BussinessNav.vue";
 import { ref } from "vue";
 
 // Current page and total pages

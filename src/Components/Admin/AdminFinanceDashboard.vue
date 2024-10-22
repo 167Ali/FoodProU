@@ -49,7 +49,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { Chart } from 'chart.js/auto';
-import SideBar from '@/components/Admin/SideBar.vue'
+import SideBar from '@/Components/Admin/SideBar.vue'
 // References for each chart
 const revenueChartCanvas = ref(null);
 const orderVolumeChartCanvas = ref(null);

@@ -65,9 +65,9 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';  // Import onMounted here
 import { useStore } from 'vuex';
-import LoginHeader from '@/components/HeaderFooter/LoginHeader.vue';
-import PageFooter from '@/components/HeaderFooter/PageFooter.vue';
-import Loader from '@/components/OtherComponents/Loader.vue'; // Import the Loader component
+import LoginHeader from '@/Components/HeaderFooter/LoginHeader.vue';
+import PageFooter from '@/Components/HeaderFooter/PageFooter.vue';
+import Loader from '@/Components/OtherComponents/Loader.vue'; // Import the Loader component
 
 const store = useStore();
 const loading = ref(true); // Loading state

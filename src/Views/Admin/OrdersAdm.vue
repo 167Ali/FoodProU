@@ -11,20 +11,22 @@
         <ViewAllOrdersAdm />
       </div>
     </div>
-    </div>
+  </div>
 </template>
 
 
 
 <script setup>
-import SideBar from '@/components/Admin/SideBar.vue';
-import ViewAllOrdersAdm from '../../components/OtherComponents/AllOrders/OrdersMainScreen.vue';
+import SideBar from '@/Components/Admin/SideBar.vue';
+import ViewAllOrdersAdm from '@/Components/OtherComponents/AllOrders/OrdersMainScreen.vue';
 </script>
 
 <style scoped>
 .page-container {
-  display: flex; /* Flexbox layout */
-  height: 100vh; /* Full page height */
+  display: flex;
+  /* Flexbox layout */
+  height: 100vh;
+  /* Full page height */
 }
 
 
@@ -54,4 +56,4 @@ import ViewAllOrdersAdm from '../../components/OtherComponents/AllOrders/OrdersM
   height: 100vh;
   /* Full height */
 }
-</style>    
+</style>

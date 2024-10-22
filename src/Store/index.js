@@ -6,7 +6,7 @@ import { menuProduct } from './Menu/menuProduct';
 import { menuChoice } from './Menu/menuChoice';
 import { orderDetails } from './RestaurantOwner/OrderDetails'
 import { rewards } from './Modules/rewards';
-import AuthStore from './Auth/AuthStore';
+import AuthStore from './Auth/authStore';
 import order from './Modules/order'; // import the order module
 import Prevorder from './Modules/PrevorderDetail';
 import Resturantownerreviews from './Modules/Resturantownerreviews';

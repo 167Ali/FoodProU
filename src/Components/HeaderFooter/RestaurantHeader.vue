@@ -27,8 +27,8 @@
 
 <script setup>
 import { ref, computed, defineProps, onMounted } from 'vue';
-import SeeReviews from '@/components/Customer/SeeReviews.vue';
-import Moreinfo from '@/components/Customer/Moreinfo.vue';
+import SeeReviews from '@/Components/Customer/SeeReviews.vue';
+import Moreinfo from '@/Components/Customer/Moreinfo.vue';
 
 const props = defineProps({
   restaurant: {

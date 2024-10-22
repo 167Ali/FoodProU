@@ -124,8 +124,8 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
-import LoginHeader from '@/components/HeaderFooter/LoginHeader.vue';
-import PageFooter from '@/components/HeaderFooter/PageFooter.vue';
+import LoginHeader from '@/Components/HeaderFooter/LoginHeader.vue';
+import PageFooter from '@/Components/HeaderFooter/PageFooter.vue';
 
 const store = useStore();
 const orderDetails = computed(() => store.getters['orders/orderDetails']);

@@ -4,7 +4,7 @@
   </div>
 </template>
 <script setup>
-import RestaurantItem from '@/components/Admin/RestaurantItem.vue';
+import RestaurantItem from '@/Components/Admin/RestaurantItem.vue';
 
 const restaurants = [
   {

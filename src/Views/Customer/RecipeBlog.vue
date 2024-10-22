@@ -29,8 +29,8 @@
   </template>
   
   <script>
-  import RecipeCard from '../../components/Customer/BlogCard.vue';
-  import RecipeModal from '../../components/Customer/RecipeModal.vue'; 
+  import RecipeCard from '@/Components/Customer/BlogCard.vue';
+  import RecipeModal from '@/Components/Customer/RecipeModal.vue'; 
   
   export default {
     components: {

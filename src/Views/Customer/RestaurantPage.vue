@@ -8,7 +8,7 @@
       <hr />
       <Deals />
     </div>
-    
+
     <div>
       <CategoryNavbar />
     </div>
@@ -20,11 +20,11 @@
 import { onMounted, ref } from 'vue';
 import { defineProps } from 'vue';
 import { useStore } from 'vuex'; // Import useStore to access the store
-import LoginHeader from '../../components/HeaderFooter/LoginHeader.vue';
-import RestaurantHeader from '../../components/HeaderFooter/RestaurantHeader.vue';
-import Deals from '../../components/Customer/Deals.vue';
-import CategoryNavbar from '../../components/Customer/CategoryNavbar.vue';
-import PageFooter from '../../components/HeaderFooter/PageFooter.vue';
+import LoginHeader from '@/Components/HeaderFooter/LoginHeader.vue';
+import RestaurantHeader from '@/Components/HeaderFooter/RestaurantHeader.vue';
+import Deals from '@/Components/Customer/Deals.vue';
+import CategoryNavbar from '@/Components/Customer/CategoryNavbar.vue';
+import PageFooter from '@/Components/HeaderFooter/PageFooter.vue';
 
 // Define props to receive the id
 const props = defineProps({

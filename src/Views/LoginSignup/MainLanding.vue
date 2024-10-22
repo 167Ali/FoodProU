@@ -148,7 +148,7 @@
 
 
 <script setup>
-import BeforeLoginHeader from '@/components/HeaderFooter/BeforeLoginHeader.vue';
+import BeforeLoginHeader from '@/Components/HeaderFooter/BeforeLoginHeader.vue';
 const cuisines = [
     { name: 'Pakistani', image: new URL('@/assets/MainLandingCusine/pk.png', import.meta.url).href },
     { name: 'Japanese', image: new URL('@/assets/MainLandingCusine/japan.png', import.meta.url).href },
