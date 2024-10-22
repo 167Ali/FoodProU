@@ -12,7 +12,7 @@ import OrderReorder from '../views/Customer/OrderReorder.vue';
 import PrevorderDetails from '../views/Customer/PrevorderDetails.vue';
 import OrderRating from '@/components/Customer/OrderRating.vue';
 import UserGuide from '@/components/Customer/UserGuide.vue';
-
+import RecipeBlog from '../views/Customer/RecipeBlog.vue'
 export default [
   {
     path: '/RestaurantPage/:id', // Updated to include :id
@@ -20,7 +20,11 @@ export default [
     component: RestaurantPage,
     props: true, // Enable passing route params as props
   },
-  
+  {
+    path: '/recipe-blog',
+    name: 'RecipeBlog',
+    component: RecipeBlog
+  },
   {
     path: '/checkout',
     name: 'checkout',

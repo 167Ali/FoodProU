@@ -54,6 +54,11 @@
     store.dispatch('resturantDetails/fetchRestaurants');
   });
   </script>
-  
-  <style scoped></style>
+ 
+  <style scoped>
+ .card-link{
+  text-decoration: none;
+ }
+
+</style>
   

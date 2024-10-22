@@ -51,6 +51,7 @@ const props = defineProps({
 const store = useStore();
 const stars = ref(0);
 const feedback = ref('');
+const token = localStorage.getItem('token'); // Get token from localStorage
 
 // Computed properties from the Vuex store
 const loading = computed(() => store.getters['AddReviews/loading']);
@@ -69,9 +70,10 @@ const submitReview = () => {
   }
 
   const reviewData = {
-    order_id: props.orderId,  // Ensure it's `order_id` as per API documentation
-    stars: stars.value,
-    feedback: feedback.value,
+    order_id: props.orderId, // Ensure it's `order_id` as per API documentation
+    rating: stars.value, // Rating is expected by the API
+    review: feedback.value, // Feedback text
+    token, // Pass the token for authorization
   };
 
   // Dispatch the action to submit the review via Vuex

@@ -1,5 +1,8 @@
 // /src/store/modules/reviews.js
 import { submitReview } from '../../Services/customer/ReviewService';
+// /src/store/modules/addreviews.js
+
+
 const state = {
   loading: false,
   error: null,
@@ -28,7 +31,7 @@ const actions = {
       await submitReview(reviewData); // Use the service to submit the review
       commit('SET_SUCCESS', 'Review submitted successfully!');
     } catch (error) {
-      commit('SET_ERROR', 'Failed to submit the review.');
+      commit('SET_ERROR', error.response?.data?.message || 'Failed to submit the review.');
     } finally {
       commit('SET_LOADING', false);
     }
