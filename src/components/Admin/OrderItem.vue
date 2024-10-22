@@ -20,7 +20,7 @@
 
 <script setup>
 import { defineProps } from 'vue';
-import { useOrderStore } from '../../store/Admin/OrderStore';
+import { useOrderStore } from '../../store/Admin/orderStore';
 
 const props = defineProps({
   item: {
