@@ -60,6 +60,7 @@ const navItems = ref([
 // Function to toggle the sidebar (for mobile)
 const toggleSidebar = () => {
   const sidebar = document.getElementById('offcanvasSidebar');
+  // eslint-disable-next-line no-undef
   const bsOffcanvas = bootstrap.Offcanvas.getInstance(sidebar) || new bootstrap.Offcanvas(sidebar);
   bsOffcanvas.toggle();
 };

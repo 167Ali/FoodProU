@@ -4,12 +4,12 @@ import profileModule from './modules/profile';
 import { menuCategory } from '../store/menu/menuCategory';
 import { menuProduct } from '../store/menu/menuProduct';
 import { menuChoice } from '../store/menu/menuChoice';
-import { orderDetails } from '../RestaurantOwner/OrderDetails'
+import { orderDetails } from './RestaurantOwner/orderDetails'
 import { rewards } from './modules/rewards';
 import AuthStore from './Auth/AuthStore';
 import order from './modules/order'; // import the order module
 import Prevorder from './modules/PrevorderDetail';
-import AddReviews from './modules/AddReviews';
+// import AddReviews from './modules/AddReviews';
 import Resturantownerreviews from './modules/Resturantownerreviews';
 //import Reviews from './modules/customerReviews';
 import axios from 'axios';

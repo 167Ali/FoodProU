@@ -10,6 +10,7 @@ const getToken = () => {
 };
 
 // Function to get active orders with JWT token
+// eslint-disable-next-line no-unused-vars
 export const getActiveOrders = async (customerId) => {
     try {
         const token = getToken(); // Get the token from localStorage
@@ -29,6 +30,7 @@ export const getActiveOrders = async (customerId) => {
 };
 
 // Function to get past orders with JWT token
+// eslint-disable-next-line no-unused-vars
 export const getPastOrders = async (customerId) => {
     try {
         const token = getToken(); // Get the token from localStorage

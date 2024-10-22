@@ -14,12 +14,12 @@
   </template>
   
   <script setup>
-  const props = defineProps({
+  defineProps({
     restaurant: {
       type: Object,
       required: true
     }
-  })
+  });
   </script>
   
   <style scoped>

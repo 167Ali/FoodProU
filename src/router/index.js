@@ -9,6 +9,11 @@ import UserGuide from '../components/Customer/UserGuide.vue';
 import RecipeBlog from '@/views/Customer/RecipeBlog.vue';
 import Rewards from '../views/Customer/Rewards.vue';
 import Get_Started_page from '@/views/Login_Signup/Get_Started_page.vue'
+import AddtoCart from '../components/Customer/AddtoCart.vue'
+import TestEr from '../components/Customer/testingThings.vue'
+import ProductCart from '../components/Customer/ProductAddToCart.vue'
+// import SeeReviews from '../components/Customer/SeeReviews.vue'
+
 // import Get_Started_page from '@/views/Login_Signup/Get_Started_page.vue'
 // import RecipeBlog from '../views/Customer/RecipeBlog.vue'
 // import Rewards from '../views/Customer/Rewards.vue'
@@ -17,6 +22,21 @@ const routes = [
   ...customerRoutes,
   ...restaurantownerRoutes,
   ...adminRoute,
+  {
+    path: '/prodo',
+    name: 'ProductCart',
+    component: ProductCart
+  },
+  // {
+  //   path: '/review',
+  //   name: 'SeeReviews',
+  //   component: SeeReviews
+  // },
+  {
+    path: '/test',
+    name: 'TestEr',
+    component: TestEr
+  },
   {
     name: 'UserGuide',
     path: '/user-guide',
@@ -38,6 +58,11 @@ const routes = [
     path: '/Get_Started_page',
     name: 'Get_Started_page',
     component: Get_Started_page
+  },
+  {
+    path: '/cart',
+    name: 'addtocart',
+    component: AddtoCart
   },
 ]
 // 

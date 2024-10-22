@@ -1,17 +1,21 @@
 <template>
   <div class="popular-item">
+    
     <img class="item-image" :src="item.image" alt="Popular item" />
     <div class="item-info">
       <h3>{{ item.name }}</h3>
       <p class="item-price">from Rs. {{ item.price }}</p>
       <p class="item-description">{{ item.description }}</p>
     </div>
-    <button class="add-to-cart-btn">+</button>
+    <!-- <button class="add-to-cart-btn">+</button> -->
+     <ProductModal/>
+
   </div>
 </template>
 
 <script setup>
 import { defineProps } from 'vue';
+import ProductModal from '../Customer/ProductAddToCart.vue';
 
 // Define the props for the component
 defineProps({
@@ -77,23 +81,7 @@ defineProps({
   font-size: 0.95rem;
   line-height: 1.4;
 }
-
-.add-to-cart-btn {
-  background-color: #00754A;
-  color: #fff;
-  font-size: 1.5rem;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
+/*  */
 .add-to-cart-btn:hover {
   background-color: #005F3A;
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
