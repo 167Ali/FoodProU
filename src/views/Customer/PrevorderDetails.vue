@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+
     <LoginHeader />
 
     <div v-if="order" class="order-details-container">
@@ -8,10 +9,9 @@
         <div class="order-card">
           <img :src="order.order_image" alt="Order Image" class="order-image" />
           <div class="order-summary">
-            <h2>{{ order.restaurant_name }} – {{ order.restaurant_branch_address }}</h2>
+            <h2>{{ order.restaurant }} – {{ order.location }}</h2>
             <p class="delivery-info">
-              Delivered on {{ order.delivery_date || 'Date not available' }}<br />
-              Order #{{ order.order_id }}
+              Delivered on {{ order.deliveryDate }}<br>Order #{{ order.customerId }}
             </p>
 
             <!-- Order From Section -->
@@ -19,7 +19,7 @@
               <i class="fa-solid fa-location-dot order-icon"></i>
               <div class="order-text">
                 <p>Order from</p>
-                <p>{{ order.restaurant }} - {{ order.restaurant_branch_address }}</p>
+                <p>{{ order.restaurant }} - {{ order.location }}</p>
               </div>
             </div>
 
@@ -28,24 +28,24 @@
               <i class="fa-solid fa-location-dot order-icon"></i>
               <div class="order-text">
                 <p>Delivered to</p>
-                <p>{{ order.customer_address }}</p>
+                <p>{{ order.deliveryAddress }}</p>
+
               </div>
             </div>
           </div>
+
         </div>
 
         <div class="order-summary-details">
           <h3>Order summary</h3>
           <div class="order-items">
-            <div v-for="item in order.order_items" :key="item.id" class="order-item">
-              <p>{{ item.menu_item_name }} (x{{ item.quantity }}) - Rs. {{ item.total_price }}</p>
-            </div>
+            <p>{{ order.items }}</p>
           </div>
           <hr />
           <div class="order-pricing">
-            <p><span>Subtotal:</span> <span>Rs. {{ subtotal }}</span></p>
-            <p><span>Delivery fee:</span> <span>Rs. {{ deliveryFee }}</span></p>
-            <p><strong>Total (incl. VAT):</strong> <strong>Rs. {{ total }}</strong></p>
+            <p><span>Subtotal:</span> <span>Rs. {{ order.subtotal }}</span></p>
+            <p><span>Delivery fee:</span> <span>Rs. {{ order.deliveryFee }}</span></p>
+            <p><strong>Total (incl. VAT):</strong> <strong>Rs. {{ order.total }}</strong></p>
           </div>
           <hr />
           <div class="payment-details">
@@ -61,7 +61,11 @@
           <button class="reorder-button">Select items to reorder</button>
         </div>
 
-        <OrderRating :orderId="order.order_id" />
+        <div class="action-card invoice-section">
+          <p>Need an invoice?</p>
+          <button class="invoice-button" @click="downloadInvoice">Download invoice</button>
+        </div>
+        <OrderRating />
       </div>
     </div>
 
@@ -69,16 +73,18 @@
       <p v-if="error">{{ error }}</p>
       <p v-else>Loading order details...</p>
     </div>
+
     <PageFooter />
   </div>
+
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { getOrderDetails, downloadOrderInvoice } from '@/Services/customer/PrevorderdetailService';
-import LoginHeader from '@/components/HeaderFooter/LoginHeader.vue';
-import PageFooter from '@/components/HeaderFooter/PageFooter.vue';
-import OrderRating from '@/components/Customer/OrderRating.vue';
+import { getOrderDetails, downloadOrderInvoice } from '@/Services/Customer/prevOrderDetailService';
+import LoginHeader from '@/Components/HeaderFooter/LoginHeader.vue';
+import PageFooter from '@/Components/HeaderFooter/PageFooter.vue';
+import OrderRating from '@/Components/Customer/OrderRating.vue';
 
 // Props
 const props = defineProps({
@@ -92,23 +98,10 @@ const props = defineProps({
 const order = ref(null);
 const error = ref(null);
 
-// Extracted data for pricing
-const subtotal = ref(0);
-const deliveryFee = ref(79); // Assuming delivery fee is fixed or fetched separately
-const total = ref(0);
-const paymentMethod = ref("Cash On Delivery"); // Placeholder, adapt as per response
-const paymentAmount = ref(0);
-
 // Fetch order details when component is mounted
 const fetchOrderDetails = async () => {
   try {
-    const response = await getOrderDetails(props.id);
-    order.value = response.data;
-
-    // Calculate the subtotal and total based on order items
-    subtotal.value = order.value.order_items.reduce((acc, item) => acc + item.total_price, 0);
-    total.value = subtotal.value + deliveryFee.value; // Assuming total includes delivery fee and other charges
-    paymentAmount.value = total.value; // Assuming the payment amount matches the total
+    order.value = await getOrderDetails(props.id);
   } catch (err) {
     error.value = err.message;
   }
@@ -131,11 +124,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Container for order details */
+/* Same styles as before */
 .order-details-container {
+
   display: flex;
-  flex-wrap: wrap;
-  /* Allows items to wrap on small screens */
   max-width: 100%;
   margin: 0 auto;
   padding: 40px 20px;
@@ -143,7 +135,6 @@ onMounted(() => {
   border-radius: 8px;
 }
 
-/* Order Information Section (Left) */
 .order-info {
   width: 38%;
   margin-left: 15%;
@@ -151,27 +142,29 @@ onMounted(() => {
 
 .order-card {
   display: flex;
-  flex-direction: column;
   background-color: white;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
+  align-items: center;
+  height: 300px;
 }
 
 .order-image {
   width: 80px;
   height: 80px;
+  margin-top: -150px;
   border-radius: 10%;
   object-fit: cover;
 }
 
 .order-summary {
   margin-left: 50px;
-  /* Center-align on smaller screens */
 }
 
 .order-summary h2 {
+  margin: 0;
   font-size: 1.3rem;
   font-weight: bold;
   color: #333;
@@ -181,14 +174,16 @@ onMounted(() => {
   color: #888;
   font-size: 0.95rem;
   margin: 10px 0;
+
 }
 
-/* Order from and delivered to sections */
 .order-from,
 .delivered-to {
+
   display: flex;
   align-items: flex-start;
   margin: 10px 0;
+  margin-left: -110px;
 }
 
 .order-icon {
@@ -208,7 +203,6 @@ onMounted(() => {
   color: #333;
 }
 
-/* Order Summary Details Section */
 .order-summary-details {
   background-color: white;
   padding: 25px;
@@ -248,7 +242,6 @@ onMounted(() => {
   text-align: right;
 }
 
-/* Order Actions Section (Right) */
 .order-actions {
   width: 25%;
   display: flex;
@@ -265,7 +258,8 @@ onMounted(() => {
   text-align: center;
 }
 
-.reorder-section p {
+.reorder-section p,
+.invoice-section p {
   font-size: 1rem;
   font-weight: bold;
   margin-bottom: 10px;
@@ -286,85 +280,23 @@ onMounted(() => {
   background-color: #00593c;
 }
 
-/* Loading Message */
+.invoice-button {
+  background-color: #1fd46b;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.invoice-button:hover {
+  background-color: #16a959;
+}
+
 .loading-message {
   text-align: center;
   font-size: 1.2rem;
   padding: 50px 0;
-}
-
-/* Media Queries for Responsiveness */
-@media (max-width: 1200px) {
-  .order-info {
-    width: 45%;
-    margin-left: 5%;
-  }
-
-  .order-actions {
-    width: 45%;
-    margin-left: 5%;
-    padding: 0;
-  }
-}
-
-@media (max-width: 768px) {
-  .order-info {
-    width: 100%;
-    margin-left: 0;
-    margin-bottom: 20px;
-  }
-
-  .order-actions {
-    width: 100%;
-    padding: 0;
-  }
-
-  .order-card {
-    flex-direction: row;
-    align-items: center;
-    text-align: left;
-  }
-
-  .order-summary {
-    margin-left: 20px;
-  }
-
-  .order-image {
-    width: 60px;
-    height: 60px;
-  }
-}
-
-@media (max-width: 576px) {
-  .order-details-container {
-    flex-direction: column;
-    padding: 20px 10px;
-  }
-
-  .order-info,
-  .order-actions {
-    width: 100%;
-    margin-left: 0;
-    padding: 0;
-  }
-
-  .order-summary h2 {
-    font-size: 1rem;
-  }
-
-  .order-pricing p,
-  .payment-details p {
-    font-size: 0.9rem;
-  }
-
-  .reorder-button {
-    font-size: 0.9rem;
-    padding: 10px;
-  }
-
-  .order-image {
-    width: 50px;
-    height: 50px;
-  }
 }
 </style>
