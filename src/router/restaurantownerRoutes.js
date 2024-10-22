@@ -6,6 +6,7 @@ import OrderReq from '../components/RestaurantOwner/OrderRequest.vue'
 import ModalView from '../components/RestaurantOwner/restOwnReciept.vue'
 import OwnerMenu from '../views/Menu/OwnerMenu.vue'
 import ViewAllOrdersRes from '@/views/RestauranOnwer/OrdersRestaurant.vue'
+import SetNewPassword from '@/components/SetNewPassword.vue'
 export default [
   {
     path: '/RestaurantOwnerDashboard',
@@ -31,7 +32,13 @@ export default [
   {
     path: '/restOwnerProfile',
     name: 'RestOwnerProfile',
-    component: RestOwnerProfile
+    component: RestOwnerProfile,
+   
+  },
+  {
+    path: '/setNewPassword',  // Notice this is a relative path
+    name: 'SetNewPassword',
+    component: SetNewPassword  // Import this component
   },
   {
     path: '/orderreq',

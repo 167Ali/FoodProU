@@ -1,16 +1,12 @@
 <template>
-  <!-- Render content only if restaurant data is available -->
   <div class="restaurant-header" v-if="restaurant">
     <div class="logo-container">
-      <img class="restaurant-logo" :src="(logo)" alt="Restaurant Logo" />
+      <img class="restaurant-logo" :src="logo" alt="Restaurant Logo" />
     </div>
     <div class="restaurant-info">
       <h1>{{ name }}</h1>
       <p class="categories">{{ categories.join(' • ') }}</p>
-      <!-- Adjusted details -->
       <p class="details">Opening Hours: {{ openingTime }} - {{ closingTime }}</p>
-
-      <!-- New container for rating, SeeReviews, and Moreinfo -->
       <div class="rating-row">
         <p class="rating">⭐ {{ rating }}</p>
         <SeeReviews />
@@ -18,15 +14,15 @@
       </div>
     </div>
     <button class="favourite-btn" @click="toggleLike">
-      <span v-if="isLiked" style="color: red">❤️ Added to Favourites</span>
+      <span v-if="isFavorite">❤️ Remove from Favourites</span>
       <span v-else>Add to Favourites</span>
     </button>
   </div>
 </template>
 
-
 <script setup>
 import { ref, computed, defineProps, onMounted } from 'vue';
+import { useStore } from 'vuex';
 import SeeReviews from '../Customer/SeeReviews.vue';
 import Moreinfo from '../Customer/Moreinfo.vue';
 
@@ -37,7 +33,7 @@ const props = defineProps({
   },
 });
 
-// Compute properties based on the passed restaurant data
+const store = useStore();
 const logo = computed(() => props.restaurant?.logo_url || '');
 const name = computed(() => props.restaurant?.name || '');
 const categories = computed(() => props.restaurant ? [props.restaurant.cuisine] : []);
@@ -45,27 +41,19 @@ const rating = computed(() => props.restaurant?.average_rating || 0);
 const openingTime = computed(() => props.restaurant?.opening_time || '');
 const closingTime = computed(() => props.restaurant?.closing_time || '');
 
-// Placeholder values for deliveryFee and minOrder if not available
-const deliveryFee = ref(0); // Update as needed
-const minOrder = ref(0); // Update as needed
+const isFavorite = computed(() => store.getters['favoriteStore/isFavorite'](props.restaurant.id));
 
-const isLiked = ref(false);
-
-// Function to toggle the liked state
 const toggleLike = () => {
-  isLiked.value = !isLiked.value;
-};
-
-// Function to get the full image URL
-const getImageUrl = (imagePath) => {
-  if (!imagePath) {
-    return '/path/to/default/image.jpg'; // Replace with your default image path
+  if (isFavorite.value) {
+    store.dispatch('favoriteStore/removeFavorite', props.restaurant.id);
+  } else {
+    store.dispatch('favoriteStore/addFavorite', props.restaurant.id);
   }
-  return imagePath.startsWith('http')
-    ? imagePath
-    : `${import.meta.env.VITE_API_BASE_URL}${imagePath}`; // Use your API base URL
 };
 </script>
+
+
+
 
 <style scoped>
 .restaurant-header {

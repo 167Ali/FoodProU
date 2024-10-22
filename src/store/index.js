@@ -18,6 +18,7 @@ import axios from 'axios';
 import ResturantDetailsStore from './customer/ResturantDetailsStore';
 import ResturantRevinue from './customer/ResturantRevinue'; // Import the new module
 import favoriteStore from './customer/FavScreenCus';
+// import addOrDelFavsStore from './customer/addOrDelFavsStore';
 
 
 import RevenueStore from './Admin/RevenueStore';
@@ -30,7 +31,7 @@ const store = createStore({
     order, // register the order module
     Prevorder,
     Resturantownerreviews,
-
+    // addOrDelFavsStore,
     Reviews,
 
     RevenueStore,

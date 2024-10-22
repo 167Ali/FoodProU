@@ -1,9 +1,12 @@
 <template>
-  <SideBar/>
+  <SideBar />
   <div class="profile-update-container my-5">
     <div class="row justify-content-center">
       <div class="col-lg-10">
         <h3 class="card-title text-center mb-4">Update Your Profile</h3>
+        <div class="d-flex justify-content-end mt-3">
+          <button class="btn btn-success submit-btn hover-effect" @click="goToChangePassword">Change Password</button>
+        </div> <br>
 
         <div class="row">
           <!-- Personal Details Card -->
@@ -11,7 +14,6 @@
             <div class="card profile-update-card shadow-lg fade-in">
               <div class="card-body">
                 <h5 class="section-title">Personal Details</h5>
-
                 <div class="form-group mb-3">
                   <label for="firstName">First Name</label>
                   <div class="input-group">
@@ -20,7 +22,6 @@
                       placeholder="Enter first name" required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="lastName">Last Name</label>
                   <div class="input-group">
@@ -29,7 +30,6 @@
                       placeholder="Enter last name" required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="phoneNumber">Phone Number</label>
                   <div class="input-group">
@@ -47,7 +47,6 @@
             <div class="card profile-update-card shadow-lg fade-in">
               <div class="card-body">
                 <h5 class="section-title">Bank Details</h5>
-
                 <div class="form-group mb-3">
                   <label for="bankName">Bank Name</label>
                   <div class="input-group">
@@ -56,7 +55,6 @@
                       placeholder="Enter bank name" required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="iban">IBAN</label>
                   <div class="input-group">
@@ -65,7 +63,6 @@
                       placeholder="Enter IBAN" pattern="^[A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}$" required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="accountType">Account Type</label>
                   <div class="input-group">
@@ -86,7 +83,6 @@
             <div class="card profile-update-card shadow-lg fade-in">
               <div class="card-body">
                 <h5 class="section-title">Restaurant Details</h5>
-
                 <div class="form-group mb-3">
                   <label for="restaurantName">Restaurant Name</label>
                   <div class="input-group">
@@ -95,7 +91,6 @@
                       id="restaurantName" placeholder="Enter restaurant name" required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="address">Address</label>
                   <div class="input-group">
@@ -104,7 +99,6 @@
                       placeholder="Enter address" required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="postalCode">Postal Code</label>
                   <div class="input-group">
@@ -113,7 +107,6 @@
                       placeholder="Enter postal code" required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="city">City</label>
                   <div class="input-group">
@@ -131,7 +124,6 @@
             <div class="card profile-update-card shadow-lg fade-in">
               <div class="card-body">
                 <h5 class="section-title">Restaurant Timing Details</h5>
-
                 <div class="form-group mb-3">
                   <label for="openingTime">Opening Time</label>
                   <div class="input-group">
@@ -140,7 +132,6 @@
                       required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="closingTime">Closing Time</label>
                   <div class="input-group">
@@ -149,7 +140,6 @@
                       required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="cuisineType">Cuisine Type</label>
                   <div class="input-group">
@@ -158,7 +148,6 @@
                       placeholder="Enter cuisine type" required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="businessType">Business Type</label>
                   <div class="input-group">
@@ -180,14 +169,19 @@
           <button type="submit" class="btn btn-primary w-100 rounded-pill submit-btn hover-effect"
             @click.prevent="updateDetails">Update Details</button>
         </div>
+
       </div>
     </div>
   </div>
 </template>
 
+
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import SideBar from './RestaurantDashboard/SideBar.vue';
+
+const router = useRouter();
 
 const ownerDetails = ref({
   firstName: '',
@@ -212,9 +206,14 @@ const restaurantDetails = ref({
 const updateDetails = () => {
   console.log("Owner Details:", ownerDetails.value);
   console.log("Restaurant Details:", restaurantDetails.value);
-  alert("Profile updated successfully!");
+  // You can add your API call logic here
+};
+
+const goToChangePassword = () => {
+  router.push({ path: '/setNewPassword' });
 };
 </script>
+
 
 <style scoped>
 /* Container padding */
@@ -240,7 +239,7 @@ const updateDetails = () => {
 }
 
 .submit-btn:hover {
-  background-color: #007bff;
+  background-color: #24cd5f;
   transform: scale(1.05);
 }
 
@@ -252,6 +251,7 @@ const updateDetails = () => {
   from {
     box-shadow: 0 0 5px rgba(0, 255, 21, 0.5);
   }
+
   to {
     box-shadow: 0 0 15px rgba(0, 255, 30, 0.8);
   }
