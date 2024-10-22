@@ -1,56 +1,73 @@
 <template>
   <div class="page-container">
-    <!-- Off-canvas Toggle Button (Visible only on mobile) - Move it outside of the sidebar -->
-    <button
-      class="btn btn-link offcanvas-toggle d-md-none"
-      type="button"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasOrderDetail"
-      aria-controls="offcanvasOrderDetail"
-    >
-      <i class="fa-solid fa-bars"></i> <!-- Hamburger Icon -->
+    <button class="btn btn-link offcanvas-toggle d-md-none" type="button" data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasOrderDetail" aria-controls="offcanvasOrderDetail">
+      <i class="fa-solid fa-bars"></i>
     </button>
 
-    <!-- Order Details Sidebar (Visible on larger screens) -->
     <div class="order-detail">
       <div class="order-sidebar d-none d-md-block">
-        <h2 class="order-title">Order Details</h2>
+        <h2 class="order-title">Restaurant Details</h2>
         <div class="order-status">
-          <button class="status-btn active">Pending</button>
-          <button class="status-btn">Rejected</button>
-          <button class="status-btn">Deactivated</button>
+          <button class="status-btn" :class="{ active: currentStatus === 'pending' }"
+            @click="setCurrentStatus('pending')">
+            Pending
+          </button>
+          <button class="status-btn" :class="{ active: currentStatus === 'declined' }"
+            @click="setCurrentStatus('declined')">
+            Declined
+          </button>
+          <button class="status-btn" :class="{ active: currentStatus === 'deactivated' }"
+            @click="setCurrentStatus('deactivated')">
+            Deactivated
+          </button>
+          
         </div>
+
         <div class="order-items">
-          <OrderItem
-            v-for="item in orderItems"
-            :key="item.id"
-            :item="item"
+          <div v-if="loading">Loading...</div> <!-- Show loading indicator when fetching data -->
+          <div v-else-if="filteredOrders.length > 0">
+            <OrderItem 
+            v-for="item in filteredOrders" 
+            :key="item.id"  
+            :item="item" 
           />
+          </div>
+          <div v-else>No orders found.</div> <!-- Show message when no orders are available -->
+          <div v-if="error">{{ error }}</div> <!-- Display any errors -->
         </div>
       </div>
 
-      <!-- Off-canvas Sidebar (Visible on mobile when toggled) -->
-      <div
-        class="offcanvas offcanvas-end"
-        tabindex="-1"
-        id="offcanvasOrderDetail"
-        aria-labelledby="offcanvasOrderDetailLabel"
-      >
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasOrderDetail" aria-labelledby="offcanvasOrderDetailLabel">
         <div class="offcanvas-header">
           <h5 id="offcanvasOrderDetailLabel">Order Details</h5>
         </div>
         <div class="offcanvas-body">
           <div class="order-status">
-            <button class="status-btn active">Pending</button>
-            <button class="status-btn">Rejected</button>
-            <button class="status-btn">Deactivated</button>
+            <button class="status-btn" :class="{ active: currentStatus === 'pending' }"
+              @click="setCurrentStatus('pending')">
+              Pending
+            </button>
+            <button class="status-btn" :class="{ active: currentStatus === 'declined' }"
+              @click="setCurrentStatus('declined')">
+              Declined
+            </button>
+            <button class="status-btn" :class="{ active: currentStatus === 'rejected' }"
+              @click="setCurrentStatus('rejected')">
+              Rejected
+            </button>
           </div>
           <div class="order-items">
-            <OrderItem
-              v-for="item in orderItems"
-              :key="item.id"
-              :item="item"
+            <div v-if="loading">Loading...</div> <!-- Show loading indicator when fetching data -->
+            <div v-else-if="filteredOrders.length > 0">
+              <OrderItem 
+              v-for="item in filteredOrders" 
+              :key="item.id"  
+              :item="item" 
             />
+            </div>
+            <div v-else>No orders found.</div> <!-- Show message when no orders are available -->
+            <div v-if="error">{{ error }}</div> <!-- Display any errors -->
           </div>
         </div>
       </div>
@@ -59,51 +76,39 @@
 </template>
 
 <script setup>
-import OrderItem from './OrderItem.vue'
+import { onMounted, ref, computed } from 'vue';
+import OrderItem from '../../components/Admin/OrderItem.vue';
+import { useOrderStore } from '../../store/Admin/orderStore'; // Adjust the path as necessary
 
-const orderItems = [
-  {
-    id: 1,
-    name: 'Snow Ramen With Chicken Katsu',
-    price: '$10.50',
-    status: 'On Process',
-    image: 'https://images.unsplash.com/photo-1477925518023-22b33cbd802c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D'
-  },
-  {
-    id: 2,
-    name: 'Spicy Tuna Roll',
-    price: '$8.00',
-    status: 'On Process',
-    image: 'https://images.unsplash.com/photo-1432139509613-5c4255815697?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGZvb2R8ZW58MHx8MHx8fDA%3D'
-  },
-  {
-    id: 3,
-    name: 'Beef Teriyaki Bento',
-    price: '$12.00',
-    status: 'On Process',
-    image: 'https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGZvb2R8ZW58MHx8MHx8fDA%3D'
-  },
-  {
-    id: 4,
-    name: 'Chicken Curry',
-    price: '$9.00',
-    status: 'On Process',
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGN1cnJ5fGVufDB8fDB8fHww%3D%3D'
-  },
-  {
-    id: 5,
-    name: 'Salmon Sashimi',
-    price: '$11.00',
-    status: 'On Process',
-    image: 'https://images.unsplash.com/photo-1487790343276-2fe56a7d9439?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGZvb2R8ZW58MHx8MHx8fDA%3D'
-  },
-]
+const { acceptedOrders, pendingOrders, declinedOrders, fetchOrderItems, loading, error } = useOrderStore();
+
+const currentStatus = ref('declined');
+const filteredOrders = computed(() => {
+  switch (currentStatus.value) {
+    case 'pending':
+      return pendingOrders.value || []; // Ensure it's an array
+    case 'declined':
+      return declinedOrders.value || []; // Ensure it's an array
+    // Add rejected orders logic if needed
+    default:
+      return [];
+  }
+});
+
+const setCurrentStatus = (status) => {
+  currentStatus.value = status; // Update the current status
+};
+
+onMounted(() => {
+  fetchOrderItems(); // Fetch order items when the component mounts
+});
 </script>
+
 
 <style scoped>
 /* Container for the entire page */
 .page-container {
-  position: relative; /* Container for positioning toggle button */
+  position: relative;
 }
 
 /* Container for the entire order detail section */
@@ -126,10 +131,12 @@ const orderItems = [
 
 /* Off-canvas toggle button */
 .offcanvas-toggle {
-  position: fixed; /* Fix the button to stay in place on mobile */
+  position: fixed;
+  /* Fix the button to stay in place on mobile */
   top: 17px;
   right: -5px;
-  z-index: 1050; /* Ensure it’s on top */
+  z-index: 1050;
+  /* Ensure it’s on top */
   background-color: transparent;
   color: black;
   border: none;
@@ -180,7 +187,8 @@ const orderItems = [
   max-height: 510px;
   overflow-y: auto;
   margin-bottom: 20px;
-  padding-right: 5px; /* Avoid clipping content due to scrollbar */
+  padding-right: 5px;
+  /* Avoid clipping content due to scrollbar */
 }
 
 /* Scrollbar styling */
@@ -195,6 +203,7 @@ const orderItems = [
 
 /* Responsive Adjustments */
 @media (min-width: 768px) {
+
   /* Hide the off-canvas toggle button on larger screens */
   .offcanvas-toggle {
     display: none;
@@ -207,6 +216,7 @@ const orderItems = [
 }
 
 @media (max-width: 767.98px) {
+
   /* Ensure the off-canvas toggle button is visible on mobile */
   .offcanvas-toggle {
     display: inline-block;
