@@ -47,38 +47,30 @@ const actions = {
   async fetchReviews({ commit }) {
     commit('SET_LOADING', true);
     try {
-      const data = await fetchReviewsAndRestaurants(); // Call the combined API
+      const data = await fetchReviewsAndRestaurants(); // Call the API
 
-      // Log the entire response to see its structure
-      console.log('API Response:', data);
+      // Access the reviews and restaurants from the data property
+      const { reviews, restaurants } = data.data;
 
-      // Accessing reviews directly from the 'data' property
-      const reviews = Array.isArray(data.data) ? data.data : []; // Ensure we get the array from the correct property
-      console.log('Extracted Reviews:', reviews);
+      // Log the API response for debugging
+      console.log('API Response - Reviews:', reviews);
+      console.log('API Response - Restaurants:', restaurants);
 
-      // If reviews are still not an array, handle it gracefully
-      if (!Array.isArray(reviews)) {
-        throw new Error('Expected reviews to be an array');
-      }
-
-      // Extract unique restaurants
-      const restaurants = Array.from(
-        new Set(reviews.map(review => JSON.stringify(review.restaurant)))
-      ).map(item => JSON.parse(item));
-
-      // Log the unique restaurants
-      console.log('Unique Restaurants:', restaurants);
+      // Ensure we get an array of reviews
+      const reviewsArray = Array.isArray(reviews) ? reviews : [];
 
       // Calculate total reviews and average rating
-      const totalReviews = reviews.length;
+      const totalReviews = reviewsArray.length;
       const averageRating = (
-        reviews.reduce((sum, review) => sum + review.stars, 0) / totalReviews
-      ).toFixed(1);
+        totalReviews > 0 
+          ? (reviewsArray.reduce((sum, review) => sum + review.stars, 0) / totalReviews).toFixed(1) 
+          : 0
+      );
 
       const growthPercentage = 5; // Example static value, update as needed
 
       // Commit the extracted data
-      commit('SET_REVIEWS', reviews);
+      commit('SET_REVIEWS', reviewsArray);
       commit('SET_TOTAL_REVIEWS', totalReviews);
       commit('SET_AVERAGE_RATING', averageRating);
       commit('SET_GROWTH_PERCENTAGE', growthPercentage);
@@ -94,8 +86,8 @@ const actions = {
 
   filterReviews({ commit, state }) {
     if (state.selectedRestaurant) {
-      const filtered = state.reviews.filter(
-        review => review.restaurant.name === state.selectedRestaurant
+      const filtered = state.reviews.filter(review => 
+        review.restaurant && review.restaurant.name === state.selectedRestaurant
       );
       commit('SET_FILTERED_REVIEWS', filtered);
     } else {

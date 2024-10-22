@@ -58,8 +58,13 @@ const logoutAction = () => {
     // Navigate to the specified page (e.g., login page)
     router.push('/'); // Adjust this path based on your routing setup
 
-    // Emit the cancel event
-    emit('cancel');
+    // Emit the confirm event
+    emit('confirm'); // This should be used to signal that logout was confirmed
+};
+
+const cancelAction = () => {
+    closeModal(); // Close the modal when "Cancel" is clicked
+    emit('cancel'); // Emit the cancel event
 };
 </script>
 

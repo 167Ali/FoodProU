@@ -10,7 +10,7 @@
       </div>
 
       <!-- Content visible only when data is available and not loading -->
-      <div v-else>
+      <div v-if="!loading">
         <!-- Restaurant Filter -->
         <div class="filter">
           <label for="restaurant">Select Restaurant:</label>
@@ -22,6 +22,7 @@
           </select>
         </div>
 
+        <!-- Summary of Total Reviews and Average Rating -->
         <div class="summary">
           <div class="summary-item">
             <h3>Total Reviews</h3>
@@ -33,25 +34,26 @@
           </div>
         </div>
 
+        <!-- Reviews List -->
         <div v-if="filteredReviews.length">
-          <div v-for="review in filteredReviews" :key="review?.id" class="review-card">
+          <div 
+            v-for="review in filteredReviews" 
+            :key="review.id" 
+            class="review-card"
+          >
             <div class="review-header">
-              <img v-if="review.user?.avatar" :src="review.user.avatar" alt="User Avatar" class="avatar" />
               <div class="review-info">
                 <h4>{{ review.user?.first_name }} {{ review.user?.last_name }}</h4>
-                <p>Restaurant: {{ review.restaurant?.name }}</p>
-                <p>{{ review.created_at }}</p>
+                <p>Restaurant: {{ review.restaurant?.name || 'Unknown Restaurant' }}</p>
+                <p>{{ new Date(review.created_at).toLocaleDateString() }}</p>
               </div>
             </div>
-            <p class="review-rating">{{ review.stars }} ★★★★☆</p>
+            <p class="review-rating">{{ review.stars }} {{ renderStars(review.stars) }}</p>
             <p class="review-text">{{ review.feedback }}</p>
-            <div class="review-actions">
-              <button class="action-button">Public Comment</button>
-              <button class="action-button">Direct Message</button>
-            </div>
           </div>
         </div>
 
+        <!-- No Reviews Available Message -->
         <div v-else>
           <p>No reviews available.</p>
         </div>
@@ -63,10 +65,11 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
-import SideBar from '../../components/Admin/SideBar.vue';
+import SideBar from '../../components/Admin/SideBar.vue'; // Sidebar component
 
 const store = useStore();
 
+// Getters from Vuex
 const reviews = computed(() => store.getters['adminreviews/reviews'] || []);
 const filteredReviews = computed(() => store.getters['adminreviews/filteredReviews'] || []);
 const totalReviews = computed(() => store.getters['adminreviews/totalReviews'] || 0);
@@ -75,22 +78,47 @@ const growthPercentage = computed(() => store.getters['adminreviews/growthPercen
 const restaurants = computed(() => store.getters['adminreviews/restaurants'] || []);
 const loading = computed(() => store.getters['adminreviews/loading'] || false);
 
-// Using a local ref to handle the selected restaurant
+// Local ref to handle the selected restaurant filter
 const selectedRestaurantLocal = ref('');
 
+// Fetch reviews on component mount
 onMounted(() => {
-  store.dispatch('adminreviews/fetchReviews'); // Fetch reviews on mount
+  store.dispatch('adminreviews/fetchReviews');
 });
 
-// Filter the reviews based on the selected restaurant
+// Filter reviews when the restaurant is changed
 const filterReviews = () => {
   store.dispatch('adminreviews/setSelectedRestaurant', selectedRestaurantLocal.value);
+};
+
+// Method to render stars dynamically
+const renderStars = (stars) => {
+  const totalStars = 5; // Total stars to show
+  let starString = '';
+
+  // Loop to create filled stars
+  for (let i = 0; i < stars; i++) {
+    starString += '★'; // Filled star
+  }
+
+  // Loop to create empty stars
+  for (let i = stars; i < totalStars; i++) {
+    starString += '☆'; // Empty star
+  }
+
+  return starString;
 };
 </script>
 
 <style scoped>
 .layout-container {
   display: flex;
+  height: 100vh; /* Full viewport height */
+}
+
+.sidebar {
+  width: 80px; /* Fixed width for the sidebar */
+  height: 100vh; /* Full height for scrolling */
 }
 
 .reviews-container {
@@ -99,6 +127,8 @@ const filterReviews = () => {
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* Enable vertical scrolling if needed */
+  max-height: calc(100vh - 40px); /* Adjust based on your header/footer height */
 }
 
 .loading-container {
@@ -137,13 +167,6 @@ const filterReviews = () => {
   align-items: center;
 }
 
-.avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 15px;
-}
-
 .review-info {
   flex: 1;
 }
@@ -155,22 +178,4 @@ const filterReviews = () => {
 .review-text {
   margin: 10px 0;
 }
-
-.review-actions {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.action-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.action-button:hover {
-  background-color: #0056b3;
-}
-</style>  
+</style>

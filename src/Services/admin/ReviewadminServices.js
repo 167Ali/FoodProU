@@ -8,7 +8,7 @@ const getToken = () => {
   return localStorage.getItem('token');
 };
 
-// Function to fetch both reviews and restaurants from a single API
+// Function to fetch both reviews and restaurants from the API
 export const fetchReviewsAndRestaurants = async () => {
   try {
     const token = getToken(); // Get the token
@@ -19,7 +19,7 @@ export const fetchReviewsAndRestaurants = async () => {
     });
 
     // Returning the data directly
-    return response.data; // Assuming the response contains both reviews and restaurant details
+    return response.data; // API response structure assumed as: { status, message, data: { reviews, restaurants } }
   } catch (error) {
     console.error('Error fetching reviews and restaurants:', error.response ? error.response.data : error.message);
     throw error; // Re-throw for handling in Vuex
