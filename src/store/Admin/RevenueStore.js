@@ -15,14 +15,14 @@ const getters = {
 const actions = {
   async fetchRevenueReports({ commit }) {
     try {
-      const data = await fetchRevenueReports();
-      console.log('Data received in store:', data); // Log data
+      const response = await fetchRevenueReports();
+      console.log('Response received in store:', response); // Log response
 
-      if (data.status === 200) {
-        commit('setRevenueDetails', data.data.revenue_details);
-        commit('setOrderVolumeDetails', data.data.order_volume_details);
+      if (response.status === 200) {
+        commit('setRevenueDetails', response.data.data.revenue_details);
+        commit('setOrderVolumeDetails', response.data.data.order_volume_details);
       } else {
-        console.error('Failed to fetch revenue reports', data);
+        console.error('Failed to fetch revenue reports', response);
       }
     } catch (error) {
       console.error('Error fetching revenue reports:', error);

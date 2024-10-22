@@ -16,8 +16,8 @@
           <label class="label" for="timeFilter">Filter by Time:</label>
           <select v-model="selectedFilter" @change="applyFilters" class="form-select">
             <option value="daily">Today</option>
-            <option value="weekly">This Week</option>
-            <option value="monthly">This Month</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
             <option value="all">All Time</option>
           </select>
         </div>
@@ -61,6 +61,7 @@
     </div>
   </div>
 </template>
+
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue';
 import { Chart, registerables } from 'chart.js';
@@ -106,335 +107,143 @@ const initializeData = () => {
     ]),
   ];
   restaurantNames.value = allRestaurants;
+
+  // Fetch initial data
+  store.dispatch('RevenueStore/fetchRevenueReports').then(() => {
+    isLoading.value = false;
+    initializeData();
+    createCharts();
+  });
 };
 
 // Function to apply filters and update charts
 const applyFilters = () => {
+  isLoading.value = true; // Show loading spinner
   createCharts();
 };
 
 // Function to create all charts
 const createCharts = () => {
-  // Destroy existing charts to prevent duplicates
-  destroyCharts();
-
+  // Create Top Performing Restaurants Chart
   if (!selectedRestaurant.value) {
-    // No restaurant filter applied, show only Top Performing Restaurants chart
     createTopRestaurantsChart();
   } else {
-    // Restaurant filter applied, show Revenue Over Time and Order Volume Over Time charts
     createRevenueOverTimeChart();
     createOrderVolumeOverTimeChart();
   }
 };
 
-// Function to destroy existing charts
-const destroyCharts = () => {
-  if (revenueOverTimeChart) {
-    revenueOverTimeChart.destroy();
-    revenueOverTimeChart = null;
-  }
-  if (orderVolumeOverTimeChart) {
-    orderVolumeOverTimeChart.destroy();
-    orderVolumeOverTimeChart = null;
-  }
-  if (topRestaurantsChart) {
-    topRestaurantsChart.destroy();
-    topRestaurantsChart = null;
-  }
-};
-
-// Helper function to generate consistent colors for restaurants
-const restaurantColors = {};
-const getRestaurantColor = (restaurant) => {
-  if (restaurantColors[restaurant]) {
-    return restaurantColors[restaurant];
-  }
-  const letters = '0123456789ABCDEF';
-  let color = '#';
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  restaurantColors[restaurant] = color;
-  return color;
-};
-
-// Chart instances
-let revenueOverTimeChart, orderVolumeOverTimeChart, topRestaurantsChart;
-
-/////////////////////////////
-// Top Performing Restaurants //
-/////////////////////////////
+// Function to create Top Performing Restaurants Chart
 const createTopRestaurantsChart = () => {
-  const { labels, data } = prepareTotalRevenueData();
-  const combinedData = labels.map((label, index) => ({ label, value: data[index] }));
-  const sortedData = combinedData.sort((a, b) => b.value - a.value).slice(0, 5); // Top 5 restaurants
-
   const ctx = topRestaurantsChartCanvas.value.getContext('2d');
-  topRestaurantsChart = new Chart(ctx, {
+  const revenueData = revenueDetails.value.revenue; // Adjust according to your data structure
+  const restaurantData = revenueDetails.value.restaurant_name; // Adjust according to your data structure
+
+  new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: sortedData.map((item) => item.label),
-      datasets: [
-        {
-          label: 'Total Revenue',
-          data: sortedData.map((item) => item.value),
-          backgroundColor: sortedData.map((item) => getRestaurantColor(item.label)),
-          borderWidth: 1,
-        },
-      ],
+      labels: restaurantData,
+      datasets: [{
+        label: 'Revenue',
+        data: revenueData,
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+      }]
     },
     options: {
-      indexAxis: 'y',
       responsive: true,
-      scales: { x: { beginAtZero: true } },
       plugins: {
-        legend: { display: false },
+        legend: { display: true },
+        title: { display: true, text: 'Top Performing Restaurants' },
       },
-    },
+      scales: {
+        y: {
+          beginAtZero: true,
+        }
+      }
+    }
   });
 };
 
-/////////////////////////////////////
-// Revenue Over Time Chart //
-/////////////////////////////////////
-const prepareRevenueOverTimeData = () => {
-  const revenueData = {};
-  const labelsSet = new Set();
-
-  revenueDetails.value.revenue.forEach((rev, index) => {
-    const date = new Date(revenueDetails.value.created_at[index]);
-    const formattedDate = formatDateForChart(date, selectedFilter.value);
-    const restaurant = revenueDetails.value.restaurant_name[index];
-
-    // Apply filters
-    if (selectedRestaurant.value && selectedRestaurant.value !== restaurant) return;
-    if (!matchesFilter(date, selectedFilter.value)) return;
-
-    if (!revenueData[restaurant]) {
-      revenueData[restaurant] = {};
-    }
-
-    if (!revenueData[restaurant][formattedDate]) {
-      revenueData[restaurant][formattedDate] = 0;
-    }
-
-    revenueData[restaurant][formattedDate] += rev;
-    labelsSet.add(formattedDate);
-  });
-
-  const labels = Array.from(labelsSet).sort((a, b) => new Date(a) - new Date(b));
-  const datasets = Object.keys(revenueData).map((restaurant) => {
-    return {
-      label: restaurant,
-      data: labels.map((date) => revenueData[restaurant][date] || 0),
-      fill: false,
-      borderColor: getRestaurantColor(restaurant),
-      tension: 0.1,
-    };
-  });
-
-  return { labels, datasets };
-};
-
+// Function to create Revenue Over Time Chart
 const createRevenueOverTimeChart = () => {
-  const { labels, datasets } = prepareRevenueOverTimeData();
   const ctx = revenueOverTimeCanvas.value.getContext('2d');
-  revenueOverTimeChart = new Chart(ctx, {
+  const revenueData = revenueDetails.value.revenue; // Adjust according to your data structure
+  const createdAtData = revenueDetails.value.created_at; // Adjust according to your data structure
+
+  new Chart(ctx, {
     type: 'line',
-    data: { labels, datasets },
+    data: {
+      labels: createdAtData,
+      datasets: [{
+        label: 'Revenue Over Time',
+        data: revenueData,
+        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        fill: true,
+      }]
+    },
     options: {
       responsive: true,
-      scales: { y: { beginAtZero: true } },
       plugins: {
-        tooltip: { mode: 'index', intersect: false },
         legend: { display: true },
+        title: { display: true, text: 'Revenue Over Time' },
       },
-    },
+      scales: {
+        y: {
+          beginAtZero: true,
+        }
+      }
+    }
   });
 };
 
-///////////////////////////////
-// Order Volume Over Time Chart //
-///////////////////////////////
-const prepareOrderVolumeOverTimeData = () => {
-  const orderData = {};
-  const labelsSet = new Set();
-
-  orderVolumeDetails.value.order_volume.forEach((orders, index) => {
-    const date = new Date(orderVolumeDetails.value.order_date[index]);
-    const formattedDate = formatDateForChart(date, selectedFilter.value);
-    const restaurant = orderVolumeDetails.value.restaurant_name[index];
-
-    // Apply filters
-    if (selectedRestaurant.value && selectedRestaurant.value !== restaurant) return;
-    if (!matchesFilter(date, selectedFilter.value)) return;
-
-    if (!orderData[restaurant]) {
-      orderData[restaurant] = {};
-    }
-
-    if (!orderData[restaurant][formattedDate]) {
-      orderData[restaurant][formattedDate] = 0;
-    }
-
-    orderData[restaurant][formattedDate] += orders;
-    labelsSet.add(formattedDate);
-  });
-
-  const labels = Array.from(labelsSet).sort((a, b) => new Date(a) - new Date(b));
-  const datasets = Object.keys(orderData).map((restaurant) => {
-    return {
-      label: restaurant,
-      data: labels.map((date) => orderData[restaurant][date] || 0),
-      fill: false,
-      borderColor: getRestaurantColor(restaurant),
-      tension: 0.1,
-    };
-  });
-
-  return { labels, datasets };
-};
-
+// Function to create Order Volume Over Time Chart
 const createOrderVolumeOverTimeChart = () => {
-  const { labels, datasets } = prepareOrderVolumeOverTimeData();
   const ctx = orderVolumeOverTimeCanvas.value.getContext('2d');
-  orderVolumeOverTimeChart = new Chart(ctx, {
+  const orderVolumeData = orderVolumeDetails.value.order_volume; // Adjust according to your data structure
+  const orderDateData = orderVolumeDetails.value.order_date; // Adjust according to your data structure
+
+  new Chart(ctx, {
     type: 'line',
-    data: { labels, datasets },
+    data: {
+      labels: orderDateData,
+      datasets: [{
+        label: 'Order Volume Over Time',
+        data: orderVolumeData,
+        borderColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        fill: true,
+      }]
+    },
     options: {
       responsive: true,
-      scales: { y: { beginAtZero: true } },
       plugins: {
-        tooltip: { mode: 'index', intersect: false },
         legend: { display: true },
+        title: { display: true, text: 'Order Volume Over Time' },
       },
-    },
+      scales: {
+        y: {
+          beginAtZero: true,
+        }
+      }
+    }
   });
 };
 
-/////////////////////////////////////
-// Helper Functions //
-/////////////////////////////////////
-const prepareTotalRevenueData = () => {
-  const revenueByRestaurant = {};
-
-  revenueDetails.value.revenue.forEach((rev, index) => {
-    const date = new Date(revenueDetails.value.created_at[index]);
-    const restaurant = revenueDetails.value.restaurant_name[index];
-
-    // Apply filters
-    if (!matchesFilter(date, selectedFilter.value)) return;
-
-    if (!revenueByRestaurant[restaurant]) {
-      revenueByRestaurant[restaurant] = 0;
-    }
-    revenueByRestaurant[restaurant] += rev;
-  });
-
-  const labels = Object.keys(revenueByRestaurant);
-  const data = Object.values(revenueByRestaurant);
-
-  return { labels, data };
-};
-
-const formatDateForChart = (date, filter) => {
-  if (filter === 'daily' || filter === 'all') {
-    return date.toLocaleDateString();
-  } else if (filter === 'weekly') {
-    const weekNumber = getWeekNumber(date);
-    return `Week ${weekNumber}, ${date.getFullYear()}`;
-  } else if (filter === 'monthly') {
-    return date.toLocaleString('default', { month: 'long', year: 'numeric' });
-  }
-};
-
-const getWeekNumber = (date) => {
-  const firstDay = new Date(date.getFullYear(), 0, 1);
-  const dayOfYear = ((date - firstDay + 86400000) / 86400000);
-  return Math.ceil(dayOfYear / 7);
-};
-
-const matchesFilter = (date, filter) => {
-  const now = new Date();
-  if (filter === 'daily') {
-    return date.toDateString() === now.toDateString();
-  } else if (filter === 'weekly') {
-    const currentWeek = getWeekNumber(now);
-    const dateWeek = getWeekNumber(date);
-    return dateWeek === currentWeek && date.getFullYear() === now.getFullYear();
-  } else if (filter === 'monthly') {
-    return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
-  } else {
-    return true;
-  }
-};
-
-/////////////////////////
-// Fetch Data on Mount //
-/////////////////////////
-onMounted(async () => {
-  try {
-    await store.dispatch('RevenueStore/fetchRevenueReports');
-    if (revenueDetails.value && orderVolumeDetails.value) {
-      initializeData();
-      createCharts();
-    } else {
-      console.error('Data not available after fetch');
-    }
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  } finally {
-    isLoading.value = false;
-  }
+// Initialize data on component mount
+onMounted(() => {
+  initializeData();
 });
 </script>
+
 <style scoped>
 .page-container {
   display: flex;
-  height: 100vh;
 }
-
 .main-content {
-  flex-grow: 1;
-  padding: 20px;
-  overflow-y: auto;
+  flex: 1;
 }
-
-.container {
-  max-width: 1200px;
-}
-
-h3 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #333;
-}
-
-canvas {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.row {
-  margin-bottom: 40px;
-}
-
-.form-select {
-  margin-top: 10px;
-}
-
 .label {
-  font-weight: bold;
-}
-
-.table {
-  margin-top: 20px;
-}
-
-.spinner-border {
-  width: 3rem;
-  height: 3rem;
+  margin-bottom: 0.5rem;
 }
 </style>
