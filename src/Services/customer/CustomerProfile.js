@@ -19,4 +19,9 @@ export const api = {
     const response = await apiClient.patch('/api/customers/edit-profile', profileData);
     return response.data;
   },
+
+  async changePassword(passwordData) {  // Ensure this method is correctly implemented
+    const response = await apiClient.post('/api/change-password', passwordData);
+    return response.data;
+  },
 };

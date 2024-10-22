@@ -64,16 +64,14 @@
                   </div>
                 </div>
                 <div class="form-group mb-3">
-                  <label for="accountType">Account Type</label>
+                  <label for="accountTitle">Account Title</label>
                   <div class="input-group">
                     <span class="input-group-text text-danger"><i class="bi bi-wallet"></i></span>
-                    <select v-model="ownerDetails.accountType" class="form-control" id="accountType" required>
-                      <option disabled value="">Select Account Type</option>
-                      <option value="current">Current</option>
-                      <option value="saving">Saving</option>
-                    </select>
+                    <input v-model="ownerDetails.accountTitle" type="text" class="form-control" id="accountTitle"
+                      placeholder="Enter Account Title" required>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
@@ -189,7 +187,7 @@ const ownerDetails = ref({
   phoneNumber: '',
   bankName: '',
   iban: '',
-  accountType: ''
+  accountTitle: ''
 });
 
 const restaurantDetails = ref({

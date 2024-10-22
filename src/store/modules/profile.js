@@ -7,7 +7,6 @@ const state = {
     last_name: '',
     phone_number: '',
     email: '',
-    isEmailVerified: true,
   },
 };
 
@@ -37,6 +36,21 @@ const actions = {
       return response;
     } catch (error) {
       console.error('Error updating profile:', error);
+      throw error;
+    }
+  },
+
+  async changePassword({ commit }, passwordData) {  // Include commit parameter if needed
+    try {
+      const response = await api.changePassword(passwordData);  // Use api.changePassword instead
+      return response;  // Return the response if needed
+    } catch (error) {
+      console.error('Error changing password:', error);
+      if (error.response) {
+        console.error('Response data:', error.response.data);
+        console.error('Response status:', error.response.status);
+        console.error('Response headers:', error.response.headers);
+      }
       throw error;
     }
   },
