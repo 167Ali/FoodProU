@@ -6,7 +6,7 @@ import AddtoCart from '@/components/Customer/AddtoCart.vue';
 import CategoryNavbar from '@/components/Customer/CategoryNavbar.vue';
 import DashboardResturantPage from '@/Views/Customer/DashboardResturantPage.vue';
 import ProfileSettings from '@/Views/Customer/ProfileSettings.vue';
-import FavoritesPage from '@/Views/Customer/favs.vue';
+import FavoritesPage from '@/Views/Customer/Favs.vue';
 import OrderScreen from '@/Views/Customer/OrderScreen.vue';
 import OrderReorder from '@/Views/Customer/OrderReorder.vue';
 import PrevorderDetails from '@/Views/Customer/PrevorderDetails.vue';

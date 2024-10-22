@@ -18,25 +18,21 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import OrderCard from '@/components/RestaurantOwner/RestaurantDashboard/OrderCard.vue';
+import { defineProps } from 'vue';
 
-export default {
-    name: "OrdersSection",
-    components: {
-        OrderCard,
+// Define props
+const props = defineProps({
+    acceptedOrders: {
+        type: Array,
+        required: true
     },
-    props: {
-        acceptedOrders: {
-            type: Array,
-            required: true,
-        },
-        rejectedOrders: {
-            type: Array,
-            required: true,
-        },
-    },
-};
+    rejectedOrders: {
+        type: Array,
+        required: true
+    }
+});
 </script>
 
 <style scoped>

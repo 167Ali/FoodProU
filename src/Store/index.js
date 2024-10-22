@@ -1,21 +1,21 @@
 // store/index.js
 import { createStore } from 'vuex';
-import profileModule from './modules/profile';
-import { menuCategory } from '../store/menu/menuCategory';
-import { menuProduct } from '../store/menu/menuProduct';
-import { menuChoice } from '../store/menu/menuChoice';
+import profileModule from './Modules/profile';
+import { menuCategory } from './Menu/menuCategory';
+import { menuProduct } from './Menu/menuProduct';
+import { menuChoice } from './Menu/menuChoice';
 import { orderDetails } from './RestaurantOwner/OrderDetails'
-import { rewards } from './modules/rewards';
+import { rewards } from './Modules/rewards';
 import AuthStore from './Auth/AuthStore';
-import order from './modules/order'; // import the order module
-import Prevorder from './modules/PrevorderDetail';
-import Resturantownerreviews from './modules/Resturantownerreviews';
-import Reviews from './modules/customerReviews';
+import order from './Modules/order'; // import the order module
+import Prevorder from './Modules/PrevorderDetail';
+import Resturantownerreviews from './Modules/Resturantownerreviews';
+import Reviews from './Modules/customerReviews';
 import axios from 'axios';
-import ResturantDetailsStore from './customer/resturantDetailsStore';
-import ResturantRevinue from './customer/resturantRevenue'; // Import the new module
-import orders from './customer/checkout';
-import favoriteStore from './customer/favScreenCus';
+import ResturantDetailsStore from './Customer/resturantDetailsStore';
+import ResturantRevinue from './Customer/resturantRevenue'; // Import the new module
+import orders from './Customer/checkout';
+import favoriteStore from './Customer/favScreenCus';
 
 const store = createStore({
   modules: {

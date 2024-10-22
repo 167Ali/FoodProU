@@ -1,5 +1,5 @@
 <template>
-  <SideBar/>
+  <SideBar />
   <div class="profile-update-container my-5">
     <div class="row justify-content-center">
       <div class="col-lg-10">
@@ -20,7 +20,6 @@
                       placeholder="Enter first name" required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="lastName">Last Name</label>
                   <div class="input-group">
@@ -104,7 +103,6 @@
                       placeholder="Enter address" required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="postalCode">Postal Code</label>
                   <div class="input-group">
@@ -252,6 +250,7 @@ const updateDetails = () => {
   from {
     box-shadow: 0 0 5px rgba(0, 255, 21, 0.5);
   }
+
   to {
     box-shadow: 0 0 15px rgba(0, 255, 30, 0.8);
   }

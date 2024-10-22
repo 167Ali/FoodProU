@@ -9,7 +9,6 @@ import axios from 'axios';
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Backend API URL
 
 
-
 export const resetPassword = async (email) => {
 
     try {
@@ -60,9 +59,8 @@ export const login = async (credentials) => {
         console.log('Login response', response);
 
         const { access_token, role, permissions } = response.data.data; // Adjust based on the response structure
-        const { id } = response.data.data.restaurant_details;
+        const id = response.data.data.restaurant_details?.id ?? 0;
         return { access_token, role, permissions, id }; // Return the relevant data
-
 
     } catch (error) {
 

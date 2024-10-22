@@ -14,20 +14,20 @@
 </template>
 
 
-<script>
-export default {
-    name: "OrderCard",
-    props: {
-        order: {
-            type: Object,
-            required: true,
-        },
-        isAccepted: {
-            type: Boolean,
-            default: true,
-        },
+<script setup>
+import { defineProps } from 'vue';
+
+// Define props
+const props = defineProps({
+    order: {
+        type: Object,
+        required: true
     },
-};
+    isAccepted: {
+        type: Boolean,
+        default: true
+    }
+});
 </script>
 
 

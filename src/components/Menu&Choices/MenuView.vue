@@ -11,14 +11,14 @@
             <div v-for="(product, index) in products" :key="index" class="col-md-6">
                 <div class="card h-100 px-3 pt-3 shadow-sm">
                     <div class="row g-0">
-                        <div class="col-3">
+                        <div class="col-5">
                             <img v-if="product.image_file" :src="product.image_file" alt="Product Image"
                                 class="img-fluid rounded mx-auto d-block border border-2 product-image" />
 
                         </div>
-                        <div class="col-6">
+                        <div class="col-7">
                             <div class="ms-3 ard-body">
-                                <h5 class="card-title">{{ product.name }}</h5>
+                                <h5 class="card-title text-capital">{{ product.name }}</h5>
                                 <!-- <p class="card-text">Description: {{ product.description }}</p> -->
                                 <div class="card-text mt-3">
                                     <strong>Description:</strong>
@@ -55,7 +55,7 @@
                     </div>
                     <div class="row align-items-center mb-1"> <!-- align-items-center ensures vertical alignment -->
                         <div class="col text-start">
-                            <h3 class="card-title mt-2 ms-0">{{ product.price }} PKR</h3>
+                            <h3 class="card-title mt-2 ms-2">{{ product.price }} PKR</h3>
                         </div>
                         <div class="col-auto">
                             <div class="d-flex justify-content-end">
@@ -69,7 +69,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Modal for Create/Edit Product -->
         <div v-if="isFormVisible" class="modal-overlay">
             <div class="modal-content">
@@ -229,9 +228,9 @@ const deleteProduct = async (index) => {
 }
 
 .product-image {
-    width: 150px;
+    width: 175px;
     height: 100%;
-    max-height: 150px;
+    max-height: 175px;
     object-fit: cover;
     border-radius: 8px;
 }
@@ -248,6 +247,11 @@ const deleteProduct = async (index) => {
 
 .card-text {
     font-size: 0.9rem;
+}
+
+.text-capital {
+    text-transform: capitalize;
+    /* Capitalizes the first letter of the text */
 }
 
 .scroller-card {

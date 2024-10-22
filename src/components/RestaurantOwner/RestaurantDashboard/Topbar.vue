@@ -15,16 +15,16 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "TopBar",
-  props: {
-    restaurantStatus: {
-      type: Boolean,
-      required: true,
-    },
+<script setup>
+import { defineProps } from 'vue';
+
+// Define props
+const props = defineProps({
+  restaurantStatus: {
+    type: Boolean,
+    required: true,
   },
-};
+});
 </script>
 
 <style scoped>
