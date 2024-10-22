@@ -180,7 +180,7 @@
   
       <!-- Footer Section -->
       <footer class="text-center py-5 text-white footer">
-          <p>© 2022 foodPro</p>
+          <p>© 2024 foodPro</p>
           <p>
               For customer support, contact: <a href="mailto:support@foodPro.ph" class="text-white">support@foodPro.pk</a>
           </p>
