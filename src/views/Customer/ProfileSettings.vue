@@ -63,10 +63,14 @@
 </template>
 
 <script setup>
-import { onMounted, computed } from 'vue';
-import { useStore } from 'vuex';
+import { computed, onMounted, ref } from 'vue';  // Import onMounted here
+
 import LoginHeader from '@/components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '@/components/HeaderFooter/PageFooter.vue';
+import Loader from '@/components/OtherComponents/Loader.vue'; // Import the Loader component
+
+import { useStore } from 'vuex';
+
 
 const store = useStore();
 const loading = ref(true); // Loading state
@@ -135,15 +139,6 @@ const savePassword = async () => {
     }
 };
 
-// Fetch profile data on component mount
-onMounted(async () => {
-    try {
-        await store.dispatch('profile/fetchProfile');
-        console.log('Fetched Profile:', store.state.profile); // Log profile data
-    } catch (error) {
-        alert('Failed to load profile data. Please try again.');
-    }
-});
 
 const onFocus = (event) => {
     const input = event.target;

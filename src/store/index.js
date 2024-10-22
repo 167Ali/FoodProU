@@ -12,17 +12,17 @@ import { rewards } from './modules/rewards';
 import AuthStore from './Auth/AuthStore';
 import order from './modules/order'; 
 import Prevorder from './modules/PrevorderDetail';
-import Resturantownerreviews from './modules/Resturantownerreviews';
-import Reviews from './modules/customerReviews';
+import AddReviews from './modules/AddReviews';
+import Resturantownerreviews from './modules/Resturantownerstore';
+import adminreviews from '../store/Admin/Reviewadminstore'; 
+
+//import Reviews from './modules/customerReviews';
 import axios from 'axios';
 import ResturantDetailsStore from './customer/ResturantDetailsStore';
-import ResturantRevinue from './customer/ResturantRevinue'; // Import the new module
+import ResturantRevinue from './customer/ResturantRevinue'; 
+import orders from './customer/orders';
 import favoriteStore from './customer/FavScreenCus';
-// import addOrDelFavsStore from './customer/addOrDelFavsStore';
-
-
-import RevenueStore from './Admin/RevenueStore';
-
+import RevenueStore from '../store/Admin/RevenueStore';
 const store = createStore({
   modules: {
     menuCategory,
@@ -32,10 +32,11 @@ const store = createStore({
     Prevorder,
     Resturantownerreviews,
     // addOrDelFavsStore,
-    Reviews,
+    // Reviews,
 
     RevenueStore,
    // Reviews,
+
    AddReviews,
    adminreviews,
     rewards,
