@@ -4,13 +4,8 @@
     <button class="btn btn-more-info" @click="showModal = true">See reviews</button>
 
     <!-- Modal -->
-    <div
-      class="modal fade"
-      :class="{ show: showModal }"
-      tabindex="-1"
-      role="dialog"
-      v-if="showModal"
-    >
+    <div class="modal fade" :class="{ show: showModal }" tabindex="-1" role="dialog" style="display: block;"
+      v-if="showModal">
       <div class="modal-dialog modal-dialog-centered" role="document" @click.stop>
         <div class="modal-content">
           <div class="modal-header">
@@ -26,62 +21,51 @@
               </div>
               <!-- Rating distribution -->
               <div class="rating-distribution">
-                <div
-                  v-for="(percentage, index) in ratings"
-                  :key="index"
-                  class="rating-row"
-                >
+                <div v-for="(percentage, index) in ratings" :key="index" class="rating-row">
                   <span>{{ 5 - index }}<i class="fas fa-star"></i></span>
                   <div class="rating-bar">
-                    <div
-                      :style="{ width: percentage + '%' }"
-                      class="rating-fill"
-                    ></div>
+                    <div :style="{ width: percentage + '%' }" class="rating-fill"></div>
                   </div>
                 </div>
               </div>
             </div>
 
+            <!-- Review Filters -->
+            <div class="review-filters mb-4">
+              <button class="filter-btn" :class="{ active: activeFilter === 'top' }" @click="setActiveFilter('top')">Top
+                reviews</button>
+              <button class="filter-btn" :class="{ active: activeFilter === 'newest' }"
+                @click="setActiveFilter('newest')">Newest</button>
+              <button class="filter-btn" :class="{ active: activeFilter === 'highest' }"
+                @click="setActiveFilter('highest')">Highest rating</button>
+              <button class="filter-btn" :class="{ active: activeFilter === 'lowest' }"
+                @click="setActiveFilter('lowest')">Lowest rating</button>
+            </div>
+
             <!-- Individual Reviews -->
-            <!-- Assume reviews is an array of review objects -->
-            <div
-              v-for="(review, index) in reviews"
-              :key="index"
-              class="review-item mb-3 rounded-box"
-            >
+            <div class="review-item mb-3 rounded-box">
               <div class="d-flex justify-content-between align-items-center">
                 <div>
-                  <strong>{{ review.name }}</strong>
-                  <span v-if="review.topReviewer" class="badge badge-secondary"
-                    >Top Reviewer</span
-                  >
-                  <p class="review-date">{{ review.date }}</p>
+                  <strong>Zaara</strong><span class="badge badge-secondary">Top Reviewer</span>
+                  <p class="review-date">2 weeks ago</p>
                 </div>
                 <div class="review-rating">
-                  <i
-                    v-for="n in 5"
-                    :key="n"
-                    class="fas fa-star"
-                    :class="n <= review.rating ? 'text-warning' : 'text-muted'"
-                  ></i>
+                  <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i
+                    class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i
+                    class="fas fa-star text-warning"></i>
                 </div>
               </div>
-              <p>{{ review.comment }}</p>
+              <p>Their rolls platter was really tasty!</p>
 
               <!-- Liked dishes -->
               <div class="liked-dish d-flex align-items-center">
-                <img
-                  :src="review.dish.image"
-                  alt="dish image"
-                  class="dish-img"
-                />
+                <img src="https://via.placeholder.com/60" alt="dish image" class="dish-img">
                 <div class="dish-info ms-3">
-                  <p class="mb-1">{{ review.dish.name }}</p>
-                  <p class="price">Rs. {{ review.dish.price }}</p>
+                  <p class="mb-1">Premium Rolls Platter</p>
+                  <p class="price">Rs. 1,200</p>
                 </div>
               </div>
             </div>
-            <!-- End of reviews loop -->
           </div>
         </div>
       </div>
@@ -89,110 +73,42 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-
-const showModal = ref(false);
-const ratings = [80, 10, 5, 3, 2]; // Example percentages for 5-star, 4-star, etc.
-const activeFilter = ref('top'); // Track which filter is active
-
-const closeModal = () => {
-  showModal.value = false;
-};
-
-// Sample reviews data
-const reviews = [
-  {
-    name: 'Zaara',
-    topReviewer: true,
-    date: '2 weeks ago',
-    rating: 5,
-    comment: 'Their rolls platter was really tasty!',
-    dish: {
-      image: 'https://via.placeholder.com/60',
-      name: 'Premium Rolls Platter',
-      price: 1200,
-    },
-  },
-  {
-    name: 'Zaara',
-    topReviewer: true,
-    date: '2 weeks ago',
-    rating: 5,
-    comment: 'Their rolls platter was really tasty!',
-    dish: {
-      image: 'https://via.placeholder.com/60',
-      name: 'Premium Rolls Platter',
-      price: 1200,
-    },
-  },{
-    name: 'Zaara',
-    topReviewer: true,
-    date: '2 weeks ago',
-    rating: 5,
-    comment: 'Their rolls platter was really tasty!',
-    dish: {
-      image: 'https://via.placeholder.com/60',
-      name: 'Premium Rolls Platter',
-      price: 1200,
-    },
-  },{
-    name: 'Zaara',
-    topReviewer: true,
-    date: '2 weeks ago',
-    rating: 5,
-    comment: 'Their rolls platter was really tasty!',
-    dish: {
-      image: 'https://via.placeholder.com/60',
-      name: 'Premium Rolls Platter',
-      price: 1200,
-    },
-  },{
-    name: 'Zaara',
-    topReviewer: true,
-    date: '2 weeks ago',
-    rating: 5,
-    comment: 'Their rolls platter was really tasty!',
-    dish: {
-      image: 'https://via.placeholder.com/60',
-      name: 'Premium Rolls Platter',
-      price: 1200,
-    },
-  },
-  // Add more review objects as needed
-];
-</script>
-
-<style scoped>
-/* Modal styling */
-.modal {
-  display: block;
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1050;
-}
-
-.modal-dialog {
+  
+  <script setup>
+  import { ref } from 'vue';
+  
+  const showModal = ref(false);
+  const ratings = [80, 10, 5, 3, 2]; // Example percentages for 5-star, 4-star, etc.
+  const activeFilter = ref('top'); // Track which filter is active
+  
+  const closeModal = () => {
+    showModal.value = false;
+  };
+  
+  const setActiveFilter = (filter) => {
+    activeFilter.value = filter; // Update active filter
+  };
+  </script>
+  
+  <style scoped>
+  /* Modal styling */
+  .modal {
+    display: block;
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1050;
+  }
+  
+  .modal-dialog {
   max-width: 600px;
   width: 100%;
-  margin: 30px auto;
-}
-
-.modal-content {
-  max-height: 90vh;
-  overflow: hidden;
-}
-
-.modal-body {
-  background-color: #f0f0f0;
-  padding: 20px;
-  border-radius: 10px;
-  max-height: 70vh;
-  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* More Info button styling */
@@ -209,7 +125,9 @@ const reviews = [
 .btn-more-info:hover,
 .btn-more-info:active {
   background-color: lightgray;
+  /* Light gray on hover or active */
   color: black;
+  /* Change text color on hover */
 }
 
 .modal-backdrop {
@@ -228,6 +146,13 @@ const reviews = [
   background: none;
   font-size: 20px;
   cursor: pointer;
+}
+
+/* Modal body with light gray background */
+.modal-body {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
 }
 
 /* Custom class for divs with rounded borders and white background */

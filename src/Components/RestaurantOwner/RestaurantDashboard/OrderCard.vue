@@ -1,23 +1,22 @@
 <template>
-    <div class="card mb-3 order-card"
-        :class="{ 'accepted-order-card': isAccepted, 'rejected-order-card': !isAccepted }">
-        <img :src="order.image" class="card-img-top" :alt="`${order.user}'s order image`" />
-        <div class="card-body d-flex flex-column">
-            <div class="text-container">
-                <h5 class="order-user">{{ order.user }}</h5>
-                <p class="order-location">{{ order.location }}</p>
-                <h5 class="text-price">$ {{ order.totalPrice.toFixed(2) }}</h5>
-            </div>
-            <button class="btn btn-order">View</button>
+<div class="card mb-3 order-card" :class="{ 'accepted-order-card': isAccepted, 'rejected-order-card': !isAccepted }">
+    <img :src="order.image" class="card-img-top" :alt="`${order.user}'s order image`" />
+    <div class="card-body d-flex flex-column">
+        <div class="text-container">
+            <h5 class="order-user">{{ order.user }}</h5>
+            <p class="order-location">{{ order.location }}</p>
+            <h5 class="text-price">$ {{ order.totalPrice.toFixed(2) }}</h5>
         </div>
+        <button class="btn btn-order">View</button>
     </div>
+</div>
 </template>
 
 
 <script setup>
 import { defineProps } from 'vue';
 
-// Define props
+// Define propsy
 const props = defineProps({
     order: {
         type: Object,
@@ -30,7 +29,7 @@ const props = defineProps({
 });
 </script>
 
-
+  
 <style scoped>
 /* General Card Styles */
 .card {
@@ -92,11 +91,9 @@ const props = defineProps({
     cursor: pointer;
     margin: 0 auto;
 }
-
 .card-body {
-    padding: 5px;
-}
-
+        padding: 5px;
+    }
 .btn-order:hover {
     background-color: #3fcf9a;
 }

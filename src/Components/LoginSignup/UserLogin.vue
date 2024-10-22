@@ -43,103 +43,83 @@
     </div>
 
 </template>
-
-<script>
-
-import { defineComponent, ref, toRefs } from 'vue';
-
+<script setup>
+import { ref } from 'vue';
 import { useStore } from 'vuex';
-
 import { useRouter } from 'vue-router';
+import { toRefs } from 'vue'; // To manage props in setup syntax
 
-export default defineComponent({
-    name: 'Login_modal',
-    props: {
-        showModal: {
-            type: Boolean,
-            required: true,
-        },
-    },
-
-    setup(props, { emit }) {
-
-        const { showModal } = toRefs(props);
-
-        const email = ref('');
-        const password = ref('');
-        const error = ref(null);
-        const isLoading = ref(false);
-        const store = useStore();
-        const router = useRouter();
-
-        const closeModal = () => {
-            emit('close');
-        };
-
-        const login = async () => {
-
-            error.value = null;
-
-            isLoading.value = true;
-            try {
-                const response = await store.dispatch('auth/login', {
-                    email: email.value,
-                    password: password.value,
-                });
-
-                const { role } = response;
-
-                switch (role) {
-
-                    case 'Admin':
-
-                        router.push({ name: 'AdminDashboard' });
-
-                        break;
-
-                    case 'Customer':
-
-                        router.push({ name: 'DashboardResturantPage' });
-
-                        break;
-
-                    case 'Restaurant Owner':
-
-                        router.push({ name: 'RestaurantOwner_Dashboard' });
-
-                        break;
-
-                    default:
-
-                        router.push({ name: 'Home' });
-
-                        break;
-
-                }
-                closeModal();
-
-            } catch (err) {
-                error.value = err.message || 'Login failed. Please check your credentials.';
-
-            } finally {
-
-                isLoading.value = false;
-
-            }
-
-        };
-
-        return {
-            showModal,
-            email,
-            password,
-            closeModal,
-            login,
-            error,
-            isLoading,
-        };
-    },
+// Props
+const props = defineProps({
+  showModal: {
+    type: Boolean,
+    required: true,
+  }
 });
+
+// Extract reactive references for props
+const { showModal } = toRefs(props);
+
+// Reactive variables for email, password, error message, and loading state
+const email = ref('');
+const password = ref('');
+const error = ref(null);
+const isLoading = ref(false);
+
+// Vuex store and router instance
+const store = useStore();
+const router = useRouter();
+
+// Emit function to trigger the 'close' event for modal
+const emit = defineEmits(['close']);
+
+// Function to close the modal
+const closeModal = () => {
+  emit('close');
+};
+
+// Function to handle login
+const login = async () => {
+  // Resetting error state before login
+  error.value = null;
+  isLoading.value = true;
+
+  try {
+    // Dispatching the login action to Vuex store with email and password
+    const response = await store.dispatch('auth/login', {
+      email: email.value,
+      password: password.value,
+    });
+
+    // Extracting the role from the response
+    const { role } = response;
+
+    // Redirecting based on user role
+    switch (role) {
+      case 'Admin':
+        router.push({ name: 'AdminDashboard' });
+        break;
+      case 'Customer':
+        router.push({ name: 'DashboardResturantPage' });
+        break;
+      case 'Restaurant Owner':
+        router.push({ name: 'RestaurantOwner_Dashboard' });
+        break;
+      default:
+        router.push({ name: 'Home' });
+        break;
+    }
+
+    // Close the modal on successful login
+    closeModal();
+  } catch (err) {
+    // Set error message if login fails
+    error.value = err.message || 'Login failed. Please check your credentials.';
+  } finally {
+    // Set loading state to false after login attempt
+    isLoading.value = false;
+  }
+};
 </script>
 
 <style scoped>

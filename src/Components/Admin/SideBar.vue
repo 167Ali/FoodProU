@@ -15,7 +15,7 @@
           </router-link>
         </li>
         <li>
-          <router-link to="/viewallorders" class="nav-link">
+          <router-link to="/viewallordersAdm" class="nav-link">
             <font-awesome-icon :icon="['fas', 'shopping-cart']" />
             <span>Orders</span>
           </router-link>
@@ -33,23 +33,68 @@
           </router-link>
         </li>
         <li>
-          <a href="/" class="nav-link">
+          <button class="nav-link" @click="showLogoutModal">
             <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
             <span>Log Out</span>
-          </a>
+          </button>
         </li>
       </ul>
     </nav>
+
+    <ModalComponent
+      v-if="isLogoutModalVisible"
+      title="Logging out?"
+      message="Thanks for stopping by. See you again soon!"
+      confirmText="Log out"
+      cancelText="Cancel"
+      :isVisible="isLogoutModalVisible"
+      @close="closeLogoutModal"
+      @confirm="confirmLogout"
+      @cancel="closeLogoutModal"
+    />
   </div>
 </template>
 
 <script setup>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'; // Import Font Awesome icon
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faUtensils, faHome, faShoppingCart, faSignOutAlt, faDollarSign, faStar } from '@fortawesome/free-solid-svg-icons';
+import {
+  faUtensils,
+  faHome,
+  faShoppingCart,
+  faSignOutAlt,
+  faDollarSign,
+  faStar,
+} from '@fortawesome/free-solid-svg-icons';
+import { ref } from 'vue';
+import ModalComponent from '../OtherComponents/ConfirmationModal.vue'; // Adjust the path as necessary
+import { useRouter } from 'vue-router';
 
-// Add icons to the library
 library.add(faUtensils, faHome, faShoppingCart, faDollarSign, faSignOutAlt, faStar);
+
+const router = useRouter(); // Initialize the router
+
+// Reactive state for the logout modal
+const isLogoutModalVisible = ref(false);
+
+// Show the logout confirmation modal
+const showLogoutModal = () => {
+  isLogoutModalVisible.value = true;
+};
+
+// Close the logout confirmation modal
+const closeLogoutModal = () => {
+  isLogoutModalVisible.value = false;
+};
+
+// Handle logout confirmation
+const confirmLogout = () => {
+  // Remove the token and user info from local storage
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+
+};
+
 </script>
 
 <style scoped>
@@ -57,14 +102,12 @@ library.add(faUtensils, faHome, faShoppingCart, faDollarSign, faSignOutAlt, faSt
 .sidebar {
   width: 100px;
   height: 100vh;
-  background-color: #1d1d1d;
-  /* Dark sidebar background for contrast */
+  background-color: #1d1d1d; /* Dark sidebar background for contrast */
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px 0;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-  /* Add subtle shadow */
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
 }
 
 /* Logo Container */
@@ -75,8 +118,7 @@ library.add(faUtensils, faHome, faShoppingCart, faDollarSign, faSignOutAlt, faSt
 /* Sidebar logo icon */
 .logo {
   font-size: 48px;
-  color: #ffffff;
-  /* White logo for better contrast */
+  color: #ffffff; /* White logo for better contrast */
 }
 
 /* Navigation styling */
@@ -112,10 +154,8 @@ nav ul {
 
 /* Hover effects on navigation links */
 .nav-link:hover {
-  background-color: #00754a;
-  /* Change background on hover */
-  border-radius: 10px;
-  /* Add subtle rounding on hover */
+  background-color: #00754a; /* Change background on hover */
+  border-radius: 10px; /* Add subtle rounding on hover */
 }
 
 /* Add spacing between nav items */
