@@ -63,11 +63,10 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue';  // Import onMounted here
+import { onMounted, computed } from 'vue';
 import { useStore } from 'vuex';
 import LoginHeader from '@/components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '@/components/HeaderFooter/PageFooter.vue';
-import Loader from '@/components/OtherComponents/Loader.vue'; // Import the Loader component
 
 const store = useStore();
 const loading = ref(true); // Loading state
@@ -136,7 +135,16 @@ const savePassword = async () => {
     }
 };
 
-// Input focus/blur functions
+// Fetch profile data on component mount
+onMounted(async () => {
+    try {
+        await store.dispatch('profile/fetchProfile');
+        console.log('Fetched Profile:', store.state.profile); // Log profile data
+    } catch (error) {
+        alert('Failed to load profile data. Please try again.');
+    }
+});
+
 const onFocus = (event) => {
     const input = event.target;
     input.classList.add('active');
@@ -149,6 +157,8 @@ const onBlur = (event) => {
     }
 };
 </script>
+
+
 
 <style scoped>
 @import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';

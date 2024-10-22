@@ -10,7 +10,7 @@ import { orderDetails } from '@/store/RestaurantOwner/orderDetails'
 
 import { rewards } from './modules/rewards';
 import AuthStore from './Auth/AuthStore';
-import order from './modules/order'; // import the order module
+import order from './modules/order'; 
 import Prevorder from './modules/PrevorderDetail';
 import Resturantownerreviews from './modules/Resturantownerreviews';
 import Reviews from './modules/customerReviews';
@@ -36,13 +36,16 @@ const store = createStore({
 
     RevenueStore,
    // Reviews,
-
+   AddReviews,
+   adminreviews,
     rewards,
     profile: profileModule,
     auth: AuthStore,
     resturantDetails: ResturantDetailsStore,
     resturantRevinue: ResturantRevinue,
     favoriteStore,
+    orderDetails, 
+
   },
 
   state: {
