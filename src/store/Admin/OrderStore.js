@@ -1,5 +1,5 @@
 import { reactive, toRefs } from 'vue';
-import OrderService from '../../Services/admin/OrderService';
+import OrderService from '@/Services/Admin/orderService';
 
 const state = reactive({
   orderItems: [],
@@ -17,7 +17,7 @@ const actions = {
     try {
       const data = await OrderService.getApplications();
       const deactivated = await OrderService.getDeactivatedApplications();
-       
+
       state.orderItems = data.data; // Assuming data.data is the array of orders
 
       // Filter orders based on status
@@ -74,9 +74,9 @@ export function useOrderStore() {
   return {
     ...toRefs(state),
     fetchOrderItems: actions.fetchOrderItems,
-    acceptApplication:actions.acceptApplication,
-    rejectApplication:actions.rejectApplication,
-    activateApplication:actions.activateApplication,
-    deactivateApplication:actions.deactivateApplication,
+    acceptApplication: actions.acceptApplication,
+    rejectApplication: actions.rejectApplication,
+    activateApplication: actions.activateApplication,
+    deactivateApplication: actions.deactivateApplication,
   };
 }

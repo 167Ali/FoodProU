@@ -12,7 +12,7 @@ const apiClient = axios.create({
 export const api = {
   async getProfile() {
     const response = await apiClient.get('/api/customers/profile');
-    return response;  
+    return response;  // Return the full response to access `response.data`
   },
 
   async updateProfile(profileData) {

@@ -1,0 +1,59 @@
+<template>
+  <SideBar />
+  <div class="reviews-container">
+    <h1>My Restaurant Reviews</h1>
+    <div v-if="loading">Loading reviews...</div>
+    <div v-if="error">{{ error }}</div>
+    <div v-else>
+      <div v-for="review in reviews" :key="review.id" class="review-card">
+        <h2>{{ review.customerName }}</h2>
+        <p>Total Spend: {{ review.totalSpend }}</p>
+        <p>Rating: {{ review.rating }}</p>
+        <p>{{ review.comment }}</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { computed, onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
+import SideBar from '@/Components/RestaurantOwner/RestaurantDashboard/SideBar.vue';
+
+// Props (define directly in the setup function)
+const props = defineProps({
+  restaurantId: {
+    type: String,
+    required: true,
+  },
+});
+
+// Use Vuex store
+const store = useStore();
+
+// Getters for reviews, loading state, and error from Vuex
+const reviews = computed(() => store.getters['reviews/reviews']);
+const loading = computed(() => store.getters['reviews/loading']);
+const error = computed(() => store.getters['reviews/error']);
+
+// Fetch reviews on component mount
+onMounted(() => {
+  store.dispatch('reviews/fetchOwnerReviews', props.restaurantId);
+});
+
+</script>
+
+
+<style scoped>
+.reviews-container {
+  padding: 20px;
+}
+
+.review-card {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+</style>
