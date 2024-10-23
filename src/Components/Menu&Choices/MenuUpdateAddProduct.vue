@@ -146,7 +146,6 @@ const submitForm = () => {
     if (productForm.image_file && productFormRef.value.checkValidity()) {
         emits('save', { ...productForm });
         isFormValidated.value = false; // Reset validation
-
     } else {
         productFormRef.value.reportValidity();
         if (!productForm.image_file) {

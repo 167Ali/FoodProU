@@ -18,7 +18,7 @@
                         </div>
                         <div class="col-7">
                             <div class="ms-3 ard-body">
-                                <h5 class="card-title text-capital">{{ product.name }}</h5>
+                               <h5 class="card-title text-capital">{{ product.name }}</h5>
                                 <!-- <p class="card-text">Description: {{ product.description }}</p> -->
                                 <div class="card-text mt-3">
                                     <strong>Description:</strong>
@@ -26,51 +26,57 @@
                                         {{ product.description }}
                                     </p>
                                 </div>
-                            </div>
-                            <div class="card-text">
-                                <strong>Assigned Choices:</strong>
-                                <p class="scroller-card">
-                                    <!-- Check if assigned_choices has any data -->
-                                    <span v-if="product.assigned_choices && product.assigned_choices.length > 0">
-                                        {{ product.assigned_choices
-                                            .filter(group => group.choice_group && group.choice_group.name)
-                                            .map(group => group.choice_group.name)
-                                            .join(', ')
-                                        }}
-                                    </span>
-                                    <!-- Fallback message if no choices are assigned -->
-                                    <span v-else>
-                                        No assigned choices available.
-                                    </span>
-                                </p>
+                                <!-- <div class="card-text">
+                                    <strong>Assigned Choices:</strong>
+                                    <ul class="scroller-card">
+                                        <li v-for="(choice, idx) in product.assignedchoices" :key="idx">{{ choice }}
+                                        </li>
+                                    </ul>
+                                </div> -->
+                                <div class="card-text">
+                                    <strong>Assigned Choices:</strong>
+                                    <p class="scroller-card">
+                                        <!-- Check if assigned_choices has any data -->
+                                        <span v-if="product.assigned_choices && product.assigned_choices.length > 0">
+                                            {{ product.assigned_choices
+                                                .filter(group => group.choice_group && group.choice_group.name)
+                                                .map(group => group.choice_group.name)
+                                                .join(', ')
+                                            }}
+                                        </span>
+                                        <!-- Fallback message if no choices are assigned -->
+                                        <span v-else>
+                                            No assigned choices available.
+                                        </span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row align-items-center mb-1"> <!-- align-items-center ensures vertical alignment -->
-                    <div class="col text-start">
-                        <h3 class="card-title mt-2 ms-2">{{ product.price }} PKR</h3>
-                    </div>
-                    <div class="col-auto">
-                        <div class="d-flex justify-content-end">
-                            <button class="btn btn-outline me-2" @click="viewProduct(index)"><i
-                                    class="fa-regular fa-pen-to-square fa-xl" style="color: #343f50;"></i></button>
-                            <button class="btn btn-outline" @click="deleteProduct(product.id)"><i
-                                    class="fa-regular fa-trash-can fa-xl" style="color: #444e5f;"></i></button>
+                    <div class="row align-items-center mb-1"> <!-- align-items-center ensures vertical alignment -->
+                        <div class="col text-start">
+                            <h3 class="card-title mt-2 ms-2">{{ product.price }} PKR</h3>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-outline me-2" @click="viewProduct(index)"><i
+                                        class="fa-regular fa-pen-to-square fa-xl" style="color: #343f50;"></i></button>
+                                <button class="btn btn-outline" @click="deleteProduct(index)"><i
+                                        class="fa-regular fa-trash-can fa-xl" style="color: #444e5f;"></i></button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Modal for Create/Edit Product -->
-    <div v-if="isFormVisible" class="modal-overlay">
-        <div class="modal-content">
-            <MenuUpdateAddProduct :product="currentProduct" :categoryTitle="categoryTitle" :is-edit-mode="isEditMode"
-                @save="saveProduct" @cancel="isFormVisible = false" />
+        <!-- Modal for Create/Edit Product -->
+        <div v-if="isFormVisible" class="modal-overlay">
+            <div class="modal-content">
+                <MenuUpdateAddProduct :product="currentProduct" :categoryTitle="categoryTitle"
+                    :is-edit-mode="isEditMode" @save="saveProduct" @cancel="isFormVisible = false" />
+            </div>
         </div>
     </div>
-
 </template>
 
 <script setup>
@@ -95,6 +101,41 @@ onMounted(async () => {
         console.error('Error fetching Choices:', error);
     }
 });
+
+// const products = ref([
+//     {
+//         category: 'Pizza',
+//         name: 'Margherita Pizza',
+//         description: 'Classic cheese and tomato pizza.',
+//         price: 350,
+//         image_path: '/src/assets/img3.jpeg',
+//         variation_id: ['Choice 1', 'Choice 2'], // Assigned choices displayed here
+//     },
+//     {
+//         category: 'Pizza',
+//         name: 'Coke',
+//         description: 'Refreshing soft drink.',
+//         price: 200,
+//         image_path: '/src/assets/img2.jpg',
+//         variation_id: ['Choice 4'], // Assigned choices displayed here
+//     },
+//     {
+//         category: 'Pizza',
+//         name: 'Cheeseburger',
+//         description: 'Juicy burger with cheese.',
+//         price: 240,
+//         image_path: '/src/assets/img1.jpg',
+//         variation_id: ['Choice 1', 'Choice 3', 'Choice 5'], // Assigned choices displayed here
+//     },
+//     {
+//         category: 'Pizza',
+//         name: 'Coke',
+//         description: 'Refreshing soft drink.',
+//         price: 200,
+//         image_path: '/src/assets/img2.jpg',
+//         variation_id: ['Choice 4'], // Assigned choices displayed here
+//     },
+// ]);
 
 const isFormVisible = ref(false);
 const isEditMode = ref(false);
@@ -131,9 +172,8 @@ const saveProduct = async (product) => {
         if (isEditMode.value && currentEditIndex.value !== null) {
             products.value[currentEditIndex.value] = product;
         } else {
-            console.log("prodyct ", product)
             // console.log("Category ID: ", categoryId);
-            console.log("Product ", product);
+            // console.log("Product ", product);
             const success = await store.dispatch('menuProduct/addProduct', { product, categoryId });
             console.log("success ", success);
             await store.dispatch('menuProduct/displayProducts', categoryId);
@@ -150,19 +190,9 @@ const saveProduct = async (product) => {
 };
 
 // Delete a product
-
-const deleteProduct = async (index) => {
-
-    try {
-        console.log("index ", index)
-        const success = await store.dispatch('menuProduct/deleteProduct', index);
-        console.log("response choice ", success);
-        products.value.splice(index, 1);
-    } catch (error) {
-        console.error('Error Deleting Choice: ', error);
-    }
+const deleteProduct = (index) => {
+    products.value.splice(index, 1);
 };
-
 </script>
 
 <style scoped>
