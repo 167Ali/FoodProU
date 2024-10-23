@@ -4,7 +4,7 @@ import profileModule from './modules/profile';
 import { menuCategory } from '../store/menu/menuCategory';
 import { menuProduct } from '../store/menu/menuProduct';
 import { menuChoice } from '../store/menu/menuChoice';
-
+import restOwnerProfileStore from './RestaurantOwner/restOwnerProfileStore';
 
 import { orderDetails } from '@/store/RestaurantOwner/orderDetails'
 
