@@ -10,7 +10,7 @@ import { rewards } from './Modules/rewards';
 import AuthStore from './Auth/authStore';
 import order from './Modules/order'; // import the order module
 import Prevorder from './Modules/prevOrderDetail';
-import Resturantownerreviews from './Modules/resturantOwnerReviews';
+import Resturantownerreviews from './Modules/resturantOwnerStore';
 import Reviews from './Modules/customerReviews';
 
 import restOwnerProfileStore from './RestaurantOwner/restOwnerProfileStore';

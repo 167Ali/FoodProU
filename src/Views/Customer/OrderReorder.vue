@@ -11,13 +11,12 @@
         <div v-else>
           <div v-for="order in activeOrders" :key="order.id" class="order-card">
             <!-- Only display the image if order_items exists and has at least one item -->
-            <img v-if="order.order_items && order.order_items.length > 0" :src="order.order_items[0].menu_item_image"
-              alt="Order Image" class="order-image" />
+            <img v-if="order.order_items && order.order_items.length > 0" :src="order.order_items[0].menu_item_image" alt="Order Image" class="order-image" />
             <div class="order-details">
               <h3>{{ order.restaurant_name }} – {{ order.branch_address }}</h3>
               <p class="delivery-info">Estimated Delivery: {{ formatDate(order.estimated_delivery_time) }}</p>
               <p class="order-id">Order #{{ order.id }}</p>
-
+              
               <div v-if="order.order_items && order.order_items.length > 0">
                 <h4>Items:</h4>
                 <ul>
@@ -43,8 +42,7 @@
         <div v-else>
           <div v-for="order in pastOrders" :key="order.id" class="order-card">
             <!-- Only display the image if order_items exists and has at least one item -->
-            <img v-if="order.order_items && order.order_items.length > 0" :src="order.order_items[0].menu_item_image"
-              alt="Order Image" class="order-image" />
+            <img v-if="order.order_items && order.order_items.length > 0" :src="order.order_items[0].menu_item_image" alt="Order Image" class="order-image" />
             <div class="order-details">
               <h3>{{ order.restaurant_name }} – {{ order.branch_address }}</h3>
               <p class="delivery-info">Delivered on {{ formatDate(order.estimated_delivery_time) }}</p>
@@ -80,10 +78,10 @@ import { ref, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router'; // Import useRouter from vue-router
 
-import { getActiveOrders, getPastOrders } from '@/Services/Customer/orderService';
+import { getActiveOrders, getPastOrders } from '../../Services/Customer/orderService';
 
-import LoginHeader from '@/Components/HeaderFooter/LoginHeader.vue';
-import PageFooter from '@/Components/HeaderFooter/PageFooter.vue'
+import LoginHeader from '../../Components/HeaderFooter/LoginHeader.vue';
+import PageFooter from '../../Components/HeaderFooter/PageFooter.vue';
 
 const store = useStore();
 const router = useRouter();
@@ -170,8 +168,7 @@ h2 {
   padding-bottom: 10px;
 }
 
-.loading-message,
-.no-orders {
+.loading-message, .no-orders {
   color: #888;
   font-size: 1.2rem;
 }

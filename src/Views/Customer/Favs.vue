@@ -1,9 +1,16 @@
 <template>
   <div class="favorite-restaurants">
     <Loader v-if="isLoading" />
-    <FavoriteRestaurantCard v-for="restaurant in favoriteRestaurants" :key="restaurant.id" :restaurantId="restaurant.id"
-      :name="restaurant.name" :logoPath="restaurant.logo_path" :cuisine="restaurant.cuisine"
-      :openingTime="restaurant.opening_time" :closingTime="restaurant.closing_time" />
+    <FavoriteRestaurantCard
+      v-for="restaurant in favoriteRestaurants"
+      :key="restaurant.id"
+      :restaurantId="restaurant.id"
+      :name="restaurant.name"
+      :logoPath="restaurant.logo_path"
+      :cuisine="restaurant.cuisine"
+      :openingTime="restaurant.opening_time"
+      :closingTime="restaurant.closing_time"
+    />
   </div>
 </template>
 
@@ -27,15 +34,6 @@ onMounted(async () => {
   }
 });
 </script>
-
-<style scoped>
-.favorite-restaurants {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-</style>
 
 <style scoped>
 .favorite-restaurants {

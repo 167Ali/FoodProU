@@ -1,15 +1,12 @@
 <template>
   <div>
-    <!-- Add to Cart Button -->
-    <button class="btn btn-primary add-to-cart-btn" @click="showModal = true">+</button>
-
     <!-- Modal -->
-    <div class="modal fade" :class="{ show: showModal }" tabindex="-1" role="dialog" style="display: block;" v-if="showModal">
+    <div class="modal fade" :class="{ show: showModal }" tabindex="-1" role="dialog" v-if="showModal">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <!-- Modal Header with Fixed Full-Width Image -->
           <div class="modal-header">
-            <img :src="productImage" alt="Product Image" class="product-image">
+            <img :src="choices.image_url" alt="Product Image" class="product-image" />
           </div>
 
           <!-- Scrollable Modal Body -->
@@ -18,18 +15,15 @@
               <strong>
                 <h4 class="font-weight-bold">{{ productName }}</h4>
               </strong>
-              <h6 class="current-price">Rs. {{ discountedPrice.toFixed(2) }} <span class="original-price">Rs. {{ originalPrice }}</span></h6>
+              <h6 class="current-price">Rs. {{ discountedPrice.toFixed(2) }} </h6>
               <p>{{ productDescription }}</p>
             </div>
 
             <!-- Dynamically Render "Choose Your Sub" Sections -->
             <div v-for="(section, sectionIndex) in sections" :key="sectionIndex" class="choose-sub-card mt-3">
-              <div
-                class="card p-3"
-                :style="{
-                  backgroundColor: section.required ? '#f8d7da' : '#f0f0f0'
-                }"
-              >
+              <div class="card p-3" :style="{
+                backgroundColor: section.required ? '#f8d7da' : '#f0f0f0'
+              }">
                 <div class="d-flex justify-content-between align-items-center">
                   <h5 class="font-weight-bold">{{ section.title }}</h5>
                   <span v-if="section.required" class="badge required-badge">Required</span>
@@ -37,15 +31,9 @@
                 <p class="mb-1">Select {{ section.selectLimit }}</p>
                 <div class="scrollable-options">
                   <div class="form-check mb-2" v-for="(option, optionIndex) in section.options" :key="optionIndex">
-                    <input
-                      class="form-check-input"
-                      :class="section.required ? 'square-checkbox' : 'circle-checkbox'"
-                      type="radio"
-                      :id="'section-' + sectionIndex + '-option-' + optionIndex"
-                      :value="option"
-                      v-model="section.selectedOption"
-                      @change="scrollToNext(sectionIndex)"
-                    />
+                    <input class="form-check-input" :class="section.required ? 'square-checkbox' : 'circle-checkbox'"
+                      type="radio" :id="'section-' + sectionIndex + '-option-' + optionIndex" :value="option"
+                      v-model="section.selectedOption" @change="scrollToNext(sectionIndex)" />
                     <label class="form-check-label" :for="'section-' + sectionIndex + '-option-' + optionIndex">
                       {{ option.name }}
                       <span v-if="option.popular" class="ml-1 text-muted">
@@ -58,18 +46,20 @@
               </div>
             </div>
 
-            <strong>Specfic instructions</strong>
+            <strong>Specific instructions</strong>
             <p>Special requests are subject to the restaurant's approval. Tell us here!</p>
 
             <!-- Text Field -->
             <div class="mt-3">
-              <textarea id="notes" class="form-control" v-model="cartNotes" rows="2" placeholder="Any special instructions?"></textarea>
+              <textarea id="notes" class="form-control" v-model="cartNotes" rows="2"
+                placeholder="Any special instructions?"></textarea>
             </div>
           </div>
 
           <!-- Add to Cart Section -->
           <div class="modal-footer justify-content-between">
             <button class="btn btn-green w-100" @click="addToCart">Add to cart</button>
+            <button class="btn btn-secondary" @click="closeModal">Close</button>
           </div>
         </div>
       </div>
@@ -79,65 +69,61 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useStore } from 'vuex';
+const props = defineProps({
+  choices: {
+    type: Array,
+    default: () => [],
+  },
+});
+const store = useStore();
 
-const showModal = ref(false);
-const productImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa9Qq1rV_svdydH5u3O8r5ZmT8udMBnSuKeA&s';
-const productName = 'Summer Deal 1';
-const discountedPrice = 475.16;
-const originalPrice = 774;
-const productDescription = 'Chicken Sub & 345ml Drink';
+const productName = props.choices.menu_item_name;
+const discountedPrice = props.choices.price;
+const productDescription = props.choices.description;
 const cartNotes = ref('');
+
+
+console.log("I have founded the data here", props.choices);
 const sections = ref([
   {
-    title: 'Choose Your Sub',
+    title: props.choices.choice_groups[0].choice_group_name,
     selectLimit: 1,
     required: true,
     selectedOption: null,
-    options: [
-      { name: 'Tikka', price: 'Free', popular: true },
-      { name: 'BBQ', price: 'Free', popular: false },
-      { name: 'Roasted Chicken Breast', price: 'Free', popular: false },
-      { name: 'Chicken Chapli', price: 'Free', popular: false },
-    ],
-  },
-  {
-    title: 'Choose Your Drink',
-    selectLimit: 1,
-    required: true,
-    selectedOption: null,
-    options: [
-      { name: 'Coca Cola', price: 'Free', popular: true },
-      { name: 'Pepsi', price: 'Free', popular: false },
-      { name: 'Sprite', price: 'Free', popular: false },
-    ],
-  },
-  {
-    title: 'Choose Your Extras',
-    selectLimit: 1,
-    required: false,
-    selectedOption: null,
-    options: [
-      { name: 'Extra Cheese', price: 'Rs. 50', popular: false },
-      { name: 'Extra Mayo', price: 'Rs. 30', popular: false },
-    ],
-  },
+    options: props.choices.choice_groups[0].choices,
+    Id:choices.choice_groups[0].choice_group_id,
+  }
 ]);
 
 const closeModal = () => {
   showModal.value = false;
 };
 
-const addToCart = () => {
-  sections.value.forEach((section) => {
-    if (section.selectedOption) {
-      console.log(`Added ${section.title}: ${section.selectedOption.name}`);
-    }
-  });
-  if (cartNotes.value) {
-    console.log(`Notes: ${cartNotes.value}`);
+const showModal = ref(true);
+
+const addToCart = async () => {
+  const variations = sections.value.map(section => ({
+    choice_group_id: section.id, // Adjust this if necessary
+    choice_id: section.selectedOption ? section.selectedOption.id : null,
+  }));
+
+  const item = {
+    menu_item_id: props.choices.menu_item_id, // Ensure this exists
+    quantity: 1,
+    variation: variations.filter(v => v.choice_id !== null),
+  };
+
+  try {
+    const response = await store.dispatch('addToCartStore/addToCart', item); // Dispatch the action from the store
+    console.log('Item added to cart:', response);
+    closeModal();
+  } catch (error) {
+    console.error('Failed to add item to cart:', error);
+    // Optionally handle the error (e.g., show a notification)
   }
-  closeModal();
 };
+
 
 // Scroll to the next section after an option is selected
 const scrollToNext = (currentSectionIndex) => {
@@ -165,11 +151,11 @@ const scrollToNext = (currentSectionIndex) => {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
+
 .modal {
   display: block;
   background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  top: 0;
+  top: 10;
   left: 0;
   width: 100%;
   height: 100%;
@@ -178,13 +164,12 @@ const scrollToNext = (currentSectionIndex) => {
 
 .modal-dialog {
   max-width: 600px;
-  max-height: 70vh;
   margin: auto;
-  border-radius: 20px; /* Added border-radius */
+  /* Center the modal */
 }
 
 .modal-content {
-  border-radius: 20px; /* Added border-radius */
+  border-radius: 20px;
   max-height: 100%;
   display: flex;
   flex-direction: column;
@@ -230,11 +215,13 @@ const scrollToNext = (currentSectionIndex) => {
 }
 
 .form-check-input.square-checkbox {
-  border-radius: 0; /* Square checkbox for required options */
+  border-radius: 0;
+  /* Square checkbox for required options */
 }
 
 .form-check-input.circle-checkbox {
-  border-radius: 50%; /* Circular checkbox for non-required options */
+  border-radius: 50%;
+  /* Circular checkbox for non-required options */
 }
 
 .modal-footer {

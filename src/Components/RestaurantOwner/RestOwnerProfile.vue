@@ -18,7 +18,7 @@
                   <label for="firstName">First Name</label>
                   <div class="input-group">
                     <span class="input-group-text text-success"><i class="bi bi-person-fill"></i></span>
-                    <input type="text" v-model="ownerDetails.firstName" class="form-control" id="firstName"
+                    <input type="text" v-model="ownerDetails.first_name" class="form-control" id="firstName"
                       placeholder="Enter first name" required />
                   </div>
                 </div>
@@ -26,7 +26,7 @@
                   <label for="lastName">Last Name</label>
                   <div class="input-group">
                     <span class="input-group-text text-warning"><i class="bi bi-person-fill"></i></span>
-                    <input type="text" v-model="ownerDetails.lastName" class="form-control" id="lastName"
+                    <input type="text" v-model="ownerDetails.last_name" class="form-control" id="lastName"
                       placeholder="Enter last name" required />
                   </div>
                 </div>
@@ -34,7 +34,7 @@
                   <label for="phoneNumber">Phone Number</label>
                   <div class="input-group">
                     <span class="input-group-text text-info"><i class="bi bi-telephone-fill"></i></span>
-                    <input type="tel" v-model="ownerDetails.phoneNumber" class="form-control" id="phoneNumber"
+                    <input type="tel" v-model="restaurantDetails.phoneNumber" class="form-control" id="phoneNumber"
                       placeholder="Enter phone number" required />
                   </div>
                 </div>
@@ -51,7 +51,7 @@
                   <label for="bankName">Bank Name</label>
                   <div class="input-group">
                     <span class="input-group-text text-warning"><i class="bi bi-bank"></i></span>
-                    <input type="text" v-model="ownerDetails.bankName" class="form-control" id="bankName"
+                    <input type="text" v-model="restaurantDetails.bank_name" class="form-control" id="bankName"
                       placeholder="Enter bank name" required />
                   </div>
                 </div>
@@ -59,7 +59,7 @@
                   <label for="iban">IBAN</label>
                   <div class="input-group">
                     <span class="input-group-text text-primary"><i class="bi bi-credit-card-fill"></i></span>
-                    <input type="text" v-model="ownerDetails.iban" class="form-control" id="iban"
+                    <input type="text" v-model="restaurantDetails.iban" class="form-control" id="iban"
                       placeholder="Enter IBAN" pattern="^[A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}$" required />
                   </div>
                 </div>
@@ -67,8 +67,8 @@
                   <label for="accountTitle">Account Title</label>
                   <div class="input-group">
                     <span class="input-group-text text-danger"><i class="bi bi-wallet"></i></span>
-                    <input v-model="ownerDetails.accountTitle" type="text" class="form-control" id="accountTitle"
-                      placeholder="Enter Account Title" required>
+                    <input v-model="restaurantDetails.account_owner_title" type="text" class="form-control"
+                      id="accountTitle" placeholder="Enter Account Title" required>
                   </div>
                 </div>
               </div>
@@ -84,7 +84,7 @@
                   <label for="restaurantName">Restaurant Name</label>
                   <div class="input-group">
                     <span class="input-group-text text-success"><i class="bi bi-shop"></i></span>
-                    <input type="text" v-model="restaurantDetails.restaurantName" class="form-control"
+                    <input type="text" v-model="restaurantDetails.restaurant_name" class="form-control"
                       id="restaurantName" placeholder="Enter restaurant name" required />
                   </div>
                 </div>
@@ -100,7 +100,7 @@
                   <label for="postalCode">Postal Code</label>
                   <div class="input-group">
                     <span class="input-group-text text-warning"><i class="bi bi-envelope"></i></span>
-                    <input type="text" v-model="restaurantDetails.postalCode" class="form-control" id="postalCode"
+                    <input type="text" v-model="restaurantDetails.postal_code" class="form-control" id="postalCode"
                       placeholder="Enter postal code" required />
                   </div>
                 </div>
@@ -125,7 +125,7 @@
                   <label for="openingTime">Opening Time</label>
                   <div class="input-group">
                     <span class="input-group-text text-success"><i class="bi bi-clock-fill"></i></span>
-                    <input type="time" v-model="restaurantDetails.openingTime" class="form-control" id="openingTime"
+                    <input type="time" v-model="restaurantDetails.opening_time" class="form-control" id="openingTime"
                       required />
                   </div>
                 </div>
@@ -133,7 +133,7 @@
                   <label for="closingTime">Closing Time</label>
                   <div class="input-group">
                     <span class="input-group-text text-danger"><i class="bi bi-clock-fill"></i></span>
-                    <input type="time" v-model="restaurantDetails.closingTime" class="form-control" id="closingTime"
+                    <input type="time" v-model="restaurantDetails.closing_time" class="form-control" id="closingTime"
                       required />
                   </div>
                 </div>
@@ -141,7 +141,7 @@
                   <label for="cuisineType">Cuisine Type</label>
                   <div class="input-group">
                     <span class="input-group-text text-info"><i class="bi bi-egg-fried"></i></span>
-                    <input type="text" v-model="restaurantDetails.cuisineType" class="form-control" id="cuisineType"
+                    <input type="text" v-model="restaurantDetails.cuisine" class="form-control" id="cuisineType"
                       placeholder="Enter cuisine type" required />
                   </div>
                 </div>
@@ -149,13 +149,11 @@
                   <label for="businessType">Business Type</label>
                   <div class="input-group">
                     <span class="input-group-text text-warning"><i class="bi bi-briefcase-fill"></i></span>
-                    <select v-model="restaurantDetails.businessType" class="form-control" id="businessType" required>
-                      <option disabled value="">Select Business Type</option>
-                      <option value="home">Home</option>
-                      <option value="restaurant">Restaurant</option>
-                    </select>
+                    <input v-model="restaurantDetails.business_type" type="text" class="form-control" id="businessType"
+                      placeholder="Enter Business Type" required>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
@@ -173,91 +171,105 @@
 </template>
 
 <script setup>
-import SideBar from '@/Components/RestaurantOwner/RestaurantDashboard/SideBar.vue';
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex'; // Import useStore to access Vuex store
+import { restaurantApi } from '@/Services/RestaurantOwner/restaurantOwnerProfService'; // Import the restaurant service
+import SideBar from '@/Components/RestaurantOwner/RestaurantDashboard/SideBar.vue';
 
 const router = useRouter();
-const store = useStore(); // Initialize the store
+const store = useStore(); // Access Vuex store
 
+// Reactive state for owner and restaurant details
 const ownerDetails = ref({
-  firstName: '',
-  lastName: '',
-  phoneNumber: '',
-  bankName: '',
-  iban: '',
-  accountTitle: ''
+  first_name: '',
+  last_name: '',
+  phoneNumber: ''
 });
 
 const restaurantDetails = ref({
-  restaurantName: '',
+  restaurant_name: '',
   address: '',
-  postalCode: '',
+  postal_code: '',
   city: '',
-  openingTime: '',
-  closingTime: '',
-  cuisineType: '',
-  businessType: ''
+  opening_time: '',
+  closing_time: '',
+  cuisine: '',
+  business_type: ''
 });
 
-// Fetch owner and restaurant details when the component is mounted
+// Fetch owner's details on mount
+// Fetch owner's details on mount
 onMounted(async () => {
-  // Fetch owner details from Vuex store
-  const ownerData = await store.dispatch('fetchOwnerDetails');
-  ownerDetails.value = ownerData;
+  try {
+    const response = await restaurantApi.fetchOwnerDetails(); // Call the service method to fetch data
+    if (response && response.data) {
+      // Adjust this to access the correct fields in the API response
+      ownerDetails.value.first_name = response.data.first_name;
+      ownerDetails.value.last_name = response.data.last_name;
+      ownerDetails.value.phoneNumber = response.data.phoneNumber; // Assuming this field exists in your API response
 
-  // Fetch restaurant details from Vuex store
-  const restaurantData = await store.dispatch('fetchRestaurantDetails');
-  restaurantDetails.value = restaurantData;
+      restaurantDetails.value.restaurant_name = response.data.restaurant_name;
+      restaurantDetails.value.address = response.data.address;
+      restaurantDetails.value.postal_code = response.data.postal_code;
+      restaurantDetails.value.city = response.data.city;
+      restaurantDetails.value.opening_time = response.data.opening_time;
+      restaurantDetails.value.closing_time = response.data.closing_time;
+      restaurantDetails.value.cuisine = response.data.cuisine;
+      restaurantDetails.value.business_type = response.data.business_type;
+      restaurantDetails.value.bank_name = response.data.bank_name;
+      restaurantDetails.value.iban = response.data.iban;
+      restaurantDetails.value.account_owner_title = response.data.account_owner_title;
+    }
+  } catch (error) {
+    console.error("Failed to fetch owner details", error);
+    // Optionally show an alert or toast message
+  }
 });
 
-// Method to navigate to change password
-const goToChangePassword = () => {
-  router.push({ name: 'ChangePassword' });
-};
 
-// Method to update owner and restaurant details
+// Function to update details
 const updateDetails = async () => {
   try {
-    // Call your Vuex action to update details
-    await store.dispatch('updateOwnerDetails', ownerDetails.value);
-    await store.dispatch('updateRestaurantDetails', restaurantDetails.value);
+    const response = await restaurantApi.updateOwnerDetails({
+      owner: ownerDetails.value,
+      restaurant: restaurantDetails.value
+    });
 
-    // Optionally, you could handle success messages or route changes here
-    alert('Details updated successfully!');
+    if (response.success) {
+      alert("Profile updated successfully!");
+      router.push('/some-route'); // Navigate to another route if needed
+    }
   } catch (error) {
-    console.error('Failed to update details:', error);
-    alert('Failed to update details. Please try again.');
+    console.error("Failed to update owner details", error);
+    // Optionally show an alert or toast message
   }
+};
+
+// Function to navigate to the change password page
+const goToChangePassword = () => {
+  router.push('/change-password');
 };
 </script>
 
 <style scoped>
-/* Your component styles */
+/* Add your styles here */
 .profile-update-container {
-  /* Add your styles here */
+  max-width: 1200px;
+  margin: auto;
 }
 
-.card {
-  /* Card styles */
+.profile-update-card {
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
 }
 
 .submit-btn {
-  /* Button styles */
+  background-color: #00754A;
+  color: white;
 }
 
-.fade-in {
-  animation: fadeIn 0.5s;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+.hover-effect:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 </style>
