@@ -7,7 +7,7 @@ import otherRoutes from './otherRoutes'
 import Get_Started_page from '@/views/Login_Signup/Get_Started_page.vue'
 import RecipeBlog from '../views/Customer/RecipeBlog.vue'
 import Rewards from '../views/Customer/Rewards.vue'
-
+import ProductAdd from '../components/Customer/ProductAddToCart.vue'
 const routes = [
   ...adminRoute,
   ...restaurantownerRoutes,
@@ -26,6 +26,15 @@ const routes = [
     name: 'Get_Started_page',
 
     component: Get_Started_page
+
+  },
+  {
+
+    path: '/pa',
+
+    name: 'Product Add',
+
+    component: ProductAdd
 
   },
 

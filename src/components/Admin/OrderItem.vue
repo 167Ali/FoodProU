@@ -2,17 +2,22 @@
   <div class="order-item">
     <img :src="item.image || 'default-image-url.jpg'" alt="Food Image" class="item-image" />
     <div class="item-details">
-      <h4 class="item-name">{{ item.restaurant_name || 'Unknown Restaurant' }}</h4>
-      <p class="item-status">{{ item.status || 'No Status' }}</p>
+      <h4 class="item-name">{{ item.restaurant_name || item.name || 'Unknown Restaurant' }}</h4>
+      <p class="item-status">{{ item.status || ' ' || 'No Status' }}</p>
       <p class="item-cuisine">{{ item.cuisine || 'Unknown Cuisine' }}</p>
-      <p class="item-owner mb-2">
-        {{ (item.first_name || 'Unknown') + ' ' + (item.last_name || 'Name') }}
+      <p class="item-owner">
+        {{ (item.first_name || ' '||'Unknown') + ' ' + (item.last_name || ' '||'Name') }}
       </p>
       <div class="button-container">
-        <button class="accept-button" @click="acceptOrder">Accept</button>
-        <button class="reject-button" v-if="item.status !== 'declined'" @click="rejectOrder">
-          Reject
-        </button>
+        <template v-if="currentStatus === 'deactivated'">
+          <button class="accept-button" @click="activate_Application">Activate</button>
+        </template>
+        <template v-else>
+          <button class="accept-button" @click="accept_Application">Accept</button>
+          <button class="reject-button" v-if="item.status !== 'declined'" @click="reject_Application">
+            Reject
+          </button>
+        </template>
       </div>
     </div>
   </div>
@@ -26,12 +31,16 @@ const props = defineProps({
   item: {
     type: Object,
     required: true
+  },
+  currentStatus: { // Add a prop to receive the current status
+    type: String,
+    required: true
   }
 });
 
-const { acceptApplication, rejectApplication, fetchOrderItems } = useOrderStore();
+const { acceptApplication, rejectApplication, activateApplication} = useOrderStore();
 
-const acceptOrder = async () => {
+const accept_Application = async () => {
   const orderId = props.item.id;
   console.log('Order ID:', orderId);
 
@@ -43,13 +52,12 @@ const acceptOrder = async () => {
   try {
     console.log(`Order accepted: ${orderId}`);
     await acceptApplication(orderId);
-    await fetchOrderItems(); // Refetch items to update the UI
   } catch (error) {
     console.error(`Error accepting order: ${error}`);
   }
 };
 
-const rejectOrder = async () => {
+const reject_Application = async () => {
   const orderId = props.item.id;
   console.log('Order ID:', orderId);
 
@@ -61,13 +69,47 @@ const rejectOrder = async () => {
   try {
     console.log(`Order rejected: ${orderId}`);
     await rejectApplication(orderId);
-    await fetchOrderItems(); // Refetch items to update the UI
   } catch (error) {
     console.error(`Error rejecting order: ${error}`);
   }
 };
-</script>
 
+const activate_Application = async () => {
+  const orderId = props.item.id;
+  console.log('Order ID:', orderId);
+
+  if (!orderId) {
+    console.error('Order ID is undefined or null');
+    return;
+  }
+
+  try {
+    console.log(`Order activated: ${orderId}`);
+    // Call the actual method to activate the order
+    await activateApplication(orderId);
+  } catch (error) {
+    console.error(`Error activating order: ${error}`);
+  }
+};
+
+const deactivate_Application = async () => {
+  const orderId = props.item.id;
+  console.log('Order ID:', orderId);
+
+  if (!orderId) {
+    console.error('Order ID is undefined or null');
+    return;
+  }
+
+  try {
+    console.log(`Order deactivated: ${orderId}`);
+    // Call the actual method to deactivate the order
+    await deactivateApplication(orderId);
+  } catch (error) {
+    console.error(`Error deactivating order: ${error}`);
+  }
+};
+</script>
 <style scoped>
 .order-item {
   display: flex;

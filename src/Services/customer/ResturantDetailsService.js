@@ -63,7 +63,6 @@ export const fetchRestaurantMenus = async (restaurantId) => {
         Authorization: `Bearer ${token}`, // Include the token in the Authorization header
       },
     });
-    console.log("ghdbscfkjnc", response.data.data);
     return response.data; // Return the response data
   } catch (error) {
     throw error;
