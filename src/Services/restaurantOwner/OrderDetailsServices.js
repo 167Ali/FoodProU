@@ -9,8 +9,5 @@ export const OrderDetails = {
     ViewOrder() {
         return axios.get(`${baseURL}/api/restaurant/orders`, { headers });
     },
-
-
-
 }
 
