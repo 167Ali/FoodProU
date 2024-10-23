@@ -11,11 +11,7 @@ import adminRoute from './adminRoutes'
 import restaurantownerRoutes from './restaurantownerRoutes'
 
 import customerRoutes from './customerRoutes'
-
-import otherRoutes from './otherRoutes';
-import Get_Started_page from '@/views/Login_Signup/Get_Started_page.vue'
-import RecipeBlog from '../views/Customer/RecipeBlog.vue'
-import Rewards from '../views/Customer/Rewards.vue'
+import otherRoutes from './otherRoutes'
 
 const routes = [
 
@@ -26,37 +22,7 @@ const routes = [
   ...customerRoutes,
 
   ...otherRoutes,
-
-  {
-
-    path: '/user-guide',
-
-    name: 'UserGuide',
-
-    component: () => import('../components/Customer/UserGuide.vue')
-
-  },
-
-  {
-
-    path: '/recipe-blog',
-
-    name: 'RecipeBlog',
-
-    component: () => import('../views/Customer/RecipeBlog.vue')
-
-  },
-
-  {
-
-    path: '/rewards',
-
-    name: 'Rewards',
-
-    component: () => import('../views/Customer/Rewards.vue')
-
-  }
-
+  
 ]
 
 

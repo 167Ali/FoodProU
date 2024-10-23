@@ -78,7 +78,7 @@
 <script setup>
 import { onMounted, ref, computed } from 'vue';
 import OrderItem from '../../components/Admin/OrderItem.vue';
-import { useOrderStore } from '../../store/Admin/OrderStore'; // Adjust the path as necessary
+import { useOrderStore } from '../../store/Admin/orderStore'; // Adjust the path as necessary
 
 const { acceptedOrders, pendingOrders, declinedOrders, fetchOrderItems, loading, error } = useOrderStore();
 

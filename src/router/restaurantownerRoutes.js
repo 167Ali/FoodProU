@@ -2,7 +2,7 @@ import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_D
 import ResturantOwner from '@/components/RestaurantOwner/ResturantOwner.vue'
 import RestOwnerProfile from '../components/RestaurantOwner/restOwnerProfile.vue'
 import ResturantReviews from '@/components/RestaurantOwner/ResturantReviews.vue'
-import OrderReq from '../components/RestaurantOwner/OrderRequest.vue'
+import OrderReq from '../components/RestaurantOwner/RestaurantDashboard/OrderRequest.vue'
 import ModalView from '../components/RestaurantOwner/restOwnReciept.vue'
 import OwnerMenu from '../views/Menu/OwnerMenu.vue'
 import ViewAllOrdersRes from '@/views/RestauranOnwer/OrdersRestaurant.vue'

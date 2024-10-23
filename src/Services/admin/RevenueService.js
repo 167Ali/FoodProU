@@ -14,8 +14,9 @@ export const fetchRevenueReports = async () => {
         Authorization: `Bearer ${token}`, // Include token if authentication is required
       },
     });
-    console.log("adminrevnue",response);
-    return response.data; // Return the response data
+    console.log("admin revenue response:", response);
+    
+    return response; // Return the full Axios response
   } catch (error) {
     throw error;
   }

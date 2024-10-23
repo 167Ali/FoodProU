@@ -1,7 +1,7 @@
 <template>
   <div class="restaurant-header" v-if="restaurant">
     <div class="logo-container">
-      <img class="restaurant-logo" :src="logo" alt="Restaurant Logo" />
+      <img class="restaurant-logo" :src="getImageUrl(logo)" alt="Restaurant Logo" />
     </div>
     <div class="restaurant-info">
       <h1>{{ name }}</h1>
@@ -21,8 +21,8 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, onMounted } from 'vue';
-import { useStore } from 'vuex';
+import { ref, computed, defineProps, watch } from 'vue';
+import { useStore } from 'vuex'; // Import useStore from Vuex
 import SeeReviews from '../Customer/SeeReviews.vue';
 import Moreinfo from '../Customer/Moreinfo.vue';
 
@@ -33,7 +33,9 @@ const props = defineProps({
   },
 });
 
-const store = useStore();
+const store = useStore(); // Initialize Vuex store
+
+// Compute properties based on the passed restaurant data
 const logo = computed(() => props.restaurant?.logo_url || '');
 const name = computed(() => props.restaurant?.name || '');
 const categories = computed(() => props.restaurant ? [props.restaurant.cuisine] : []);
@@ -41,13 +43,23 @@ const rating = computed(() => props.restaurant?.average_rating || 0);
 const openingTime = computed(() => props.restaurant?.opening_time || '');
 const closingTime = computed(() => props.restaurant?.closing_time || '');
 
-const isFavorite = computed(() => store.getters['favoriteStore/isFavorite'](props.restaurant.id));
+// Check if the restaurant is liked (in favorites)
+const isLiked = ref(false);
 
-const toggleLike = () => {
-  if (isFavorite.value) {
-    store.dispatch('favoriteStore/removeFavorite', props.restaurant.id);
+// Function to toggle the liked state
+const toggleLike = async () => {
+  if (isLiked.value) {
+    await store.dispatch('resturantDetails/removeFavoriteRestaurant', props.restaurant.id);
   } else {
-    store.dispatch('favoriteStore/addFavorite', props.restaurant.id);
+    await store.dispatch('resturantDetails/addFavoriteRestaurant', props.restaurant.id);
+  }
+  isLiked.value = !isLiked.value; // Toggle the liked state
+};
+
+// Function to get the full image URL
+const getImageUrl = (imagePath) => {
+  if (!imagePath) {
+    return '/path/to/default/image.jpg'; // Replace with your default image path
   }
 };
 </script>
@@ -86,7 +98,6 @@ const toggleLike = () => {
   font-weight: bolder;
 }
 
-/* Add flexbox to rating-row */
 .rating-row {
   display: flex;
   align-items: center;

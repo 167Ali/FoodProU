@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createStore } from 'vuex';
 import axios from 'axios';
 

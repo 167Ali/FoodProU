@@ -18,25 +18,21 @@
     </div>
 </template>
   
-<script>
+<script setup>
+// Import the OrderCard component
 import OrderCard from './OrderCard.vue';
 
-export default {
-    name: "OrdersSection",
-    components: {
-        OrderCard,
-    },
-    props: {
-        acceptedOrders: {
-            type: Array,
-            required: true,
-        },
-        rejectedOrders: {
-            type: Array,
-            required: true,
-        },
-    },
-};
+// Define props using the `defineProps` function in the Composition API
+defineProps({
+  acceptedOrders: {
+    type: Array,
+    required: true,
+  },
+  rejectedOrders: {
+    type: Array,
+    required: true,
+  },
+});
 </script>
   
 <style scoped>

@@ -1,4 +1,5 @@
 <template>
+  <LoginHeader />
   <div class="recipe-blog">
     <RecipeCard
       v-for="(recipe, index) in recipes"
@@ -26,6 +27,7 @@
       @close="closeModal"
     />
   </div>
+  <PageFooter/>
 </template>
 
 <script setup>

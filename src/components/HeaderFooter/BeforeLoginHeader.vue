@@ -6,7 +6,7 @@
             <div class="business-banner-content">
                 <font-awesome-icon :icon="['fas', 'briefcase']" class="business-icon" />
                 <span class="business-text">Do you need a business account?</span>
-                <button class="signup-button" @click="goToBusinessSignup">SIGN UP NOW</button>
+                <button class="signup-button" @click="goToBusinessSignup">Get started</button>
             </div>
         </div>
 
@@ -50,7 +50,7 @@ const closeSignUpModal = () => {
 };
 
 const goToBusinessSignup = () => {
-    router.push('/businesslanding');
+    router.push('/get-started-page');
 };
 </script>
 

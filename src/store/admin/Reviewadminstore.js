@@ -1,4 +1,4 @@
-import { fetchReviews, fetchRestaurants } from '../../Services/admin/ReviewadminServices';
+import { fetchReviewsAndRestaurants } from '../../Services/admin/ReviewadminServices';
 
 const state = {
   reviews: [],
@@ -15,7 +15,7 @@ const state = {
 const mutations = {
   SET_REVIEWS(state, reviews) {
     state.reviews = reviews;
-    state.filteredReviews = reviews; // Default to showing all reviews
+    state.filteredReviews = reviews;
   },
   SET_TOTAL_REVIEWS(state, total) {
     state.totalReviews = total;
@@ -40,38 +40,54 @@ const mutations = {
   },
   SET_ERROR(state, error) {
     state.error = error;
-  }
+  },
 };
 
 const actions = {
   async fetchReviews({ commit }) {
     commit('SET_LOADING', true);
     try {
-      const data = await fetchReviews();
-      commit('SET_REVIEWS', data.reviews);
-      commit('SET_TOTAL_REVIEWS', data.totalReviews);
-      commit('SET_AVERAGE_RATING', data.averageRating);
-      commit('SET_GROWTH_PERCENTAGE', data.growthPercentage);
+      const data = await fetchReviewsAndRestaurants(); // Call the API
+
+      // Access the reviews and restaurants from the data property
+      const { reviews, restaurants } = data.data;
+
+      // Log the API response for debugging
+      console.log('API Response - Reviews:', reviews);
+      console.log('API Response - Restaurants:', restaurants);
+
+      // Ensure we get an array of reviews
+      const reviewsArray = Array.isArray(reviews) ? reviews : [];
+
+      // Calculate total reviews and average rating
+      const totalReviews = reviewsArray.length;
+      const averageRating = (
+        totalReviews > 0 
+          ? (reviewsArray.reduce((sum, review) => sum + review.stars, 0) / totalReviews).toFixed(1) 
+          : 0
+      );
+
+      const growthPercentage = 5; // Example static value, update as needed
+
+      // Commit the extracted data
+      commit('SET_REVIEWS', reviewsArray);
+      commit('SET_TOTAL_REVIEWS', totalReviews);
+      commit('SET_AVERAGE_RATING', averageRating);
+      commit('SET_GROWTH_PERCENTAGE', growthPercentage);
+      commit('SET_RESTAURANTS', restaurants);
+
     } catch (error) {
-      commit('SET_ERROR', 'Failed to fetch reviews');
+      console.error('Error fetching reviews and restaurants:', error); // Log the error
+      commit('SET_ERROR', 'Failed to fetch reviews and restaurants');
     } finally {
       commit('SET_LOADING', false);
     }
   },
 
-  async fetchRestaurants({ commit }) {
-    try {
-      const data = await fetchRestaurants();
-      commit('SET_RESTAURANTS', data.restaurants);
-    } catch (error) {
-      commit('SET_ERROR', 'Failed to fetch restaurants');
-    }
-  },
-
   filterReviews({ commit, state }) {
     if (state.selectedRestaurant) {
-      const filtered = state.reviews.filter(
-        (review) => review.restaurant === state.selectedRestaurant
+      const filtered = state.reviews.filter(review => 
+        review.restaurant && review.restaurant.name === state.selectedRestaurant
       );
       commit('SET_FILTERED_REVIEWS', filtered);
     } else {
@@ -81,7 +97,7 @@ const actions = {
 
   setSelectedRestaurant({ commit, dispatch }, restaurant) {
     commit('SET_SELECTED_RESTAURANT', restaurant);
-    dispatch('filterReviews'); // Call filter after selecting a restaurant
+    dispatch('filterReviews');
   },
 };
 
