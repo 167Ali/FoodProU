@@ -1,76 +1,42 @@
 // src/router/index.js
-
-import { createRouter, createWebHistory } from 'vue-router'
-// Import route modules
-
-import adminRoute from '@/Router/adminRoutes'
-
-import restaurantownerRoutes from '@/Router/restaurantownerRoutes'
-
-import customerRoutes from '@/Router/customerRoutes'
-
-import otherRoutes from '@/Router/otherRoutes';
-import getstarted from '@/Views/LoginSignup/GetStartedPage.vue'
-import RecipeBlog from '@/Views/Customer/RecipeBlog.vue'
-import Rewards from '@/Views/Customer/Rewards.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import adminRoute from './adminRoutes';
+import restaurantownerRoutes from './restaurantownerRoutes';
+import customerRoutes from './customerRoutes';
+import otherRoutes from './otherRoutes';
 
 const routes = [
-
   ...adminRoute,
-
   ...restaurantownerRoutes,
-
   ...customerRoutes,
-
   ...otherRoutes,
-
-  {
-
-    path: '/user-guide',
-
-    name: 'UserGuide',
-
-    component: () => import('../Components/Customer/UserGuide.vue')
-
-  },
-
-  {
-
-    path: '/recipe-blog',
-
-    name: 'RecipeBlog',
-
-    component: RecipeBlog,
-
-  },
-  {
-    path: '/getstarted',
-    name: 'getstarted',
-    component: getstarted
-  },
-
-  {
-
-    path: '/rewards',
-
-    name: 'Rewards',
-
-    component: Rewards,
-
-  },
-
-]
-
-
+];
 
 const router = createRouter({
-
   history: createWebHistory(),
+  routes,
+});
 
-  routes
+router.beforeEach((to, from, next) => {
+  // Retrieve token and user data from localStorage
+  const token = localStorage.getItem('token');
+  const user = JSON.parse(localStorage.getItem('user'));
 
-})
+  // Check if the route requires authentication
+  if (to.meta.requiresAuth && !token) {
+    return next({ name: 'Main_landing' }); // Redirect to the login page if not authenticated
+  }
 
+   // Role-based access control
+   if (to.meta.role && user) {
+    if (user.role !== to.meta.role) {
+      // Redirect back to the current page if the role does not match
+      return next(false);
+    }
+  }
 
+  // Proceed to the next route if no conditions were met
+  next();
+});
 
-export default router
+export default router;

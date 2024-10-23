@@ -1,43 +1,54 @@
 // src/router/customerRoutes.js
-
-import RecipeBlog from '../Views/Customer/RecipeBlog.vue'
-import RestaurantPage from '@/Views/Customer/RestaurantPage.vue';
-import CheckOut from '@/Components/Customer/CheckOut.vue';
-import AddtoCart from '@/Components/Customer/AddtoCart.vue';
-import CategoryNavbar from '@/Components/Customer/CategoryNavbar.vue';
-import DashboardResturantPage from '@/Views/Customer/DashboardResturantPage.vue';
-import ProfileSettings from '@/Views/Customer/ProfileSettings.vue';
-import FavoritesPage from '@/Views/Customer/Favs.vue';
-import OrderScreen from '@/Views/Customer/OrderScreen.vue';
-import OrderReorder from '@/Views/Customer/OrderReorder.vue';
-import PrevorderDetails from '@/Views/Customer/PrevorderDetails.vue';
+import RestaurantPage from '../Views/Customer/RestaurantPage.vue';
+import CheckOut from '../Components/Customer/CheckOut.vue';
+import CategoryNavbar from '../Components/Customer/CategoryNavbar.vue';
+import DashboardResturantPage from '../Views/Customer/DashboardResturantPage.vue';
+import ProfileSettings from '../Views/Customer/ProfileSettings.vue';
+import FavoritesPage from '../Views/Customer/Favs.vue';
+import OrderScreen from '../Views/Customer/OrderScreen.vue';
+import OrderReorder from '../Views/Customer/OrderReorder.vue';
+import PrevorderDetails from '../Views/Customer/PrevorderDetails.vue';
 import OrderRating from '@/Components/Customer/OrderRating.vue';
 import UserGuide from '@/Components/Customer/UserGuide.vue';
+import RecipeBlog from '../Views/Customer/RecipeBlog.vue';
+
 export default [
   {
-    // M ALi route
-    // path: '/restaurant/:restaurantId/menu',
-    // name: 'RestaurantMenu',
-    // component: Restaurantpage,
-    // props: true 
-
-    path: '/RestaurantPage/:id', 
+    path: '/RestaurantPage/:id',
     name: 'RestaurantPage',
     component: RestaurantPage,
-    props: true, 
-
+    props: true,
+    meta: {
+      requiresAuth: true,
+      role: 'Customer',
+    },
   },
-
+  {
+    path: '/recipe-blog',
+    name: 'RecipeBlog',
+    component: RecipeBlog,
+    meta: {
+      requiresAuth: true,
+      role: 'Customer',
+    },
+  },
   {
     path: '/checkout',
     name: 'checkout',
-    component: CheckOut
+    component: CheckOut,
+    meta: {
+      requiresAuth: true,
+      role: 'Customer',
+    },
   },
-
   {
     path: '/catnvbr',
     name: 'categorynavbar',
-    component: CategoryNavbar
+    component: CategoryNavbar,
+    meta: {
+      requiresAuth: true,
+      role: 'Customer',
+    },
   },
   {
     path: '/dashboardresturantpage',
@@ -45,43 +56,73 @@ export default [
     component: DashboardResturantPage,
     children: [
       {
-        
         path: '/userguide',
         name: 'UserGuide',
-        component: UserGuide
+        component: UserGuide,
+        meta: {
+          requiresAuth: true,
+          role: 'Customer',
+        },
       },
-    ]
+    ],
+    meta: {
+      requiresAuth: true,
+      role: 'Customer',
+    },
   },
-
   {
     path: '/profilesettings',
     name: 'ProfileSettings',
-    component: ProfileSettings
+    component: ProfileSettings,
+    meta: {
+      requiresAuth: true,
+      role: 'Customer',
+    },
   },
   {
     path: '/favoritespage',
     name: 'Favoritespage',
-    component: FavoritesPage
+    component: FavoritesPage,
+    meta: {
+      requiresAuth: true,
+      role: 'Customer',
+    },
   },
   {
     path: '/orderScreen',
     name: 'OrderScreen',
-    component: OrderScreen
+    component: OrderScreen,
+    meta: {
+      requiresAuth: true,
+      role: 'Customer',
+    },
   },
   {
     path: '/OrderReorder',
     name: 'OrderReorder',
-    component: OrderReorder
+    component: OrderReorder,
+    meta: {
+      requiresAuth: true,
+      role: 'Customer',
+    },
   },
   {
     path: '/order-details/:id',
     name: 'PrevorderDetails',
     component: PrevorderDetails,
     props: true,
+    meta: {
+      requiresAuth: true,
+      role: 'Customer',
+    },
   },
   {
     path: '/OrderRating',
     name: 'OrderRating',
-    component: OrderRating
-  }
+    component: OrderRating,
+    meta: {
+      requiresAuth: true,
+      role: 'Customer',
+    },
+  },
 ];
