@@ -180,123 +180,124 @@ onMounted(() => {
 .order-from,
 .delivered-to {
 
-  display: flex;
-  align-items: flex-start;
-  margin: 10px 0;
-  margin-left: -110px;
-}
-
-.order-icon {
-  font-size: 1.2rem;
-  color: #00754a;
-  margin-right: 10px;
-}
-
-.order-text p {
-  margin: 0;
-  color: #555;
-}
-
-.order-from .order-text p:first-child,
-.delivered-to .order-text p:first-child {
-  font-weight: bold;
-  color: #333;
-}
-
-.order-summary-details {
-  background-color: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
-}
-
-.order-summary-details h3 {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 15px;
-  color: #333;
-}
-
-.order-items,
-.order-pricing,
-.payment-details {
-  margin-bottom: 10px;
-}
-
-.order-pricing,
-.payment-details {
-  font-size: 1rem;
-  color: #555;
-}
-
-.order-pricing p,
-.payment-details p {
-  display: flex;
-  justify-content: space-between;
-  margin: 5px 0;
-}
-
-.order-pricing p span,
-.payment-details p span {
-  text-align: right;
-}
-
-.order-actions {
-  width: 25%;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding: 0 20px;
-}
-
-.action-card {
-  background-color: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.reorder-section p,
-.invoice-section p {
-  font-size: 1rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.reorder-button {
-  background-color: #00754a;
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.reorder-button:hover {
-  background-color: #00593c;
-}
-
-.invoice-button {
-  background-color: #1fd46b;
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.invoice-button:hover {
-  background-color: #16a959;
-}
-
-.loading-message {
-  text-align: center;
-  font-size: 1.2rem;
-  padding: 50px 0;
-}
-</style>
+    display: flex;
+    align-items: flex-start;
+    margin: 10px 0;
+    margin-left: -110px;
+  }
+  
+  .order-icon {
+    font-size: 1.2rem;
+    color: #00754a;
+    margin-right: 10px;
+  }
+  
+  .order-text p {
+    margin: 0;
+    color: #555;
+  }
+  
+  .order-from .order-text p:first-child,
+  .delivered-to .order-text p:first-child {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .order-summary-details {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+  
+  .order-summary-details h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .order-items,
+  .order-pricing,
+  .payment-details {
+    margin-bottom: 10px;
+  }
+  
+  .order-pricing,
+  .payment-details {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .order-pricing p,
+  .payment-details p {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+  }
+  
+  .order-pricing p span,
+  .payment-details p span {
+    text-align: right;
+  }
+  
+  .order-actions {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 0 20px;
+  }
+  
+  .action-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .reorder-section p,
+  .invoice-section p {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .reorder-button {
+    background-color: #00754a;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .reorder-button:hover {
+    background-color: #00593c;
+  }
+  
+  .invoice-button {
+    background-color: #1fd46b;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .invoice-button:hover {
+    background-color: #16a959;
+  }
+  
+  .loading-message {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 50px 0;
+  }
+  </style>
+  

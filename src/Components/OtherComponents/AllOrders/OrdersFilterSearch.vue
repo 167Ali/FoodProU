@@ -10,7 +10,6 @@
                 </button>
             </div>
         </div>
-
         <!-- Filter Modal -->
         <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -28,8 +27,8 @@
                                     placeholder="Filter by Order ID..." />
                             </div>
 
-                              <!-- Status filter -->
-                              <div class="mb-3">
+                            <!-- Status filter -->
+                            <div class="mb-3">
                                 <label class="form-label">Order Status</label>
                                 <select class="form-select" v-model="statusFilter">
                                     <option value="">All</option>
@@ -39,8 +38,8 @@
                                 </select>
                             </div>
 
-                         <!-- Restaurant filter (Dropdown using prop) -->
-                         <div class="mb-3">
+                            <!-- Restaurant filter (Dropdown using prop) -->
+                            <div class="mb-3">
                                 <label class="form-label">Restaurant</label>
                                 <select class="form-select" v-model="restaurantFilter">
                                     <option value="">Select a restaurant...</option>
@@ -71,10 +70,8 @@
                                     placeholder="Filter by address..." />
                             </div>
 
-                           
-
-                           <!-- Date filter -->
-                           <div class="mb-3">
+                            <!-- Date filter -->
+                            <div class="mb-3">
                                 <label class="form-label">Order Date Range</label>
                                 <div class="d-flex">
                                     <input type="date" class="form-control me-2" v-model="startDateFilter" />

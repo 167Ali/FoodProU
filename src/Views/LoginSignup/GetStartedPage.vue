@@ -9,7 +9,7 @@
           <h2 class="mb-0 ms-4">foodpro for business</h2>
         </div>
         <div>
-          <a href="#" class="btn btn-lg btn-green">Get Started</a>
+          <a href="/businesslanding" class="btn btn-lg btn-green">Register</a>
         </div>
       </div>
     </header>
@@ -25,10 +25,10 @@
               restaurants. Fuel work-from-home sessions, late nights in the
               office, corporate events, client meetings, and much more.
             </p>
-            <a href="#" class="btn btn-green btn-lg">Get started</a>
+            <a href="/businesslanding" class="btn btn-green btn-lg">Register Now !</a>
           </div>
           <div class="col-md-6">
-            <img src="../../assets/b2_logo.png" alt="foodpro Mascot" class="img-fluid main_pic " />
+            <img src="../../Assets/b2_logo.png" alt="foodpro Mascot" class="img-fluid main_pic " />
           </div>
         </div>
       </div>
@@ -90,7 +90,7 @@
             <a href="#" class="btn btn-green btn-lg mt-3">Take a sneak peek at the dashboard</a>
           </div>
           <div class="col-md-6 ">
-            <img src="../../assets/b1_logo.jpg" alt="foodpro Dashboard" class="img-fluid business_pics" />
+            <img src="../../Assets/b1_logo.jpg" alt="foodpro Dashboard" class="img-fluid business_pics" />
           </div>
         </div>
       </div>
@@ -124,14 +124,12 @@
         <h5>With foodpro for business, give your team access to the best restaurants, dine-in deals and regular food
           allowances</h5>
         <div class="d-flex justify-content-center gap-4 mt-4">
-          <img src="../../Assets/MainLandingCusine/PK_KFC.png" alt="KFC" class="restaurant-logo" />
-          <img src="../../Assets/MainLandingCusine/PK_Butlers.png" alt="Butlers Chocolate" class="restaurant-logo" />
-          <img src="../../Assets/MainLandingCusine/PK_Angeethi.png" alt="Angeethi" class="restaurant-logo" />
-          <img src="../../Assets/MainLandingCusine/PK_Domino.png" alt="Domino's" class="restaurant-logo" />
-          <img src="../../Assets/MainLandingCusine/PK_Red.png" alt="Apple" class="restaurant-logo" />
+          <img v-for="(restaurant, index) in restaurants" :key="index" :src="restaurant.src" :alt="restaurant.alt"
+            class="restaurant-logo" />
         </div>
       </div>
     </section>
+
     <!-- Testimonials Section -->
     <section class="testimonials-section py-5">
       <div class="container">
@@ -201,14 +199,21 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref } from "vue";
+import KFC from "@/Assets/MainLandingCusine/PK_KFC.png";
+import Butlers from "@/Assets/MainLandingCusine/PK_Butlers.png";
+import Angeethi from "@/Assets/MainLandingCusine/PK_Angeethi.png";
+import Domino from "@/Assets/MainLandingCusine/PK_Domino.png";
+import Red from "@/Assets/MainLandingCusine/PK_Red.png";
 
-export default defineComponent({
-  setup() {
-    return {};
-  },
-});
+const restaurants = ref([
+  { src: KFC, alt: "KFC" },
+  { src: Butlers, alt: "Butlers Chocolate" },
+  { src: Angeethi, alt: "Angeethi" },
+  { src: Domino, alt: "Domino's" },
+  { src: Red, alt: "Apple" },
+]);
 </script>
 
 <style scoped>

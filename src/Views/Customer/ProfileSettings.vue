@@ -2,7 +2,7 @@
     <LoginHeader />
     <div class="container mt-5 d-flex justify-content-center">
         <div class="form-container">
-            <Loader v-if="loading" /> <!-- Use the Loader component -->
+            <Loader v-if="loading" />
             <!-- Profile -->
             <div class="mb-4" v-else>
                 <div class="d-flex align-items-center justify-content-between mb-3">
@@ -29,8 +29,6 @@
                         <input type="email" v-model="profile.email" class="form-control" id="email" required
                             @focus="onFocus($event)" @blur="onBlur($event)" placeholder="" />
                         <label for="email" class="floating-label">Email</label>
-                        <span v-if="isEmailVerified" class="badge bg-warning mt-2">Verified</span>
-                        <span v-else class="badge bg-danger mt-2">Not Verified</span>
                     </div>
                     <button type="submit" class="btn btn-primary scale-on-hover"
                         :disabled="isProfileFormInvalid">Save</button>
@@ -40,15 +38,15 @@
             <!-- Password -->
             <div>
                 <h5 class="fw-bold">Password</h5>
-                <form @submit.prevent="savePassword" class="animate__animated animate__fadeIn">
+                <form @submit.prevent="changePassword" class="animate__animated animate__fadeIn"> <!-- Updated to call changePassword -->
                     <div class="mb-3 input-wrapper">
-                        <input type="password" v-model="profile.currentPassword" class="form-control"
+                        <input type="password" v-model="currentPassword" class="form-control"
                             id="currentPassword" required @focus="onFocus($event)" @blur="onBlur($event)"
                             placeholder="" />
                         <label for="currentPassword" class="floating-label">Current Password</label>
                     </div>
                     <div class="mb-3 input-wrapper">
-                        <input type="password" v-model="profile.newPassword" class="form-control" id="newPassword"
+                        <input type="password" v-model="newPassword" class="form-control" id="newPassword"
                             required @focus="onFocus($event)" @blur="onBlur($event)" placeholder=" " />
                         <label for="newPassword" class="floating-label">New Password</label>
                     </div>
@@ -63,14 +61,18 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue';  // Import onMounted here
-import { useStore } from 'vuex';
+import { computed, onMounted, ref } from 'vue';
 import LoginHeader from '@/Components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '@/Components/HeaderFooter/PageFooter.vue';
-import Loader from '@/Components/OtherComponents/Loader.vue'; // Import the Loader component
+import Loader from '@/Components/OtherComponents/Loader.vue';
+import { useStore } from 'vuex';
 
 const store = useStore();
 const loading = ref(true); // Loading state
+
+// Password fields
+const currentPassword = ref('');
+const newPassword = ref('');
 
 // Get the profile from Vuex store
 const profile = computed(() => store.state.profile.profile);
@@ -86,9 +88,6 @@ onMounted(async () => {
     }
 });
 
-// Computed property for email verification status
-const isEmailVerified = computed(() => profile.value.email_verified_at !== null);
-
 // Form validation logic
 const isProfileFormInvalid = computed(() => {
     return (
@@ -101,8 +100,8 @@ const isProfileFormInvalid = computed(() => {
 
 const isPasswordFormInvalid = computed(() => {
     return (
-        !profile.value.currentPassword ||
-        !profile.value.newPassword
+        !currentPassword.value ||
+        !newPassword.value
     );
 });
 
@@ -123,20 +122,24 @@ const saveProfile = async () => {
 };
 
 // Save password function
-const savePassword = async () => {
+const changePassword = async () => {
     try {
-        await store.dispatch('profile/savePassword', {
-            currentPassword: profile.value.currentPassword,
-            newPassword: profile.value.newPassword
-        });
+        const payload = {
+            old_password: currentPassword.value,
+            new_password: newPassword.value
+        };
+        console.log('Changing password with payload:', payload); // Log the payload
+        await store.dispatch('profile/changePassword', payload);
         alert('Password updated successfully!');
+        // Clear password inputs after successful update
+        currentPassword.value = '';
+        newPassword.value = '';
     } catch (error) {
         console.error('Error updating password:', error);
         alert('Failed to save password. Please try again.');
     }
 };
 
-// Input focus/blur functions
 const onFocus = (event) => {
     const input = event.target;
     input.classList.add('active');

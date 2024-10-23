@@ -58,16 +58,6 @@
                                     <input type="email" v-model="form.email" class="form-control" id="email"
                                         placeholder="Enter your email address" required />
                                 </div>
-                                <div class="form-group mb-3">
-                                    <label for="password">Password</label>
-                                    <input type="password" v-model="form.password" class="form-control" id="password"
-                                        placeholder="Create a password" required />
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="password_confirmation">Confirm Password</label>
-                                    <input type="password" v-model="form.password_confirmation" class="form-control"
-                                        id="password_confirmation" placeholder="Confirm your password" required />
-                                </div>
                             </div>
 
                             <!-- Business Information -->
@@ -97,6 +87,7 @@
                                         </option>
                                     </select>
                                 </div>
+
                                 <div class="form-group mb-3">
                                     <label for="logo_path">Logo</label>
                                     <input type="file" @change="handleFileUpload" class="form-control" id="logo_path" />
@@ -227,6 +218,10 @@
 <script setup>
 import BussinessNav from "@/Components/LoginSignup/BussinessNav.vue";
 import { ref } from "vue";
+import { useStore } from "vuex";
+
+// Vuex store
+const store = useStore();
 
 // Current page and total pages
 const currentPage = ref(1);
@@ -237,13 +232,11 @@ const form = ref({
     first_name: "",
     last_name: "",
     email: "",
-    password: "",
-    password_confirmation: "",
     restaurant_name: "",
     opening_time: "",
     closing_time: "",
     cuisine: "",
-    logo_path: "",
+    logo_path: null, // Use null initially for file
     business_type: "",
     address: "",
     postal_code: "",
@@ -254,18 +247,20 @@ const form = ref({
     account_owner_title: "",
 });
 
-const cuisines = ref([
-    'Chinese Cuisine',
-    'Indian Cuisine',
-    'Italian Cuisine',
-    'Middle Eastern Cuisine',
-    'Turkish Cuisine',
-    'Thai Cuisine',
-    'Fast Food',
-    'Mexican Cuisine',
-    'American Cuisine',
-    'Continental Cuisine'
-]);
+// Cuisines array
+const cuisines = [
+    "Chinese Cuisine",
+    "Indian Cuisine",
+    "Italian Cuisine",
+    "Middle Eastern Cuisine",
+    "Turkish Cuisine",
+    "Thai Cuisine",
+    "Fast Food",
+    "Mexican Cuisine",
+    "American Cuisine",
+    "Continental Cuisine",
+];
+
 // Move to next page after validation
 const nextPage = () => {
     if (validateForm(currentPage.value)) {
@@ -282,13 +277,7 @@ const prevPage = () => {
 const validateForm = (page) => {
     switch (page) {
         case 1:
-            return (
-                form.value.first_name &&
-                form.value.last_name &&
-                form.value.email &&
-                form.value.password &&
-                form.value.password_confirmation
-            );
+            return form.value.first_name && form.value.last_name && form.value.email;
         case 2:
             return (
                 form.value.restaurant_name &&
@@ -299,11 +288,7 @@ const validateForm = (page) => {
                 form.value.business_type
             );
         case 3:
-            return (
-                form.value.address &&
-                form.value.postal_code &&
-                form.value.city
-            );
+            return form.value.address && form.value.postal_code && form.value.city;
         case 4:
             return (
                 form.value.cnic &&
@@ -317,8 +302,35 @@ const validateForm = (page) => {
 };
 
 // Submit the form data
-const submitForm = () => {
-    console.log("Form Submitted", form.value);
+const submitForm = async () => {
+    try {
+        const formData = new FormData();
+        formData.append("first_name", form.value.first_name);
+        formData.append("last_name", form.value.last_name);
+        formData.append("email", form.value.email);
+        formData.append("restaurant_name", form.value.restaurant_name);
+        formData.append("opening_time", form.value.opening_time);
+        formData.append("closing_time", form.value.closing_time);
+        formData.append("cuisine", form.value.cuisine);
+        formData.append("logo_path", form.value.logo_path); // Append the file
+        formData.append("business_type", form.value.business_type);
+        formData.append("address", form.value.address);
+        formData.append("postal_code", form.value.postal_code);
+        formData.append("city", form.value.city);
+        formData.append("cnic", form.value.cnic);
+        formData.append("bank_name", form.value.bank_name);
+        formData.append("iban", form.value.iban);
+        formData.append("account_owner_title", form.value.account_owner_title);
+
+        // Call Vuex action to register the business
+        const response = await store.dispatch("auth/registerBusiness", formData);
+        console.log("Business registration successful", response);
+        alert("Business registered successfully!");
+
+    } catch (error) {
+        console.error("Business registration error:", error.message);
+        alert(`Business registration failed: ${error.message}`);
+    }
 };
 
 // Handle file upload for logo_path
@@ -326,8 +338,8 @@ const handleFileUpload = (event) => {
     const file = event.target.files[0];
     form.value.logo_path = file;
 };
-
 </script>
+
 
 <style scoped>
 /* Header */

@@ -18,7 +18,6 @@
                 </div>
             </div>
         </section>
-
         <section class="text-center py-5 mx-5">
             <h3 class="mb-5 card_text">Find your MouthWatering cuisines and many more</h3>
             <div class="row justify-content-center">
@@ -121,7 +120,7 @@
                 <p class="mb-3 text-black">
                     Here at foodPro, we deliver delicacies from local restaurants right to your home. The delivery
                     service
-                    brings to you a perfect combination of the coziness of yo   ur home and amazing food from nearby
+                    brings to you a perfect combination of the coziness of your home and amazing food from nearby
                     restaurants.
                 </p>
                 <h5 class="mb-2 text-black">What is the difference between delivery and Pick-Up?</h5>
@@ -137,7 +136,7 @@
 
         <!-- Footer Section -->
         <footer class="text-center py-5 text-white footer">
-            <p>© 2022 foodPro</p>
+            <p>© 2024 foodPro</p>
             <p>
                 For customer support, contact: <a href="mailto:support@foodPro.ph"
                     class="text-white">support@foodPro.pk</a>
@@ -159,7 +158,6 @@ const cuisines = [
     { name: 'Arabic', image: new URL('@/assets/MainLandingCusine/arabic.png', import.meta.url).href },
     { name: 'Turkish', image: new URL('@/assets/MainLandingCusine/turkish.png', import.meta.url).href }
 ];
-
 </script>
 
 
@@ -240,18 +238,6 @@ const cuisines = [
     bottom: 0;
     left: 0;
     font-weight: bolder;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .card {
-        height: 280px;
-    }
-
-    .card img {
-        height: 120px;
-        /* Adjust the image size for smaller screens */
-    }
 }
 
 .image-box {
@@ -338,13 +324,37 @@ footer p {
         font-size: 2.2rem;
     }
 
-
     #hero-section input {
-        width: 80%;
+        width: 100%;
     }
 
     .image-box {
         height: 180px;
+    }
+
+    .col-md-6.text-center.position-relative {
+        display: none;
+    }
+
+    .card {
+        height: 280px;
+    }
+
+    .card img {
+        height: 120px;
+        /* Adjust the image size for smaller screens */
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .card {
+            height: 280px;
+        }
+
+        .card img {
+            height: 120px;
+            /* Adjust the image size for smaller screens */
+        }
     }
 }
 </style>

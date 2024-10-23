@@ -13,20 +13,20 @@
     </div>
 </template>
 
-
+  
 <script setup>
 import { defineProps } from 'vue';
 
-// Define props
-const props = defineProps({
-    order: {
-        type: Object,
-        required: true
-    },
-    isAccepted: {
-        type: Boolean,
-        default: true
-    }
+// Define props using Composition API
+defineProps({
+  order: {
+    type: Object,
+    required: true,
+  },
+  isAccepted: {
+    type: Boolean,
+    default: true,
+  },
 });
 </script>
 

@@ -25,7 +25,7 @@ onMounted(async () => {
     await store.dispatch('AllOrdersAdm/fetchOrders');
     // Initialize filteredOrders and restaurants after fetching
     filteredOrders.value = [...orders.value];
-    //restaurants.value = [...new Set(orders.value.map(order => order.restaurant))];
+    restaurants.value = [...new Set(orders.value.map(order => order.restaurant))];
   } catch (error) {
     console.error('Error fetching data:', error);
   }
@@ -50,8 +50,6 @@ watch(orders, (newOrders) => {
 
 
 
-// Generate a unique list of restaurants
-
 // Apply filter logic
 // Parent filter file
 const applyFilter = (filterData) => {
@@ -60,32 +58,32 @@ const applyFilter = (filterData) => {
     const matchesSearchQuery =
       !filterData.searchQuery ||
       order.id.toString().includes(filterData.searchQuery) ||
-      order.user_name.toLowerCase().includes(filterData.searchQuery.toLowerCase()) ||
-      order.user_phone.includes(filterData.searchQuery) ||
-      order.user_address.toLowerCase().includes(filterData.searchQuery.toLowerCase()) ||
-      // order.restaurant.toLowerCase().includes(filterData.searchQuery.toLowerCase()) ||
-      order.total_amount.toString().includes(filterData.searchQuery) ||
-      //order.foodCommission.toString().includes(filterData.searchQuery) ||
-      order.estimated_delivery_time.includes(filterData.searchQuery) ||
+      order.name.toLowerCase().includes(filterData.searchQuery.toLowerCase()) ||
+      order.phone.includes(filterData.searchQuery) ||
+      order.address.toLowerCase().includes(filterData.searchQuery.toLowerCase()) ||
+      order.restaurant.toLowerCase().includes(filterData.searchQuery.toLowerCase()) ||
+      order.totalPrice.toString().includes(filterData.searchQuery) ||
+      order.foodCommission.toString().includes(filterData.searchQuery) ||
+      order.date.includes(filterData.searchQuery) ||
       order.status.toLowerCase().includes(filterData.searchQuery.toLowerCase());
 
     // Filter specific fields individually (from the modal filters)
     const matchesOrderId = !filterData.orderIdFilter || order.id.toString().includes(filterData.orderIdFilter);
-    const matchesName = !filterData.nameFilter || order.user_name.toLowerCase().includes(filterData.nameFilter.toLowerCase());
-    const matchesPhone = !filterData.phoneFilter || order.user_phone.includes(filterData.phoneFilter);
-    const matchesAddress = !filterData.addressFilter || order.user_address.toLowerCase().includes(filterData.addressFilter.toLowerCase());
+    const matchesName = !filterData.nameFilter || order.name.toLowerCase().includes(filterData.nameFilter.toLowerCase());
+    const matchesPhone = !filterData.phoneFilter || order.phone.includes(filterData.phoneFilter);
+    const matchesAddress = !filterData.addressFilter || order.address.toLowerCase().includes(filterData.addressFilter.toLowerCase());
 
     // Restaurant filter
-    //const matchesRestaurant = !filterData.restaurantFilter || order.restaurant.toLowerCase() === filterData.restaurantFilter.toLowerCase();
+    const matchesRestaurant = !filterData.restaurantFilter || order.restaurant.toLowerCase() === filterData.restaurantFilter.toLowerCase();
 
     const matchesTotalPrice =
-      order.total_amount >= filterData.priceRange[0] && order.total_amount <= filterData.priceRange[1];
+      order.totalPrice >= filterData.priceRange[0] && order.totalPrice <= filterData.priceRange[1];
 
-    //const matchesCommission =
-    //order.foodCommission >= filterData.commissionRange[0] && order.foodCommission <= filterData.commissionRange[1];
+    const matchesCommission =
+      order.foodCommission >= filterData.commissionRange[0] && order.foodCommission <= filterData.commissionRange[1];
 
     // Date range filtering
-    const orderDate = new Date(order.estimated_delivery_time);
+    const orderDate = new Date(order.date);
     const startDate = filterData.startDateFilter ? new Date(filterData.startDateFilter) : null;
     const endDate = filterData.endDateFilter ? new Date(filterData.endDateFilter) : null;
 
@@ -95,7 +93,7 @@ const applyFilter = (filterData) => {
 
     const matchesStatus = !filterData.statusFilter || order.status.toLowerCase() === filterData.statusFilter.toLowerCase();
 
-    return matchesSearchQuery && matchesOrderId && matchesName && matchesPhone && matchesAddress && matchesTotalPrice && matchesDateRange && matchesStatus;
+    return matchesSearchQuery && matchesOrderId && matchesName && matchesPhone && matchesAddress && matchesRestaurant && matchesTotalPrice && matchesCommission && matchesDateRange && matchesStatus;
   });
 };
 

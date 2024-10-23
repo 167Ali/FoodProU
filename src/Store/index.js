@@ -9,9 +9,16 @@ import { AllOrdersAdm } from './Admin/allOrders'
 import { rewards } from './Modules/rewards';
 import AuthStore from './Auth/authStore';
 import order from './Modules/order'; // import the order module
-import Prevorder from './Modules/PrevorderDetail';
-import Resturantownerreviews from './Modules/Resturantownerreviews';
+import Prevorder from './Modules/prevOrderDetail';
+import Resturantownerreviews from './Modules/resturantOwnerReviews';
 import Reviews from './Modules/customerReviews';
+
+import restOwnerProfileStore from './RestaurantOwner/restOwnerProfileStore';
+
+import AddReviews from './Modules/addReviews';
+import adminreviews from '../Store/Admin/reviewAdminStore';
+
+
 import axios from 'axios';
 import ResturantDetailsStore from './Customer/resturantDetailsStore';
 import ResturantRevinue from './Customer/resturantRevenue'; // Import the new module
@@ -25,9 +32,16 @@ const store = createStore({
     menuChoice,
     order, // register the order module
     Prevorder,
-    orders, // Register the 'orders' module
     Resturantownerreviews,
     Reviews,
+    // addOrDelFavsStore,
+    // Reviews,
+    // RevenueStore,
+    restOwnerProfileStore,
+    // Reviews,
+
+    AddReviews,
+    adminreviews,
     rewards,
     profile: profileModule,
     auth: AuthStore,

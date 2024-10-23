@@ -19,19 +19,19 @@
 </template>
 
 <script setup>
+// Import the OrderCard component
 import OrderCard from '@/Components/RestaurantOwner/RestaurantDashboard/OrderCard.vue';
-import { defineProps } from 'vue';
 
-// Define props
-const props = defineProps({
+// Define props using the `defineProps` function in the Composition API
+defineProps({
     acceptedOrders: {
         type: Array,
-        required: true
+        required: true,
     },
     rejectedOrders: {
         type: Array,
-        required: true
-    }
+        required: true,
+    },
 });
 </script>
 
