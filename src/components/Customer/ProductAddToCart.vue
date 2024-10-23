@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Add to Cart Button -->
-    <button class="btn btn-primary" @click="showModal = true">Add to cart</button>
+    <button class="btn btn-primary add-to-cart-btn" @click="showModal = true">+</button>
 
     <!-- Modal -->
     <div class="modal fade" :class="{ show: showModal }" tabindex="-1" role="dialog" style="display: block;" v-if="showModal">
@@ -150,6 +150,21 @@ const scrollToNext = (currentSectionIndex) => {
 </script>
 
 <style scoped>
+.add-to-cart-btn {
+  background-color: #00754A;
+  color: #fff;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
 .modal {
   display: block;
   background: rgba(0, 0, 0, 0.5);

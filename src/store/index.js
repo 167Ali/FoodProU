@@ -12,7 +12,6 @@ import Prevorder from './modules/PrevorderDetail';
 import AddReviews from './modules/AddReviews';
 import Resturantownerreviews from './modules/Resturantownerstore';
 import adminreviews from '../store/Admin/Reviewadminstore'; 
-
 //import Reviews from './modules/customerReviews';
 import axios from 'axios';
 import ResturantDetailsStore from './customer/ResturantDetailsStore';

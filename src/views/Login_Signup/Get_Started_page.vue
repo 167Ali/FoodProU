@@ -9,7 +9,7 @@
         <h2 class="mb-0 ms-4">foodpro for business</h2>
       </div>
       <div>
-        <a href="#" class="btn btn-lg btn-green">Get Started</a>
+        <a href="/businesslanding" class="btn btn-lg btn-green">Register</a>
       </div>
     </div>
   </header>
@@ -25,7 +25,7 @@
             restaurants. Fuel work-from-home sessions, late nights in the
             office, corporate events, client meetings, and much more.
           </p>
-          <a href="#" class="btn btn-green btn-lg">Get started</a>
+          <a href="/businesslanding" class="btn btn-green btn-lg">Register Now !</a>
         </div>
         <div class="col-md-6">
           <img

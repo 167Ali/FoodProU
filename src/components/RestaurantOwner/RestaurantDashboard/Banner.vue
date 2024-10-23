@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <div class="banner mb-4">
       <img
@@ -8,10 +9,7 @@
     </div>
   </template>
   
-  <script>
-  export default {
-    name: "Banner",
-  };
+  <script setup>
   </script>
   
   <style scoped>

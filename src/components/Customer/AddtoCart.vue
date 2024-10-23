@@ -1,40 +1,33 @@
 <template>
+  
+  <!-- View Cart Button for Mobile -->
+  <button v-if="isMobile && !cartVisible" @click="toggleCart" class="cart-toggle-btn">
+    View Cart ({{ totalItems }} items) - Rs. {{ cartTotal }}
+  </button>
+
   <div class="cart-container">
-    <!-- View Cart Button for Mobile -->
-    <button
-      v-if="isMobile && !cartVisible"
-      @click="toggleCart"
-      class="cart-toggle-btn"
-    >
-      View Cart ({{ totalItems }} items) - Rs. {{ cartTotal }}
-    </button>
 
     <!-- Cart Modal for Desktop & Mobile -->
-    <div
-      :class="['cart-modal', { 'cart-visible': cartVisible, 'fullscreen': isMobile }]"
-    >
+    <div :class="['cart-modal', { 'cart-visible': cartVisible, 'fullscreen': isMobile }]">
       <!-- Close Button for Mobile -->
-      <button v-if="isMobile" @click="toggleCart" class="close-btn">
-        &times;
-      </button>
+      <button v-if="isMobile" @click="toggleCart" class="close-btn"> &times; </button>
       <!-- Cart Content -->
       <h5 v-if="cart.length > 0">Your items</h5>
+
       <div v-if="cart.length === 0" class="empty-cart">
         <h6>Hungry?</h6>
         <p>You haven't added anything to your cart!</p>
       </div>
+      
       <div v-else>
         <div v-for="item in cart" :key="item.id" class="cart-item">
-          <img :src="item.image" alt="item.name" class="item-img" />
+          <img :src="item.image" alt="item.name" class="item-img"/>
           <div class="item-details">
             <p class="item-name">{{ item.name }}</p>
             <p class="item-price">Rs. {{ item.price }}</p>
           </div>
           <div class="item-quantity">
-            <button
-              v-if="item.quantity > 1"
-              @click="decrementItem(item)"
-            >
+            <button v-if="item.quantity > 1" @click="decrementItem(item)">
               <i class="fa-solid fa-minus fa1"></i>
             </button>
             <button v-else @click="removeItem(item)">
@@ -58,27 +51,35 @@
             Service Fee<span>Rs. {{ serviceFee }}</span>
           </p>
         </div>
+        <!-- Total and Checkout Button for Mobile -->
+        <div  v-if="isMobile " class="chekout-btn-mobile">
+          <p class="d-flex justify-content-between cart-summary-total">
+          <span> Total
+            <span class="fee-tax">(incl. fees and tax)</span>
+          </span>
+          <span>Rs. {{ cartTotal }}</span>
+          </p>
+          <button class="checkout-btn">
+            Review Payment and Address
+          </button>
+        </div>
         
       </div>
+      
     </div>
 
     <!-- Total and Checkout Button for Desktop -->
-    <p
-      class="d-flex justify-content-between cart-summary-total"
-      v-if="!isMobile && cart.length > 0"
-    >
-      <span>
-        Total
+    <p class="d-flex justify-content-between cart-summary-total" v-if="!isMobile && cart.length > 0">
+      <span> Total
         <span class="fee-tax">(incl. fees and tax)</span>
       </span>
       <span>Rs. {{ cartTotal }}</span>
     </p>
-    <button
-      class="checkout-btn"
-      v-if="!isMobile && cart.length > 0"
-    >
+    <button class="checkout-btn" v-if="!isMobile && cart.length > 0">
       Review Payment and Address
     </button>
+
+    
   </div>
 
 </template>
@@ -191,9 +192,13 @@
 
 .cart-container {
   background-color: white;
+
+
   /* position: fixed;
   right: 0px;
   top: 64px; */
+  /* posi */
+
   margin-top: 60px;
   margin-right: 80px;
   width: 350px;
@@ -255,10 +260,10 @@ h5{
 
 .item-name {
   font-weight: 600;
-  font-family: agrandir;
+  font-family:system-ui, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 16px;
   margin-bottom: 4px;
-  color: #333;
+
 }
 
 .item-price {
@@ -307,11 +312,19 @@ h5{
 .cart-summary span {
   padding-right: 10px;
 }  
-  .cart-summary-total{
-    margin: 10px 0px 0px 0px;
-    font-size: 18px;
-    font-weight: bold
-  }
+.cart-summary span, .cart-summary p {
+  color: #787878;
+  font-weight: 600;
+  font-family: 'Open Sans', system-ui, 'Segoe UI', 'Helvetica Neue', sans-serif;
+}
+.cart-summary-total{
+  margin: 10px 0px 0px 0px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.cart-summary-total span, .checkout-btn{
+  font-family:'Open Sans', system-ui, 'Segoe UI', 'Helvetica Neue', sans-serif;
+}
   .fee-tax{
     font-size: 13px;
     color: #787878;
@@ -343,11 +356,18 @@ h5{
   
   .cart-toggle-btn {
     width: 100%;
-    background-color: #ff3366;
+    background-color: #00754A;
     color: white;
     padding: 12px;
     border: none;
     font-size: 16px;
+    position: absolute;
+    bottom: 10px;
+    border-radius: 5px;
+    margin-left: 2vw;
+    /* margin-right: 20px */
+    width: 96vw;
+
   }
 
 
@@ -358,7 +378,7 @@ h5{
     text-align: center;
   }
   .empty-cart h6{
-    font-family: agrandir;
+    font-family: 'Agrandir', 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 22px;
     font-weight: bolder;
     margin: 0 auto;
@@ -380,18 +400,29 @@ h5{
     right: 16px;
     cursor: pointer;
   }
+  .checkout-btn-mobile{
+    border: 1px solid black;
+  }
+
+
 
 /* Hide the cart by default on mobile */
 @media (max-width: 959px) {
-  /* .cart-container { */
-    /* display: none; */
-  /* } */
-  .cart-visible {
+  /* .cart-visible {
     display: none;
-  }
-  .cart-container
+  } */
+  /* .cart-container
   {
     display: none;
+  } */
+  /* .chekout-btn-mobile{
+    display: block;
+  } */
+  .empty-cart{
+    margin-top: -150px;
+    /* display: flex; */
+    /* justify-content: center;
+    align-items: center; */
   }
 }
 
@@ -400,6 +431,9 @@ h5{
   .cart-modal {
     display: block;
   }
+  /* .chekout-btn-mobile{
+    display: none;
+  } */
 }
 /*  */
 </style>
