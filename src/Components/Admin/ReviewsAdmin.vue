@@ -65,7 +65,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
-import SideBar from '../../components/Admin/SideBar.vue'; // Sidebar component
+import SideBar from '../../Components/Admin/SideBar.vue'; // Sidebar component
 
 const store = useStore();
 

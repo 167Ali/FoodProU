@@ -4,11 +4,12 @@
         <form @submit.prevent="addVoucher" class="mb-4">
             <div class="form-row">
                 <div class="col-md-4">
-                    <input type="text" v-model="voucher.code" class="form-control" placeholder="Voucher Code" required />
+                    <input type="text" v-model="voucher.code" class="form-control" placeholder="Voucher Code"
+                        required />
                 </div>
                 <div class="col-md-4 ms-4">
-                    <input type="number" v-model="voucher.discount" class="form-control" placeholder="Discount (%)" required
-                        min="0" />
+                    <input type="number" v-model="voucher.discount" class="form-control" placeholder="Discount (%)"
+                        required min="0" />
                 </div>
                 <div class="col-md-4 ms-5">
                     <button type="submit" class="btn btn-success btn-block">Add Voucher</button>
@@ -37,7 +38,7 @@
         </table>
     </div>
 </template>
-  
+
 <script>
 import { ref } from 'vue';
 
@@ -67,7 +68,7 @@ export default {
     },
 };
 </script>
-  
+
 <style scoped>
 .container {
     max-width: 800px;
@@ -141,4 +142,3 @@ h2 {
     background-color: #c82333;
 }
 </style>
-  

@@ -41,17 +41,9 @@
       </ul>
     </nav>
 
-    <ModalComponent
-      v-if="isLogoutModalVisible"
-      title="Logging out?"
-      message="Thanks for stopping by. See you again soon!"
-      confirmText="Log out"
-      cancelText="Cancel"
-      :isVisible="isLogoutModalVisible"
-      @close="closeLogoutModal"
-      @confirm="confirmLogout"
-      @cancel="closeLogoutModal"
-    />
+    <ModalComponent v-if="isLogoutModalVisible" title="Logging out?"
+      message="Thanks for stopping by. See you again soon!" confirmText="Log out" cancelText="Cancel"
+      :isVisible="isLogoutModalVisible" @close="closeLogoutModal" @confirm="confirmLogout" @cancel="closeLogoutModal" />
   </div>
 </template>
 
@@ -67,7 +59,7 @@ import {
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
 import { ref } from 'vue';
-import ModalComponent from '../OtherComponents/ConfirmationModal.vue'; // Adjust the path as necessary
+import ModalComponent from '@/Components/OtherComponents/ConfirmationModal.vue'; // Adjust the path as necessary
 import { useRouter } from 'vue-router';
 
 library.add(faUtensils, faHome, faShoppingCart, faDollarSign, faSignOutAlt, faStar);
@@ -102,12 +94,14 @@ const confirmLogout = () => {
 .sidebar {
   width: 100px;
   height: 100vh;
-  background-color: #1d1d1d; /* Dark sidebar background for contrast */
+  background-color: #1d1d1d;
+  /* Dark sidebar background for contrast */
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px 0;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  /* Add subtle shadow */
 }
 
 /* Logo Container */
@@ -118,7 +112,8 @@ const confirmLogout = () => {
 /* Sidebar logo icon */
 .logo {
   font-size: 48px;
-  color: #ffffff; /* White logo for better contrast */
+  color: #ffffff;
+  /* White logo for better contrast */
 }
 
 /* Navigation styling */
@@ -154,8 +149,10 @@ nav ul {
 
 /* Hover effects on navigation links */
 .nav-link:hover {
-  background-color: #00754a; /* Change background on hover */
-  border-radius: 10px; /* Add subtle rounding on hover */
+  background-color: #00754a;
+  /* Change background on hover */
+  border-radius: 10px;
+  /* Add subtle rounding on hover */
 }
 
 /* Add spacing between nav items */

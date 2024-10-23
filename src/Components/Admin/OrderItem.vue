@@ -25,7 +25,7 @@
 
 <script setup>
 import { defineProps } from 'vue';
-import { useOrderStore } from '../../store/Admin/OrderStore';
+import { useOrderStore } from '../../Store/Admin/orderStore';
 
 const props = defineProps({
   item: {
@@ -130,6 +130,7 @@ const deactivate_Application = async () => {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
+
 .item-image {
   width: 80px;
   height: 80px;
@@ -144,17 +145,20 @@ const deactivate_Application = async () => {
   justify-content: center;
   flex-grow: 1;
 }
+
 .item-name {
   font-size: 18px;
   font-weight: bold;
   color: #00754A;
   margin: 0;
 }
+
 .item-status {
   font-size: 14px;
   color: #888;
   margin: 5px 0;
 }
+
 .item-cuisine {
   font-size: 14px;
   color: #333;
@@ -166,7 +170,8 @@ const deactivate_Application = async () => {
   margin-top: 10px;
 }
 
-.accept-button, .reject-button {
+.accept-button,
+.reject-button {
   padding: 5px 10px;
   border: none;
   border-radius: 5px;
@@ -181,6 +186,7 @@ const deactivate_Application = async () => {
   background-color: #4CAF50;
   color: white;
 }
+
 .accept-button:hover {
   background-color: #45a049;
   transform: translateY(-2px);
@@ -190,6 +196,7 @@ const deactivate_Application = async () => {
   background-color: #f44336;
   color: white;
 }
+
 .reject-button:hover {
   background-color: #d32f2f;
   transform: translateY(-2px);

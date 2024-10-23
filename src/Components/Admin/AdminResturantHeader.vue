@@ -30,8 +30,8 @@
   
   <script setup>
   import { ref } from 'vue';
-  import SeeReviews from '../Customer/SeeReviews.vue';
-  import Moreinfo from '../Customer/Moreinfo.vue';
+  import SeeReviews from '@/Components/Customer/SeeReviews.vue';
+  import Moreinfo from '@/Components/Customer/Moreinfo.vue';
   
   const logo = ref('src/assets/logo.jpeg');
   const name = ref('Burger Lab — Johar Town South');
