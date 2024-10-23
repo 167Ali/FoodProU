@@ -25,7 +25,7 @@ export default [
 
 // },
 {
-  path:'/get-started-page',
+  path:'/getstarted',
   name:'Get_Started_page',
   component: Get_Started_page
 },

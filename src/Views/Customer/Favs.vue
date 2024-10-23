@@ -17,8 +17,8 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
-import FavoriteRestaurantCard from '../../Components/Customer/FavRestCard.vue'; // Ensure the correct path to the card component
-import Loader from '../../Components/OtherComponents/Loader.vue'; // Ensure the correct path to the loader component
+import FavoriteRestaurantCard from '@/Components/Customer/FavRestCard.vue'; // Ensure the correct path to the card component
+import Loader from '@/Components/OtherComponents/Loader.vue'; // Ensure the correct path to the loader component
 
 const store = useStore();
 const favoriteRestaurants = computed(() => store.state.favoriteStore.favoriteRestaurants);

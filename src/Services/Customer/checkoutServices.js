@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Get the token from localStorage and set up authorization headers
 const tokenLocalStorage = localStorage.getItem('token');
-console.log('Token from localStorage:', tokenLocalStorage); // Check if the token exists
+ // Check if the token exists
 const token = `Bearer ${tokenLocalStorage}`;
 const headers = { Authorization: token };
 
