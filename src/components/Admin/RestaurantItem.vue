@@ -1,13 +1,13 @@
 <template>
     <div class="restaurant-item">
-      <img :src="restaurant.image" alt="Restaurant Image" class="restaurant-image" />
+      <img :src="restaurant.logo_path" alt="Restaurant Image" class="restaurant-image" />
       <div class="restaurant-details">
         <h3 class="restaurant-name">{{ restaurant.name }}</h3>
         <p class="restaurant-info">{{ restaurant.info }}</p>
-        <p class="delivery-time">Delivery in {{ restaurant.deliveryTime }}</p>
+        <p class="delivery-time">Delivery in {{ restaurant.delivery_time }}</p>
         <div class="rating">
-          <span class="rating-stars">⭐ {{ restaurant.rating }}</span>
-          <span class="rating-count">{{ restaurant.reviews }}+ ratings</span>
+          <span class="rating-stars">⭐ {{ restaurant.avg_rating }}</span>
+          <span class="rating-count">{{ restaurant.review_count }}+ ratings</span>
         </div>
       </div>
     </div>

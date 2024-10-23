@@ -22,6 +22,7 @@ import ResturantRevinue from './customer/ResturantRevinue';
 import orders from './customer/orders';
 import favoriteStore from './customer/FavScreenCus';
 import RevenueStore from '../store/Admin/RevenueStore';
+import restaurantsData from './Admin/RestaurantsData';
 const store = createStore({
   modules: {
     menuCategory,
@@ -42,6 +43,7 @@ const store = createStore({
     rewards,
     profile: profileModule,
     auth: AuthStore,
+    restaurants: restaurantsData,
     resturantDetails: ResturantDetailsStore,
     resturantRevinue: ResturantRevinue,
     favoriteStore,
