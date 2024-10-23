@@ -33,42 +33,43 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: "RecipeModal",
-    props: {
-        isVisible: {
-            type: Boolean,
-            required: true,
-        },
-        image: {
-            type: String,
-            required: true,
-        },
-        title: {
-            type: String,
-            required: true,
-        },
-        category: {
-            type: String,
-            required: true,
-        },
-        ingredients: {
-            type: Array,
-            required: true,
-        },
-        instructions: {
-            type: String,
-            required: true,
-        },
-    },
-    methods: {
-        closeModal() {
-            this.$emit('close');
-        },
-    },
+<script setup>
+import { defineProps, defineEmits } from 'vue';
+
+const props = defineProps({
+  isVisible: {
+    type: Boolean,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  ingredients: {
+    type: Array,
+    required: true,
+  },
+  instructions: {
+    type: String,
+    required: true,
+  },
+});
+
+const emit = defineEmits(['close']);
+
+const closeModal = () => {
+  emit('close');
 };
 </script>
+
 
 <style scoped>
 .modal-content {

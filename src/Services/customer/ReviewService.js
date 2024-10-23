@@ -1,7 +1,7 @@
 // /src/Services/customer/ReviewService.js
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL_H;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Set this environment variable
 
 // Retrieve the token from localStorage
 const getToken = () => {

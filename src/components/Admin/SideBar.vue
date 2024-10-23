@@ -15,7 +15,7 @@
           </router-link>
         </li>
         <li>
-          <router-link to="/viewallordersAdm" class="nav-link">
+          <router-link to="/viewallorders" class="nav-link">
             <font-awesome-icon :icon="['fas', 'shopping-cart']" />
             <span>Orders</span>
           </router-link>

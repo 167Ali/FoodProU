@@ -1,11 +1,12 @@
 import RestaurantOwner_Dashboard from '../views/RestauranOnwer/RestaurantOwner_Dashboard.vue'
 import ResturantOwner from '@/components/RestaurantOwner/ResturantOwner.vue'
-import RestOwnerProfile from '@/components/RestaurantOwner/restOwnerProfile.vue'
+import RestOwnerProfile from '../components/RestaurantOwner/restOwnerProfile.vue'
 import ResturantReviews from '@/components/RestaurantOwner/ResturantReviews.vue'
 import OrderReq from '../components/RestaurantOwner/RestaurantDashboard/OrderRequest.vue'
 import ModalView from '../components/RestaurantOwner/restOwnReciept.vue'
 import OwnerMenu from '../views/Menu/OwnerMenu.vue'
-import ViewAllOrdersRes from '@/views/RestauranOnwer/ViewAllOrdersRes.vue'
+import ViewAllOrdersRes from '@/views/RestauranOnwer/OrdersRestaurant.vue'
+import SetNewPassword from '@/components/SetNewPassword.vue'
 export default [
   {
     path: '/RestaurantOwnerDashboard',
@@ -31,7 +32,13 @@ export default [
   {
     path: '/restOwnerProfile',
     name: 'RestOwnerProfile',
-    component: RestOwnerProfile
+    component: RestOwnerProfile,
+   
+  },
+  {
+    path: '/setNewPassword',  // Notice this is a relative path
+    name: 'SetNewPassword',
+    component: SetNewPassword  // Import this component
   },
   {
     path: '/orderreq',

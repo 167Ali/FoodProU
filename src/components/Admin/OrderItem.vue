@@ -5,8 +5,8 @@
       <h4 class="item-name">{{ item.restaurant_name || item.name || 'Unknown Restaurant' }}</h4>
       <p class="item-status">{{ item.status || ' ' || 'No Status' }}</p>
       <p class="item-cuisine">{{ item.cuisine || 'Unknown Cuisine' }}</p>
-      <p class="item-owner">
-        {{ (item.first_name || ' ' || 'Unknown') + ' ' + (item.last_name || ' ' || 'Name') }}
+      <p class="item-owner mb-2">
+        {{ (item.first_name || 'Unknown') + ' ' + (item.last_name || 'Name') }}
       </p>
       <div class="button-container">
         <template v-if="currentStatus === 'deactivated'">
@@ -38,7 +38,7 @@ const props = defineProps({
   }
 });
 
-const { acceptApplication, rejectApplication, activateApplication } = useOrderStore();
+const { acceptApplication, rejectApplication, fetchOrderItems } = useOrderStore();
 
 const accept_Application = async () => {
   const orderId = props.item.id;
@@ -73,47 +73,7 @@ const reject_Application = async () => {
     console.error(`Error rejecting order: ${error}`);
   }
 };
-
-const activate_Application = async () => {
-  const orderId = props.item.id;
-  console.log('Order ID:', orderId);
-
-  if (!orderId) {
-    console.error('Order ID is undefined or null');
-    return;
-  }
-
-  try {
-    console.log(`Order activated: ${orderId}`);
-    // Call the actual method to activate the order
-    await activateApplication(orderId);
-  } catch (error) {
-    console.error(`Error activating order: ${error}`);
-  }
-
-};
-
-// eslint-disable-next-line no-unused-vars
-const deactivate_Application = async () => {
-  const orderId = props.item.id;
-  console.log('Order ID:', orderId);
-
-  if (!orderId) {
-    console.error('Order ID is undefined or null');
-    return;
-  }
-
-  try {
-    console.log(`Order deactivated: ${orderId}`);
-    // Call the actual method to deactivate the order
-    // eslint-disable-next-line no-undef
-    await deactivateApplication(orderId);
-  } catch (error) {
-    console.error(`Error deactivating order: ${error}`);
-  }
-};
 </script>
-
 <style scoped>
 .order-item {
   display: flex;

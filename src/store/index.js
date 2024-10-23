@@ -4,7 +4,10 @@ import profileModule from './modules/profile';
 import { menuCategory } from '../store/menu/menuCategory';
 import { menuProduct } from '../store/menu/menuProduct';
 import { menuChoice } from '../store/menu/menuChoice';
+import restOwnerProfileStore from './RestaurantOwner/restOwnerProfileStore';
+
 import { orderDetails } from '@/store/RestaurantOwner/orderDetails'
+
 import { rewards } from './modules/rewards';
 import AuthStore from './Auth/AuthStore';
 import order from './modules/order'; 
@@ -26,10 +29,14 @@ const store = createStore({
     menuChoice,
     order, // register the order module
     Prevorder,
-    orders, // Register the 'orders' module
     Resturantownerreviews,
+    // addOrDelFavsStore,
+    // Reviews,
+
     RevenueStore,
+    restOwnerProfileStore,
    // Reviews,
+
    AddReviews,
    adminreviews,
     rewards,
@@ -71,7 +78,7 @@ const store = createStore({
     async login({ commit, dispatch }, credentials) {
       try {
         const response = await axios.post('http://192.168.15.67:8000/api/login', credentials);
-
+        
         console.log('API Response:', response);
 
         const accessToken = response.data.data.access_token;
