@@ -31,6 +31,7 @@
             v-for="item in filteredOrders" 
             :key="item.id"  
             :item="item" 
+            :currentStatus="currentStatus"
           />
           </div>
           <div v-else>No orders found.</div> <!-- Show message when no orders are available -->
@@ -52,8 +53,8 @@
               @click="setCurrentStatus('declined')">
               Declined
             </button>
-            <button class="status-btn" :class="{ active: currentStatus === 'rejected' }"
-              @click="setCurrentStatus('rejected')">
+            <button class="status-btn" :class="{ active: currentStatus === 'deactivated' }"
+              @click="setCurrentStatus('deactivated')">
               Rejected
             </button>
           </div>
@@ -63,7 +64,8 @@
               <OrderItem 
               v-for="item in filteredOrders" 
               :key="item.id"  
-              :item="item" 
+              :item="item"
+              :currentStatus="currentStatus" 
             />
             </div>
             <div v-else>No orders found.</div> <!-- Show message when no orders are available -->
@@ -80,7 +82,7 @@ import { onMounted, ref, computed } from 'vue';
 import OrderItem from '../../components/Admin/OrderItem.vue';
 import { useOrderStore } from '../../store/Admin/orderStore'; // Adjust the path as necessary
 
-const { acceptedOrders, pendingOrders, declinedOrders, fetchOrderItems, loading, error } = useOrderStore();
+const { deactivatedOrders,pendingOrders, declinedOrders, fetchOrderItems, loading, error } = useOrderStore();
 
 const currentStatus = ref('declined');
 const filteredOrders = computed(() => {
@@ -89,7 +91,8 @@ const filteredOrders = computed(() => {
       return pendingOrders.value || []; // Ensure it's an array
     case 'declined':
       return declinedOrders.value || []; // Ensure it's an array
-    // Add rejected orders logic if needed
+      case 'deactivated':
+      return deactivatedOrders.value || [];
     default:
       return [];
   }

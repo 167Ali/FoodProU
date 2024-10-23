@@ -15,10 +15,17 @@ import UserGuide from '@/components/Customer/UserGuide.vue';
 import RecipeBlog from '../views/Customer/RecipeBlog.vue'
 export default [
   {
-    path: '/RestaurantPage/:id', // Updated to include :id
+    // M ALi route
+    // path: '/restaurant/:restaurantId/menu',
+    // name: 'RestaurantMenu',
+    // component: Restaurantpage,
+    // props: true 
+
+    path: '/RestaurantPage/:id', 
     name: 'RestaurantPage',
     component: RestaurantPage,
-    props: true, // Enable passing route params as props
+    props: true, 
+
   },
   {
     path: '/recipe-blog',

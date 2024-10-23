@@ -1,5 +1,4 @@
 <template>
-  <!-- Render content only if restaurant data is available -->
   <div class="restaurant-header" v-if="restaurant">
     <div class="logo-container">
       <img class="restaurant-logo" :src="getImageUrl(logo)" alt="Restaurant Logo" />
@@ -62,11 +61,11 @@ const getImageUrl = (imagePath) => {
   if (!imagePath) {
     return '/path/to/default/image.jpg'; // Replace with your default image path
   }
-  return imagePath.startsWith('http')
-    ? imagePath
-    : `${import.meta.env.VITE_API_BASE_URL}${imagePath}`; // Use your API base URL
 };
 </script>
+
+
+
 
 <style scoped>
 .restaurant-header {

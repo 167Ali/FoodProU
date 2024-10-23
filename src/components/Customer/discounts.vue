@@ -3,20 +3,7 @@
     id="deal-slider"
     class="carousel slide"
     data-bs-ride="carousel"
-    style="background-color: #66a182; padding: 20px; border-radius: 12px;"
   >
-    <!-- Carousel Indicators -->
-    <div class="carousel-indicators">
-      <button
-        v-for="(slide, index) in slides"
-        :key="index"
-        :data-bs-target="'#deal-slider'"
-        :data-bs-slide-to="index"
-        :class="{ active: index === 0 }"
-        :aria-label="'Slide ' + (index + 1)"
-      ></button>
-    </div>
-
     <!-- Carousel Items -->
     <div class="carousel-inner">
       <div
@@ -103,8 +90,13 @@ onMounted(() => {
   store.dispatch('resturantDetails/fetchDeals');
 });
 </script>
-
 <style scoped>
+#deal-slider {
+  background:#00754A;
+  padding: 20px;
+  border-radius: 12px;
+  
+}
 .card {
   max-width: 550px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
@@ -156,12 +148,24 @@ onMounted(() => {
   border-radius: 0.25rem;
 }
 
-.carousel-indicators button {
-  background-color: #9c9c9c;
+
+.carousel-control-prev-icon
+{
+  background-color: #000000; 
+  border-radius: 50%; 
+  padding: 0px 0px 10px 0px;
+  margin-right: 155px;
+}
+.carousel-control-next-icon {
+  background-color: #000000; 
+  border-radius: 50%;
+  padding: 0px 0px 10px 0px;
+  margin-left: 155px;
 }
 
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  background-color: #b5d6ca;
+@media (max-width: 767.98px) {
+  #deal-slider {
+    display: none;
+  }
 }
 </style>
