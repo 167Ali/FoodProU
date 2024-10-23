@@ -12,7 +12,6 @@ import restaurantownerRoutes from './restaurantownerRoutes'
 
 import customerRoutes from './customerRoutes'
 import otherRoutes from './otherRoutes'
-
 const routes = [
 
   ...adminRoute,

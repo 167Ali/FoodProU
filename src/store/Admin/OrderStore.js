@@ -3,7 +3,7 @@ import OrderService from '../../Services/admin/OrderService';
 
 const state = reactive({
   orderItems: [],
-  acceptedOrders: [],
+  deactivatedOrders: [],
   pendingOrders: [],
   declinedOrders: [],
   loading: false,
@@ -16,12 +16,14 @@ const actions = {
     state.error = null; // Reset error
     try {
       const data = await OrderService.getApplications();
+      const deactivated = await OrderService.getDeactivatedApplications();
+       
       state.orderItems = data.data; // Assuming data.data is the array of orders
 
       // Filter orders based on status
-      state.acceptedOrders = state.orderItems.filter(item => item.status === 'approved');
-      state.pendingOrders = state.orderItems.filter(item => item.status === 'pending');
       state.declinedOrders = state.orderItems.filter(item => item.status === 'declined');
+      state.pendingOrders = state.orderItems.filter(item => item.status === 'pending');
+      state.deactivatedOrders = deactivated.data;
     } catch (error) {
       state.error = 'Failed to fetch order items';
       console.error(error);
@@ -46,7 +48,26 @@ const actions = {
     } catch (error) {
       console.error('Error rejecting application:', error);
     }
+  },
+  async activateApplication(requestId) {
+    console.log('Received requestId in activateApplication:', requestId); // This should log the correct ID
+    try {
+      await OrderService.activateApplication(requestId); // Call the service with requestId
+      await actions.fetchOrderItems();
+    } catch (error) {
+      console.error('Error activating application:', error);
+    }
+  },
+  async deactivateApplication(requestId) {
+    console.log('Received requestId in deactivateApplication:', requestId); // This should log the correct ID
+    try {
+      await OrderService.deactivateApplication(requestId); // Call the service with requestId
+      await actions.fetchOrderItems();
+    } catch (error) {
+      console.error('Error deactivating application:', error);
+    }
   }
+
 };
 
 export function useOrderStore() {
@@ -54,6 +75,8 @@ export function useOrderStore() {
     ...toRefs(state),
     fetchOrderItems: actions.fetchOrderItems,
     acceptApplication:actions.acceptApplication,
-    rejectApplication:actions.rejectApplication
+    rejectApplication:actions.rejectApplication,
+    activateApplication:actions.activateApplication,
+    deactivateApplication:actions.deactivateApplication,
   };
 }
