@@ -71,7 +71,6 @@
                       placeholder="Enter Account Title" required>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
@@ -173,13 +172,14 @@
   </div>
 </template>
 
-
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex'; // Import useStore to access Vuex store
 import SideBar from './RestaurantDashboard/SideBar.vue';
 
 const router = useRouter();
+const store = useStore(); // Initialize the store
 
 const ownerDetails = ref({
   firstName: '',
@@ -201,57 +201,62 @@ const restaurantDetails = ref({
   businessType: ''
 });
 
-const updateDetails = () => {
-  console.log("Owner Details:", ownerDetails.value);
-  console.log("Restaurant Details:", restaurantDetails.value);
-  // You can add your API call logic here
+// Fetch owner and restaurant details when the component is mounted
+onMounted(async () => {
+  // Fetch owner details from Vuex store
+  const ownerData = await store.dispatch('fetchOwnerDetails');
+  ownerDetails.value = ownerData;
+
+  // Fetch restaurant details from Vuex store
+  const restaurantData = await store.dispatch('fetchRestaurantDetails');
+  restaurantDetails.value = restaurantData;
+});
+
+// Method to navigate to change password
+const goToChangePassword = () => {
+  router.push({ name: 'ChangePassword' });
 };
 
-const goToChangePassword = () => {
-  router.push({ path: '/setNewPassword' });
+// Method to update owner and restaurant details
+const updateDetails = async () => {
+  try {
+    // Call your Vuex action to update details
+    await store.dispatch('updateOwnerDetails', ownerDetails.value);
+    await store.dispatch('updateRestaurantDetails', restaurantDetails.value);
+    
+    // Optionally, you could handle success messages or route changes here
+    alert('Details updated successfully!');
+  } catch (error) {
+    console.error('Failed to update details:', error);
+    alert('Failed to update details. Please try again.');
+  }
 };
 </script>
 
-
 <style scoped>
-/* Container padding */
+/* Your component styles */
 .profile-update-container {
-  padding: 20px;
+  /* Add your styles here */
 }
 
-/* Card styles */
-.profile-update-card {
-  transition: all 0.5s ease;
-  opacity: 0;
-  transform: translateY(20px);
+.card {
+  /* Card styles */
 }
 
-.profile-update-card.fade-in {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Button hover effect */
 .submit-btn {
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  /* Button styles */
 }
 
-.submit-btn:hover {
-  background-color: #24cd5f;
-  transform: scale(1.05);
+.fade-in {
+  animation: fadeIn 0.5s;
 }
 
-.submit-btn.hover-effect {
-  animation: hoverEffect 2s infinite alternate;
-}
-
-@keyframes hoverEffect {
+@keyframes fadeIn {
   from {
-    box-shadow: 0 0 5px rgba(0, 255, 21, 0.5);
+    opacity: 0;
   }
-
   to {
-    box-shadow: 0 0 15px rgba(0, 255, 30, 0.8);
+    opacity: 1;
   }
 }
 </style>

@@ -23,6 +23,8 @@ import ResturantRevinue from './customer/ResturantRevinue';
 import orders from './customer/orders';
 import favoriteStore from './customer/FavScreenCus';
 import RevenueStore from '../store/Admin/RevenueStore';
+
+import restOwnerProfileStore from './RestaurantOwner/restOwnerProfileStore';
 const store = createStore({
   modules: {
     menuCategory,
@@ -35,6 +37,7 @@ const store = createStore({
     // Reviews,
 
     RevenueStore,
+    restOwnerProfileStore,
    // Reviews,
 
    AddReviews,
