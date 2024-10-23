@@ -2,37 +2,37 @@
   <div class="rating-container">
     <h2>Rate Your Order</h2>
 
-    <div class="rating-section">
-      <label for="rating">Rating:</label>
+    <div class="stars-section">
+      <label for="stars">Rating:</label>
       <div class="stars">
-        <span v-for="star in 5" :key="star" @click="setRating(star)" :class="{ selected: star <= rating }" class="star">
+        <span
+          v-for="star in 5"
+          :key="star"
+          @click="setStars(star)"
+          :class="{ selected: star <= stars }"
+          class="star"
+        >
           ★
         </span>
       </div>
     </div>
 
-    <div class="remarks-section">
-      <label for="remarks">Remarks:</label>
-      <textarea v-model="remarks" id="remarks" placeholder="Write your remarks here..."></textarea>
+    <div class="feedback-section">
+      <label for="feedback">Feedback:</label>
+      <textarea
+        v-model="feedback"
+        id="feedback"
+        placeholder="Write your feedback here..."
+      ></textarea>
     </div>
 
-    <button @click="submitReview" class="submit-button">Add Review</button>
+    <button @click="submitReview" class="submit-button" :disabled="loading">
+      Add Review
+    </button>
     <div v-if="loading">Submitting review...</div>
     <div v-if="error">{{ error }}</div>
+    <div v-if="successMessage" class="success">{{ successMessage }}</div>
   </div>
-
-  <div class="feedback-section">
-    <label for="feedback">Feedback:</label>
-    <textarea v-model="feedback" id="feedback" placeholder="Write your feedback here..."></textarea>
-  </div>
-
-  <button @click="submitReview" class="submit-button" :disabled="loading">
-    Add Review
-  </button>
-  <div v-if="loading">Submitting review...</div>
-  <div v-if="error">{{ error }}</div>
-  <div v-if="successMessage" class="success">{{ successMessage }}</div>
-  
 </template>
 
 <script setup>
@@ -75,7 +75,16 @@ const submitReview = () => {
     review: feedback.value, // Feedback text
     token, // Pass the token for authorization
   };
-}
+
+  // Dispatch the action to submit the review via Vuex
+  store.dispatch('AddReviews/submitCustomerReview', reviewData);
+
+  // Optionally reset fields after submission if no error occurred
+  if (!loading.value && !error.value) {
+    stars.value = 0;
+    feedback.value = '';
+  }
+};
 </script>
 
 <style scoped>
@@ -94,8 +103,8 @@ h2 {
   margin-bottom: 20px;
 }
 
-.rating-section,
-.remarks-section {
+.stars-section,
+.feedback-section {
   margin-bottom: 20px;
 }
 
@@ -145,5 +154,15 @@ textarea {
 
 .submit-button:hover {
   background-color: #00593C;
+}
+
+.submit-button:disabled {
+  background-color: #ccc;
+}
+
+.success {
+  color: green;
+  margin-top: 10px;
+  text-align: center;
 }
 </style>
