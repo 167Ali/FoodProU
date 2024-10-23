@@ -23,5 +23,14 @@ export const restaurantApi = {
     }
   },
 
-  
+  // Update owner's profile details
+  async updateOwnerProfile(profileData) {
+    try {
+      const response = await apiClient.post('/api/update-restaurant', profileData);
+      return response.data; // Return the response data after successful update
+    } catch (error) {
+      console.error('Error updating owner profile:', error);
+      throw error; // Rethrow the error for further handling if needed
+    }
+  },
 };
