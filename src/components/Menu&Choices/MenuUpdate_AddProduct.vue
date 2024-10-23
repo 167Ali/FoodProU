@@ -1,12 +1,9 @@
 <template>
 
     <div class="p-2">
-        <div class="mb-3 d-flex justify-content-between align-items-center">
-    <h4 class="card-title">{{ isEditMode ? 'Edit Product' : 'Add Product' }}</h4>
-    <button class="btn btn-outline" type="button" @click="cancelForm">
-        <i class="fa-solid fa-xmark fa-lg" style="color: #030303;"></i>
-    </button>
-</div>
+        <div class="mb-3">
+            <h4 class="card-title">{{ isEditMode ? 'Edit Product' : 'Add Product' }}</h4>
+        </div>
         <form ref="productFormRef" @submit.prevent="submitForm" :class="{ 'was-validated': isFormValidated }">
             <!-- Product Name -->
             <div class="card">
@@ -35,7 +32,7 @@
                             <div class="scroller-card">
                                 <div v-for="(choice, index) in availableChoices" :key="index" class="form-check">
                                     <input type="checkbox" class="form-check-input" :id="'choice' + index"
-                                        v-model="choice.id" :value="choice.id" />
+                                        v-model="productForm.assigned_Choices" :value="choice.id" />
                                     <label class="form-check-label" :for="'choice' + index">
                                         <!-- Displaying choice name, required/optional status, and choice type in a line -->
                                         {{ choice.name }} -
@@ -102,7 +99,7 @@ const availableChoices = computed(() => store.getters['menuChoice/allChoices']);
 
 // Available choices for the product (can be fetched from an API later)
 //const availableChoices = ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4', 'Choice 5'];
-    
+
 // Refs and reactive data
 const productFormRef = ref(null);
 const isFormValidated = ref(false);
@@ -111,9 +108,7 @@ const productForm = reactive({
     description: '', //price
     price: 0,               //category // description//variation_id
     image_path: null, // Now directly storing the image data URL // image_path
-    variation_id: {
-        choices: [], addons: []
-    }, // Array to store selected choices 
+    assigned_Choices: [], // Array to store selected choices 
 });
 const fileInput = ref(null);
 
@@ -147,6 +142,7 @@ const submitForm = () => {
     if (productForm.image_file && productFormRef.value.checkValidity()) {
         emits('save', { ...productForm });
         isFormValidated.value = false; // Reset validation
+
     } else {
         productFormRef.value.reportValidity();
         if (!productForm.image_file) {

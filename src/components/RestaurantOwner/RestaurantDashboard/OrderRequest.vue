@@ -65,7 +65,7 @@ const selectedOrder = ref(null); // Store the currently viewed order
 const orders = ref([]); // List of new orders
 const acceptedOrders = ref([]);
 const rejectedOrders = ref([]);
-// const interval = ref(null);
+const interval = ref(null);
 
 const populateDummyOrders = () => {
   // Generate some dummy orders

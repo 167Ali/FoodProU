@@ -10,12 +10,12 @@
       :description="recipe.description"
       :author="recipe.author"
       :date="recipe.date"
-      @click="openModal(recipe)" 
+      @click="openModal(recipe)"
     />
-
+    
     <!-- Background overlay -->
     <div v-if="isModalVisible" class="modal-overlay" @click="closeModal"></div>
-
+    
     <RecipeModal
       v-if="isModalVisible"
       :isVisible="isModalVisible"
@@ -33,78 +33,75 @@
 <script setup>
 import { ref } from 'vue';
 import RecipeCard from '../../components/Customer/BlogCard.vue';
-import RecipeModal from '../../components/Customer/RecipeModal.vue'; 
-import LoginHeader from '@/components/HeaderFooter/LoginHeader.vue';
-import PageFooter from '@/components/HeaderFooter/PageFooter.vue';
+import RecipeModal from '../../components/Customer/RecipeModal.vue';
 
-// Reactive state
 const recipes = ref([
-{
-            image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/%22Hyderabadi_Dum_Biryani%22.jpg/1280px-%22Hyderabadi_Dum_Biryani%22.jpg',
-            category: 'Italian',
-            title: 'Delicious Pasta',
-            description: 'A simple and flavorful pasta recipe with tomato sauce.',
-            author: 'Amanda H.',
-            date: '4 days ago',
-            ingredients: ['Pasta', 'Tomato sauce', 'Olive oil', 'Garlic', 'Basil'],
-            instructions: 'Cook pasta according to package instructions. In a separate pan, sauté garlic in olive oil, add tomato sauce, and combine with pasta. Serve with fresh basil.'
-          },
-          {
-            image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/%22Hyderabadi_Dum_Biryani%22.jpg/1280px-%22Hyderabadi_Dum_Biryani%22.jpg',
-            category: 'Italian',
-            title: 'Delicious Pasta',
-            description: 'A simple and flavorful pasta recipe with tomato sauce.',
-            author: 'Amanda H.',
-            date: '4 days ago',
-            ingredients: ['Pasta', 'Tomato sauce', 'Olive oil', 'Garlic', 'Basil'],
-            instructions: 'Cook pasta according to package instructions. In a separate pan, sauté garlic in olive oil, add tomato sauce, and combine with pasta. Serve with fresh basil.'
-          },
-          {
-            image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/%22Hyderabadi_Dum_Biryani%22.jpg/1280px-%22Hyderabadi_Dum_Biryani%22.jpg',
-            category: 'Italian',
-            title: 'Delicious Pasta',
-            description: 'A simple and flavorful pasta recipe with tomato sauce.',
-            author: 'Amanda H.',
-            date: '4 days ago',
-            ingredients: ['Pasta', 'Tomato sauce', 'Olive oil', 'Garlic', 'Basil'],
-            instructions: 'Cook pasta according to package instructions. In a separate pan, sauté garlic in olive oil, add tomato sauce, and combine with pasta. Serve with fresh basil.'
-          },
-          {
-            image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/%22Hyderabadi_Dum_Biryani%22.jpg/1280px-%22Hyderabadi_Dum_Biryani%22.jpg',
-            category: 'Italian',
-            title: 'Delicious Pasta',
-            description: 'A simple and flavorful pasta recipe with tomato sauce.',
-            author: 'Amanda H.',
-            date: '4 days ago',
-            ingredients: ['Pasta', 'Tomato sauce', 'Olive oil', 'Garlic', 'Basil'],
-            instructions: 'Cook pasta according to package instructions. In a separate pan, sauté garlic in olive oil, add tomato sauce, and combine with pasta. Serve with fresh basil.'
-          },
-          {
-            image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/%22Hyderabadi_Dum_Biryani%22.jpg/1280px-%22Hyderabadi_Dum_Biryani%22.jpg',
-            category: 'Italian',
-            title: 'Delicious Pasta',
-            description: 'A simple and flavorful pasta recipe with tomato sauce.',
-            author: 'Amanda H.',
-            date: '4 days ago',
-            ingredients: ['Pasta', 'Tomato sauce', 'Olive oil', 'Garlic', 'Basil'],
-            instructions: 'Cook pasta according to package instructions. In a separate pan, sauté garlic in olive oil, add tomato sauce, and combine with pasta. Serve with fresh basil.'
-          },
-          {
-            image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/%22Hyderabadi_Dum_Biryani%22.jpg/1280px-%22Hyderabadi_Dum_Biryani%22.jpg',
-            category: 'Italian',
-            title: 'Delicious Pasta',
-            description: 'A simple and flavorful pasta recipe with tomato sauce.',
-            author: 'Amanda H.',
-            date: '4 days ago',
-            ingredients: ['Pasta', 'Tomato sauce', 'Olive oil', 'Garlic', 'Basil'],
-            instructions: 'Cook pasta according to package instructions. In a separate pan, sauté garlic in olive oil, add tomato sauce, and combine with pasta. Serve with fresh basil.'
-          },
+  {
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Mutton_Nihari.jpg/220px-Mutton_Nihari.jpg',
+    category: 'Pakistani',
+    title: 'Beef Nihari',
+    description: 'A slow-cooked beef stew spiced with traditional Pakistani flavors.',
+    author: 'Zainab A.',
+    date: '2 days ago',
+    ingredients: ['Beef shank', 'Ginger', 'Garlic', 'Spices', 'Wheat flour'],
+    instructions: 'Cook beef with spices and wheat flour on slow heat. Garnish with ginger and green chili. Serve with naan.'
+  },
+  {
+    image: 'https://www.sandyathome.com/wp-content/uploads/2019/04/chicken-biryani-recipe-1024x577.png',
+    category: 'Pakistani',
+    title: 'Chicken Biryani',
+    description: 'A flavorful and aromatic rice dish with spiced chicken.',
+    author: 'Ahmed K.',
+    date: '3 days ago',
+    ingredients: ['Chicken', 'Basmati rice', 'Yogurt', 'Tomatoes', 'Spices'],
+    instructions: 'Marinate chicken in yogurt and spices, cook with basmati rice and tomatoes. Serve with raita.'
+  },
+  {
+    image: 'https://myfoodstory.com/wp-content/uploads/2021/09/karahi-chicken-kadai-chicken-1-500x500.jpg',
+    category: 'Pakistani',
+    title: 'Chicken Karahi',
+    description: 'A spicy and flavorful chicken curry prepared in a wok (karahi).',
+    author: 'Fatima B.',
+    date: '5 days ago',
+    ingredients: ['Chicken', 'Tomatoes', 'Green chilies', 'Garlic', 'Ginger', 'Spices'],
+    instructions: 'Cook chicken with tomatoes, garlic, and green chilies in a wok. Serve hot with naan or rice.'
+  },
+  {
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrLAl37RxeCfyIJZOkEH6YBDXIMvHQL8sW5Q&s',
+    category: 'Pakistani',
+    title: 'Beef Haleem',
+    description: 'A thick and hearty beef and lentil stew, slow-cooked for hours.',
+    author: 'Hassan T.',
+    date: '6 days ago',
+    ingredients: ['Beef', 'Lentils', 'Wheat', 'Ginger', 'Garlic', 'Spices'],
+    instructions: 'Cook beef, lentils, and wheat slowly for several hours. Serve with fried onions, lemon, and green chilies.'
+  },
+  {
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNDUcORb_Tawy3bGDl5B3TrdAIOFJ3zeUIYQ&s',
+    category: 'Pakistani',
+    title: 'Chicken Sajji',
+    description: 'Whole chicken marinated and roasted to perfection, a Balochi specialty.',
+    author: 'Sana F.',
+    date: '7 days ago',
+    ingredients: ['Whole chicken', 'Yogurt', 'Spices', 'Lemon', 'Rice'],
+    instructions: 'Marinate whole chicken with spices and yogurt, then roast. Serve with lemon and rice.'
+  },
+  {
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxhnmvZuwHY-VprdaZ1i7vQdeRahsn34uJSA&s',
+    category: 'Pakistani',
+    title: 'Chana Chaat',
+    description: 'A tangy and spicy chickpea salad, perfect for snacks or appetizers.',
+    author: 'Ayesha M.',
+    date: '1 week ago',
+    ingredients: ['Chickpeas', 'Onions', 'Tomatoes', 'Cilantro', 'Spices', 'Tamarind sauce'],
+    instructions: 'Mix boiled chickpeas with onions, tomatoes, and spices. Add tamarind sauce and garnish with cilantro.'
+  }
 ]);
+
 
 const isModalVisible = ref(false);
 const selectedRecipe = ref({});
 
-// Methods
 const openModal = (recipe) => {
   selectedRecipe.value = recipe;
   isModalVisible.value = true;
