@@ -6,13 +6,7 @@
     </div>
 
     <!-- Offcanvas Sidebar for Mobile -->
-    <div
-      class="offcanvas offcanvas-start"
-      id="offcanvasSidebar"
-      tabindex="-1"
-      aria-labelledby="offcanvasSidebarLabel"
-      style="width: 90px;"
-    >
+    <div class="offcanvas offcanvas-start" id="offcanvasSidebar" tabindex="-1" aria-labelledby="offcanvasSidebarLabel" style="width: 90px;">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Menu</h5>
         <button type="button" class="btn-close text-reset" @click="toggleSidebar" aria-label="Close" ref="closeButton"></button>

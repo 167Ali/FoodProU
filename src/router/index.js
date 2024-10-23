@@ -10,7 +10,7 @@ import RecipeBlog from '@/views/Customer/RecipeBlog.vue';
 import Rewards from '../views/Customer/Rewards.vue';
 import Get_Started_page from '@/views/Login_Signup/Get_Started_page.vue'
 import AddtoCart from '../components/Customer/AddtoCart.vue'
-import TestEr from '../components/Customer/testingThings.vue'
+import TestEr from '../components/RestaurantOwner/RestaurantDashboard/testingThings.vue'
 import ProductCart from '../components/Customer/ProductAddToCart.vue'
 // import SeeReviews from '../components/Customer/SeeReviews.vue'
 // import Rewards from '../views/Customer/Rewards.vue'

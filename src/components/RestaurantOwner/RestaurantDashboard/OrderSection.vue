@@ -1,40 +1,39 @@
 <template>
     <div class="orders-section">
-        <!-- Accepted Orders -->
-        <div class="accepted-orders mb-4">
-            <h4 class="section-title">Accepted Orders</h4>
-            <div class="orders-container">
-                <OrderCard v-for="order in acceptedOrders" :key="order.id" :order="order" :is-accepted="true" />
-            </div>
+      <!-- Accepted Orders -->
+      <div class="accepted-orders mb-4">
+        <h4 class="section-title">Accepted Orders</h4>
+        <div class="orders-container">
+          <OrderCard v-for="order in acceptedOrders" :key="order.id" :order="order" :is-accepted="true" />
         </div>
-
-        <!-- Rejected Orders -->
-        <div class="rejected-orders mb-4">
-            <h4 class="section-title">Rejected Orders</h4>
-            <div class="orders-container">
-                <OrderCard v-for="order in rejectedOrders" :key="order.id" :order="order" :is-accepted="false" />
-            </div>
+      </div>
+      
+      <!-- Rejected Orders -->
+      <div class="rejected-orders mb-4">
+        <h4 class="section-title">Rejected Orders</h4>
+        <div class="orders-container">
+          <OrderCard v-for="order in rejectedOrders" :key="order.id" :order="order" :is-accepted="false" />
         </div>
+      </div>
     </div>
 </template>
   
 <script setup>
-// Import the OrderCard component
-import OrderCard from './OrderCard.vue';
 
-// Define props using the `defineProps` function in the Composition API
-defineProps({
-  acceptedOrders: {
-    type: Array,
-    required: true,
-  },
-  rejectedOrders: {
-    type: Array,
-    required: true,
-  },
-});
-</script>
+  import OrderCard from './OrderCard.vue';
   
+  defineProps({
+    acceptedOrders: {
+      type: Array,
+      required: true,
+    },
+    rejectedOrders: {
+      type: Array,
+      required: true,
+    },
+  });
+</script>
+
 <style scoped>
 /* General Orders Section Styles */
 

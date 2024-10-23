@@ -1,5 +1,8 @@
-// store/index.js
+// src/store/index.js
+import axios from 'axios';
 import { createStore } from 'vuex';
+// import Vue from 'vue';
+// import Vuex from 'vuex';
 import profileModule from './modules/profile';
 import { menuCategory } from '../store/menu/menuCategory';
 import { menuProduct } from '../store/menu/menuProduct';
@@ -12,13 +15,13 @@ import Prevorder from './modules/PrevorderDetail';
 import AddReviews from './modules/AddReviews';
 import Resturantownerreviews from './modules/Resturantownerstore';
 import adminreviews from '../store/Admin/Reviewadminstore'; 
-//import Reviews from './modules/customerReviews';
-import axios from 'axios';
+// import Reviews from './modules/customerReviews';
 import ResturantDetailsStore from './customer/ResturantDetailsStore';
 import ResturantRevinue from './customer/ResturantRevinue'; 
 import orders from './customer/orders';
 import favoriteStore from './customer/FavScreenCus';
 import RevenueStore from '../store/Admin/RevenueStore';
+import RestOrders from './restaurant/restaurantOrders';
 const store = createStore({
   modules: {
     menuCategory,
@@ -29,9 +32,10 @@ const store = createStore({
     orders, // Register the 'orders' module
     Resturantownerreviews,
     RevenueStore,
-   // Reviews,
-   AddReviews,
-   adminreviews,
+    RestOrders,
+    // Reviews,
+    AddReviews,
+    adminreviews,
     rewards,
     profile: profileModule,
     auth: AuthStore,

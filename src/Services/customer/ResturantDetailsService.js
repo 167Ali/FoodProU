@@ -3,11 +3,12 @@
 import axios from 'axios';
 
 // Base API URL
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL_H; // Replace with your actual base URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Replace with your actual base URL
 
 // Function to fetch restaurants
 export const fetchRestaurants = async (params = {}) => {
   const token = localStorage.getItem('token');
+  // eslint-disable-next-line no-useless-catch
   try {
     const response = await axios.get(`${API_BASE_URL}/api/restaurants`, {
       headers: {
@@ -24,6 +25,7 @@ export const fetchRestaurants = async (params = {}) => {
 // Function to fetch deals
 export const fetchDeals = async () => {
   const token = localStorage.getItem('token');
+  // eslint-disable-next-line no-useless-catch
   try {
     const response = await axios.get(`${API_BASE_URL}/api/deals`, {
       headers: {
@@ -39,6 +41,7 @@ export const fetchDeals = async () => {
 // Function to search restaurants
 export const searchRestaurants = async (searchTerm) => {
   const token = localStorage.getItem('token');
+  // eslint-disable-next-line no-useless-catch
   try {
     const response = await axios.get(`${API_BASE_URL}/api/search-restaurant`, {
       headers: {
@@ -57,6 +60,7 @@ export const searchRestaurants = async (searchTerm) => {
 // Function to fetch restaurant menus
 export const fetchRestaurantMenus = async (restaurantId) => {
   const token = localStorage.getItem('token');
+  // eslint-disable-next-line no-useless-catch
   try {
     const response = await axios.get(`${API_BASE_URL}/api/restaurants/${restaurantId}/menus`, {
       headers: {
@@ -73,6 +77,7 @@ export const fetchRestaurantMenus = async (restaurantId) => {
 // Function to add a restaurant to favorites
 export const addFavoriteRestaurant = async (restaurantId) => {
   const token = localStorage.getItem('token');
+  // eslint-disable-next-line no-useless-catch
   try {
     const response = await axios.post(
       `${API_BASE_URL}/api/customers/add-favorite-restaurant`,
@@ -91,15 +96,19 @@ export const addFavoriteRestaurant = async (restaurantId) => {
 // Function to remove a restaurant from favorites
 export const removeFavoriteRestaurant = async (restaurantId) => {
   const token = localStorage.getItem('token');
+  // eslint-disable-next-line no-useless-catch
   try {
-    const response = await axios.post(
+    const response = await axios.delete(
       `${API_BASE_URL}/api/customers/del-favorite-restaurant`,
-      { restaurant_id: restaurantId },
+      
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+        params: {
+          restaurant_id: restaurantId
+        },
+      },
     );
     return response.data;
   } catch (error) {

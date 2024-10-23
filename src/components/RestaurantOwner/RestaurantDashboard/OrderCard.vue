@@ -1,22 +1,21 @@
 <template>
-<div class="card mb-3 order-card" :class="{ 'accepted-order-card': isAccepted, 'rejected-order-card': !isAccepted }">
-    <img :src="order.image" class="card-img-top" :alt="`${order.user}'s order image`" />
-    <div class="card-body d-flex flex-column">
+    <div class="card mb-3 order-card" :class="{ 'accepted-order-card': isAccepted, 'rejected-order-card': !isAccepted }">
+      <img :src="order.image" class="card-img-top" :alt="`${order.user_name}'s order image`" />
+      <div class="card-body d-flex flex-column">
         <div class="text-container">
-            <h5 class="order-user">{{ order.user }}</h5>
-            <p class="order-location">{{ order.location }}</p>
-            <h5 class="text-price">$ {{ order.totalPrice.toFixed(2) }}</h5>
+          <h5 class="order-user">{{ order.user_name }}</h5>
+          <p class="order-location">{{ order.user_address }}</p>
+          <h5 class="text-price">$ {{ order.total_amount.toFixed(2) }}</h5>
         </div>
         <button class="btn btn-order">View</button>
+      </div>
     </div>
-</div>
 </template>
 
-  
+
 <script setup>
 import { defineProps } from 'vue';
-
-// Define props using Composition API
+// 
 defineProps({
   order: {
     type: Object,

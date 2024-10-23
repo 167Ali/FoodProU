@@ -19,20 +19,7 @@
             </div>
 
             <!-- Display customer details and address -->
-             
-            <!-- <div>
-              <i class="fa-solid fa-location-crosshairs"></i>
-              <p class="address">
-                <strong>{{ orderDetails?.customer_details?.delivery_address || 'No address provided' }}</strong>
-                <br />
-                <button v-if="!editAddress" @click="editAddress = true" class="address-change-btn">Change</button>
-                <div v-else>
-                  <input type="text" v-model="newAddress" placeholder="Enter new address" class="updating-address">
-                  <button @click="updateAddress" class="updating-address-btn">Update</button>
-                </div>
-              </p>
-            </div> -->
-
+             <!--  -->
             <div>
               <i class="fa-solid fa-location-crosshairs"></i>
               <p class="address">
@@ -123,7 +110,7 @@
               <p>Available payment methods</p>
               <div class="form-check delivery-check">
                 <input class="form-check-input" type="radio" name="paymentMethod" id="cod" checked />
-                <label class="form-check-label" for="cod">{{ orderDetails?.payment_method }} (COD)</label>
+                <label class="form-check-label" for="cod">{{ orderDetails?.payment_method }}</label>
                 <!-- <label class="form-check-label" for="cod">Cash On Delivery (COD)</label> -->
               </div>
 
@@ -144,27 +131,7 @@
   </div>
   <PageFooter/>
 </template>
-
-<!-- <script setup>
-  import { computed,  onMounted, ref } from 'vue';
-  import { useStore } from 'vuex';
-  import LoginHeader from '../HeaderFooter/LoginHeader.vue';
-  import PageFooter from '../HeaderFooter/PageFooter.vue';
-
-  const store = useStore();
-  const orderDetails = computed(() => store.getters['orders/orderDetails']);
-  const newAddress = ref('');
-  const editAddress = ref(false);
-
-  onMounted(async() => {
-    await store.dispatch('orders/getOrderDetails'); // Ensure correct action name
-  });
-
-  const updateAddress = () => {
-    store.dispatch('orders/updateAddress', newAddress.value);
-    editAddress.value = false;
-  };
-</script> -->
+<!--  -->
 
 <script setup>
   import { computed, onMounted, ref } from 'vue';
