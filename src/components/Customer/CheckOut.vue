@@ -19,20 +19,7 @@
             </div>
 
             <!-- Display customer details and address -->
-             
-            <!-- <div>
-              <i class="fa-solid fa-location-crosshairs"></i>
-              <p class="address">
-                <strong>{{ orderDetails?.customer_details?.delivery_address || 'No address provided' }}</strong>
-                <br />
-                <button v-if="!editAddress" @click="editAddress = true" class="address-change-btn">Change</button>
-                <div v-else>
-                  <input type="text" v-model="newAddress" placeholder="Enter new address" class="updating-address">
-                  <button @click="updateAddress" class="updating-address-btn">Update</button>
-                </div>
-              </p>
-            </div> -->
-
+             <!--  -->
             <div>
               <i class="fa-solid fa-location-crosshairs"></i>
               <p class="address">
@@ -45,11 +32,7 @@
                 </div>
               </p>
             </div>
-
-
-
-
-
+            <!--  -->
             <!-- Rider note section -->
             <div class="mt-3">
               <textarea class="form-control" rows="3" placeholder="Note to rider - e.g., building, landmark"></textarea>
@@ -94,7 +77,7 @@
           </div>
         </div>
 
-
+        
       </div>
 
       <!-- Delivery options, personal details, payment, and place order button -->
@@ -110,7 +93,7 @@
               </div>
             </div>
           </div>
-<!--  -->
+
           <div class="card mb-4">
             <div class="card-body">
               <h4 class="card-title">Personal details</h4>
@@ -119,7 +102,7 @@
               <p>{{ orderDetails?.customer_details?.phone_number }}</p>
             </div>
           </div>
-<!--  -->
+
           <div class="card mb-4">
             <div class="card-body">
               <h4 class="card-title">Payment</h4>
@@ -137,6 +120,10 @@
           <div class="mt-4">
             <button class="btn btn-green w-100" @click="placeOrder">Place Order</button>
           </div>
+          <div class="general-terms">
+            <p>By making this purchase you agree to our terms and conditions.</p>
+            <p>I agree that placing the order places me under an obligation to make a payment in accordance with the General Terms and Conditions.</p>
+          </div>
           
         </div>
       </div>
@@ -144,27 +131,7 @@
   </div>
   <PageFooter/>
 </template>
-
-<!-- <script setup>
-  import { computed,  onMounted, ref } from 'vue';
-  import { useStore } from 'vuex';
-  import LoginHeader from '../HeaderFooter/LoginHeader.vue';
-  import PageFooter from '../HeaderFooter/PageFooter.vue';
-
-  const store = useStore();
-  const orderDetails = computed(() => store.getters['orders/orderDetails']);
-  const newAddress = ref('');
-  const editAddress = ref(false);
-
-  onMounted(async() => {
-    await store.dispatch('orders/getOrderDetails'); // Ensure correct action name
-  });
-
-  const updateAddress = () => {
-    store.dispatch('orders/updateAddress', newAddress.value);
-    editAddress.value = false;
-  };
-</script> -->
+<!--  -->
 
 <script setup>
   import { computed, onMounted, ref } from 'vue';
@@ -189,7 +156,7 @@
       currentAddress.value = savedAddress;
     }
   });
-
+  // console.log(Response.data)
   // Update the delivery address and save it to local storage
   const updateAddress = () => {
     if (newAddress.value) {
@@ -202,16 +169,13 @@
   // Handle place order and pass updated address to the API
   const placeOrder = () => {
     const checkoutData = {
-      address: currentAddress.value,
+      delivery_address: currentAddress.value,
       // Other necessary checkout data (like items, payment method, etc.)
     };
     store.dispatch('orders/placeOrder', checkoutData);
   };
 </script>
-
-
-
-
+<!--  -->
 <style scoped>
   .card {
     border: none;
@@ -224,6 +188,7 @@
   }
   .container{
     padding: 60px 80px;
+    margin-bottom: -50px;
   }
   .map-container img {
     width: 100%;
@@ -238,8 +203,7 @@
     margin: 10px;
     font-size: 20px;
   }
-
-
+  /*  */
   .address-change-btn{
     border: 1px solid #00754a;
     border-radius: 50px;
@@ -343,8 +307,7 @@
     border-radius: 50%;
   }
 
-  .btn-green,
-  .btn-green:hover {
+  .btn-green, .btn-green:hover {
     background-color: #00754a;
     color: #fff;
   }
@@ -362,7 +325,7 @@
     padding: 20px 40px;
     border-radius: 10px;
   }
-  /*  */
+
   .general-terms {
     margin-top: 20px;
     color: rgb(97, 97, 97);
@@ -371,24 +334,12 @@
   /* Full width layout on large screens */
   @media (max-width: 992px) {
     .container {
+      margin-top: 1px;
       max-width: 100% !important;  /* Overrides Bootstrap's max-width */
       padding-left: 15px !important;
       padding-right: 15px !important;
     }
-    
-    /* .row {
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-    }
-    
-    .col-lg-7, .col-lg-5 {
-      padding-left: 0 !important;
-      padding-right: 0 !important;
-    }
-
-    .card {
-      border: none;
-    } */
+    /*  */
   }
 
 </style>

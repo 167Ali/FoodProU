@@ -2,37 +2,37 @@
   <div class="rating-container">
     <h2>Rate Your Order</h2>
 
-    <div class="stars-section">
-      <label for="stars">Rating:</label>
+    <div class="rating-section">
+      <label for="rating">Rating:</label>
       <div class="stars">
-        <span
-          v-for="star in 5"
-          :key="star"
-          @click="setStars(star)"
-          :class="{ selected: star <= stars }"
-          class="star"
-        >
+        <span v-for="star in 5" :key="star" @click="setRating(star)" :class="{ selected: star <= rating }" class="star">
           ★
         </span>
       </div>
     </div>
 
-    <div class="feedback-section">
-      <label for="feedback">Feedback:</label>
-      <textarea
-        v-model="feedback"
-        id="feedback"
-        placeholder="Write your feedback here..."
-      ></textarea>
+    <div class="remarks-section">
+      <label for="remarks">Remarks:</label>
+      <textarea v-model="remarks" id="remarks" placeholder="Write your remarks here..."></textarea>
     </div>
 
-    <button @click="submitReview" class="submit-button" :disabled="loading">
-      Add Review
-    </button>
+    <button @click="submitReview" class="submit-button">Add Review</button>
     <div v-if="loading">Submitting review...</div>
     <div v-if="error">{{ error }}</div>
-    <div v-if="successMessage" class="success">{{ successMessage }}</div>
   </div>
+
+  <div class="feedback-section">
+    <label for="feedback">Feedback:</label>
+    <textarea v-model="feedback" id="feedback" placeholder="Write your feedback here..."></textarea>
+  </div>
+
+  <button @click="submitReview" class="submit-button" :disabled="loading">
+    Add Review
+  </button>
+  <div v-if="loading">Submitting review...</div>
+  <div v-if="error">{{ error }}</div>
+  <div v-if="successMessage" class="success">{{ successMessage }}</div>
+  
 </template>
 
 <script setup>
@@ -51,6 +51,7 @@ const props = defineProps({
 const store = useStore();
 const stars = ref(0);
 const feedback = ref('');
+const token = localStorage.getItem('token'); // Get token from localStorage
 
 // Computed properties from the Vuex store
 const loading = computed(() => store.getters['AddReviews/loading']);
@@ -69,20 +70,12 @@ const submitReview = () => {
   }
 
   const reviewData = {
-    order_id: props.orderId,  // Ensure it's `order_id` as per API documentation
-    stars: stars.value,
-    feedback: feedback.value,
+    order_id: props.orderId, // Ensure it's `order_id` as per API documentation
+    rating: stars.value, // Rating is expected by the API
+    review: feedback.value, // Feedback text
+    token, // Pass the token for authorization
   };
-
-  // Dispatch the action to submit the review via Vuex
-  store.dispatch('AddReviews/submitCustomerReview', reviewData);
-
-  // Optionally reset fields after submission if no error occurred
-  if (!loading.value && !error.value) {
-    stars.value = 0;
-    feedback.value = '';
-  }
-};
+}
 </script>
 
 <style scoped>
@@ -101,8 +94,8 @@ h2 {
   margin-bottom: 20px;
 }
 
-.stars-section,
-.feedback-section {
+.rating-section,
+.remarks-section {
   margin-bottom: 20px;
 }
 
@@ -152,15 +145,5 @@ textarea {
 
 .submit-button:hover {
   background-color: #00593C;
-}
-
-.submit-button:disabled {
-  background-color: #ccc;
-}
-
-.success {
-  color: green;
-  margin-top: 10px;
-  text-align: center;
 }
 </style>

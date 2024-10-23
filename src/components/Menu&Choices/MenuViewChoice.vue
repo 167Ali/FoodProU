@@ -38,10 +38,9 @@
                                         </thead> -->
                                         <tbody>
                                             <tr v-for="(item, idx) in choice.choices" :key="idx">
-                                                <td class="small">{{ item.name }}</td>
-                                                <!-- Smaller text for data -->
-                                                <td class="small">{{ item.price }} pkr</td>
-                                                <!-- Smaller text for data -->
+                                                <td class="small">{{ item?.name || 'Unnamed' }}</td>
+                                                <!-- Add fallback -->
+                                                <td class="small">{{ item?.price || '0' }} pkr</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -49,7 +48,7 @@
                             </div>
                         </div>
                         <div class="col-2 d-flex flex-column justify-content-center">
-                            <button class="btn btn-outline mb-3" @click="viewChoice(index)">
+                            <button class="btn btn-outline mb-3" @click="viewChoice(index, choice.id)">
                                 <i class="fa-regular fa-pen-to-square fa-xl" style="color: #343f50;"></i>
                             </button>
                             <button class="btn btn-outline" @click="deleteChoice(choice.id)">
@@ -122,6 +121,12 @@ const processedChoices = computed(() => {
                 choices: item.choices,
                 type: 'choice',
             };
+        } else {
+            return {
+                ...item,
+                choices: [], // Ensure choices is always an array
+                type: 'unknown', // Fallback type
+            };
         }
     });
 });
@@ -183,7 +188,6 @@ const isFormVisible = ref(false);
 const isEditMode = ref(false);
 const currentChoice = ref(null);
 const currentEditIndex = ref(null);
-
 // Function to open the form modal for creating a new choice
 const openModal = () => {
     isFormVisible.value = true;
@@ -201,6 +205,8 @@ const viewChoice = (index) => {
 
 // Save function for the form component
 const saveChoice = async (choice) => {
+    console.log("choice  and id ", choice)
+
     try {
         if (isEditMode.value && currentEditIndex.value !== null) {
 
@@ -208,7 +214,6 @@ const saveChoice = async (choice) => {
             console.log("response edit choice ", success);
             //choices.value[currentEditIndex.value] = choice;
         } else {
-            console.log("CC ", choice)
             const success = await store.dispatch('menuChoice/addChoice', choice);
             console.log("response choice ", success);
         }
@@ -244,7 +249,6 @@ const deleteChoice = async (index) => {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 20;
 }
 
 .scroller-card {
@@ -264,7 +268,6 @@ const deleteChoice = async (index) => {
     border-radius: 8px;
     width: 500px;
     max-width: 100%;
-
 }
 
 /* .card {
@@ -276,7 +279,6 @@ const deleteChoice = async (index) => {
 .card-title {
     font-size: 1.25rem;
     font-weight: bold;
-    color: #00754A;
 }
 
 .card-text i {
@@ -309,7 +311,6 @@ const deleteChoice = async (index) => {
 .card {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
-    margin-top: 25px;
 }
 
 h4 {

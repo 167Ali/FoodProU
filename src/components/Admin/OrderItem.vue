@@ -5,8 +5,8 @@
       <h4 class="item-name">{{ item.restaurant_name || item.name || 'Unknown Restaurant' }}</h4>
       <p class="item-status">{{ item.status || ' ' || 'No Status' }}</p>
       <p class="item-cuisine">{{ item.cuisine || 'Unknown Cuisine' }}</p>
-      <p class="item-owner">
-        {{ (item.first_name || ' '||'Unknown') + ' ' + (item.last_name || ' '||'Name') }}
+      <p class="item-owner mb-2">
+        {{ (item.first_name || 'Unknown') + ' ' + (item.last_name || 'Name') }}
       </p>
       <div class="button-container">
         <template v-if="currentStatus === 'deactivated'">
@@ -38,7 +38,7 @@ const props = defineProps({
   }
 });
 
-const { acceptApplication, rejectApplication, activateApplication} = useOrderStore();
+const { acceptApplication, rejectApplication, fetchOrderItems } = useOrderStore();
 
 const accept_Application = async () => {
   const orderId = props.item.id;
@@ -73,42 +73,6 @@ const reject_Application = async () => {
     console.error(`Error rejecting order: ${error}`);
   }
 };
-
-const activate_Application = async () => {
-  const orderId = props.item.id;
-  console.log('Order ID:', orderId);
-
-  if (!orderId) {
-    console.error('Order ID is undefined or null');
-    return;
-  }
-
-  try {
-    console.log(`Order activated: ${orderId}`);
-    // Call the actual method to activate the order
-    await activateApplication(orderId);
-  } catch (error) {
-    console.error(`Error activating order: ${error}`);
-  }
-};
-
-const deactivate_Application = async () => {
-  const orderId = props.item.id;
-  console.log('Order ID:', orderId);
-
-  if (!orderId) {
-    console.error('Order ID is undefined or null');
-    return;
-  }
-
-  try {
-    console.log(`Order deactivated: ${orderId}`);
-    // Call the actual method to deactivate the order
-    await deactivateApplication(orderId);
-  } catch (error) {
-    console.error(`Error deactivating order: ${error}`);
-  }
-};
 </script>
 <style scoped>
 .order-item {
@@ -126,7 +90,6 @@ const deactivate_Application = async () => {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
-
 .item-image {
   width: 80px;
   height: 80px;
@@ -141,20 +104,17 @@ const deactivate_Application = async () => {
   justify-content: center;
   flex-grow: 1;
 }
-
 .item-name {
   font-size: 18px;
   font-weight: bold;
   color: #00754A;
   margin: 0;
 }
-
 .item-status {
   font-size: 14px;
   color: #888;
   margin: 5px 0;
 }
-
 .item-cuisine {
   font-size: 14px;
   color: #333;
@@ -166,8 +126,7 @@ const deactivate_Application = async () => {
   margin-top: 10px;
 }
 
-.accept-button,
-.reject-button {
+.accept-button, .reject-button {
   padding: 5px 10px;
   border: none;
   border-radius: 5px;
@@ -182,7 +141,6 @@ const deactivate_Application = async () => {
   background-color: #4CAF50;
   color: white;
 }
-
 .accept-button:hover {
   background-color: #45a049;
   transform: translateY(-2px);
@@ -192,7 +150,6 @@ const deactivate_Application = async () => {
   background-color: #f44336;
   color: white;
 }
-
 .reject-button:hover {
   background-color: #d32f2f;
   transform: translateY(-2px);

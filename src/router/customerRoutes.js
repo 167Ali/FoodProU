@@ -2,7 +2,7 @@
 
 import RestaurantPage from '../views/Customer/RestaurantPage.vue';
 import CheckOut from '../components/Customer/CheckOut.vue';
-import AddtoCart from '../components/Customer/AddtoCart.vue';
+// import AddtoCart from '../components/Customer/AddtoCart.vue';
 import CategoryNavbar from '../components/Customer/CategoryNavbar.vue';
 import DashboardResturantPage from '../views/Customer/DashboardResturantPage.vue';
 import ProfileSettings from '../views/Customer/ProfileSettings.vue';
@@ -12,15 +12,26 @@ import OrderReorder from '../views/Customer/OrderReorder.vue';
 import PrevorderDetails from '../views/Customer/PrevorderDetails.vue';
 import OrderRating from '@/components/Customer/OrderRating.vue';
 import UserGuide from '@/components/Customer/UserGuide.vue';
-
+import RecipeBlog from '../views/Customer/RecipeBlog.vue'
 export default [
   {
-    path: '/RestaurantPage/:id', // Updated to include :id
+    // M ALi route
+    // path: '/restaurant/:restaurantId/menu',
+    // name: 'RestaurantMenu',
+    // component: Restaurantpage,
+    // props: true 
+
+    path: '/RestaurantPage/:id', 
     name: 'RestaurantPage',
     component: RestaurantPage,
-    props: true, // Enable passing route params as props
+    props: true, 
+
   },
-  
+  {
+    path: '/recipe-blog',
+    name: 'RecipeBlog',
+    component: RecipeBlog
+  },
   {
     path: '/checkout',
     name: 'checkout',
@@ -38,11 +49,7 @@ export default [
     component: DashboardResturantPage,
     children: [
       {
-        path: '/caart',
-        name: 'addtocart',
-        component: AddtoCart
-      },
-      {
+        
         path: '/userguide',
         name: 'UserGuide',
         component: UserGuide

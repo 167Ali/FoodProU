@@ -1,89 +1,20 @@
 <template>
   <div class="popular-item">
+    
     <img class="item-image" :src="item.image" alt="Popular item" />
     <div class="item-info">
       <h3>{{ item.menu_item_name }}</h3>
       <p class="item-price">from Rs. {{ item.price }}</p>
       <p class="item-description">{{ item.description }}</p>
     </div>
-    <button class="add-to-cart-btn" @click="showModal = true">+</button>
+    <!-- <button class="add-to-cart-btn">+</button> -->
+     <ProductModal/>
 
-    <!-- Modal -->
-    <div class="modal fade" :class="{ show: showModal }" role="dialog" v-if="showModal">
-      <div class="modal-dialog " role="document">
-        <div class="modal-content">
-          <!-- Modal Header with Fixed Full-Width Image -->
-          <div class="modal-header">
-            <img :src="productImage" alt="Product Image" class="product-image">
-          </div>
-
-          <!-- Scrollable Modal Body -->
-          <div class="modal-body scrollable-body" ref="modalBody">
-            <div class="text-left">
-              <strong>
-                <h4 class="font-weight-bold">{{ productName }}</h4>
-              </strong>
-              <h6 class="current-price">Rs. {{ discountedPrice.toFixed(2) }} <span class="original-price">Rs. {{ originalPrice }}</span></h6>
-              <p>{{ productDescription }}</p>
-            </div>
-
-            <!-- Dynamically Render "Choose Your Sub" Sections -->
-            <div v-for="(section, sectionIndex) in sections" :key="sectionIndex" class="choose-sub-card mt-3">
-              <div
-                class="card p-3"
-                :style="{
-                  backgroundColor: section.required ? '#f8d7da' : '#f0f0f0'
-                }"
-              >
-                <div class="d-flex justify-content-between align-items-center">
-                  <h5 class="font-weight-bold">{{ section.title }}</h5>
-                  <span v-if="section.required" class="badge required-badge">Required</span>
-                </div>
-                <p class="mb-1">Select {{ section.selectLimit }}</p>
-                <div class="scrollable-options">
-                  <div class="form-check mb-2" v-for="(option, optionIndex) in section.options" :key="optionIndex">
-                    <input
-                      class="form-check-input"
-                      :class="section.required ? 'square-checkbox' : 'circle-checkbox'"
-                      type="radio"
-                      :id="'section-' + sectionIndex + '-option-' + optionIndex"
-                      :value="option"
-                      v-model="section.selectedOption"
-                      @change="scrollToNext(sectionIndex)"
-                    />
-                    <label class="form-check-label" :for="'section-' + sectionIndex + '-option-' + optionIndex">
-                      {{ option.name }}
-                      <span v-if="option.popular" class="ml-1 text-muted">
-                        <i class="fas fa-fire"></i> Popular
-                      </span>
-                    </label>
-                    <span class="float-right text-muted">{{ option.price }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <strong>Specfic instructions</strong>
-            <p>Special requests are subject to the restaurant's approval. Tell us here!</p>
-
-            <!-- Text Field -->
-            <div class="mt-3">
-              <textarea id="notes" class="form-control" v-model="cartNotes" rows="2" placeholder="Any special instructions?"></textarea>
-            </div>
-          </div>
-
-          <!-- Add to Cart Section -->
-          <div class="modal-footer justify-content-between">
-            <button class="btn btn-green w-100" @click="addToCart">Add to cart</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps,ref} from 'vue';
+import { defineProps } from 'vue';
 
 // Define the props for the component
 defineProps({
@@ -217,23 +148,7 @@ const scrollToNext = (currentSectionIndex) => {
   font-size: 0.95rem;
   line-height: 1.4;
 }
-
-.add-to-cart-btn {
-  background-color: #00754A;
-  color: #fff;
-  font-size: 1.5rem;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
+/*  */
 .add-to-cart-btn:hover {
   background-color: #005F3A;
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
@@ -347,7 +262,7 @@ const scrollToNext = (currentSectionIndex) => {
 
   .item-image {
     width: 100%;
-    height: 150px;
+    height: auto;
     margin-bottom: 15px;
   }
 

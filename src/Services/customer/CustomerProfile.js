@@ -11,12 +11,17 @@ const apiClient = axios.create({
 
 export const api = {
   async getProfile() {
-    const response = await apiClient.get('/api/customers/profile');  // Update with the correct endpoint
-    return response.data;
+    const response = await apiClient.get('/api/customers/profile');
+    return response;  
   },
 
   async updateProfile(profileData) {
     const response = await apiClient.patch('/api/customers/edit-profile', profileData);
+    return response.data;
+  },
+
+  async changePassword(passwordData) {  // Ensure this method is correctly implemented
+    const response = await apiClient.post('/api/change-password', passwordData);
     return response.data;
   },
 };

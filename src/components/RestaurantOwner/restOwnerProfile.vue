@@ -1,9 +1,12 @@
 <template>
-  <SideBar/>
+  <SideBar />
   <div class="profile-update-container my-5">
     <div class="row justify-content-center">
       <div class="col-lg-10">
         <h3 class="card-title text-center mb-4">Update Your Profile</h3>
+        <div class="d-flex justify-content-end mt-3">
+          <button class="btn btn-success submit-btn hover-effect" @click="goToChangePassword">Change Password</button>
+        </div> <br>
 
         <div class="row">
           <!-- Personal Details Card -->
@@ -11,7 +14,6 @@
             <div class="card profile-update-card shadow-lg fade-in">
               <div class="card-body">
                 <h5 class="section-title">Personal Details</h5>
-
                 <div class="form-group mb-3">
                   <label for="firstName">First Name</label>
                   <div class="input-group">
@@ -20,7 +22,6 @@
                       placeholder="Enter first name" required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="lastName">Last Name</label>
                   <div class="input-group">
@@ -29,7 +30,6 @@
                       placeholder="Enter last name" required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="phoneNumber">Phone Number</label>
                   <div class="input-group">
@@ -47,7 +47,6 @@
             <div class="card profile-update-card shadow-lg fade-in">
               <div class="card-body">
                 <h5 class="section-title">Bank Details</h5>
-
                 <div class="form-group mb-3">
                   <label for="bankName">Bank Name</label>
                   <div class="input-group">
@@ -56,7 +55,6 @@
                       placeholder="Enter bank name" required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="iban">IBAN</label>
                   <div class="input-group">
@@ -65,16 +63,12 @@
                       placeholder="Enter IBAN" pattern="^[A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}$" required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
-                  <label for="accountType">Account Type</label>
+                  <label for="accountTitle">Account Title</label>
                   <div class="input-group">
                     <span class="input-group-text text-danger"><i class="bi bi-wallet"></i></span>
-                    <select v-model="ownerDetails.accountType" class="form-control" id="accountType" required>
-                      <option disabled value="">Select Account Type</option>
-                      <option value="current">Current</option>
-                      <option value="saving">Saving</option>
-                    </select>
+                    <input v-model="ownerDetails.accountTitle" type="text" class="form-control" id="accountTitle"
+                      placeholder="Enter Account Title" required>
                   </div>
                 </div>
               </div>
@@ -86,7 +80,6 @@
             <div class="card profile-update-card shadow-lg fade-in">
               <div class="card-body">
                 <h5 class="section-title">Restaurant Details</h5>
-
                 <div class="form-group mb-3">
                   <label for="restaurantName">Restaurant Name</label>
                   <div class="input-group">
@@ -95,7 +88,6 @@
                       id="restaurantName" placeholder="Enter restaurant name" required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="address">Address</label>
                   <div class="input-group">
@@ -104,7 +96,6 @@
                       placeholder="Enter address" required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="postalCode">Postal Code</label>
                   <div class="input-group">
@@ -113,7 +104,6 @@
                       placeholder="Enter postal code" required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="city">City</label>
                   <div class="input-group">
@@ -131,7 +121,6 @@
             <div class="card profile-update-card shadow-lg fade-in">
               <div class="card-body">
                 <h5 class="section-title">Restaurant Timing Details</h5>
-
                 <div class="form-group mb-3">
                   <label for="openingTime">Opening Time</label>
                   <div class="input-group">
@@ -140,7 +129,6 @@
                       required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="closingTime">Closing Time</label>
                   <div class="input-group">
@@ -149,7 +137,6 @@
                       required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="cuisineType">Cuisine Type</label>
                   <div class="input-group">
@@ -158,7 +145,6 @@
                       placeholder="Enter cuisine type" required />
                   </div>
                 </div>
-
                 <div class="form-group mb-3">
                   <label for="businessType">Business Type</label>
                   <div class="input-group">
@@ -180,14 +166,20 @@
           <button type="submit" class="btn btn-primary w-100 rounded-pill submit-btn hover-effect"
             @click.prevent="updateDetails">Update Details</button>
         </div>
+
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex'; // Import useStore to access Vuex store
 import SideBar from './RestaurantDashboard/SideBar.vue';
+
+const router = useRouter();
+const store = useStore(); // Initialize the store
 
 const ownerDetails = ref({
   firstName: '',
@@ -195,7 +187,7 @@ const ownerDetails = ref({
   phoneNumber: '',
   bankName: '',
   iban: '',
-  accountType: ''
+  accountTitle: ''
 });
 
 const restaurantDetails = ref({
@@ -209,51 +201,62 @@ const restaurantDetails = ref({
   businessType: ''
 });
 
-const updateDetails = () => {
-  console.log("Owner Details:", ownerDetails.value);
-  console.log("Restaurant Details:", restaurantDetails.value);
-  alert("Profile updated successfully!");
+// Fetch owner and restaurant details when the component is mounted
+onMounted(async () => {
+  // Fetch owner details from Vuex store
+  const ownerData = await store.dispatch('fetchOwnerDetails');
+  ownerDetails.value = ownerData;
+
+  // Fetch restaurant details from Vuex store
+  const restaurantData = await store.dispatch('fetchRestaurantDetails');
+  restaurantDetails.value = restaurantData;
+});
+
+// Method to navigate to change password
+const goToChangePassword = () => {
+  router.push({ name: 'ChangePassword' });
+};
+
+// Method to update owner and restaurant details
+const updateDetails = async () => {
+  try {
+    // Call your Vuex action to update details
+    await store.dispatch('updateOwnerDetails', ownerDetails.value);
+    await store.dispatch('updateRestaurantDetails', restaurantDetails.value);
+    
+    // Optionally, you could handle success messages or route changes here
+    alert('Details updated successfully!');
+  } catch (error) {
+    console.error('Failed to update details:', error);
+    alert('Failed to update details. Please try again.');
+  }
 };
 </script>
 
 <style scoped>
-/* Container padding */
+/* Your component styles */
 .profile-update-container {
-  padding: 20px;
+  /* Add your styles here */
 }
 
-/* Card styles */
-.profile-update-card {
-  transition: all 0.5s ease;
-  opacity: 0;
-  transform: translateY(20px);
+.card {
+  /* Card styles */
 }
 
-.profile-update-card.fade-in {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Button hover effect */
 .submit-btn {
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  /* Button styles */
 }
 
-.submit-btn:hover {
-  background-color: #007bff;
-  transform: scale(1.05);
+.fade-in {
+  animation: fadeIn 0.5s;
 }
 
-.submit-btn.hover-effect {
-  animation: hoverEffect 2s infinite alternate;
-}
-
-@keyframes hoverEffect {
+@keyframes fadeIn {
   from {
-    box-shadow: 0 0 5px rgba(0, 255, 21, 0.5);
+    opacity: 0;
   }
   to {
-    box-shadow: 0 0 15px rgba(0, 255, 30, 0.8);
+    opacity: 1;
   }
 }
 </style>

@@ -4,20 +4,24 @@ import profileModule from './modules/profile';
 import { menuCategory } from '../store/menu/menuCategory';
 import { menuProduct } from '../store/menu/menuProduct';
 import { menuChoice } from '../store/menu/menuChoice';
+import restOwnerProfileStore from './RestaurantOwner/restOwnerProfileStore';
+
 import { orderDetails } from '@/store/RestaurantOwner/orderDetails'
+
 import { rewards } from './modules/rewards';
 import AuthStore from './Auth/AuthStore';
-import order from './modules/order'; // import the order module
+import order from './modules/order'; 
 import Prevorder from './modules/PrevorderDetail';
 import AddReviews from './modules/AddReviews';
-import Resturantownerreviews from './modules/Resturantownerreviews';
+import Resturantownerreviews from './modules/Resturantownerstore';
+import adminreviews from '../store/Admin/Reviewadminstore'; 
 //import Reviews from './modules/customerReviews';
 import axios from 'axios';
 import ResturantDetailsStore from './customer/ResturantDetailsStore';
-import ResturantRevinue from './customer/ResturantRevinue'; // Import the new module
+import ResturantRevinue from './customer/ResturantRevinue'; 
 import orders from './customer/orders';
 import favoriteStore from './customer/FavScreenCus';
-import RevenueStore from './Admin/RevenueStore';
+import RevenueStore from '../store/Admin/RevenueStore';
 const store = createStore({
   modules: {
     menuCategory,
@@ -25,17 +29,24 @@ const store = createStore({
     menuChoice,
     order, // register the order module
     Prevorder,
-    orders, // Register the 'orders' module
     Resturantownerreviews,
+    // addOrDelFavsStore,
+    // Reviews,
+
     RevenueStore,
+    restOwnerProfileStore,
    // Reviews,
+
+   AddReviews,
+   adminreviews,
     rewards,
     profile: profileModule,
     auth: AuthStore,
     resturantDetails: ResturantDetailsStore,
     resturantRevinue: ResturantRevinue,
     favoriteStore,
-    orderDetails, // Ensure this is properly registered
+    orderDetails, 
+
   },
 
   state: {
@@ -67,7 +78,7 @@ const store = createStore({
     async login({ commit, dispatch }, credentials) {
       try {
         const response = await axios.post('http://192.168.15.67:8000/api/login', credentials);
-
+        
         console.log('API Response:', response);
 
         const accessToken = response.data.data.access_token;

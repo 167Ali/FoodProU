@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <div class="top-bar d-flex justify-content-between align-items-center mb-4">
       <!-- Left section: Restaurant Name -->
@@ -15,19 +16,18 @@
     </div>
   </template>
   
-  <script>
-  export default {
-    name: "TopBar",
-    props: {
-      restaurantStatus: {
-        type: Boolean,
-        required: true,
-      },
-    },
-  };
-  </script>
+ <script setup>
+   import { defineProps } from 'vue';
+   // Define props using Composition API
+   defineProps({
+     restaurantStatus: {
+       type: Boolean,
+       required: true,
+     },
+   });
+ </script>
   
-  <style scoped>
+<style scoped>
   /* Top Bar Container */
   .top-bar {
     padding: 15px 20px;
@@ -105,4 +105,4 @@
         margin-left: -65px;
     }
   }
-  </style>
+</style>
