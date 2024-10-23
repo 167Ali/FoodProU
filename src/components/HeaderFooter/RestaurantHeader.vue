@@ -14,7 +14,7 @@
       </div>
     </div>
     <button class="favourite-btn" @click="toggleLike">
-      <span v-if="isFavorite">❤️ Remove from Favourites</span>
+      <span v-if="is_favorite" style="color: red">❤️ Added to Favourites</span>
       <span v-else>Add to Favourites</span>
     </button>
   </div>
@@ -42,7 +42,7 @@ const categories = computed(() => props.restaurant ? [props.restaurant.cuisine] 
 const rating = computed(() => props.restaurant?.average_rating || 0);
 const openingTime = computed(() => props.restaurant?.opening_time || '');
 const closingTime = computed(() => props.restaurant?.closing_time || '');
-
+const is_favorite = computed(() => props.restaurant?.is_favorite|| '');
 // Check if the restaurant is liked (in favorites)
 const isLiked = ref(false);
 

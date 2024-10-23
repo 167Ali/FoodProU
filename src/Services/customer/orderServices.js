@@ -7,7 +7,7 @@ const token = `Bearer ${tokenLocalStorage}`;
 const headers = { Authorization: token };
 
 // Base URL for the API
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL_H;
 
 // Function to get order details with authorization headers
 export const getOrderDetails = async () => {

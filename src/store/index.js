@@ -22,11 +22,15 @@ import ResturantRevinue from './customer/ResturantRevinue';
 import orders from './customer/orders';
 import favoriteStore from './customer/FavScreenCus';
 import RevenueStore from '../store/Admin/RevenueStore';
+import addToCartStore from './customer/addToCartStore';
+import restaurantsData from './Admin/RestaurantsData';
 const store = createStore({
   modules: {
     menuCategory,
+    restaurants: restaurantsData,
     menuProduct,
     menuChoice,
+    addToCartStore,
     order, // register the order module
     Prevorder,
     Resturantownerreviews,

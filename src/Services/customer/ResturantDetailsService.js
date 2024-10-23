@@ -63,9 +63,6 @@ export const fetchRestaurantMenus = async (restaurantId) => {
         Authorization: `Bearer ${token}`,
       },
     });
-<<<<<<< HEAD
-    return response.data; // Return the response data
-=======
     console.log("Fetched restaurant menus:", response.data.data);
     return response.data;
   } catch (error) {
@@ -87,7 +84,6 @@ export const addFavoriteRestaurant = async (restaurantId) => {
       }
     );
     return response.data;
->>>>>>> c9ad2cb12abf9d682f3e858de71bd54c1500105f
   } catch (error) {
     throw error;
   }
@@ -96,14 +92,16 @@ export const addFavoriteRestaurant = async (restaurantId) => {
 export const removeFavoriteRestaurant = async (restaurantId) => {
   const token = localStorage.getItem('token');
   try {
-    const response = await axios.post(
+    const response = await axios.delete(
       `${API_BASE_URL}/api/customers/del-favorite-restaurant`,
-      { restaurant_id: restaurantId },
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+        params: {
+          restaurant_id: restaurantId
+        },
+      },
     );
     return response.data;
   } catch (error) {
