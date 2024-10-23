@@ -4,121 +4,116 @@
     <div class="reviews-container">
       <h2>Reviews</h2>
 
-      <!-- Loading Spinner -->
-      <div v-if="loading" class="loading-container">
-        <p>Loading data...</p>
+      <!-- Restaurant Filter -->
+      <div class="filter">
+        <label for="restaurant">Select Restaurant:</label>
+        <select id="restaurant" v-model="selectedRestaurant" @change="filterReviews">
+          <option value="">All Restaurants</option>
+          <option v-for="restaurant in restaurants" :key="restaurant.id" :value="restaurant.name">
+            {{ restaurant.name }}
+          </option>
+        </select>
       </div>
 
-      <!-- Content visible only when data is available and not loading -->
-      <div v-if="!loading">
-        <!-- Restaurant Filter -->
-        <div class="filter">
-          <label for="restaurant">Select Restaurant:</label>
-          <select id="restaurant" v-model="selectedRestaurantLocal" @change="filterReviews">
-            <option value="">All Restaurants</option>
-            <option v-for="restaurant in restaurants" :key="restaurant.id" :value="restaurant.name">
-              {{ restaurant.name }}
-            </option>
-          </select>
+      <div class="summary">
+        <div class="summary-item">
+          <h3>Total Reviews</h3>
+          <p>{{ filteredReviews.length }} ({{ growthPercentage }}%)</p>
         </div>
-
-        <!-- Summary of Total Reviews and Average Rating -->
-        <div class="summary">
-          <div class="summary-item">
-            <h3>Total Reviews</h3>
-            <p>{{ filteredReviews.length }} ({{ growthPercentage }}%)</p>
-          </div>
-          <div class="summary-item">
-            <h3>Average Rating</h3>
-            <p>{{ averageRating || 0 }} ★★★★☆</p>
-          </div>
+        <div class="summary-item">
+          <h3>Average Rating</h3>
+          <p>{{ averageRating }} ★★★★☆</p>
         </div>
+      </div>
 
-        <!-- Reviews List -->
-        <div v-if="filteredReviews.length">
-          <div v-for="review in filteredReviews" :key="review.id" class="review-card">
-            <div class="review-header">
-              <div class="review-info">
-                <h4>{{ review.user?.first_name }} {{ review.user?.last_name }}</h4>
-                <p>Restaurant: {{ review.restaurant?.name || 'Unknown Restaurant' }}</p>
-                <p>{{ new Date(review.created_at).toLocaleDateString() }}</p>
-              </div>
+      <div v-if="filteredReviews.length">
+        <div v-for="review in filteredReviews" :key="review.id" class="review-card">
+          <div class="review-header">
+            <img :src="review.avatar" alt="User Avatar" class="avatar" />
+            <div class="review-info">
+              <h4>{{ review.name }}</h4>
+              <p>Total Spend: ${{ review.totalSpend }}</p>
+              <p>Total Reviews: {{ review.totalReview }}</p>
+              <p>{{ review.date }}</p>
             </div>
-            <p class="review-rating">{{ review.stars }} {{ renderStars(review.stars) }}</p>
-            <p class="review-text">{{ review.feedback }}</p>
+          </div>
+          <p class="review-rating">{{ review.rating }} ★★★★☆</p>
+          <p class="review-text">{{ review.text }}</p>
+          <div class="review-actions">
+            <button class="action-button">Public Comment</button>
+            <button class="action-button">Direct Message</button>
           </div>
         </div>
+      </div>
 
-        <!-- No Reviews Available Message -->
-        <div v-else>
-          <p>No reviews available.</p>
-        </div>
+      <div v-else>
+        <p>No reviews available.</p>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import { useStore } from 'vuex';
-import SideBar from '@/Components/Admin/SideBar.vue'; // Sidebar component
+import { ref, onMounted } from 'vue';
+import { fetchReviews, fetchRestaurants } from '@/Services/Admin/reviewAdminServices';
+import SideBar from '@/Components/Admin/SideBar.vue';
 
-const store = useStore();
+// Define state using the Composition API
+const reviews = ref([]);
+const filteredReviews = ref([]);
+const totalReviews = ref(0);
+const averageRating = ref(0);
+const growthPercentage = ref(0);
+const restaurants = ref([]);
+const selectedRestaurant = ref('');
 
-// Getters from Vuex
-const reviews = computed(() => store.getters['adminreviews/reviews'] || []);
-const filteredReviews = computed(() => store.getters['adminreviews/filteredReviews'] || []);
-const totalReviews = computed(() => store.getters['adminreviews/totalReviews'] || 0);
-const averageRating = computed(() => store.getters['adminreviews/averageRating'] || 0);
-const growthPercentage = computed(() => store.getters['adminreviews/growthPercentage'] || 0);
-const restaurants = computed(() => store.getters['adminreviews/restaurants'] || []);
-const loading = computed(() => store.getters['adminreviews/loading'] || false);
+// Function to fetch reviews
+const getReviews = async () => {
+  try {
+    const data = await fetchReviews();
+    reviews.value = data.reviews; // Adjust according to your API response structure
+    totalReviews.value = data.totalReviews;
+    averageRating.value = data.averageRating;
+    growthPercentage.value = data.growthPercentage;
+    filteredReviews.value = reviews.value; // Set initial filtered reviews
+  } catch (error) {
+    console.error('Failed to fetch reviews:', error);
+  }
+};
 
-// Local ref to handle the selected restaurant filter
-const selectedRestaurantLocal = ref('');
+// Function to fetch restaurants
+const getRestaurants = async () => {
+  try {
+    const data = await fetchRestaurants();
+    restaurants.value = data.restaurants; // Adjust according to your API response structure
+  } catch (error) {
+    console.error('Failed to fetch restaurants:', error);
+  }
+};
 
-// Fetch reviews on component mount
-onMounted(() => {
-  store.dispatch('adminreviews/fetchReviews');
-});
-
-// Filter reviews when the restaurant is changed
+// Function to filter reviews by the selected restaurant
 const filterReviews = () => {
-  store.dispatch('adminreviews/setSelectedRestaurant', selectedRestaurantLocal.value);
+  if (selectedRestaurant.value) {
+    filteredReviews.value = reviews.value.filter(review => review.restaurant === selectedRestaurant.value);
+  } else {
+    filteredReviews.value = reviews.value; // Reset to all reviews if no restaurant is selected
+  }
 };
 
-// Method to render stars dynamically
-const renderStars = (stars) => {
-  const totalStars = 5; // Total stars to show
-  let starString = '';
-
-  // Loop to create filled stars
-  for (let i = 0; i < stars; i++) {
-    starString += '★'; // Filled star
-  }
-
-  // Loop to create empty stars
-  for (let i = stars; i < totalStars; i++) {
-    starString += '☆'; // Empty star
-  }
-
-  return starString;
-};
+// Fetch data when component is mounted
+onMounted(() => {
+  getReviews();
+  getRestaurants();
+});
 </script>
 
 <style scoped>
 .layout-container {
   display: flex;
-  height: 100vh;
-  /* Full viewport height */
+
 }
 
-.sidebar {
-  width: 80px;
-  /* Fixed width for the sidebar */
-  height: 100vh;
-  /* Full height for scrolling */
-}
+
 
 .reviews-container {
   flex-grow: 1;
@@ -126,15 +121,6 @@ const renderStars = (stars) => {
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
-  /* Enable vertical scrolling if needed */
-  max-height: calc(100vh - 40px);
-  /* Adjust based on your header/footer height */
-}
-
-.loading-container {
-  text-align: center;
-  margin: 20px 0;
 }
 
 .filter {
@@ -168,15 +154,41 @@ const renderStars = (stars) => {
   align-items: center;
 }
 
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
 .review-info {
   flex: 1;
 }
 
 .review-rating {
-  color: #ffa500;
+  color: #FFA500;
+  /* Gold color for rating */
 }
 
 .review-text {
   margin: 10px 0;
+}
+
+.review-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.action-button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.action-button:hover {
+  background-color: #0056b3;
 }
 </style>
