@@ -50,7 +50,7 @@ const closeSignUpModal = () => {
 };
 
 const goToBusinessSignup = () => {
-    router.push('/get-started-page');
+    router.push('/getstarted');
 };
 </script>
 
