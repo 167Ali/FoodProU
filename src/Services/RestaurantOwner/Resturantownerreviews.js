@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // Base URL for your API
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL_H;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Retrieve the token from localStorage
 const getToken = () => {
@@ -24,4 +24,4 @@ export const fetchOwnerReviews = async (restaurantId) => {
     console.error('Error fetching restaurant reviews:', error.response ? error.response.data : error.message);
     throw error; // Re-throw the error for handling in Vuex
   }
-};
+}; 

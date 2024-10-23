@@ -1,7 +1,7 @@
 // src/Services/RestaurantService.js
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL_H;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 /**
  * Fetch restaurant details based on the provided token.

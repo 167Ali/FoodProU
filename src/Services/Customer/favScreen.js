@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = import.meta.env.VITE_API_BASE_URL_H;
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 console.log('API Base URL:', baseURL); // To check if baseURL is being logged correctly
 
 // Function to get the token from local storage or other secure storage
