@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps,ref } from 'vue';
 
 // Define the props for the component
 defineProps({

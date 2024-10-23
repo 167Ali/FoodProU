@@ -14,7 +14,7 @@
       </div>
     </div>
     <button class="favourite-btn" @click="toggleLike">
-      <span v-if="is_favorite" style="color: red">❤️ Added to Favourites</span>
+      <span v-if="is_favorite " style="color: red">❤️ Added to Favourites</span>
       <span v-else>Add to Favourites</span>
     </button>
   </div>
