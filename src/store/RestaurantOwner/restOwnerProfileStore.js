@@ -1,55 +1,49 @@
-// src/store/modules/profile.js
-import { fetchRestaurantDetails } from '../../Services/restaurantOwner/restaurantOwnerProfService'; // Ensure correct import
+// src/store/modules/ownerProfile.js
+import { restaurantApi } from '@/Services/restaurantOwner/restaurantOwnerProfService'; // Adjust the path as necessary
 
 const state = {
-  ownerDetails: {},
-  restaurantDetails: {},
-};
-
-const getters = {
-  getOwnerDetails: (state) => state.ownerDetails,
-  getRestaurantDetails: (state) => state.restaurantDetails,
-};
-
-const actions = {
-  async fetchOwnerDetails({ commit }, token) {
-    try {
-      const response = await fetchRestaurantDetails(token);
-      commit('SET_OWNER_DETAILS', response); // Use response directly since it already contains the necessary data
-    } catch (error) {
-      console.error(error.message);
-    }
-  },
+  ownerDetails: null,
+  loading: false,
+  error: null,
 };
 
 const mutations = {
   SET_OWNER_DETAILS(state, details) {
-    state.ownerDetails = {
-      firstName: details.first_name,
-      lastName: details.last_name,
-      phoneNumber: details.phone_number, // Ensure this is included in your API response
-      bankName: details.bank_name,
-      iban: details.iban,
-      accountTitle: details.account_owner_title,
-    };
-
-    state.restaurantDetails = {
-      restaurantName: details.restaurant_name,
-      address: details.address,
-      postalCode: details.postal_code,
-      city: details.city,
-      openingTime: details.opening_time,
-      closingTime: details.closing_time,
-      cuisineType: details.cuisine,
-      businessType: details.business_type,
-    };
+    state.ownerDetails = details; // Directly set owner details to the state
   },
+  SET_LOADING(state, loading) {
+    state.loading = loading;
+  },
+  SET_ERROR(state, error) {
+    state.error = error;
+  },
+};
+
+const actions = {
+  async fetchOwnerProfile({ commit }) {
+    commit('SET_LOADING', true);
+    commit('SET_ERROR', null); // Reset error before fetching
+    try {
+      const response = await restaurantApi.fetchOwnerDetails(); // Call the service to fetch details
+      commit('SET_OWNER_DETAILS', response); // Commit the owner details from the response data
+    } catch (error) {
+      commit('SET_ERROR', error.message || 'Failed to fetch owner details'); // Commit any error
+    } finally {
+      commit('SET_LOADING', false); // Reset loading state
+    }
+  },
+};
+
+const getters = {
+  ownerDetails: (state) => state.ownerDetails,
+  isLoading: (state) => state.loading,
+  error: (state) => state.error,
 };
 
 export default {
   namespaced: true,
   state,
-  getters,
-  actions,
   mutations,
+  actions,
+  getters,
 };
