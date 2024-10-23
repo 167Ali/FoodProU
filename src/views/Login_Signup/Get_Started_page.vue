@@ -133,12 +133,8 @@
       <h2 class="restaurants-heading">Treat your team to thousands of top-rated restaurants</h2>
       <h5>With foodpro for business, give your team access to the best restaurants, dine-in deals and regular food allowances</h5>
       <div class="d-flex justify-content-center gap-4 mt-4">
-        <img src="../../assets/PK_KFC.png" alt="KFC" class="restaurant-logo" />
-        <img src="../../assets/PK_Butlers.png" alt="Butlers Chocolate" class="restaurant-logo" />
-        <img src="../../assets/PK_Angeethi.png" alt="Angeethi" class="restaurant-logo" />
-        <img src="../../assets/PK_Domino.png" alt="Domino's" class="restaurant-logo" />
-        <img src="../../assets/PK_Red.png" alt="Apple" class="restaurant-logo" />
-      </div>
+    <img v-for="(restaurant, index) in restaurants" :key="index" :src="restaurant.src" :alt="restaurant.alt" class="restaurant-logo" />
+  </div>
     </div>
   </section>
 
@@ -210,14 +206,21 @@
 </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref } from "vue";
+import KFC from "@/assets/PK_KFC.png";
+import Butlers from "@/assets/PK_Butlers.png";
+import Angeethi from "@/assets/PK_Angeethi.png";
+import Domino from "@/assets/PK_Domino.png";
+import Red from "@/assets/PK_Red.png";
 
-export default defineComponent({
-setup() {
-  return {};
-},
-});
+const restaurants = ref([
+  { src: KFC, alt: "KFC" },
+  { src: Butlers, alt: "Butlers Chocolate" },
+  { src: Angeethi, alt: "Angeethi" },
+  { src: Domino, alt: "Domino's" },
+  { src: Red, alt: "Apple" },
+]);
 </script>
 
 <style scoped>
