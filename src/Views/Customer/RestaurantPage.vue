@@ -8,22 +8,22 @@
       <hr />
       <Deals />
     </div>
-    <div>
-      <CategoryNavbar />
+    <div v-if="menusData">
+      <CategoryNavbar :menus="menusData" />
     </div>
     <PageFooter />
   </div>
 </template>
-
+  
 <script setup>
 import { onMounted, ref } from 'vue';
 import { defineProps } from 'vue';
 import { useStore } from 'vuex'; // Import useStore to access the store
-import LoginHeader from '../../Components/HeaderFooter/LoginHeader.vue';
-import RestaurantHeader from '../../Components/HeaderFooter/RestaurantHeader.vue';
-import Deals from '../../Components/Customer/Deals.vue';
-import CategoryNavbar from '../../Components/Customer/CategoryNavbar.vue';
-import PageFooter from '../../Components/HeaderFooter/PageFooter.vue';
+import LoginHeader from '@/Components/HeaderFooter/LoginHeader.vue';
+import RestaurantHeader from '@/Components/HeaderFooter/RestaurantHeader.vue';
+import Deals from '@/Components/Customer/Deals.vue';
+import CategoryNavbar from '@/Components/Customer/CategoryNavbar.vue';
+import PageFooter from '@/Components/HeaderFooter/PageFooter.vue';
 
 // Define props to receive the id
 const props = defineProps({
@@ -36,7 +36,7 @@ const props = defineProps({
 const store = useStore();
 
 const restaurantData = ref(null); // Added: to store restaurant data
-
+const menusData = ref(null);
 onMounted(() => {
   console.log('Restaurant ID:', props.id);
   // Dispatch an action to fetch restaurant menus
@@ -45,20 +45,20 @@ onMounted(() => {
     .then(() => {
       // Access the fetched data from the store
       const menus = store.getters['resturantDetails/getRestaurantMenus'];
-      console.log('Menus data:', menus);
+      // console.log('Menus data:', menus);
 
       // Extract the restaurant data
       restaurantData.value = menus.restaurant;
-
+      menusData.value = menus.menus;
       // Log the restaurant data to verify
-      console.log('Restaurant data:', restaurantData.value);
+      // console.log('Restaurant data:', restaurantData.value);
     })
     .catch((error) => {
       console.error('Error fetching menus:', error);
     });
 });
 </script>
-
+  
 <style scoped>
 .restaurant-header {
   padding: 20px;
@@ -74,3 +74,4 @@ onMounted(() => {
   /* font-size: 1px; */
 }
 </style>
+  

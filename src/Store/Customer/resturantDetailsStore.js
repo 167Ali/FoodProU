@@ -4,21 +4,24 @@ import {
   fetchRestaurants as fetchRestaurantsService,
   fetchDeals as fetchDealsService,
   searchRestaurants as searchRestaurantsService,
-  fetchRestaurantMenus as fetchRestaurantMenusService, // Added
-} from '../../Services/Customer/resturantDetailsService';
+  fetchRestaurantMenus as fetchRestaurantMenusService,
+  addFavoriteRestaurant as addFavoriteRestaurantService,
+  removeFavoriteRestaurant as removeFavoriteRestaurantService,
+} from '@/Services/Customer/resturantDetailsService';
 
 const state = () => ({
   restaurants: [],
   deals: [],
   searchResults: [],
-  restaurantMenus: {}, // Added
+  restaurantMenus: {},
 });
 
 const getters = {
   allRestaurants: (state) => state.restaurants,
   allDeals: (state) => state.deals,
   searchResults: (state) => state.searchResults,
-  getRestaurantMenus: (state) => state.restaurantMenus, // Added
+  getRestaurantMenus: (state) => state.restaurantMenus,
+  
 };
 
 const actions = {
@@ -30,18 +33,15 @@ const actions = {
       // Quick Filters
       if (filters.quickFilters) {
         if (filters.quickFilters.ratings) {
-          // For 'Ratings 4+', set rating=4
           params.rating = 4;
         }
         if (filters.quickFilters.deals) {
-          // Backend expects 'deal' as boolean or integer (1 for true)
           params.deal = 1;
         }
       }
 
       // Selected Cuisines
       if (filters.selectedCuisines && filters.selectedCuisines.length > 0) {
-        // Assuming the backend accepts multiple cuisines as comma-separated values
         params.cuisine = filters.selectedCuisines.join(',');
       }
 
@@ -93,7 +93,7 @@ const actions = {
     }
   },
 
-  async fetchRestaurantMenus({ commit }, restaurantId) { // Added
+  async fetchRestaurantMenus({ commit }, restaurantId) {
     try {
       const data = await fetchRestaurantMenusService(restaurantId);
       if (data.status === 200) {
@@ -105,6 +105,31 @@ const actions = {
       console.error('Error fetching restaurant menus:', error);
     }
   },
+  async addFavoriteRestaurant({ commit }, restaurantId) {
+    try {
+      const data = await addFavoriteRestaurantService(restaurantId);
+      if (data.status === 200) {
+        commit('addFavoriteRestaurant', restaurantId);
+      } else {
+        console.error('Failed to add favorite restaurant', data);
+      }
+    } catch (error) {
+      console.error('Error adding favorite restaurant:', error);
+    }
+  },
+  async removeFavoriteRestaurant({ commit }, restaurantId) {
+    try {
+      const data = await removeFavoriteRestaurantService(restaurantId);
+      if (data.status === 200) {
+        commit('removeFavoriteRestaurant', restaurantId);
+      } else {
+        console.error('Failed to remove favorite restaurant', data);
+      }
+    } catch (error) {
+      console.error('Error removing favorite restaurant:', error);
+    }
+  },
+
 };
 
 const mutations = {
@@ -117,9 +142,18 @@ const mutations = {
   setSearchResults(state, results) {
     state.searchResults = results;
   },
-  setRestaurantMenus(state, menus) { // Added
+  setRestaurantMenus(state, menus) {
     state.restaurantMenus = menus;
   },
+  addFavoriteRestaurant(state, restaurantId) {
+    if (!state.favoriteRestaurants.includes(restaurantId)) {
+      state.favoriteRestaurants.push(restaurantId);
+    }
+  },
+  removeFavoriteRestaurant(state, restaurantId) {
+    state.favoriteRestaurants = state.favoriteRestaurants.filter((id) => id !== restaurantId);
+  },
+  
 };
 
 export default {
