@@ -24,7 +24,7 @@ import ResturantDetailsStore from './Customer/resturantDetailsStore';
 import ResturantRevinue from './Customer/resturantRevenue'; // Import the new module
 import orders from './Customer/checkout';
 import favoriteStore from './Customer/favScreenCus';
-
+import ProductAddToCart from '@/Components/Customer/ProductAddToCart.vue';
 const store = createStore({
   modules: {
     menuCategory,
@@ -34,6 +34,7 @@ const store = createStore({
     Prevorder,
     Resturantownerreviews,
     Reviews,
+    ProductAddToCart,
     // addOrDelFavsStore,
     // Reviews,
     // RevenueStore,
