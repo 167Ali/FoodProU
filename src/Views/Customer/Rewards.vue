@@ -1,5 +1,5 @@
 <template>
-
+<LoginHeader/>
     <!-- Points Display Section -->
     <div class="points-section">
         <div class="rewards-container text-dark">
@@ -61,12 +61,14 @@
         </div>
 
     </div>
+    <PageFooter/>
 </template>
 
 <script setup>
 import { computed } from 'vue';
 import { useStore } from 'vuex';
-
+import LoginHeader from '@/Components/HeaderFooter/LoginHeader.vue';
+import PageFooter from '@/Components/HeaderFooter/PageFooter.vue';
 const store = useStore();
 
 // Use the correct namespaced module ('rewards')

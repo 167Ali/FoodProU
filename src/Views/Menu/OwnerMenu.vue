@@ -1,8 +1,10 @@
 <template>
+    
     <MenuAndChoice />
 </template>
 <script setup>
 import MenuAndChoice from '@/Components/Menu&Choices/MenuAndChoice.vue';
+
 </script>
 <style>
 * {
