@@ -5,7 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import adminRoute from '@/Router/adminRoutes'
 
-import restaurantownerRoutes from '@/Router/restaurantownerRoutes'
+import restaurantownerRoutes from '@/Router/restaurantOwnerRoutes'
 
 import customerRoutes from '@/Router/customerRoutes'
 
