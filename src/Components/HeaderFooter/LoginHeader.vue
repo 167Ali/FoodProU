@@ -39,6 +39,7 @@
                             </router-link>
                         </li>
 
+
                         <li>
                             <router-link to="/Rewards" class="nav-link">
                                 <font-awesome-icon :icon="['fas', 'gift']" />
@@ -91,6 +92,7 @@ import {
     faHeart, // Added heart icon
     faReceipt,
     faGift
+
 } from '@fortawesome/free-solid-svg-icons';
 
 // Add icons to the library
@@ -102,8 +104,10 @@ library.add(
     faQuestionCircle,
     faSignOutAlt,
     faHeart, // Added heart icon to library
+
     faReceipt,
     faGift
+
 );
 
 // Reactive state
