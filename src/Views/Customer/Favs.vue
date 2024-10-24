@@ -1,4 +1,5 @@
 <template>
+  <LoginHeader/>
   <div class="favorite-restaurants">
     <Loader v-if="isLoading" />
     <FavoriteRestaurantCard
@@ -12,9 +13,12 @@
       :closingTime="restaurant.closing_time"
     />
   </div>
+  <PageFooter/>
 </template>
 
 <script setup>
+import LoginHeader from '@/Components/HeaderFooter/LoginHeader.vue';
+import PageFooter from '@/Components/HeaderFooter/PageFooter.vue';
 import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import FavoriteRestaurantCard from '@/Components/Customer/FavRestCard.vue'; // Ensure the correct path to the card component

@@ -31,18 +31,26 @@
                                 <span>User Guide</span>
                             </router-link>
                         </li>
+
                         <li>
                             <router-link to="/recipe-blog" class="nav-link">
                                 <font-awesome-icon :icon="['fas', 'receipt']" />
                                 <span>Recipe</span>
                             </router-link>
                         </li>
+
+
+                        <li>
+                            <router-link to="/Rewards" class="nav-link">
+                                <font-awesome-icon :icon="['fas', 'gift']" />
+                                <span>Reward</span>
+                            </router-link>
+                        </li>
+
                         <li>
                             <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
                             <button class="nav-link" @click="showLogoutModal">Log Out</button>
-
                         </li>
-
                     </ul>
                 </div>
             </div>
@@ -50,6 +58,7 @@
                 message="Thanks for stopping by. See you again soon!" confirmText="Log out" cancelText="Cancel"
                 :isVisible="isLogoutModalVisible" @close="closeLogoutModal" @confirm="confirmLogout"
                 @cancel="closeLogoutModal" />
+
             <!-- Heart Button -->
             <router-link to="/favoritespage" class="favorites-button">
                 <button class="heart-icon-button">
@@ -66,8 +75,6 @@
         </div>
     </nav>
 </template>
-
-
 <script setup>
 import { useRouter } from 'vue-router';
 const router = useRouter();
@@ -84,6 +91,8 @@ import {
     faSignOutAlt,
     faHeart, // Added heart icon
     faReceipt,
+    faGift
+
 } from '@fortawesome/free-solid-svg-icons';
 
 // Add icons to the library
@@ -95,12 +104,15 @@ library.add(
     faQuestionCircle,
     faSignOutAlt,
     faHeart, // Added heart icon to library
-    faReceipt
+
+    faReceipt,
+    faGift
+
 );
 
 // Reactive state
 const dropdownOpen = ref(false);
-const username = ref('Guest');
+const username = ref('Guest'); // Default is Guest
 const dropdown = ref(null);
 
 // Toggle dropdown visibility
@@ -116,17 +128,22 @@ const closeDropdown = (event) => {
     }
 };
 
-
-// Lifecycle hooks
+// Fetch logged-in user info on mounted
 onMounted(() => {
+    // Check if user data exists in localStorage (or fetch it from Vuex if you prefer)
+    const storedUser = JSON.parse(localStorage.getItem('user')); // Example key
+    if (storedUser && storedUser.username) {
+        username.value = storedUser.username; // Update username with the logged-in user's name
+    }
+
     document.addEventListener('click', closeDropdown);
 });
 
 onBeforeUnmount(() => {
     document.removeEventListener('click', closeDropdown);
 });
-const isLogoutModalVisible = ref(false);
 
+const isLogoutModalVisible = ref(false);
 
 const showLogoutModal = () => {
     isLogoutModalVisible.value = true;
@@ -139,12 +156,11 @@ const closeLogoutModal = () => {
 const confirmLogout = () => {
     isLogoutModalVisible.value = false;
     console.log('Logging out...');
+    localStorage.removeItem('token'); // Assuming you're removing the token upon logout
     window.location.href = '/';
 };
 
 </script>
-
-
 <style scoped>
 .navbar {
     display: flex;
@@ -201,8 +217,6 @@ const confirmLogout = () => {
     border-radius: 8px;
     min-width: 200px;
     z-index: 1000;
-
-
 }
 
 .dropdownmenu ul {
@@ -225,9 +239,7 @@ const confirmLogout = () => {
     border-radius: 5px;
 }
 
-
 .cart-icon {
-
     margin-left: 20px;
     display: flex;
     align-items: center;
@@ -261,4 +273,5 @@ const confirmLogout = () => {
 .cart-icon-button:hover {
     color: #00754a;
 }
+
 </style>
