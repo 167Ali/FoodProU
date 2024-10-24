@@ -92,7 +92,7 @@ const confirmLogout = () => {
   // Remove the token and user info from local storage
   localStorage.removeItem('token');
   localStorage.removeItem('user');
-
+  window.location.href = '/';
 };
 
 </script>

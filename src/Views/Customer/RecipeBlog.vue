@@ -34,7 +34,8 @@
 import { ref } from 'vue';
 import RecipeCard from '../../Components/Customer/BlogCard.vue';
 import RecipeModal from '../../Components/Customer/RecipeModal.vue';
-
+import LoginHeader from '@/Components/HeaderFooter/LoginHeader.vue';
+import PageFooter from '@/Components/HeaderFooter/PageFooter.vue';
 const recipes = ref([
   {
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Mutton_Nihari.jpg/220px-Mutton_Nihari.jpg',
