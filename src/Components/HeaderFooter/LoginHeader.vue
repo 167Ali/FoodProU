@@ -32,6 +32,12 @@
                             </router-link>
                         </li>
                         <li>
+                            <router-link to="/recipe-blog" class="nav-link">
+                                <font-awesome-icon :icon="['fas', 'receipt']" />
+                                <span>Recipe</span>
+                            </router-link>
+                        </li>
+                        <li>
                             <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
                             <button class="nav-link" @click="showLogoutModal">Log Out</button>
 
@@ -52,7 +58,7 @@
             </router-link>
 
             <!-- Cart Button -->
-            <router-link to="/RestaurantPage" class="cart-button">
+            <router-link to="/RestaurantPage/:id" class="cart-button">
                 <button class="cart-icon-button">
                     <font-awesome-icon :icon="['fas', 'shopping-cart']" />
                 </button>
@@ -77,6 +83,7 @@ import {
     faQuestionCircle,
     faSignOutAlt,
     faHeart, // Added heart icon
+    faReceipt,
 } from '@fortawesome/free-solid-svg-icons';
 
 // Add icons to the library
@@ -87,7 +94,8 @@ library.add(
     faUser,
     faQuestionCircle,
     faSignOutAlt,
-    faHeart // Added heart icon to library
+    faHeart, // Added heart icon to library
+    faReceipt
 );
 
 // Reactive state
