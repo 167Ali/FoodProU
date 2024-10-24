@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Create an axios instance for API calls
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL_H, // Ensure this is set correctly in your environment variables
+  baseURL: import.meta.env.VITE_API_BASE_URL, // Ensure this is set correctly in your environment variables
   headers: {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${localStorage.getItem('token')}`, // Ensure the token is available in localStorage
