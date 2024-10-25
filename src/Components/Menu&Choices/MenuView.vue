@@ -26,13 +26,6 @@
                                         {{ product.description }}
                                     </p>
                                 </div>
-                                <!-- <div class="card-text">
-                                    <strong>Assigned Choices:</strong>
-                                    <ul class="scroller-card">
-                                        <li v-for="(choice, idx) in product.assignedchoices" :key="idx">{{ choice }}
-                                        </li>
-                                    </ul>
-                                </div> -->
                                 <div class="card-text">
                                     <strong>Assigned Choices:</strong>
                                     <p class="scroller-card">
@@ -91,6 +84,7 @@ const { categoryTitle, categoryId } = defineProps({
     categoryId: Number
 });
 
+
 const products = computed(() => store.getters['menuProduct/allProducts']);
 
 onMounted(async () => {
@@ -101,46 +95,10 @@ onMounted(async () => {
     }
 });
 
-// const products = ref([
-//     {
-//         category: 'Pizza',
-//         name: 'Margherita Pizza',
-//         description: 'Classic cheese and tomato pizza.',
-//         price: 350,
-//         image_path: '/src/assets/img3.jpeg',
-//         variation_id: ['Choice 1', 'Choice 2'], // Assigned choices displayed here
-//     },
-//     {
-//         category: 'Pizza',
-//         name: 'Coke',
-//         description: 'Refreshing soft drink.',
-//         price: 200,
-//         image_path: '/src/assets/img2.jpg',
-//         variation_id: ['Choice 4'], // Assigned choices displayed here
-//     },
-//     {
-//         category: 'Pizza',
-//         name: 'Cheeseburger',
-//         description: 'Juicy burger with cheese.',
-//         price: 240,
-//         image_path: '/src/assets/img1.jpg',
-//         variation_id: ['Choice 1', 'Choice 3', 'Choice 5'], // Assigned choices displayed here
-//     },
-//     {
-//         category: 'Pizza',
-//         name: 'Coke',
-//         description: 'Refreshing soft drink.',
-//         price: 200,
-//         image_path: '/src/assets/img2.jpg',
-//         variation_id: ['Choice 4'], // Assigned choices displayed here
-//     },
-// ]);
-
 const isFormVisible = ref(false);
 const isEditMode = ref(false);
 const currentProduct = ref(null);
 const currentEditIndex = ref(null);
-
 
 // Function to open the form modal for creating a new product
 const openModal = () => {
