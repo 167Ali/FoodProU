@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 // Base API URL
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL_H; // Replace with your actual base URL variable
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Replace with your actual base URL variable
 
 // Function to fetch revenue reports
 export const fetchRevenueReports = async () => {
@@ -14,11 +14,11 @@ export const fetchRevenueReports = async () => {
         Authorization: `Bearer ${token}`, // Include token if authentication is required
       },
     })
-    .then((reponse)=>{
-      console.log(response);
-    }).catch((error)=>{console.log(error)});
+      .then((reponse) => {
+        console.log(response);
+      }).catch((error) => { console.log(error) });
     console.log("admin revenue response:", response);
-    
+
     return response; // Return the full Axios response
   } catch (error) {
 

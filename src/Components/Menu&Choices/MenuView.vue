@@ -18,7 +18,7 @@
                         </div>
                         <div class="col-7">
                             <div class="ms-3 ard-body">
-                               <h5 class="card-title text-capital">{{ product.name }}</h5>
+                                <h5 class="card-title text-capital">{{ product.name }}</h5>
                                 <!-- <p class="card-text">Description: {{ product.description }}</p> -->
                                 <div class="card-text mt-3">
                                     <strong>Description:</strong>
@@ -26,13 +26,6 @@
                                         {{ product.description }}
                                     </p>
                                 </div>
-                                <!-- <div class="card-text">
-                                    <strong>Assigned Choices:</strong>
-                                    <ul class="scroller-card">
-                                        <li v-for="(choice, idx) in product.assignedchoices" :key="idx">{{ choice }}
-                                        </li>
-                                    </ul>
-                                </div> -->
                                 <div class="card-text">
                                     <strong>Assigned Choices:</strong>
                                     <p class="scroller-card">
@@ -102,46 +95,10 @@ onMounted(async () => {
     }
 });
 
-// const products = ref([
-//     {
-//         category: 'Pizza',
-//         name: 'Margherita Pizza',
-//         description: 'Classic cheese and tomato pizza.',
-//         price: 350,
-//         image_path: '/src/assets/img3.jpeg',
-//         variation_id: ['Choice 1', 'Choice 2'], // Assigned choices displayed here
-//     },
-//     {
-//         category: 'Pizza',
-//         name: 'Coke',
-//         description: 'Refreshing soft drink.',
-//         price: 200,
-//         image_path: '/src/assets/img2.jpg',
-//         variation_id: ['Choice 4'], // Assigned choices displayed here
-//     },
-//     {
-//         category: 'Pizza',
-//         name: 'Cheeseburger',
-//         description: 'Juicy burger with cheese.',
-//         price: 240,
-//         image_path: '/src/assets/img1.jpg',
-//         variation_id: ['Choice 1', 'Choice 3', 'Choice 5'], // Assigned choices displayed here
-//     },
-//     {
-//         category: 'Pizza',
-//         name: 'Coke',
-//         description: 'Refreshing soft drink.',
-//         price: 200,
-//         image_path: '/src/assets/img2.jpg',
-//         variation_id: ['Choice 4'], // Assigned choices displayed here
-//     },
-// ]);
-
 const isFormVisible = ref(false);
 const isEditMode = ref(false);
 const currentProduct = ref(null);
 const currentEditIndex = ref(null);
-
 
 // Function to open the form modal for creating a new product
 const openModal = () => {

@@ -1,5 +1,4 @@
 <template>
-
     <div class="p-2">
         <div class="mb-3 d-flex justify-content-between align-items-center">
             <h4 class="card-title">{{ isEditMode ? 'Edit Product' : 'Add Product' }}</h4>
@@ -57,9 +56,6 @@
                     <div class="col-md-6 col-12">
                         <div class="p-4 text-center">
                             <div class="drop-zone" @click="triggerFileInput">
-                                <!-- <input type="file" ref="fileInput" @change="handleImageUpload" accept="image/*"
-                                    :required="!productForm.image" class="d-none" /> -->
-
                                 <input type="file" ref="fileInput" @change="handleImageUpload" accept="image/*"
                                     class="d-none" />
 
@@ -109,7 +105,7 @@ const isFormValidated = ref(false);
 const productForm = reactive({
     name: '', //name
     description: '', //price
-    price: 0,               //category // description//variation_id
+    price: 0,
     image_path: null, // Now directly storing the image data URL // image_path
     assigned_choices: [], // Array to store selected choices 
 });
@@ -136,10 +132,7 @@ const handleImageUpload = (event) => {
         alert('Please upload a valid image file.');
     }
 };
-
 // Submit form
-
-
 const submitForm = () => {
     isLoading.value = true;
     isFormValidated.value = true;
@@ -153,8 +146,6 @@ const submitForm = () => {
         }
     }
 };
-
-
 // Cancel form
 const cancelForm = () => {
     emits('cancel');

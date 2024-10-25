@@ -10,7 +10,7 @@ export const fetchRestaurants = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log("biwhebcjwebcfjwn de",response.data);
+    console.log("biwhebcjwebcfjwn de", response.data);
     return response.data;
   } catch (error) {
     throw error;
