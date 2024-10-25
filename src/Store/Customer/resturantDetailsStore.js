@@ -50,11 +50,9 @@ const actions = {
         params.sort = filters.sortOption;
       }
 
-      console.log('Fetching restaurants with params:', params);
 
       const data = await fetchRestaurantsService(params);
 
-      console.log('Filtered data', data.data);
 
       if (data.status === 200) {
         commit('setRestaurants', data.data);

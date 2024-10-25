@@ -11,8 +11,7 @@ import PrevorderDetails from '../Views/Customer/PrevorderDetails.vue';
 import OrderRating from '@/Components/Customer/OrderRating.vue';
 import UserGuide from '@/Components/Customer/UserGuide.vue';
 import RecipeBlog from '../Views/Customer/RecipeBlog.vue';
-import Rewards from '@/Views/Customer/Rewards.vue'
-
+import Rewards from '@/Views/Customer/Rewards.vue';
 export default [
   {
     path: '/RestaurantPage/:id',
@@ -34,7 +33,7 @@ export default [
     },
   },
   {
-    path: '/rewards',
+    path: '/Rewards',
     name: 'Rewards',
     component: Rewards,
     meta: {

@@ -8,7 +8,8 @@ import ModalView from '@/Components/RestaurantOwner/RestOwnReciept.vue';
 import OwnerMenu from '@/Views/Menu/OwnerMenu.vue';
 import ViewAllOrdersRes from '@/Views/RestauranOnwer/OrdersRestaurant.vue';
 import SetNewPassword from '@/Components/OtherComponents/SetNewPassword.vue';
-
+import DealsSection from '@/Components/RestaurantOwner/DealsSection.vue';
+import Voucher from '@/Components/RestaurantOwner/Voucher.vue';
 export default [
   {
     path: '/RestaurantOwnerDashboard',
@@ -23,6 +24,24 @@ export default [
     path: '/Resturantowner',
     name: 'RestaurantOwner',
     component: ResturantOwner,
+    meta: {
+      requiresAuth: true,
+      role: 'Restaurant Owner',
+    },
+  },
+  {
+    path: '/DealsSection',
+    name: 'DealsSection',
+    component: DealsSection,
+    meta: {
+      requiresAuth: true,
+      role: 'Restaurant Owner',
+    },
+  },
+  {
+    path: '/Voucher',
+    name: 'Voucher',
+    component: Voucher,
     meta: {
       requiresAuth: true,
       role: 'Restaurant Owner',

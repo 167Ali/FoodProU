@@ -92,9 +92,10 @@ const sections = ref([
     required: true,
     selectedOption: null,
     options: props.choices.choice_groups[0].choices,
-    Id:choices.choice_groups[0].choice_group_id,
+    Id: props.choices.choice_groups[0].choice_group_id
   }
 ]);
+
 
 const closeModal = () => {
   showModal.value = false;
@@ -104,18 +105,19 @@ const showModal = ref(true);
 
 const addToCart = async () => {
   const variations = sections.value.map(section => ({
-    choice_group_id: section.id, // Adjust this if necessary
+    choice_group_id: section.Id, // Adjust this if necessary
     choice_id: section.selectedOption ? section.selectedOption.id : null,
   }));
 
   const item = {
     menu_item_id: props.choices.menu_item_id, // Ensure this exists
     quantity: 1,
-    variation: variations.filter(v => v.choice_id !== null),
+    variations: variations.filter(v => v.choice_id !== null),
   };
+  const itemJson = JSON.stringify(item);
 
   try {
-    const response = await store.dispatch('addToCartStore/addToCart', item); // Dispatch the action from the store
+    const response = await store.dispatch('addToCartStore/addToCart', itemJson); // Dispatch the action from the store
     console.log('Item added to cart:', response);
     closeModal();
   } catch (error) {

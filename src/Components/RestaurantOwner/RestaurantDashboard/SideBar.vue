@@ -75,6 +75,8 @@ const navItems = ref([
   { icon: 'fas fa-chart-line', label: 'Analytics', route: '/Resturantowner' },
   { icon: 'fas fa-receipt', label: 'Menu', route: '/ownermenu' },
   { icon: 'fas fa-utensils', label: 'Orders', route: '/ViewAllOrdersRes' },
+  { icon: 'fas fa-receipt', label: 'Deals', route: '/DealsSection' },
+  { icon: 'fas fa-ticket', label: 'Voucher', route: '/Voucher' },
   { icon: 'fas fa-star', label: 'Reviews', route: '/ResturantReviews' },
   { icon: 'fas fa-cogs', label: 'Settings', route: '/restOwnerProfile' },
   { icon: 'fas fa-sign-out-alt', label: 'Log Out', route: '/' }, // This will be the button for logging out
@@ -115,17 +117,34 @@ const confirmLogout = () => {
 
 <style scoped>
 /* Sidebar styles */
+/* Sidebar styles */
 .sidebar {
   width: 90px;
   background-color: #f1f3f5;
   min-height: 100vh;
-  height: 100%;
+  height: 100%; /* Keep the full height */
   position: fixed;
   top: 0;
   left: 0;
   border-right: 1px solid #e0e0e0;
   padding-top: 2rem;
+  overflow-y: auto; /* Enable scrolling */
   transition: all 0.3s ease-in-out;
+  scroll-behavior: smooth; /* Optional: Smooth scrolling */
+}
+
+/* Ensure the scrollbar doesn't cover the content */
+.sidebar::-webkit-scrollbar {
+  width: 6px; /* Customize the width of the scrollbar */
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #cad1d4; /* Customize the scrollbar color */
+  border-radius: 10px; /* Rounded scrollbar */
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background-color: #f1f3f5; /* Background for the scrollbar track */
 }
 
 .logo {
