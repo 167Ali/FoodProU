@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL_H;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const getToken = () => {
     const token = localStorage.getItem('token'); // The token is stored with the key 'token'
     console.log('JWT Token:', token); // Log the token to the console

@@ -18,7 +18,7 @@
                         </div>
                         <div class="col-7">
                             <div class="ms-3 ard-body">
-                               <h5 class="card-title text-capital">{{ product.name }}</h5>
+                                <h5 class="card-title text-capital">{{ product.name }}</h5>
                                 <!-- <p class="card-text">Description: {{ product.description }}</p> -->
                                 <div class="card-text mt-3">
                                     <strong>Description:</strong>
@@ -90,7 +90,6 @@ const { categoryTitle, categoryId } = defineProps({
     categoryTitle: String,
     categoryId: Number
 });
-
 
 const products = computed(() => store.getters['menuProduct/allProducts']);
 

@@ -11,7 +11,7 @@
                 <div class="points-value">
 
                     <h1>{{ totalPoints }} <i class=" fa-greater-than"></i></h1>
-                    <img src="../../assets/bg3.gif" alt="Points Image" class="points-image">
+                    <!-- <img src="../../assets/giftbox.png" alt="Points Image" class="points-image"> -->
                 </div>
 
             </div>
@@ -121,19 +121,19 @@ const redeemPoints = (reward) => {
 .points-value {
     display: flex;
     align-items: center;
-    justify-content: space-between; 
+    justify-content: space-between;
 }
 
 .points-value h1 {
     margin: 0;
-   font-size: x-large;
+    font-size: x-large;
 }
 
 .points-value img {
     max-width: 100px;
     height: auto;
     mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent); 
+    -webkit-mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent);
 
 }
 
@@ -287,6 +287,7 @@ const redeemPoints = (reward) => {
     .rewards-list {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
+
     .points-header {
         display: flex;
         justify-content: space-between;
@@ -300,27 +301,30 @@ const redeemPoints = (reward) => {
 
 
 @media (max-width: 576px) {
+
     /* Make points section text smaller for mobile */
     .points-value {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; 
-}
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-.points-value h1 {
-    margin: 0;
-   font-size: larger;
-   margin-bottom: auto
-}
+    .points-value h1 {
+        margin: 0;
+        font-size: larger;
+        margin-bottom: auto
+    }
 
-.points-value img {
-    max-width: 80px;
-    height: auto;
-    margin-bottom: 50px;
-    mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent); /* Transparency on sides */
-    -webkit-mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent); /* For better browser support */
+    .points-value img {
+        max-width: 80px;
+        height: auto;
+        margin-bottom: 50px;
+        mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent);
+        /* Transparency on sides */
+        -webkit-mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent);
+        /* For better browser support */
 
-}
+    }
 
     /* Center align the points section for mobile */
     .points-section {
@@ -328,7 +332,7 @@ const redeemPoints = (reward) => {
         text-align: center;
     }
 
- 
+
 
     /* Stack the info boxes vertically on small screens */
     .info-boxes {

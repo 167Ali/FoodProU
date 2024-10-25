@@ -2,7 +2,7 @@
 <template>
   <router-view></router-view>
   <LoginHeader />
-
+  
   <div class="row me-xl-5 me-lg-2">
     <div class="d-none d-lg-block col-lg-3">
       <DashboardFilter @filterChanged="applyFilters" />
@@ -31,14 +31,13 @@
 <script setup>
 import { computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
-import RestaurantCard from '@/Components/Customer/RestaurantCard.vue';
-import DashboardFilter from '@/Components/Customer/DashboardFilter.vue';
-import Searchbar from '@/Components/OtherComponents/Searchbar.vue';
-import LoginHeader from '@/Components/HeaderFooter/LoginHeader.vue';
-import PageFooter from '@/Components/HeaderFooter/PageFooter.vue';
+import RestaurantCard from '../../Components/Customer/RestaurantCard.vue';
+import DashboardFilter from '../../Components/Customer/DashboardFilter.vue';
+import Searchbar from '../../Components/OtherComponents/Searchbar.vue';
+import LoginHeader from '../../Components/HeaderFooter/LoginHeader.vue';
+import PageFooter from '../../Components/HeaderFooter/PageFooter.vue';
 import discounts from '@/Components/Customer/Discounts.vue';
 import Cuisines from '@/Components/Customer/Cuisines.vue';
-
 const store = useStore();
 
 // Get restaurants from the store
@@ -56,4 +55,9 @@ onMounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.card-link{
+text-decoration: none;
+}
+
+</style>

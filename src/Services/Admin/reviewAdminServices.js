@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Base URL for your API
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL_H; // Using _H as in your example
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Using _H as in your example
 
 // Function to retrieve the token from localStorage
 const getToken = () => {
