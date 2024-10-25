@@ -1,12 +1,10 @@
 <template>
-  
   <!-- View Cart Button for Mobile -->
   <button v-if="isMobile && !cartVisible" @click="toggleCart" class="cart-toggle-btn">
     View Cart ({{ totalItems }} items) - Rs. {{ cartTotal }}
   </button>
 
   <div class="cart-container">
-
     <!-- Cart Modal for Desktop & Mobile -->
     <div :class="['cart-modal', { 'cart-visible': cartVisible, 'fullscreen': isMobile }]">
       <!-- Close Button for Mobile -->
@@ -20,8 +18,8 @@
       </div>
       
       <div v-else>
-        <div v-for="item in cart" :key="item.id" class="cart-item">
-          <img :src="item.image" alt="item.name" class="item-img"/>
+        <div v-for="item in cart" :key="item.menu_item_id" class="cart-item">
+          <img :src="item.image_path" alt="item.name" class="item-img"/>
           <div class="item-details">
             <p class="item-name">{{ item.name }}</p>
             <p class="item-price">Rs. {{ item.price }}</p>
@@ -52,12 +50,12 @@
           </p>
         </div>
         <!-- Total and Checkout Button for Mobile -->
-        <div  v-if="isMobile " class="chekout-btn-mobile">
+        <div v-if="isMobile" class="checkout-btn-mobile">
           <p class="d-flex justify-content-between cart-summary-total">
-          <span> Total
-            <span class="fee-tax">(incl. fees and tax)</span>
-          </span>
-          <span>Rs. {{ cartTotal }}</span>
+            <span>Total
+              <span class="fee-tax">(incl. fees and tax)</span>
+            </span>
+            <span>Rs. {{ cartTotal }}</span>
           </p>
           <button class="checkout-btn">
             Review Payment and Address
@@ -70,7 +68,7 @@
 
     <!-- Total and Checkout Button for Desktop -->
     <p class="d-flex justify-content-between cart-summary-total" v-if="!isMobile && cart.length > 0">
-      <span> Total
+      <span>Total
         <span class="fee-tax">(incl. fees and tax)</span>
       </span>
       <span>Rs. {{ cartTotal }}</span>
@@ -78,113 +76,95 @@
     <button class="checkout-btn" v-if="!isMobile && cart.length > 0">
       Review Payment and Address
     </button>
-
-    
   </div>
-
 </template>
 
-<!--  -->
 <script setup>
-  import { reactive, ref, computed, onMounted } from 'vue';
-  import kulchaImg from '@/Assets/Images/kulcha.png';
-  import alooAndaImg from '@/Assets/Images/salan.png';
-  import raitaImg from '@/Assets/Images/raita.png';
-  import saladImg from '@/Assets/Images/salad.png';
-  import lassiImg from '@/Assets/Images/lassi.png';
-  
-  // Dummy items in the cart for now
-  
-  const cart = reactive([
-    {
-      id: 1,
-      name: 'Kulcha',
-      price: 50,
-      quantity: 1,
-      image: kulchaImg,
-    },
-    {
-      id: 2,
-      name: 'Aloo Anda',
-      price: 230,
-      quantity: 1,
-      image: alooAndaImg,
-    },
-    {
-      id: 3,
-      name: 'Raita',
-      price: 50,
-      quantity: 1,
-      image: raitaImg,
-    },
-    {
-      id: 4,
-      name: 'Salad',
-      price: 70,
-      quantity: 1,
-      image: saladImg,
-    },
-    {
-      id: 5,
-      name: 'Lassi',
-      price: 160,
-      quantity: 1,
-      image: lassiImg,
-    },
-  ]);
-  
+import { reactive, ref, computed, onMounted } from 'vue';
 
-  // State for mobile responsiveness
-  const isMobile = ref(false);
-  const cartVisible = ref(false);
+// State for mobile responsiveness
+const isMobile = ref(false);
+const cartVisible = ref(false);
 
-  const deliveryFee = 120;
-  const serviceFee = 9.99;
+// Fees
+const deliveryFee = 120;
+const serviceFee = 9.99;
 
-  // Methods for managing the cart
-  const incrementItem = (item) => {
-    item.quantity++;
-  };
-  
-  const decrementItem = (item) => {
-    if (item.quantity > 1) {
-      item.quantity--;
+// Reactive cart data
+const cart = reactive([]);
+
+// Fetch cart items from local storage
+const fetchCartItems = () => {
+  const storedItems = localStorage.getItem('cartItem');
+  if (storedItems) {
+    try {
+      const items = JSON.parse(storedItems);
+      if (Array.isArray(items)) {
+        cart.push(...items); // Only spread if items is an array
+      } else {
+        console.warn('Stored data is not an array:', items);
+      }
+    } catch (error) {
+      console.error('Failed to parse stored items from local storage:', error);
     }
+  }
+};
+
+// Methods for managing the cart
+const incrementItem = (item) => {
+  item.quantity++;
+  updateLocalStorage(); // Update local storage after changing the quantity
+};
+
+const decrementItem = (item) => {
+  if (item.quantity > 1) {
+    item.quantity--;
+  } else {
+    removeItem(item); // Remove the item if quantity is 1
+  }
+  updateLocalStorage(); // Update local storage after changing the quantity
+};
+
+const removeItem = (item) => {
+  const index = cart.indexOf(item);
+  if (index > -1) {
+    cart.splice(index, 1);
+    updateLocalStorage(); // Update local storage after removing the item
+  }
+};
+
+// Function to update local storage
+const updateLocalStorage = () => {
+  localStorage.setItem('cartItem', JSON.stringify(cart));
+};
+
+// Computed properties
+const cartSubtotal = computed(() => {
+  return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+});
+
+const cartTotal = computed(() => {
+  return cartSubtotal.value + deliveryFee + serviceFee;
+});
+
+const totalItems = computed(() => {
+  return cart.reduce((sum, item) => sum + item.quantity, 0);
+});
+
+// Toggle cart visibility for mobile
+const toggleCart = () => {
+  cartVisible.value = !cartVisible.value;
+};
+
+// Check screen size for responsiveness
+onMounted(() => {
+  const checkScreenSize = () => {
+    isMobile.value = window.innerWidth <= 959;
   };
-  
-  const removeItem = (item) => {
-    const index = cart.indexOf(item);
-    if (index > -1) {
-      cart.splice(index, 1);
-    }
-  };
-  
-  // Computed properties
-  const cartSubtotal = computed(() => {
-    return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  });
-  
-  const cartTotal = computed(() => {
-    return cartSubtotal.value + deliveryFee + serviceFee;
-  });
-  
-  const totalItems = computed(() => {
-    return cart.reduce((sum, item) => sum + item.quantity, 0);
-  });
-  
-  // Toggle cart visibility for mobile
-  const toggleCart = () => {
-    cartVisible.value = !cartVisible.value;
-  };
-  
-  // Check screen size for responsiveness
-  onMounted(() => {
-    const checkScreenSize = () => {
-      isMobile.value = window.innerWidth <= 959;
-    };
-    window.addEventListener('resize', checkScreenSize);
-    checkScreenSize();
-  });
+  window.addEventListener('resize', checkScreenSize);
+  checkScreenSize();
+  fetchCartItems(); // Fetch items on component mount
+});
 </script>
 
 
@@ -430,10 +410,5 @@ h5{
   .cart-modal {
     display: block;
   }
-  /* .chekout-btn-mobile{
-    display: none;
-  } */
 }
-/*  */
 </style>
-
