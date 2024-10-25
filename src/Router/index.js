@@ -1,7 +1,7 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
 import adminRoute from './adminRoutes';
-import restaurantownerRoutes from './restaurantownerRoutes';
+import restaurantownerRoutes from './restaurantOwnerRoutes';
 import customerRoutes from './customerRoutes';
 import otherRoutes from './otherRoutes';
 
@@ -27,8 +27,8 @@ router.beforeEach((to, from, next) => {
     return next({ name: 'Main_landing' }); // Redirect to the login page if not authenticated
   }
 
-   // Role-based access control
-   if (to.meta.role && user) {
+  // Role-based access control
+  if (to.meta.role && user) {
     if (user.role !== to.meta.role) {
       // Redirect back to the current page if the role does not match
       return next(false);
