@@ -26,7 +26,6 @@ const createProductFormData = (productData) => {
     if (productData.assigned_choices && productData.assigned_choices.length > 0) {
         formData.append('assigned_choices', JSON.stringify(productData.assigned_choices)); // Send the choices array
     }
-
     console.log("FORM DATA CONTENTS:");
     formData.forEach((value, key) => {
         console.log(key, value);

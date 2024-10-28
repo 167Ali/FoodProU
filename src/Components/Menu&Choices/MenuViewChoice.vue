@@ -52,13 +52,7 @@
         </div>
     </div>
 
-
-
-
     <div class="container mt-4">
-        <!-- Button to trigger modal for creating a choice -->
-
-        <!-- Modal for Create/Edit Choice -->
         <div v-if="isFormVisible" class="modal-overlay">
             <div class="modal-content">
                 <MenuCreateChoice :choice="currentChoice" :is-edit-mode="isEditMode" @save="saveChoice"
@@ -93,7 +87,6 @@ const processedChoices = computed(() => {
         }
     });
 });
-
 
 onMounted(async () => {
     try {
