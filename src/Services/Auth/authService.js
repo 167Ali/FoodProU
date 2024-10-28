@@ -31,7 +31,14 @@ export const login = async (credentials) => {
 
         console.log('Login response', response);
         const { access_token, role, permissions } = response.data.data; // Adjust based on the response structure
-        const id = response.data.data.restaurant_details?.id ?? 0;
+        const id = response.data.data.restaurant_details?.id ?? 0;  
+  
+        // Save restaurant name to localStorage
+        localStorage.setItem('restaurantName', restaurant_details.name);
+    
+        return { access_token, role, permissions }; // Return the relevant data
+
+
         return { access_token, role, permissions, id }; // Return the relevant data
 
     } catch (error) {

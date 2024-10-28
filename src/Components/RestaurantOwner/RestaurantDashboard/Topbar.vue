@@ -1,32 +1,46 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <div class="top-bar d-flex justify-content-between align-items-center mb-4">
-      <!-- Left section: Restaurant Name -->
-      <h2 class="restaurant-name me-3">Burger Lab</h2>
-  
-      <!-- Center section: Search Input -->
-      <div class="search-container">
-        <input type="text" class="form-control search-input" placeholder="Search for orders..." />
-      </div>
-  
-      <!-- Right section: Toggle Button -->
-      <button @click="$emit('toggle-status')" class="btn btn-toggle">
-        {{ restaurantStatus ? "Deactivate" : "Activate" }}
-      </button>
+  <div class="top-bar d-flex justify-content-between align-items-center mb-4">
+    <!-- Left section: Restaurant Name -->
+    <h2 class="restaurant-name me-3">{{ restaurantName }}</h2>
+
+    <!-- Center section: Search Input -->
+    <div class="search-container">
+      <input type="text" class="form-control search-input" placeholder="Search for orders..." />
     </div>
-  </template>
-  
- <script setup>
-   import { defineProps } from 'vue';
-   // Define props using Composition API
-   defineProps({
-     restaurantStatus: {
-       type: Boolean,
-       required: true,
-     },
-   });
- </script>
-  
+
+    <!-- Right section: Toggle Button -->
+    <button @click="$emit('toggle-status')" class="btn btn-toggle">
+      {{ restaurantStatus ? "Deactivate" : "Activate" }}
+    </button>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue';
+
+// Get restaurant name from localStorage
+const restaurantName = ref(localStorage.getItem('restaurantName') || '');
+
+// Props
+defineProps({
+  restaurantStatus: {
+    type: Boolean,
+    required: true,
+  },
+});
+
+// Optionally, if you need to update the restaurant name later from the store, 
+// you can watch for changes and update the local reference.
+onMounted(() => {
+  const storedRestaurantName = localStorage.getItem('restaurantName');
+  if (storedRestaurantName) {
+    restaurantName.value = storedRestaurantName;
+  }
+});
+</script>
+
+
 <style scoped>
   /* Top Bar Container */
   .top-bar {
@@ -39,11 +53,11 @@
   }
   
   .restaurant-name {
+    font-family: system-ui,  'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 2.5rem;
     font-weight: bold;
-    background: linear-gradient(to right, #ff6b6b, #ffd93d);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color:#00754a;
+    /* -webkit-text-fill-color: transparent; */
     margin: 0;
   }
   
