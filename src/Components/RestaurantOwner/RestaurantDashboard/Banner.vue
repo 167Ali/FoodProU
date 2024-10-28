@@ -3,9 +3,7 @@
     <div class="banner mb-4">
       <img
         src="https://images.unsplash.com/photo-1525596201491-f6eae338a205?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGZvb2RzfGVufDB8fDB8fHww"
-        alt="Delicious Food Banner"
-        class="img-fluid banner-img"
-      />
+        alt="Delicious Food Banner" class="img-fluid banner-img"/>
     </div>
   </template>
   
