@@ -1,6 +1,5 @@
 // src/store/modules/restaurantOrders.js
-import restaurantOrderServices from '@/Services/restaurantOwner/restaurantOrders';
-
+import restaurantOrderServices from '@/Services/Resturant/restaurantOrdersService';
 const state = {
   isModalOpen: false,
   selectedOrder: null,
