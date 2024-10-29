@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-
     <LoginHeader />
 
     <div v-if="order" class="order-details-container">
@@ -29,11 +28,9 @@
               <div class="order-text">
                 <p>Delivered to</p>
                 <p>{{ order.deliveryAddress }}</p>
-
               </div>
             </div>
           </div>
-
         </div>
 
         <div class="order-summary-details">
@@ -50,7 +47,6 @@
           <hr />
           <div class="payment-details">
             <p><span>Paid with</span> <span>{{ order.paymentMethod }} - Rs. {{ order.paymentAmount }}</span></p>
-
           </div>
         </div>
       </div>
@@ -62,11 +58,8 @@
           <button class="reorder-button">Select items to reorder</button>
         </div>
 
-        <div class="action-card invoice-section">
-          <p>Need an invoice?</p>
-          <button class="invoice-button" @click="downloadInvoice">Download invoice</button>
-        </div>
-        <OrderRating />
+        <!-- Pass orderId to OrderRating component -->
+        <OrderRating :orderId="props.id" />
       </div>
     </div>
 
@@ -77,7 +70,6 @@
 
     <PageFooter />
   </div>
-
 </template>
 
 <script setup>
@@ -87,7 +79,6 @@ import LoginHeader from '../../Components/HeaderFooter/LoginHeader.vue';
 import PageFooter from '../../Components/HeaderFooter/PageFooter.vue';
 import OrderRating from '@/Components/Customer/OrderRating.vue';
 
-// Props
 const props = defineProps({
   id: {
     type: String,
@@ -95,11 +86,9 @@ const props = defineProps({
   },
 });
 
-// Reactive data
 const order = ref(null);
 const error = ref(null);
 
-// Fetch order details when component is mounted
 const fetchOrderDetails = async () => {
   try {
     order.value = await getOrderDetails(props.id);
@@ -108,7 +97,6 @@ const fetchOrderDetails = async () => {
   }
 };
 
-// Handle invoice download
 const downloadInvoice = async () => {
   try {
     await downloadOrderInvoice(props.id);
@@ -118,7 +106,6 @@ const downloadInvoice = async () => {
   }
 };
 
-// Hook to fetch order details on mount
 onMounted(() => {
   fetchOrderDetails();
 });

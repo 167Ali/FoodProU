@@ -15,9 +15,9 @@ import Reviews from './Modules/customerReviews';
 import RevenueStore from './Admin/RevenueStore';
 import restOwnerProfileStore from './RestaurantOwner/restOwnerProfileStore';
 import RestOrders from '@/Store/RestaurantOwner/restaurantOrder';
-import AddReviews from './Modules/addReviews';
+import addReviews from './Modules/addReviews';
 import adminreviews from '../Store/Admin/reviewAdminStore';
-
+import orderService from '@/Services/Admin/orderService';
 
 import axios from 'axios';
 import ResturantDetailsStore from './Customer/resturantDetailsStore';
@@ -28,6 +28,7 @@ import ProductAddToCart from '@/Components/Customer/ProductAddToCart.vue';
 const store = createStore({
   modules: {
     menuCategory,
+    orderService,
     RestOrders, 
        RevenueStore,
     menuProduct,
@@ -43,7 +44,7 @@ const store = createStore({
     restOwnerProfileStore,
     // Reviews,
 
-    AddReviews,
+    addReviews,
     adminreviews,
     rewards,
     profile: profileModule,
