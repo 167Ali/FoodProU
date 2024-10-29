@@ -110,7 +110,7 @@
               <p>Available payment methods</p>
               <div class="form-check delivery-check">
                 <input class="form-check-input" type="radio" name="paymentMethod" id="cod" checked />
-                <label class="form-check-label" for="cod">{{ orderDetails?.payment_method }} (COD)</label>
+                <label class="form-check-label" for="cod">{{ orderDetails?.payment_method }}</label>
                 <!-- <label class="form-check-label" for="cod">Cash On Delivery (COD)</label> -->
               </div>
 
@@ -138,6 +138,8 @@
   import { useStore } from 'vuex';
   import LoginHeader from '../HeaderFooter/LoginHeader.vue';
   import PageFooter from '../HeaderFooter/PageFooter.vue';
+  import { useRouter } from 'vue-router';
+  const router = useRouter();
 
   const store = useStore();
   const orderDetails = computed(() => store.getters['orders/orderDetails']);
@@ -156,7 +158,7 @@
       currentAddress.value = savedAddress;
     }
   });
-  // console.log(Response.data)
+
   // Update the delivery address and save it to local storage
   const updateAddress = () => {
     if (newAddress.value) {
@@ -173,6 +175,8 @@
       // Other necessary checkout data (like items, payment method, etc.)
     };
     store.dispatch('orders/placeOrder', checkoutData);
+    router.push('/orderScreen');
+
   };
 </script>
 <!--  -->

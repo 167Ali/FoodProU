@@ -52,14 +52,6 @@
         emit('close');
       };
   
-      const signUp = () => {
-        // Logic for sign-up
-        console.log('First Name:', firstName.value);
-        console.log('Last Name:', lastName.value);
-        console.log('Email:', email.value);
-        console.log('Password:', password.value);
-      };
-  
       return {
         firstName,
         lastName,

@@ -128,14 +128,6 @@ const closeModal = () => {
 };
 
 const addToCart = () => {
-  sections.value.forEach((section) => {
-    if (section.selectedOption) {
-      console.log(`Added ${section.title}: ${section.selectedOption.name}`);
-    }
-  });
-  if (cartNotes.value) {
-    console.log(`Notes: ${cartNotes.value}`);
-  }
   closeModal();
 };
 

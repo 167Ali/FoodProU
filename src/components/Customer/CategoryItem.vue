@@ -29,7 +29,6 @@ const props = defineProps({
 const showModal = ref(false); // State to manage modal visibility
 
 const choicesData = props.item;
-//console.log("Items are",choicesData);
 
 </script>
 

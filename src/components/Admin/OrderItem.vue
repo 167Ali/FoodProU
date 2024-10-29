@@ -42,15 +42,12 @@ const { acceptApplication, rejectApplication, fetchOrderItems } = useOrderStore(
 
 const accept_Application = async () => {
   const orderId = props.item.id;
-  console.log('Order ID:', orderId);
-
   if (!orderId) {
     console.error('Order ID is undefined or null');
     return;
   }
 
   try {
-    console.log(`Order accepted: ${orderId}`);
     await acceptApplication(orderId);
   } catch (error) {
     console.error(`Error accepting order: ${error}`);
@@ -59,15 +56,13 @@ const accept_Application = async () => {
 
 const reject_Application = async () => {
   const orderId = props.item.id;
-  console.log('Order ID:', orderId);
-
+ 
   if (!orderId) {
     console.error('Order ID is undefined or null');
     return;
   }
 
   try {
-    console.log(`Order rejected: ${orderId}`);
     await rejectApplication(orderId);
   } catch (error) {
     console.error(`Error rejecting order: ${error}`);

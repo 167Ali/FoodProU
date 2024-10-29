@@ -33,6 +33,7 @@ const store = createStore({
     addToCartStore,
     order, // register the order module
     Prevorder,
+    orders,
     Resturantownerreviews,
     // addOrDelFavsStore,
     // Reviews,

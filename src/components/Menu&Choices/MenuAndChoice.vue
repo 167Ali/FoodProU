@@ -186,9 +186,6 @@ const scrollRight = () => {
 
 
 const addCategory = async () => {
-    console.log(discountPercentage.value)
-    console.log(selectedOption.value)
-    console.log(newCategory.value)
     try {
         if (newCategory.value.trim() !== '') {
             await store.dispatch('menuCategory/addCategory', { name: newCategory.value });
@@ -228,10 +225,7 @@ const categoryId = ref(null);
 const selectItem = (index, id, title) => {
     selectedItem.value = index;
     selectedTitle.value = title;
-
     categoryId.value = id;
-
-    console.log("selected item ", id, title)
     isProductCategoryVisibile.value = true;
 };
 

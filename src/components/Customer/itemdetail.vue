@@ -42,8 +42,6 @@
   };
   
   const addToCart = () => {
-    // Logic to add the product to the cart
-    console.log('Added to cart:', productName);
     closeModal(); // Optionally close the modal after adding to the cart
   };
   </script>

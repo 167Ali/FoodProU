@@ -86,7 +86,6 @@ const signUp = async () => {
   try {
     const response = await store.dispatch('auth/register', formData);
     successMessage.value = 'Registration successful! Redirecting...';
-    console.log('Registration successful', response);
     setTimeout(() => {
       closeModal();
     }, 2000); // Delay closing the modal for a brief period to show the success message

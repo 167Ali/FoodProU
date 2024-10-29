@@ -1,7 +1,7 @@
 <template>
   <div class="restaurant-header" v-if="restaurant">
     <div class="logo-container">
-      <img class="restaurant-logo" :src="getImageUrl(logo)" alt="Restaurant Logo" />
+      <img class="restaurant-logo" :src="logo" alt="Restaurant Logo" />
     </div>
     <div class="restaurant-info">
       <h1>{{ name }}</h1>
@@ -14,7 +14,7 @@
       </div>
     </div>
     <button class="favourite-btn" @click="toggleLike">
-      <span v-if="is_favorite" style="color: red">❤️ Added to Favourites</span>
+      <span v-if="isLiked" style="color: red">❤️ Added to Favourites</span>
       <span v-else>Add to Favourites</span>
     </button>
   </div>
@@ -36,13 +36,13 @@ const props = defineProps({
 const store = useStore(); // Initialize Vuex store
 
 // Compute properties based on the passed restaurant data
-const logo = computed(() => props.restaurant?.logo_url || '');
+const logo = computed(() => props.restaurant?.image || '');
 const name = computed(() => props.restaurant?.name || '');
 const categories = computed(() => props.restaurant ? [props.restaurant.cuisine] : []);
 const rating = computed(() => props.restaurant?.average_rating || 0);
 const openingTime = computed(() => props.restaurant?.opening_time || '');
 const closingTime = computed(() => props.restaurant?.closing_time || '');
-const is_favorite = computed(() => props.restaurant?.is_favorite|| '');
+const is_favorite = computed(() => props.restaurant?.is_favorite || '');
 // Check if the restaurant is liked (in favorites)
 const isLiked = ref(false);
 
@@ -56,12 +56,6 @@ const toggleLike = async () => {
   isLiked.value = !isLiked.value; // Toggle the liked state
 };
 
-// Function to get the full image URL
-const getImageUrl = (imagePath) => {
-  if (!imagePath) {
-    return '/path/to/default/image.jpg'; // Replace with your default image path
-  }
-};
 </script>
 
 

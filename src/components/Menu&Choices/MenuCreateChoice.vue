@@ -105,7 +105,6 @@ const addItem = () => {
 
 const removeItem = (index, id) => {
     if (choiceForm.choices.length > 1 || choiceForm.new_choices.length > 1) {
-        console.log("remove chl")
         if (props.isEditMode) {
             // For existing choices, mark as deleted
             if (choiceForm.choices.length > 0 && id) {
@@ -119,7 +118,6 @@ const removeItem = (index, id) => {
         // When not in edit mode, just remove the choice
         else {
             choiceForm.choices.splice(index, 1);
-            console.log(choiceForm.choices);
         }
     }
 };

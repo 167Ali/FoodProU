@@ -259,7 +259,6 @@ const submitDeal = () => {
     products: selected,
   };
 
-  console.log('Deal Created:', deal);
   dealName.value = '';
   description.value = '';
   discount.value = '';

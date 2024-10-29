@@ -205,7 +205,6 @@ const viewChoice = (index) => {
 
 // Save function for the form component
 const saveChoice = async (choice) => {
-    console.log("choice  and id ", choice)
 
     try {
         if (isEditMode.value && currentEditIndex.value !== null) {

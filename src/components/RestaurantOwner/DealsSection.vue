@@ -8,19 +8,16 @@
                     <input type="text" v-model="deal.title" class="form-control" placeholder="Deal Title" required />
                 </div>
                 <div class="col-12 col-md-4 mb-3">
-                    <input type="number" v-model="deal.discount" class="form-control" placeholder="Discount (%)" required
-                        min="1" max="100" />
+                    <input type="number" v-model="deal.discount" class="form-control" placeholder="Discount (%)" required min="1" max="100" />
                 </div>
                 <div class="col-12 col-md-4 mb-3">
-                    <input type="text" v-model="deal.validity" @blur="validateDate" class="form-control"
-                        placeholder="Validity Date (YYYY-MM-DD)" required />
+                    <input type="text" v-model="deal.validity" @blur="validateDate" class="form-control" placeholder="Validity Date (YYYY-MM-DD)" required />
                     <div v-if="invalidDate" class="text-danger">Invalid date format. Use YYYY-MM-DD.</div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="col-12 mb-3">
-                    <textarea v-model="deal.description" class="form-control" rows="3" placeholder="Deal Description"
-                        required></textarea>
+                    <textarea v-model="deal.description" class="form-control" rows="3" placeholder="Deal Description" required></textarea>
                 </div>
                 <div class="col-12 col-md-4">
                     <button type="submit" class="btn btn-success btn-block" :disabled="invalidDate">Add Deal</button>
@@ -53,48 +50,58 @@
         </table>
     </div>
 </template>
-  
-<script>
+
+<script setup>
 import { ref } from 'vue';
 
-export default {
-    name: 'DealsManagement',
-    setup() {
-        const deal = ref({ title: '', discount: '', validity: '', description: '' });
-        const deals = ref([]);
-        const invalidDate = ref(false);
+// State variables
+const deal = ref({ title: '', discount: '', validity: '', description: '' });
+const deals = ref([]);
+const invalidDate = ref(false);
 
-        const addDeal = () => {
-            if (deal.value.title && deal.value.discount && deal.value.validity && deal.value.description && !invalidDate.value) {
-                deals.value.push({ ...deal.value });
-                deal.value = { title: '', discount: '', validity: '', description: '' };
-            }
-        };
+// Add a new deal
+const addDeal = () => {
+    if (isDealValid()) {
+        deals.value.push({ ...deal.value });
+        resetDeal();
+    }
+};
 
-        const editDeal = (index) => {
-            deal.value = { ...deals.value[index] };
-            deals.value.splice(index, 1);
-        };
+// Edit an existing deal
+const editDeal = (index) => {
+    deal.value = { ...deals.value[index] };
+    deals.value.splice(index, 1);
+};
 
-        const deleteDeal = (index) => {
-            deals.value.splice(index, 1);
-        };
+// Delete a deal
+const deleteDeal = (index) => {
+    deals.value.splice(index, 1);
+};
 
-        const validateDate = () => {
-            const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-            invalidDate.value = !dateRegex.test(deal.value.validity) || !isValidDate(deal.value.validity);
-        };
+// Validate the date format
+const validateDate = () => {
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    invalidDate.value = !dateRegex.test(deal.value.validity) || !isValidDate(deal.value.validity);
+};
 
-        const isValidDate = (dateString) => {
-            const date = new Date(dateString);
-            return date instanceof Date && !isNaN(date);
-        };
+// Check if a date is valid
+const isValidDate = (dateString) => {
+    const date = new Date(dateString);
+    return date instanceof Date && !isNaN(date);
+};
 
-        return { deal, deals, addDeal, editDeal, deleteDeal, validateDate, invalidDate };
-    },
+// Reset the deal form
+const resetDeal = () => {
+    deal.value = { title: '', discount: '', validity: '', description: '' };
+    invalidDate.value = false;
+};
+
+// Check if the deal input is valid
+const isDealValid = () => {
+    return deal.value.title && deal.value.discount && deal.value.validity && deal.value.description && !invalidDate.value;
 };
 </script>
-  
+
 <style scoped>
 h2 {
     color: #00754a;
@@ -125,4 +132,3 @@ h2 {
     }
 }
 </style>
-  

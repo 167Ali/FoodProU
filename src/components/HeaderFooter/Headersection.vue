@@ -13,8 +13,6 @@
 <script setup>
 const filterByRestaurant = (event) => {
   const selectedRestaurant = event.target.value;
-  console.log('Selected restaurant:', selectedRestaurant);
-  // Handle filtering by restaurant here
 };
 </script>
 

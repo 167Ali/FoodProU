@@ -25,7 +25,7 @@
             @mousedown.prevent="selectResult(result)"
           >
             <img
-              :src="getImageUrl(result.logo_path)"
+              :src="result.logo_path"
               alt="Logo"
               style="width: 30px; height: 30px; object-fit: cover; border-radius: 50%; margin-right: 10px;"
             />

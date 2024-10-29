@@ -7,8 +7,7 @@
                     <input type="text" v-model="voucher.code" class="form-control" placeholder="Voucher Code" required />
                 </div>
                 <div class="col-md-4 ms-4">
-                    <input type="number" v-model="voucher.discount" class="form-control" placeholder="Discount (%)" required
-                        min="0" />
+                    <input type="number" v-model="voucher.discount" class="form-control" placeholder="Discount (%)" required min="0" />
                 </div>
                 <div class="col-md-4 ms-5">
                     <button type="submit" class="btn btn-success btn-block">Add Voucher</button>
@@ -29,7 +28,7 @@
                     <td>{{ voucher.code }}</td>
                     <td>{{ voucher.discount }}</td>
                     <td>
-                        <button @click="editVoucher(index)" class="btn btn-warning btn-sm mr-2 ">Edit</button>
+                        <button @click="editVoucher(index)" class="btn btn-warning btn-sm mr-2">Edit</button>
                         <button @click="deleteVoucher(index)" class="btn btn-danger btn-sm ms-2">Delete</button>
                     </td>
                 </tr>
@@ -37,37 +36,39 @@
         </table>
     </div>
 </template>
-  
-<script>
+
+<script setup>
 import { ref } from 'vue';
 
-export default {
-    name: 'VoucherManagement',
-    setup() {
-        const voucher = ref({ code: '', discount: '' });
-        const vouchers = ref([]);
+// State variables
+const voucher = ref({ code: '', discount: '' });
+const vouchers = ref([]);
 
-        const addVoucher = () => {
-            if (voucher.value.code && voucher.value.discount) {
-                vouchers.value.push({ ...voucher.value });
-                voucher.value = { code: '', discount: '' };
-            }
-        };
+// Add a new voucher
+const addVoucher = () => {
+    if (voucher.value.code && voucher.value.discount) {
+        vouchers.value.push({ ...voucher.value });
+        resetVoucher();
+    }
+};
 
-        const editVoucher = (index) => {
-            voucher.value = { ...vouchers.value[index] };
-            vouchers.value.splice(index, 1);
-        };
+// Edit an existing voucher
+const editVoucher = (index) => {
+    voucher.value = { ...vouchers.value[index] };
+    vouchers.value.splice(index, 1);
+};
 
-        const deleteVoucher = (index) => {
-            vouchers.value.splice(index, 1);
-        };
+// Delete a voucher
+const deleteVoucher = (index) => {
+    vouchers.value.splice(index, 1);
+};
 
-        return { voucher, vouchers, addVoucher, editVoucher, deleteVoucher };
-    },
+// Reset the voucher form
+const resetVoucher = () => {
+    voucher.value = { code: '', discount: '' };
 };
 </script>
-  
+
 <style scoped>
 .container {
     max-width: 800px;
@@ -141,4 +142,3 @@ h2 {
     background-color: #c82333;
 }
 </style>
-  

@@ -161,12 +161,7 @@ const saveProduct = async (product) => {
         if (isEditMode.value && currentEditIndex.value !== null) {
             products.value[currentEditIndex.value] = product;
         } else {
-            console.log("prodyct ", product)
-            // console.log("Category ID: ", categoryId);
-            console.log("Product ", product);
             const success = await store.dispatch('menuProduct/addProduct', { product, categoryId });
-            console.log("success ", success);
-            // Uncomment if you want to add the product after the category
             products.value.push(product);
             isFormVisible.value = false;
         }
@@ -182,9 +177,7 @@ const saveProduct = async (product) => {
 const deleteProduct = async (index) => {
 
     try {
-        console.log("index ", index)
         const success = await store.dispatch('menuProduct/deleteProduct', index);
-        console.log("response choice ", success);
         products.value.splice(index, 1);
     } catch (error) {
         console.error('Error Deleting Choice: ', error);

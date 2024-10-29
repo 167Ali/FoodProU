@@ -147,7 +147,6 @@ library.add(
   // Confirm logout action
   const confirmLogout = () => {
     isLogoutModalVisible.value = false;
-    console.log('Logging out...');
     window.location.href = '/'; // Change this to your actual logout route
   };
   </script>

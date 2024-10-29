@@ -56,7 +56,6 @@ const props = defineProps({
 
 const categorylinks = props.menus;
 
-//console.log('Category', categorylinks);
 const isRightButtonVisible = ref(false);
 const isLeftButtonVisible = ref(false);
 const activeCategory = ref('');
@@ -64,11 +63,6 @@ const searchQuery = ref('');
 const isMobile = ref(false);
 const categoriesDiv = ref(null);
 
-// Watch search query changes
-watch(searchQuery, (newQuery) => {
-  console.log('Search query updated:', newQuery);
-  // Add any code you want to trigger when searchQuery changes
-});
 
 // Check screen size for responsiveness
 const checkMobileView = () => {

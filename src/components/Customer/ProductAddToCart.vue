@@ -70,21 +70,20 @@
 <script setup>
 import { ref } from 'vue';
 import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 const props = defineProps({
   choices: {
     type: Array,
     default: () => [],
   },
 });
+const router = useRouter();
 const store = useStore();
 
 const productName = props.choices.menu_item_name;
 const discountedPrice = props.choices.price;
 const productDescription = props.choices.description;
 const cartNotes = ref('');
-
-
-console.log("I have founded the data here", props.choices);
 const sections = ref([
   {
     title: props.choices.choice_groups[0].choice_group_name,
@@ -92,9 +91,10 @@ const sections = ref([
     required: true,
     selectedOption: null,
     options: props.choices.choice_groups[0].choices,
-    Id:choices.choice_groups[0].choice_group_id,
+    Id: props.choices.choice_groups[0].choice_group_id
   }
 ]);
+
 
 const closeModal = () => {
   showModal.value = false;
@@ -104,23 +104,55 @@ const showModal = ref(true);
 
 const addToCart = async () => {
   const variations = sections.value.map(section => ({
-    choice_group_id: section.id, // Adjust this if necessary
+    choice_group_id: section.Id,
     choice_id: section.selectedOption ? section.selectedOption.id : null,
   }));
 
   const item = {
-    menu_item_id: props.choices.menu_item_id, // Ensure this exists
+    menu_item_id: props.choices.menu_item_id,
     quantity: 1,
-    variation: variations.filter(v => v.choice_id !== null),
+    variations: JSON.stringify(variations.filter(v => v.choice_id !== null)), // Keep as an array, not a string
   };
 
   try {
-    const response = await store.dispatch('addToCartStore/addToCart', item); // Dispatch the action from the store
-    console.log('Item added to cart:', response);
-    closeModal();
+    const response = await store.dispatch('addToCartStore/addToCart', item);
+    // Ensure response has the expected structure
+    if (!response || !response.data) {
+      throw new Error('Invalid response structure');
+    }
+
+    const { data } = response; // Assuming response structure
+    const { menu_item } = data;
+
+    // Check if menu_item exists
+    if (!menu_item) {
+      throw new Error('Menu item not found in response');
+    }
+
+    // Create the new item object
+    const newItem = {
+      menu_item_id: item.menu_item_id,
+      name: menu_item.name,
+      image_path: menu_item.image_path,
+      price: menu_item.price || 0, // Provide a default value if price is not available
+      quantity: item.quantity,
+      variations: item.variations, // Include variations in the new item
+    };
+
+    // Retrieve existing items from local storage
+    const existingItems = JSON.parse(localStorage.getItem('cartItem')) || [];
+
+    // Add the new item to the array
+    existingItems.push(newItem);
+
+    // Save the updated array back to local storage
+    localStorage.setItem('cartItem', JSON.stringify(existingItems));
+
+    closeModal(); // Optionally close the modal
+    window.location.reload(); // Reload the page if necessary
+
   } catch (error) {
     console.error('Failed to add item to cart:', error);
-    // Optionally handle the error (e.g., show a notification)
   }
 };
 
