@@ -10,6 +10,7 @@
                 </button>
             </div>
         </div>
+
         <!-- Filter Modal -->
         <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -38,16 +39,6 @@
                                 </select>
                             </div>
 
-                            <!-- Restaurant filter (Dropdown using prop) -->
-                            <div class="mb-3">
-                                <label class="form-label">Restaurant</label>
-                                <select class="form-select" v-model="restaurantFilter">
-                                    <option value="">Select a restaurant...</option>
-                                    <option v-for="restaurant in restaurants" :key="restaurant" :value="restaurant">
-                                        {{ restaurant }}
-                                    </option>
-                                </select>
-                            </div>
 
                             <!-- Name filter -->
                             <div class="mb-3">
@@ -69,6 +60,8 @@
                                 <input type="text" class="form-control" v-model="addressFilter"
                                     placeholder="Filter by address..." />
                             </div>
+
+
 
                             <!-- Date filter -->
                             <div class="mb-3">

@@ -53,8 +53,8 @@ const actions = {
       const { reviews, restaurants } = data.data;
 
       // Log the API response for debugging
-      console.log('API Response - Reviews:', reviews);
-      console.log('API Response - Restaurants:', restaurants);
+      // console.log('API Response - Reviews:', reviews);
+      // console.log('API Response - Restaurants:', restaurants);
 
       // Ensure we get an array of reviews
       const reviewsArray = Array.isArray(reviews) ? reviews : [];

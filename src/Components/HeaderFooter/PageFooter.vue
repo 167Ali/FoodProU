@@ -63,7 +63,7 @@ const footerColumns = ref([
 <style scoped>
 .footer {
   background-color: #f9f9f9;
-  padding: 40px 0;
+  padding: 40px 20px;
   border-top: 1px solid #eaeaea;
 }
 
@@ -71,10 +71,13 @@ const footerColumns = ref([
   display: flex;
   justify-content: space-around;
   text-align: left;
+  flex-wrap: wrap;
 }
 
 .footer-column {
   flex: 1;
+  min-width: 200px;
+  padding: 10px;
 }
 
 .footer-column ul {
@@ -83,7 +86,6 @@ const footerColumns = ref([
 }
 
 .footer-column ul li {
-  margin-left: 150px;
   margin-bottom: 10px;
   font-size: 14px;
   color: #555;
@@ -96,5 +98,21 @@ const footerColumns = ref([
 
 .footer-column ul li a:hover {
   text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .footer {
+    text-align: center;
+  }
+  
+  .footer-links {
+    flex-direction: column;
+  }
+
+  .footer-column {
+    text-align: center;
+    margin-bottom: 20px;
+  }
 }
 </style>

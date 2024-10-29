@@ -10,4 +10,3 @@ export const AllOrders = {
         return axios.get(`${baseURL}/api/get-all-orders`, { headers });
     },
 }
-

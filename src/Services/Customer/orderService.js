@@ -5,7 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Vite uses 'VITE_' pre
 // Function to get JWT token from localStorage
 const getToken = () => {
     const token = localStorage.getItem('token'); // The token is stored with the key 'token'
-    console.log('JWT Token:', token); // Log the token to the console
+    // console.log('JWT Token:', token); // Log the token to the console
     return token;
 };
 
