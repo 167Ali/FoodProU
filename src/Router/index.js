@@ -1,7 +1,7 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
 import adminRoute from './adminRoutes';
-import restaurantownerRoutes from './restaurantOwnerRoutes';
+import restaurantownerRoutes from './restaurantownerRoutes';
 import customerRoutes from './customerRoutes';
 import otherRoutes from './otherRoutes';
 

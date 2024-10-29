@@ -16,10 +16,10 @@
         <h6>Hungry?</h6>
         <p>You haven't added anything to your cart!</p>
       </div>
-      
+
       <div v-else>
         <div v-for="item in cart" :key="item.menu_item_id" class="cart-item">
-          <img :src="item.image_path" alt="item.name" class="item-img"/>
+          <img :src="item.image_path" alt="item.name" class="item-img" />
           <div class="item-details">
             <p class="item-name">{{ item.name }}</p>
             <p class="item-price">Rs. {{ item.price }}</p>
@@ -61,9 +61,9 @@
             Review Payment and Address
           </button>
         </div>
-        
+
       </div>
-      
+
     </div>
 
     <!-- Total and Checkout Button for Desktop -->
@@ -73,9 +73,9 @@
       </span>
       <span>Rs. {{ cartTotal }}</span>
     </p>
-    <button class="checkout-btn" v-if="!isMobile && cart.length > 0">
+    <router-link to="/checkout" class="checkout-btn" v-if="!isMobile && cart.length > 0">
       Review Payment and Address
-    </button>
+    </router-link>
   </div>
 </template>
 
@@ -169,7 +169,6 @@ onMounted(() => {
 
 
 <style scoped>
-
 .cart-container {
   background-color: white;
 
@@ -200,10 +199,11 @@ onMounted(() => {
   z-index: 800;
 }
 
-h5{
+h5 {
   font-weight: 1000;
   font-family: 'Agrandir', 'Open Sans', 'Helvetica Neue', sans-serif;
 }
+
 .cart-visible {
   display: block;
 }
@@ -224,6 +224,7 @@ h5{
   border-bottom: 1px solid rgb(225, 225, 225);
   padding: 15px 12px 15px 12px;
 }
+
 .item-img {
   width: 50px;
   height: 50px;
@@ -232,6 +233,7 @@ h5{
   object-fit: cover;
   margin-right: 16px;
 }
+
 /*  */
 .item-details {
   flex-grow: 1;
@@ -239,7 +241,7 @@ h5{
 
 .item-name {
   font-weight: 600;
-  font-family:system-ui, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: system-ui, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 16px;
   margin-bottom: 4px;
 
@@ -249,6 +251,7 @@ h5{
   font-size: 14px;
   color: #888;
 }
+
 .item-quantity {
   display: flex;
   align-items: center;
@@ -267,14 +270,18 @@ h5{
 }
 
 .item-quantity span {
-  
+
   font-size: 16px;
 }
-.fa2, .fa3, .fa1{
+
+.fa2,
+.fa3,
+.fa1 {
   font-weight: 100;
   padding: 0px 0px 0px 5px;
 }
-.fa1{
+
+.fa1 {
   font-weight: 600;
   color: #3e3e3e;
 }
@@ -284,33 +291,42 @@ h5{
 }
 
 .cart-summary p {
-  margin: 4px 0;  
+  margin: 4px 0;
   font-size: 14px;
 
-}  
+}
+
 .cart-summary span {
   padding-right: 10px;
-}  
-.cart-summary span, .cart-summary p {
+}
+
+.cart-summary span,
+.cart-summary p {
   color: #787878;
   font-weight: 600;
   font-family: 'Open Sans', system-ui, 'Segoe UI', 'Helvetica Neue', sans-serif;
 }
-.cart-summary-total{
+
+.cart-summary-total {
   margin: 10px 0px 0px 0px;
   font-size: 18px;
   font-weight: 600;
 }
-.cart-summary-total span, .checkout-btn{
-  font-family:'Open Sans', system-ui, 'Segoe UI', 'Helvetica Neue', sans-serif;
+
+.cart-summary-total span,
+.checkout-btn {
+  font-family: 'Open Sans', system-ui, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  text-decoration: none;
 }
-  .fee-tax{
-    font-size: 13px;
-    color: #787878;
-    font-weight: 400;
-  }
-  .checkout-btn {
-  background-color:#00754A;
+
+.fee-tax {
+  font-size: 13px;
+  color: #787878;
+  font-weight: 400;
+}
+
+.checkout-btn {
+  background-color: #00754A;
   color: white;
   padding: 12px;
   border: none;
@@ -322,71 +338,75 @@ h5{
 }
 
 .checkout-btn:hover {
-  background-color:#076241;
+  background-color: #076241;
 }
 
-  /* Responsive Mobile Styles */
-  .cart-button-mode {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    padding: 0;
-  }
-  
-  .cart-toggle-btn {
-    width: 100%;
-    background-color: #00754A;
-    color: white;
-    padding: 12px;
-    border: none;
-    font-size: 16px;
-    position: absolute;
-    bottom: 10px;
-    border-radius: 5px;
-    margin-left: 2vw;
-    /* margin-right: 20px */
-    width: 96vw;
+/* Responsive Mobile Styles */
+.cart-button-mode {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 0;
+}
 
-  }
+.cart-toggle-btn {
+  width: 100%;
+  background-color: #00754A;
+  color: white;
+  padding: 12px;
+  border: none;
+  font-size: 16px;
+  position: absolute;
+  bottom: 10px;
+  border-radius: 5px;
+  margin-left: 2vw;
+  /* margin-right: 20px */
+  width: 96vw;
+
+}
 
 
-  .empty-cart{
-    height: 100%;
-    width: 100%;
-    padding-top: 40%;
-    text-align: center;
-  }
-  .empty-cart h6{
-    font-family: 'Agrandir', 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 22px;
-    font-weight: bolder;
-    margin: 0 auto;
-    padding-bottom: 10px;
-  }
-  .empty-cart p{
-    text-align: center;
-    width: 67%;
-    margin: auto;
-    color: #838383;
-  }
+.empty-cart {
+  height: 100%;
+  width: 100%;
+  padding-top: 40%;
+  text-align: center;
+}
 
-  .close-btn {
-    background-color: transparent;
-    border: none;
-    font-size: 24px;
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    cursor: pointer;
-  }
-  .checkout-btn-mobile{
-    border: 1px solid black;
-  }
+.empty-cart h6 {
+  font-family: 'Agrandir', 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 22px;
+  font-weight: bolder;
+  margin: 0 auto;
+  padding-bottom: 10px;
+}
+
+.empty-cart p {
+  text-align: center;
+  width: 67%;
+  margin: auto;
+  color: #838383;
+}
+
+.close-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+}
+
+.checkout-btn-mobile {
+  border: 1px solid black;
+}
 
 
 
 /* Hide the cart by default on mobile */
 @media (max-width: 959px) {
+
   /* .cart-visible {
     display: none;
   } */
@@ -397,7 +417,7 @@ h5{
   /* .chekout-btn-mobile{
     display: block;
   } */
-  .empty-cart{
+  .empty-cart {
     margin-top: -150px;
     /* display: flex; */
     /* justify-content: center;
@@ -410,5 +430,11 @@ h5{
   .cart-modal {
     display: block;
   }
+
+  /* .chekout-btn-mobile{
+    display: none;
+  } */
 }
+
+/*  */
 </style>

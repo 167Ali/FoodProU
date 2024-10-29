@@ -3,8 +3,7 @@
     <div class="row g-3 justify-content-center">
       <div class="col-lg-9">
         <div
-          class="card timer-section shadow-sm mb-2 text-black text-center border-0 rounded-3 p-2 animate__animated animate__fadeIn"
-        >
+          class="card timer-section shadow-sm mb-2 text-black text-center border-0 rounded-3 p-2 animate__animated animate__fadeIn">
           <div class="d-flex justify-content-between align-items-center mb-2"></div>
 
           <div>
@@ -21,23 +20,21 @@
 
         <div
           class="card order-details-section shadow-sm p-2 bg-white border-0 rounded-3 animate__animated animate__fadeInUp"
-        >
+          v-if="isOrderActive">
           <h6 class="fw-bold text-center mb-2">Order Details</h6>
         </div>
         <br />
 
-        <ul class="list-group list-group-flush scrollable-list">
+        <ul class="list-group list-group-flush scrollable-list" v-if="isOrderActive">
           <li
             class="list-group-item d-flex justify-content-between align-items-center py-2 animate__animated animate__fadeIn"
-            v-for="item in orderItems"
-            :key="item.id"
-          >
+            v-for="item in orderItems" :key="item.id">
             <div class="d-flex flex-column">
               <div class="d-flex align-items-center">
                 <img :src="item.img" alt="item image" class="item-img me-2" />
                 <div class="item-details">
                   <span class="item-name fw-semibold">{{ item.name }}</span><br />
-                  <small>Order Number: <strong>#{{ item.orderNumber }}</strong></small><br />
+                  <small>Item Number: <strong>#{{ item.orderNumber }}</strong></small><br />
                   <small>Delivery Address: <strong>{{ item.address }}</strong></small><br />
                   <small>City: <strong>{{ item.city }}</strong></small>
                 </div>
@@ -47,15 +44,14 @@
           </li>
         </ul>
 
-        <div class="total-section text-end mt-2">
+        <div class="total-section text-end mt-2" v-if="isOrderActive">
           <h6 class="fw-bold">Total: <span class="text-success">Rs {{ totalPayment }} </span></h6>
         </div>
       </div>
 
       <div class="col-lg-3 d-flex flex-column justify-content-start align-items-center">
         <div
-          class="card cancel-section shadow-sm p-3 bg-light text-center border-0 rounded-3 animate__animated animate__bounceIn"
-        >
+          class="card cancel-section shadow-sm p-3 bg-light text-center border-0 rounded-3 animate__animated animate__bounceIn">
           <p class="mt-2 fs-6 countdown-text">
             Time Remaining:
             <strong>
@@ -74,58 +70,33 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 
+const initialOrderItems = [
+  {
+    id: 1,
+    name: "Masala Fries",
+    price: 450,
+    orderNumber: 1,
+    address: "326 PF",
+    city: "Lahore",
+    img: "http://192.168.15.67:8000/storage/menuitems/0mDeobliEAVGRhzw5wl0NGj9WWTkn5T3N0CbB0zm.webp",
+  },
+  {
+    id: 2,
+    name: "Chicken fillet Sandwich",
+    price: 690,
+    orderNumber: 2,
+    address: "326 PF",
+    city: "Lahore",
+    img: "http://192.168.15.67:8000/storage/menuitems/PTYrHpfxp35cjeIMayFVgoCfvzzJIQAdSYK4iuxb.webp",
+  }
+];
+
 const minutes = ref(5);
 const cancelMinutes = ref(3);
 const cancelSeconds = ref(cancelMinutes.value * 60);
 const progressWidth = ref(0);
-
-const orderItems = ref([
-  {
-    id: 1,
-    name: "Chicken Biryani",
-    price: 400,
-    orderNumber: 123456,
-    address: "123 Main Street",
-    city: "Karachi",
-    img: "https://t3.ftcdn.net/jpg/01/96/80/24/240_F_196802485_VQxk0qmyPGTq56rKYXGikVGApD3A7v5T.jpg",
-  },
-  {
-    id: 2,
-    name: "Beef Kebab",
-    price: 200,
-    orderNumber: 123457,
-    address: "456 Elm Street",
-    city: "Lahore",
-    img: "https://t3.ftcdn.net/jpg/02/28/09/68/240_F_228096879_Llb3kQFgYSpuooa7Bewtdw9Cm3NXicVt.jpg",
-  },
-  {
-    id: 3,
-    name: "Naan",
-    price: 35,
-    orderNumber: 123458,
-    address: "789 Oak Street",
-    city: "Islamabad",
-    img: "https://t3.ftcdn.net/jpg/07/98/99/76/240_F_798997656_PARY8jYTOTsnGu7w1ABg7mCseAmEhm1G.jpg",
-  },
-  {
-    id: 4,
-    name: "Mango Shake",
-    price: 220,
-    orderNumber: 123459,
-    address: "111 Maple Street",
-    city: "Quetta",
-    img: "https://t4.ftcdn.net/jpg/01/63/49/09/240_F_163490991_ASRBS0x9ZEWekoihL8UcRIV6BebG2Ud2.jpg",
-  },
-  {
-    id: 5,
-    name: "Gulab Jamun",
-    price: 200,
-    orderNumber: 123460,
-    address: "222 Pine Street",
-    city: "Peshawar",
-    img: "https://t3.ftcdn.net/jpg/08/42/48/86/240_F_842488691_jNknbqQn2GSMXFggvtyX3UaVORtBRFSc.jpg",
-  },
-]);
+const orderItems = ref([...initialOrderItems]);
+const isOrderActive = ref(true); // New flag to track order status
 
 const totalPayment = computed(() => {
   return orderItems.value.reduce((total, item) => total + item.price, 0);
@@ -161,7 +132,18 @@ const startCancelTimer = () => {
 };
 
 const cancelOrder = () => {
-  alert("Order has been cancelled.");
+  // Stop timers
+  clearInterval(timer);
+  clearInterval(cancelTimer);
+
+  // Reset data
+  orderItems.value = [...initialOrderItems];
+  minutes.value = 5;
+  cancelSeconds.value = cancelMinutes.value * 60;
+  progressWidth.value = 0;
+  isOrderActive.value = false; // Set flag to false
+
+  alert("Order has been cancelled and reset.");
 };
 
 onMounted(() => {
