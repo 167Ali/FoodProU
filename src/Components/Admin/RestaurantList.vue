@@ -7,12 +7,7 @@
     <div v-if="error">{{ error }}</div>
 
     <!-- Display the restaurants once the data is loaded -->
-    <RestaurantItem
-      v-for="item in restaurants"
-      :key="item.id"
-      :restaurant="item"
-      class="restaurant-item"
-    />
+    <RestaurantItem v-for="item in restaurants" :key="item.id" :restaurant="item" class="restaurant-item" />
   </div>
 </template>
 
@@ -44,7 +39,8 @@ onMounted(() => {
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .restaurant-list {
-    grid-template-columns: 1fr; /* Show one card per row on mobile */
+    grid-template-columns: 1fr;
+    /* Show one card per row on mobile */
   }
 }
 
@@ -58,7 +54,8 @@ onMounted(() => {
 }
 
 .restaurant-item:hover {
-  transform: scale(1.02); /* Slight scale on hover */
+  transform: scale(1.02);
+  /* Slight scale on hover */
 }
 
 .restaurant-item img {
@@ -72,7 +69,8 @@ onMounted(() => {
 
 @media (min-width: 992px) {
   .restaurant-item {
-    flex-direction: row; /* Adjust layout for larger screens if needed */
+    flex-direction: row;
+    /* Adjust layout for larger screens if needed */
   }
 }
 </style>

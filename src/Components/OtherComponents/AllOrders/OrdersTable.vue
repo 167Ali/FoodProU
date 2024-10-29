@@ -7,9 +7,9 @@
                     <th>Customer Name</th>
                     <th>Phone</th>
                     <th>Address</th>
-                    <th>Restaurant</th>
+                    <!-- <th>Restaurant</th> -->
                     <th>Total Price</th>
-                    <th>Food ProCom</th>
+                    <!-- <th>Food ProCom</th> -->
                     <th>Status</th>
                     <th>Date</th>
                     <th>View Details</th>
@@ -19,14 +19,15 @@
                 <transition-group name="fade" mode="out-in">
                     <tr v-for="order in filteredOrders" :key="order.id">
                         <td>{{ order.id }}</td>
-                        <td>{{ order.name }}</td>
-                        <td>{{ order.phone }}</td>
-                        <td>{{ order.address }}</td>
-                        <td>{{ order.restaurant }}</td>
-                        <td>{{ formatCurrency(order.totalPrice) }}</td>
-                        <td>{{ formatCurrency(order.foodCommission) }}</td>
+                        <td>{{ order.first_name }}</td>
+                        <td>{{ order.phone_number }}</td>
+                        <td>{{ order.customer_address }}</td>
+                        <!-- <td>{{ order.restaurant }}</td> -->
+                        <td>{{ formatCurrency(order.total_amount) }}</td>
+                        <!-- <td>{{ formatCurrency(order.foodCommission) }}</td> -->
                         <td>{{ order.status }}</td>
-                        <td>{{ order.date }}</td>
+                        <td>{{ orderDetails.created_at ?
+                            orderDetails.created_at.split(' ')[0] : '' }}</td>
                         <td>
                             <button class="btn btn-details" @click="openModal(order)">
                                 <i class="fas fa-eye"></i> View Details
@@ -36,6 +37,7 @@
                 </transition-group>
             </tbody>
         </table>
+
         <!-- Receipt Modal -->
         <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -50,14 +52,17 @@
                             <hr />
                             <div class="row">
                                 <div class="col-6 ">
-                                    <p><strong>Customer Name:</strong> {{ orderDetails.name }}</p>
-                                    <p><strong>Phone Number:</strong> {{ orderDetails.phone }}</p>
-                                    <p><strong>Address:</strong> {{ orderDetails.address }}</p>
+                                    <p><strong>Customer Name:</strong> {{ orderDetails.first_name }}</p>
+                                    <p><strong>Address:</strong> {{ orderDetails.customer_address }}</p>
+                                    <p><strong>Phone Number:</strong> {{ orderDetails.phone_number }}</p>
                                 </div>
                                 <div class="col-6 d-flex flex-column align-items-end ">
+                                    <p><strong>Restaurant Name:</strong> {{ orderDetails.restaurant_name }}</p>
                                     <p><strong>Order Number:</strong> {{ orderDetails.id }}</p>
-                                    <p><strong>Date:</strong> {{ orderDetails.date }}</p>
-                                    <p><strong>Time:</strong> {{ orderDetails.time }}</p>
+                                    <p><strong>Date:</strong> {{ orderDetails.created_at ?
+                                        orderDetails.created_at.split(' ')[0] : '' }}</p>
+
+
                                 </div>
                             </div>
                             <hr />
@@ -70,29 +75,10 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Total Product Price</td>
-                                        <td class="text-end">{{ orderDetails.totalPrice }} PKR</td>
+                                        <td>Total Order Price</td>
+                                        <td class="text-end">{{ orderDetails.total_amount }} PKR</td>
                                     </tr>
-                                    <tr>
-                                        <td>Delivery Charges</td>
-                                        <td class="text-end">200 PKR</td>
-                                    </tr>
-                                    <tr>
-                                        <td>GST (16%)</td>
-                                        <td class="text-end">{{ gstAmount }} PKR</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Food Pro Commission</td>
-                                        <td class="text-end">{{ orderDetails.foodCommission }} PKR</td>
-                                    </tr>
-                                    <tr class="table-primary">
-                                        <td><strong>Total Restaurant Got</strong></td>
-                                        <td class="text-end"><strong>{{ totalRestaurantGot }} PKR</strong></td>
-                                    </tr>
-                                    <tr class="table-success">
-                                        <td><strong>Profit</strong></td>
-                                        <td class="text-end"><strong>{{ profit }} PKR</strong></td>
-                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -125,6 +111,9 @@ const props = defineProps({
 const formatCurrency = (amount) => {
     return `Rs ${amount.toFixed(2)}`;
 };
+
+
+
 // Order details ref
 const orderDetails = ref({});
 
@@ -146,12 +135,12 @@ const openModal = (order) => {
 
 // Calculate GST
 const gstAmount = computed(() => {
-    return (orderDetails.value.totalPrice * 0.16).toFixed(2);
+    return (orderDetails.value.total_amount * 0.16).toFixed(2);
 });
 
 // Calculate total amount restaurant got
 const totalRestaurantGot = computed(() => {
-    return (orderDetails.value.totalPrice - gstAmount.value - orderDetails.value.foodCommission + 200).toFixed(2);
+    return (orderDetails.value.total_amount - gstAmount.value).toFixed(2);
 });
 
 // Calculate profit

@@ -1,36 +1,50 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Vite uses 'VITE_' prefix for env variables
 
-class OrderService {
-    async getApplications() {
-        try {
-            const response = await axios.get(`${API_BASE_URL}/api/get-applications`);
-            return response.data;
-            // Adjust according to your API response structure
-        } catch (error) {
-            console.error('Error fetching applications:', error);
-            throw error;
-        }
-    }
-    async acceptApplication(requestId) {
-        try {
-            const response = await axios.post(`${API_BASE_URL}/api/accept-application/${requestId}`);
-            return response.data; // Return the response data as needed
-        } catch (error) {
-            console.error('Error accepting application:', error);
-            throw error;
-        }
-    }
-    async rejectApplication(requestId) {
-        try {
-            const response = await axios.post(`${API_BASE_URL}/api/reject-application/${requestId}`);
-            return response.data; // Return the response data as needed
-        } catch (error) {
-            console.error('Error rejecting application:', error);
-            throw error;
-        }
-    }
-}
+// Function to get JWT token from localStorage
+const getToken = () => {
+    const token = localStorage.getItem('token'); // The token is stored with the key 'token'
+    console.log('JWT Token:', token); // Log the token to the console
+    return token;
+};
 
-export default new OrderService();
+// Function to get active orders with JWT token
+// eslint-disable-next-line no-unused-vars
+export const getActiveOrders = async (customerId) => {
+    try {
+        const token = getToken(); // Get the token from localStorage
+
+
+        const response = await axios.get(`${API_BASE_URL}/api/orders/active-order`, {
+            headers: {
+                Authorization: `Bearer ${token}` // Pass the token in the headers
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching active orders:', error);
+        throw error;
+    }
+};
+
+// Function to get past orders with JWT token
+// eslint-disable-next-line no-unused-vars
+export const getPastOrders = async (customerId) => {
+    try {
+        const token = getToken(); // Get the token from localStorage
+
+
+        const response = await axios.get(`${API_BASE_URL}/api/orders/history`, {
+            headers: {
+                Authorization: `Bearer ${token}` // Pass the token in the headers
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching past orders:', error);
+        throw error;
+    }
+};

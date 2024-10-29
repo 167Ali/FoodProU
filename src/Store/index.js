@@ -23,6 +23,8 @@ import ResturantRevinue from './Customer/resturantRevenue'; // Import the new mo
 import orders from './Customer/checkout';
 import favoriteStore from './Customer/favScreenCus';
 import ProductAddToCart from '@/Components/Customer/ProductAddToCart.vue';
+import restaurantsData from './Admin/restaurantData';
+
 const store = createStore({
   modules: {
     menuCategory,
@@ -40,7 +42,7 @@ const store = createStore({
     // RevenueStore,
     restOwnerProfileStore,
     // Reviews,
-
+    restaurants: restaurantsData,
     AddReviews,
     adminreviews,
     rewards,
