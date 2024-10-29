@@ -15,22 +15,23 @@ import Reviews from './Modules/customerReviews';
 import RevenueStore from './Admin/RevenueStore';
 import restOwnerProfileStore from './RestaurantOwner/restOwnerProfileStore';
 import RestOrders from '@/Store/RestaurantOwner/restaurantOrder';
-import addReviews from './Modules/addReviews';
+import AddReviews from './Modules/addReviews';
 import adminreviews from '../Store/Admin/reviewAdminStore';
-import orderService from '@/Services/Admin/orderService';
-
 import axios from 'axios';
 import ResturantDetailsStore from './Customer/resturantDetailsStore';
 import ResturantRevinue from './Customer/resturantRevenue'; // Import the new module
-import orders from './Customer/checkout';
+import orders from './Customer/orders';
 import favoriteStore from './Customer/favScreenCus';
 import ProductAddToCart from '@/Components/Customer/ProductAddToCart.vue';
+import restaurantsData from './Admin/restaurantData';
+import addToCartStore from './Customer/addToCartStore';
+
+
 const store = createStore({
   modules: {
     menuCategory,
-    orderService,
-    RestOrders, 
-       RevenueStore,
+    RestOrders,
+    RevenueStore,
     menuProduct,
     menuChoice,
     order, // register the order module
@@ -38,13 +39,15 @@ const store = createStore({
     Resturantownerreviews,
     Reviews,
     ProductAddToCart,
+    addToCartStore,
+    orders,
     // addOrDelFavsStore,
     // Reviews,
     // RevenueStore,
     restOwnerProfileStore,
     // Reviews,
-
-    addReviews,
+    restaurants: restaurantsData,
+    AddReviews,
     adminreviews,
     rewards,
     profile: profileModule,

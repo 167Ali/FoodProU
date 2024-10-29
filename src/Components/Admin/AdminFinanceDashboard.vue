@@ -63,7 +63,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from 'vue';
+import { ref, onMounted, onUnmounted, computed, watch, nextTick } from 'vue';
 import { Chart, registerables } from 'chart.js';
 import { useStore } from 'vuex';
 import SideBar from '@/Components/Admin/SideBar.vue';
@@ -83,6 +83,11 @@ const selectedFilter = ref('all');
 const selectedRestaurant = ref('');
 const isLoading = ref(true);
 
+// Chart instances
+let topRestaurantsChart = null;
+let revenueOverTimeChart = null;
+let orderVolumeOverTimeChart = null;
+
 // Fetch data from the store
 const revenueDetails = computed(() => store.getters['RevenueStore/getRevenueDetails']);
 const orderVolumeDetails = computed(() => store.getters['RevenueStore/getOrderVolumeDetails']);
@@ -90,41 +95,26 @@ const orderVolumeDetails = computed(() => store.getters['RevenueStore/getOrderVo
 // Reactive variables
 const restaurantNames = ref([]);
 
-// Watch for changes in the filters and re-create charts when they change
-watch([selectedFilter, selectedRestaurant], () => {
-  if (!isLoading.value) {
-    createCharts();
-  }
-});
-
-// Function to initialize data
-const initializeData = () => {
-  // Populate restaurantNames
-  const allRestaurants = [
-    ...new Set([
-      ...revenueDetails.value.restaurant_name,
-      ...orderVolumeDetails.value.restaurant_name,
-    ]),
-  ];
-  restaurantNames.value = allRestaurants;
-
-  // Fetch initial data
-  store.dispatch('RevenueStore/fetchRevenueReports').then(() => {
+// Function to initialize data and create charts
+const initializeData = async () => {
+  try {
+    await store.dispatch('RevenueStore/fetchRevenueReports');
+    restaurantNames.value = Array.from(new Set([
+      ...(revenueDetails.value.restaurant_name || []),
+      ...(orderVolumeDetails.value.restaurant_name || []),
+    ]));
     isLoading.value = false;
-    initializeData();
+    await nextTick();  // Wait until the DOM is updated
     createCharts();
-  });
+  } catch (error) {
+    console.error("Error in dispatch:", error);
+  }
 };
 
-// Function to apply filters and update charts
-const applyFilters = () => {
-  isLoading.value = true; // Show loading spinner
-  createCharts();
-};
-
-// Function to create all charts
+// Function to create all charts based on selected filter and restaurant
 const createCharts = () => {
-  // Create Top Performing Restaurants Chart
+  destroyCharts();
+
   if (!selectedRestaurant.value) {
     createTopRestaurantsChart();
   } else {
@@ -133,13 +123,30 @@ const createCharts = () => {
   }
 };
 
+// Function to destroy existing charts before re-creating them
+const destroyCharts = () => {
+  if (topRestaurantsChart) {
+    topRestaurantsChart.destroy();
+    topRestaurantsChart = null;
+  }
+  if (revenueOverTimeChart) {
+    revenueOverTimeChart.destroy();
+    revenueOverTimeChart = null;
+  }
+  if (orderVolumeOverTimeChart) {
+    orderVolumeOverTimeChart.destroy();
+    orderVolumeOverTimeChart = null;
+  }
+};
+
 // Function to create Top Performing Restaurants Chart
 const createTopRestaurantsChart = () => {
+  if (!topRestaurantsChartCanvas.value) return;  // Check if the canvas is available
   const ctx = topRestaurantsChartCanvas.value.getContext('2d');
-  const revenueData = revenueDetails.value.revenue; // Adjust according to your data structure
-  const restaurantData = revenueDetails.value.restaurant_name; // Adjust according to your data structure
+  const revenueData = revenueDetails.value.revenue || [];
+  const restaurantData = revenueDetails.value.restaurant_name || [];
 
-  new Chart(ctx, {
+  topRestaurantsChart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: restaurantData,
@@ -166,11 +173,12 @@ const createTopRestaurantsChart = () => {
 
 // Function to create Revenue Over Time Chart
 const createRevenueOverTimeChart = () => {
+  if (!revenueOverTimeCanvas.value) return;  // Check if the canvas is available
   const ctx = revenueOverTimeCanvas.value.getContext('2d');
-  const revenueData = revenueDetails.value.revenue; // Adjust according to your data structure
-  const createdAtData = revenueDetails.value.created_at; // Adjust according to your data structure
+  const revenueData = revenueDetails.value.revenue || [];
+  const createdAtData = revenueDetails.value.created_at || [];
 
-  new Chart(ctx, {
+  revenueOverTimeChart = new Chart(ctx, {
     type: 'line',
     data: {
       labels: createdAtData,
@@ -199,11 +207,12 @@ const createRevenueOverTimeChart = () => {
 
 // Function to create Order Volume Over Time Chart
 const createOrderVolumeOverTimeChart = () => {
+  if (!orderVolumeOverTimeCanvas.value) return;  // Check if the canvas is available
   const ctx = orderVolumeOverTimeCanvas.value.getContext('2d');
-  const orderVolumeData = orderVolumeDetails.value.order_volume; // Adjust according to your data structure
-  const orderDateData = orderVolumeDetails.value.order_date; // Adjust according to your data structure
+  const orderVolumeData = orderVolumeDetails.value.order_volume || [];
+  const orderDateData = orderVolumeDetails.value.order_date || [];
 
-  new Chart(ctx, {
+  orderVolumeOverTimeChart = new Chart(ctx, {
     type: 'line',
     data: {
       labels: orderDateData,
@@ -230,9 +239,21 @@ const createOrderVolumeOverTimeChart = () => {
   });
 };
 
+// Watch for changes in the filters and re-create charts when they change
+watch([selectedFilter, selectedRestaurant], () => {
+  if (!isLoading.value) {
+    createCharts();
+  }
+});
+
 // Initialize data on component mount
 onMounted(() => {
   initializeData();
+});
+
+// Clean up chart instances on component unmount
+onUnmounted(() => {
+  destroyCharts();
 });
 </script>
 
@@ -240,10 +261,30 @@ onMounted(() => {
 .page-container {
   display: flex;
 }
+
 .main-content {
   flex: 1;
+  padding: 20px;
 }
+
 .label {
+  font-weight: bold;
   margin-bottom: 0.5rem;
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  color: #007bff;
+}
+
+h3 {
+  text-align: center;
+  margin-top: 20px;
+}
+
+canvas {
+  width: 100% !important;
+  height: auto !important;
 }
 </style>

@@ -18,6 +18,7 @@
         </a>
       </div>
 
+      <!-- <button id="scrollRight" class="scroll-btn right" @click="scrollRight">›</button> -->
       <button v-if="isRightButtonVisible" id="scrollRight" class="scroll-btn right" @click="scrollRight">›</button>
     </div>
 
@@ -101,6 +102,28 @@ const scrollNavbarItemIntoView = () => {
     });
   }
 };
+
+// // Highlight active section on scroll and scroll navbar item into view
+// const onScroll = () => {
+//   const navbarHeight = document.getElementById('categoryNavbar').offsetHeight;
+//   const offset = window.scrollY + navbarHeight;
+
+//   categoryLinks.value.forEach((category) => {
+//     const section = document.getElementById(category.id);
+//     const sectionTop = section.offsetTop;
+//     const sectionBottom = sectionTop + section.offsetHeight;
+
+//     if (offset >= sectionTop && offset < sectionBottom) {
+//       activeCategory.value = category.id;
+
+//       // Scroll the active navbar item into center view
+//       nextTick(() => {
+//         scrollNavbarItemIntoView();
+//       });
+//     }
+//   });
+// };
+
 // Check if categories overflow the container
 const checkOverflow = () => {
   const container = categoriesDiv.value;

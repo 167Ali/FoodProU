@@ -20,7 +20,8 @@
                     </div>
                     <div class="mb-3">
 
-                        <input type="password" class="form-control" placeholder="Password" v-model="password" required />
+                        <input type="password" class="form-control" placeholder="Password" v-model="password"
+                            required />
 
                     </div>
 
@@ -50,10 +51,10 @@ import { toRefs } from 'vue'; // To manage props in setup syntax
 
 // Props
 const props = defineProps({
-  showModal: {
-    type: Boolean,
-    required: true,
-  }
+    showModal: {
+        type: Boolean,
+        required: true,
+    }
 });
 
 // Extract reactive references for props
@@ -74,55 +75,54 @@ const emit = defineEmits(['close']);
 
 // Function to close the modal
 const closeModal = () => {
-  emit('close');
+    emit('close');
 };
 
 // Function to handle login
 const login = async () => {
-  // Resetting error state before login
-  error.value = null;
-  isLoading.value = true;
+    // Resetting error state before login
+    error.value = null;
+    isLoading.value = true;
 
-  try {
-    // Dispatching the login action to Vuex store with email and password
-    const response = await store.dispatch('auth/login', {
-      email: email.value,
-      password: password.value,
-    });
+    try {
+        // Dispatching the login action to Vuex store with email and password
+        const response = await store.dispatch('auth/login', {
+            email: email.value,
+            password: password.value,
+        });
 
-    // Extracting the role from the response
-    const { role } = response;
+        // Extracting the role from the response
+        const { role } = response;
 
-    // Redirecting based on user role
-    switch (role) {
-      case 'Admin':
-        router.push({ name: 'AdminDashboard' });
-        break;
-      case 'Customer':
-        router.push({ name: 'DashboardResturantPage' });
-        break;
-      case 'Restaurant Owner':
-        router.push({ name: 'RestaurantOwner_Dashboard' });
-        break;
-      default:
-        router.push({ name: 'Home' });
-        break;
+        // Redirecting based on user role
+        switch (role) {
+            case 'Admin':
+                router.push({ name: 'AdminDashboard' });
+                break;
+            case 'Customer':
+                router.push({ name: 'DashboardResturantPage' });
+                break;
+            case 'Restaurant Owner':
+                router.push({ name: 'RestaurantOwner_Dashboard' });
+                break;
+            default:
+                router.push({ name: 'Home' });
+                break;
+        }
+
+        // Close the modal on successful login
+        closeModal();
+    } catch (err) {
+        // Set error message if login fails
+        error.value = err.message || 'Login failed. Please check your credentials.';
+    } finally {
+        // Set loading state to false after login attempt
+        isLoading.value = false;
     }
-
-    // Close the modal on successful login
-    closeModal();
-  } catch (err) {
-    // Set error message if login fails
-    error.value = err.message || 'Login failed. Please check your credentials.';
-  } finally {
-    // Set loading state to false after login attempt
-    isLoading.value = false;
-  }
 };
 </script>
 
 <style scoped>
-
 .modal-title {
     text-align: center;
     flex-grow: 1;

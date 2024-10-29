@@ -7,21 +7,17 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Replace with your act
 
 // Function to fetch revenue reports
 export const fetchRevenueReports = async () => {
-  const token = localStorage.getItem('token'); // Retrieve token if needed
+  const token = localStorage.getItem('token');
+
   try {
     const response = await axios.get(`${API_BASE_URL}/api/restaurant-revenues`, {
       headers: {
-        Authorization: `Bearer ${token}`, // Include token if authentication is required
+        Authorization: `Bearer ${token}`,
       },
-    })
-      .then((reponse) => {
-        console.log(response);
-      }).catch((error) => { console.log(error) });
-    console.log("admin revenue response:", response);
-
-    return response; // Return the full Axios response
+    });
+    return response;
   } catch (error) {
-
+    console.error("Error fetching revenue reports:", error.response ? error.response.data : error.message);
     throw error;
   }
 };
