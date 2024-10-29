@@ -17,8 +17,6 @@ import restOwnerProfileStore from './RestaurantOwner/restOwnerProfileStore';
 import RestOrders from '@/Store/RestaurantOwner/restaurantOrder';
 import AddReviews from './Modules/addReviews';
 import adminreviews from '../Store/Admin/reviewAdminStore';
-
-
 import axios from 'axios';
 import ResturantDetailsStore from './Customer/resturantDetailsStore';
 import ResturantRevinue from './Customer/resturantRevenue'; // Import the new module
@@ -28,8 +26,8 @@ import ProductAddToCart from '@/Components/Customer/ProductAddToCart.vue';
 const store = createStore({
   modules: {
     menuCategory,
-    RestOrders, 
-       RevenueStore,
+    RestOrders,
+    RevenueStore,
     menuProduct,
     menuChoice,
     order, // register the order module

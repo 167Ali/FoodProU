@@ -1,4 +1,5 @@
 // src/store/Auth/AuthStore.js
+
 import { resetPassword, setPassword, login, register, registerBusiness } from '../../Services/Auth/authService';
 const state = () => ({
     loading: false,
@@ -6,16 +7,11 @@ const state = () => ({
     errorMessage: '',
     token: localStorage.getItem('token') || null,
     user: { role: null, userId: null },
-    id: null,
 });
 const mutations = {
     SET_TOKEN(state, token) {
         state.token = token;
         localStorage.setItem('token', token);
-    },
-    SET_ID(state, token) {
-        state.token = token;
-        localStorage.setItem('id', token);
     },
     SET_USER(state, user) {
         state.user = user;
@@ -66,18 +62,25 @@ const mutations = {
     },
 };
 const actions = {
+
     async forgotPassword({ commit }, email) {
+
         commit('RESET_PASSWORD_REQUEST');
 
         try {
+
             const response = await resetPassword(email);
+
             console.log(response);
+
             commit('RESET_PASSWORD_SUCCESS', response.message || 'Password reset link has been sent to your email.');
+
         } catch (error) {
+
             commit('RESET_PASSWORD_FAILURE', error.message || 'An error occurred. Please try again.');
+
         }
 
-        commit('RESET_PASSWORD_REQUEST');
     },
 
     async setPassword({ commit }, payload) {
@@ -101,9 +104,8 @@ const actions = {
     },
     async login({ commit }, credentials) {
         try {
-            const { access_token, role, permissions, id } = await login(credentials); // Call the login service
+            const { access_token, role, permissions } = await login(credentials); // Call the login service
             commit('SET_TOKEN', access_token);
-            commit('SET_ID', id);
             commit('SET_USER', { role, permissions }); // Store role and permissions in the user state
             return { role, permissions: permissions || [] };
         } catch (error) {
