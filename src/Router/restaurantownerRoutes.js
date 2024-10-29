@@ -83,7 +83,15 @@ export default [
       role: 'Restaurant Owner',
     },
   },
- 
+  {
+    path: '/orderreq',
+    name: 'OrderReq',
+    component: OrderReq,
+    meta: {
+      requiresAuth: true,
+      role: 'Restaurant Owner',
+    },
+  },
   {
     path: '/modalView',
     name: 'ModalView',
