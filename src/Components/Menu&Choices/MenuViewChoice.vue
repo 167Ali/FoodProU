@@ -85,6 +85,14 @@ const processedChoices = computed(() => {
                 type: 'choice',
             };
         }
+        else {
+            // Handle case where data is null or empty
+            return {
+                ...item,
+                choices: [],
+                type: 'unknown',
+            };
+        }
     });
 });
 
