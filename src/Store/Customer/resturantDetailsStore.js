@@ -7,7 +7,7 @@ import {
   fetchRestaurantMenus as fetchRestaurantMenusService,
   addFavoriteRestaurant as addFavoriteRestaurantService,
   removeFavoriteRestaurant as removeFavoriteRestaurantService,
-} from '@/Services/Customer/resturantDetailsService';
+} from '../../Services/Customer/resturantDetailsService';
 
 const state = () => ({
   restaurants: [],
@@ -50,9 +50,11 @@ const actions = {
         params.sort = filters.sortOption;
       }
 
+      console.log('Fetching restaurants with params:', params);
 
       const data = await fetchRestaurantsService(params);
 
+      console.log('Filtered data', data.data);
 
       if (data.status === 200) {
         commit('setRestaurants', data.data);

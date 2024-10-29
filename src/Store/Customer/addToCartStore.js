@@ -1,4 +1,4 @@
-import { api } from '@/Services/Customer/addToCart';
+import { api } from '../../Services/Customer/addToCart';
 
 const state = {
   cartItems: [],

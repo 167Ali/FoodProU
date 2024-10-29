@@ -14,7 +14,7 @@ export const AllOrdersAdm = {
         async fetchOrders({ commit }) {
             try {
                 const response = await AllOrders.ViewOrder();
-                console.log("orders store ", response.data.data);
+                console.log(response.data.data);
                 commit('SET_ORDERS', response.data.data);
             } catch (error) {
                 console.error('Error fetching Order:', error);

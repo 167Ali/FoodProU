@@ -17,7 +17,6 @@ const actions = {
     try {
       const data = await OrderService.getApplications();
       const deactivated = await OrderService.getDeactivatedApplications();
-
       state.orderItems = data.data; // Assuming data.data is the array of orders
 
       // Filter orders based on status

@@ -5,7 +5,7 @@
     <div class="rating-section">
       <label for="rating">Rating:</label>
       <div class="stars">
-        <span v-for="star in 5" :key="star" @click="setRating(star)" :class="{ selected: star <= rating }" class="star">
+        <span v-for="star in 5" :key="star" @click="setStars(star)" :class="{ selected: star <= stars }" class="star">
           ★
         </span>
       </div>
@@ -13,26 +13,14 @@
 
     <div class="remarks-section">
       <label for="remarks">Remarks:</label>
-      <textarea v-model="remarks" id="remarks" placeholder="Write your remarks here..."></textarea>
+      <textarea v-model="feedback" id="remarks" placeholder="Write your remarks here..."></textarea>
     </div>
 
     <button @click="submitReview" class="submit-button">Add Review</button>
     <div v-if="loading">Submitting review...</div>
     <div v-if="error">{{ error }}</div>
+    <div v-if="successMessage" class="success">{{ successMessage }}</div>
   </div>
-
-  <div class="feedback-section">
-    <label for="feedback">Feedback:</label>
-    <textarea v-model="feedback" id="feedback" placeholder="Write your feedback here..."></textarea>
-  </div>
-
-  <button @click="submitReview" class="submit-button" :disabled="loading">
-    Add Review
-  </button>
-  <div v-if="loading">Submitting review...</div>
-  <div v-if="error">{{ error }}</div>
-  <div v-if="successMessage" class="success">{{ successMessage }}</div>
-  
 </template>
 
 <script setup>
@@ -54,9 +42,9 @@ const feedback = ref('');
 const token = localStorage.getItem('token'); // Get token from localStorage
 
 // Computed properties from the Vuex store
-const loading = computed(() => store.getters['AddReviews/loading']);
-const error = computed(() => store.getters['AddReviews/error']);
-const successMessage = computed(() => store.getters['AddReviews/successMessage']);
+const loading = computed(() => store.getters['addReviews/loading']);
+const error = computed(() => store.getters['addReviews/error']);
+const successMessage = computed(() => store.getters['addReviews/successMessage']);
 
 // Methods
 const setStars = (value) => {
@@ -70,12 +58,15 @@ const submitReview = () => {
   }
 
   const reviewData = {
-    order_id: props.orderId, // Ensure it's `order_id` as per API documentation
-    rating: stars.value, // Rating is expected by the API
-    review: feedback.value, // Feedback text
-    token, // Pass the token for authorization
+    order_id: props.orderId,
+    rating: stars.value,
+    review: feedback.value,
+    token,
   };
-}
+
+  // Dispatch Vuex action to submit the review
+  store.dispatch('addReviews/submitCustomerReview', reviewData);
+};
 </script>
 
 <style scoped>

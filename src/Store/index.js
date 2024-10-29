@@ -15,8 +15,10 @@ import Reviews from './Modules/customerReviews';
 import RevenueStore from './Admin/RevenueStore';
 import restOwnerProfileStore from './RestaurantOwner/restOwnerProfileStore';
 import RestOrders from '@/Store/RestaurantOwner/restaurantOrder';
-import AddReviews from './Modules/addReviews';
+import addReviews from './Modules/addReviews';
 import adminreviews from '../Store/Admin/reviewAdminStore';
+import orderService from '@/Services/Admin/orderService';
+
 import axios from 'axios';
 import ResturantDetailsStore from './Customer/resturantDetailsStore';
 import ResturantRevinue from './Customer/resturantRevenue'; // Import the new module
@@ -28,8 +30,9 @@ import restaurantsData from './Admin/restaurantData';
 const store = createStore({
   modules: {
     menuCategory,
-    RestOrders,
-    RevenueStore,
+    orderService,
+    RestOrders, 
+       RevenueStore,
     menuProduct,
     menuChoice,
     order, // register the order module

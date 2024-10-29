@@ -8,29 +8,33 @@
       <div v-if="loading" class="loading">Loading reviews...</div>
       <div v-if="error" class="error">{{ error }}</div>
 
-      <!-- Reviews Display -->
-      <div v-else class="reviews-list">
-        <div v-for="review in reviews" :key="review.id" class="review-card">
-          <!-- Avatar and Header -->
-          <div class="review-header">
-            <img :src="review.avatar" alt="Avatar" class="review-avatar" />
-            <div class="review-info">
-              <h2>{{ review.first_name }} {{ review.last_name }}</h2>
-              <p class="review-date">{{ review.date }}</p>
+      <!-- Display No Reviews Message or Reviews -->
+      <div v-else>
+        <p v-if="reviews.length === 0" class="no-reviews-message">No reviews available.</p>
+        
+        <div v-else class="reviews-list">
+          <div v-for="review in reviews" :key="review.id" class="review-card">
+            <!-- Avatar and Header -->
+            <div class="review-header">
+              <img :src="review.avatar" alt="Avatar" class="review-avatar" />
+              <div class="review-info">
+                <h2>{{ review.first_name }} {{ review.last_name }}</h2>
+                <p class="review-date">{{ review.date }}</p>
+              </div>
+              <div class="review-rating">
+                <!-- Star Rating and Total Comments -->
+                <span class="stars">
+                  <i v-for="n in 5" :key="n" :class="n <= review.stars ? 'fas fa-star' : 'far fa-star'"></i>
+                </span>
+                <span class="comments-count">
+                   {{ review.comments_count }}
+                </span>
+              </div>
             </div>
-            <div class="review-rating">
-              <!-- Star Rating and Total Comments -->
-              <span class="stars">
-                <i v-for="n in 5" :key="n" :class="n <= review.stars ? 'fas fa-star' : 'far fa-star'"></i>
-              </span>
-              <span class="comments-count">
-                 {{ review.comments_count }}
-              </span>
-            </div>
+            <i class="fas fa-comment comments-count"></i>
+            <!-- Review Body -->
+            <p class="review-feedback">{{ review.feedback }}</p>
           </div>
-          <i class="fas fa-comment comments-count"></i>
-          <!-- Review Body -->
-          <p class="review-feedback">{{ review.feedback }}</p>
         </div>
       </div>
     </div>
@@ -74,8 +78,7 @@ onMounted(() => {
 
 /* Sidebar */
 .sidebar {
-  width: 80px; /* Increase sidebar width for better layout */
-  
+  width: 80px;
   height: 100vh;
   position: sticky;
   top: 0;
@@ -92,8 +95,8 @@ onMounted(() => {
   overflow: auto;
 }
 
-/* Loading and Error styles */
-.loading, .error {
+/* Loading, Error, and No Reviews Message styles */
+.loading, .error, .no-reviews-message {
   text-align: center;
   margin-top: 20px;
   color: #ff6347;
